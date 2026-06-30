@@ -1,126 +1,207 @@
 ---
 /**
- * Regulamin świadczenia usług. Treść bazowa — dane usługodawcy z site.config.
- * Zakres usług dostosuj per klient (sekcja §2).
+ * Regulamin świadczenia usług drogą elektroniczną — wersja rozbudowana, profesjonalna.
+ * Dane usługodawcy z site.config. Zakres właściwych usług = odrębne umowy z klientem.
  */
 import LajfLayout from '../layouts/lajf-layout.astro';
 import { siteConfig } from '../../site.config';
 
 const { brandName, company } = siteConfig;
-const updated = '20 czerwca 2026';
+const updated = '30 czerwca 2026';
 const addressLine = [company.address, company.taxId].filter(Boolean).join(', ');
+
+const toc = [
+  ['1', 'Postanowienia ogólne i definicje'],
+  ['2', 'Usługodawca i kontakt'],
+  ['3', 'Rodzaj i zakres usług'],
+  ['4', 'Wymagania techniczne'],
+  ['5', 'Formularz kontaktowy'],
+  ['6', 'Zawarcie i realizacja umowy'],
+  ['7', 'Wynagrodzenie i płatności'],
+  ['8', 'Prawa autorskie'],
+  ['9', 'Zakaz dostarczania treści bezprawnych'],
+  ['10', 'Reklamacje'],
+  ['11', 'Odstąpienie od umowy (konsument)'],
+  ['12', 'Pozasądowe rozwiązywanie sporów'],
+  ['13', 'Ochrona danych osobowych'],
+  ['14', 'Postanowienia końcowe'],
+];
 ---
 
 <LajfLayout
   title={`Regulamin | ${brandName}`}
-  description={`Regulamin świadczenia usług w serwisie ${brandName}.`}
+  description={`Regulamin świadczenia usług drogą elektroniczną w serwisie ${brandName} — zasady korzystania z serwisu, zawierania umów, płatności, reklamacji i odstąpienia.`}
 >
   <article class="legal container">
+    <span class="legal__eyebrow">Dokumenty</span>
     <h1>Regulamin świadczenia usług</h1>
     <p class="legal__lead">
-      Regulamin określa zasady świadczenia usług za pośrednictwem serwisu
-      <strong>{brandName}</strong>.
+      Regulamin określa zasady korzystania z serwisu <strong>{brandName}</strong>, świadczenia usług
+      drogą elektroniczną oraz zawierania i realizacji umów na usługi {brandName}. Korzystając z
+      serwisu, akceptujesz poniższe postanowienia.
     </p>
 
-    <h2>§1. Postanowienia ogólne</h2>
+    <nav class="legal__toc" aria-label="Spis treści">
+      <p class="legal__toc-title">Spis treści</p>
+      <ol>
+        {toc.map(([n, label]) => <li><a href={`#par-${n}`}>{label}</a></li>)}
+      </ol>
+    </nav>
+
+    <h2 id="par-1">§1. Postanowienia ogólne i definicje</h2>
+    <p>Na potrzeby Regulaminu przyjmuje się następujące znaczenia:</p>
+    <ul>
+      <li><strong>Serwis</strong> — strona internetowa dostępna pod adresem lajf.eu;</li>
+      <li><strong>Wykonawca / Usługodawca</strong> — {company.legalName};</li>
+      <li><strong>Klient</strong> — osoba korzystająca z Serwisu lub zlecająca usługę (przedsiębiorca lub konsument);</li>
+      <li><strong>Usługi</strong> — usługi świadczone przez Wykonawcę (tworzenie stron i aplikacji, SEO, doradztwo, usługi okołomuzyczne) oraz usługi świadczone drogą elektroniczną w ramach Serwisu;</li>
+      <li><strong>Umowa</strong> — umowa o realizację konkretnego zlecenia, zawierana indywidualnie z Klientem.</li>
+    </ul>
+
+    <h2 id="par-2">§2. Usługodawca i kontakt</h2>
     <p>
-      Usługodawcą jest <strong>{company.legalName}</strong>{addressLine && `, ${addressLine}`}
-      (dalej: „Wykonawca"). Kontakt:
-      <a href={`mailto:${company.email}`}>{company.email}</a>, tel. {company.phone}.
+      Usługodawcą jest <strong>{company.legalName}</strong>{addressLine && `, ${addressLine}`}.
+      Kontakt: <a href={`mailto:${company.email}`}>{company.email}</a>, tel. {company.phone}.
     </p>
 
-    <h2>§2. Zakres usług</h2>
+    <h2 id="par-3">§3. Rodzaj i zakres usług</h2>
+    <p>W ramach Serwisu Wykonawca świadczy nieodpłatnie usługi drogą elektroniczną:</p>
+    <ul>
+      <li>udostępnienie treści informacyjnych o ofercie i realizacjach,</li>
+      <li>udostępnienie formularza kontaktowego umożliwiającego wysłanie zapytania.</li>
+    </ul>
     <p>
-      Wykonawca świadczy usługi zgodnie z zakresem i ofertą przedstawioną w serwisie. Szczegółowy
-      zakres każdego zlecenia ustalany jest indywidualnie z Klientem przed rozpoczęciem prac.
+      Właściwe usługi (m.in. tworzenie stron WWW, sklepów, aplikacji i systemów, SEO, doradztwo
+      oraz usługi okołomuzyczne) Wykonawca realizuje <strong>na podstawie odrębnych, indywidualnych
+      umów</strong>, których zakres, cenę i termin ustala się każdorazowo z Klientem.
     </p>
 
-    <h2>§3. Zawarcie umowy i realizacja</h2>
+    <h2 id="par-4">§4. Wymagania techniczne</h2>
+    <p>Do korzystania z Serwisu potrzebne są:</p>
+    <ul>
+      <li>urządzenie z dostępem do internetu i aktualną przeglądarką internetową,</li>
+      <li>włączona obsługa JavaScript oraz plików cookie (w zakresie niezbędnym do działania strony),</li>
+      <li>aktywne konto e-mail (do korzystania z formularza kontaktowego).</li>
+    </ul>
+
+    <h2 id="par-5">§5. Formularz kontaktowy</h2>
     <p>
-      Kontakt przez formularz nie jest zamówieniem. Współpraca rozpoczyna się po ustaleniu zakresu,
-      ceny i terminu (w formie dokumentowej — e-mail) oraz akceptacji wyceny przez Klienta. Zakres,
-      cena i termin są ustalane indywidualnie dla każdego zlecenia.
+      Formularz służy do nawiązania kontaktu i przesłania zapytania. Wysłanie formularza
+      <strong>nie jest zamówieniem ani zawarciem umowy</strong> — stanowi zaproszenie do rozmowy o
+      współpracy. Klient zobowiązuje się podać dane prawdziwe. Zasady przetwarzania danych z
+      formularza opisuje <a href="/polityka-prywatnosci">Polityka prywatności</a>.
     </p>
 
-    <h2>§4. Wynagrodzenie i płatności</h2>
+    <h2 id="par-6">§6. Zawarcie i realizacja umowy</h2>
     <p>
-      Wynagrodzenie ustalane jest indywidualnie i potwierdzane przed rozpoczęciem prac. Płatność
-      następuje na podstawie faktury, w terminie i na zasadach ustalonych przy zamówieniu (możliwa
-      zaliczka). Ceny prezentowane w serwisie („od…") mają charakter orientacyjny.
+      Współpraca rozpoczyna się po ustaleniu zakresu, ceny i terminu oraz akceptacji wyceny przez
+      Klienta (w formie dokumentowej — np. e-mail). Standardowy model rozliczeń realizacji to
+      <strong>30% zaliczki na start, 40% w trakcie i 30% przed wydaniem</strong>, o ile strony nie
+      ustalą inaczej w Umowie. Szczegółowe warunki, zakres oraz harmonogram określa Umowa lub
+      zaakceptowana wycena.
     </p>
 
-    <h2>§5. Prawa autorskie</h2>
+    <h2 id="par-7">§7. Wynagrodzenie i płatności</h2>
     <p>
-      Autorskie prawa osobiste do utworów (autorstwo) są niezbywalne i pozostają przy twórcy.
-      Zakres przeniesienia autorskich praw majątkowych lub udzielenia licencji do utworu ustalany
-      jest indywidualnie w umowie/zamówieniu i następuje po zapłacie pełnego wynagrodzenia, o ile
-      strony nie ustalą inaczej.
+      Wynagrodzenie ustalane jest indywidualnie i potwierdzane przed rozpoczęciem prac. Ceny
+      prezentowane w Serwisie (oznaczone „od…") mają charakter <strong>orientacyjny</strong> i nie
+      stanowią oferty w rozumieniu Kodeksu cywilnego. Płatność następuje na podstawie faktury, w
+      terminie i na zasadach ustalonych w Umowie. Wykonawca jest czynnym podatnikiem VAT — do cen
+      netto doliczany jest podatek VAT według obowiązującej stawki.
     </p>
 
-    <h2>§6. Reklamacje</h2>
+    <h2 id="par-8">§8. Prawa autorskie</h2>
     <p>
-      Reklamacje można składać na adres <a href={`mailto:${company.email}`}>{company.email}</a>.
-      Wykonawca rozpatruje reklamację w terminie 14 dni od jej otrzymania, informując Klienta o
-      sposobie rozpatrzenia.
+      Autorskie prawa osobiste (autorstwo) są niezbywalne i pozostają przy twórcy. Przeniesienie
+      autorskich praw majątkowych do utworów wytworzonych w ramach zlecenia lub udzielenie licencji
+      następuje na zasadach określonych w Umowie i <strong>po zapłacie pełnego wynagrodzenia</strong>,
+      o ile strony nie ustalą inaczej.
+    </p>
+    <p>
+      Treści Serwisu (teksty, grafiki, układ, kod) są chronione prawem autorskim i stanowią własność
+      Wykonawcy lub są wykorzystywane na podstawie odpowiednich licencji. Kopiowanie lub
+      wykorzystywanie ich bez zgody jest niedozwolone.
     </p>
 
-    <h2>§7. Prawo odstąpienia (konsument)</h2>
+    <h2 id="par-9">§9. Zakaz dostarczania treści bezprawnych</h2>
     <p>
-      Konsumentowi co do zasady przysługuje prawo odstąpienia od umowy zawartej na odległość w
-      terminie 14 dni. Prawo to <strong>nie przysługuje</strong> m.in. w odniesieniu do usług
-      tworzonych według indywidualnej specyfikacji Klienta oraz treści cyfrowych dostarczonych za
-      wyraźną zgodą Klienta przed upływem terminu odstąpienia (art. 38 ustawy o prawach konsumenta).
+      Klienta obowiązuje zakaz dostarczania treści o charakterze bezprawnym, w tym za pośrednictwem
+      formularza kontaktowego. Wykonawca może odmówić realizacji usługi, której przedmiot lub treści
+      naruszałyby prawo lub dobre obyczaje.
     </p>
 
-    <h2>§8. Postanowienia końcowe</h2>
+    <h2 id="par-10">§10. Reklamacje</h2>
     <p>
-      W sprawach nieuregulowanych stosuje się przepisy prawa polskiego, w tym Kodeksu cywilnego oraz
-      ustawy o prawie autorskim i prawach pokrewnych. Zasady przetwarzania danych opisuje
+      Reklamacje dotyczące usług świadczonych drogą elektroniczną oraz realizowanych zleceń można
+      składać na adres <a href={`mailto:${company.email}`}>{company.email}</a>. Reklamacja powinna
+      zawierać opis sprawy i dane kontaktowe. Wykonawca rozpatruje reklamację w terminie
+      <strong>14 dni</strong> od jej otrzymania i informuje Klienta o sposobie rozpatrzenia.
+    </p>
+
+    <h2 id="par-11">§11. Odstąpienie od umowy (konsument)</h2>
+    <p>
+      Konsumentowi (oraz przedsiębiorcy na prawach konsumenta) co do zasady przysługuje prawo
+      odstąpienia od umowy zawartej na odległość w terminie <strong>14 dni</strong> bez podania
+      przyczyny. Prawo to <strong>nie przysługuje</strong> m.in. w odniesieniu do umów o świadczenie
+      usług w pełni wykonanych za wyraźną zgodą konsumenta, usług tworzonych według indywidualnej
+      specyfikacji (np. dedykowana strona/aplikacja) oraz treści cyfrowych dostarczonych za wyraźną
+      zgodą przed upływem terminu odstąpienia (art. 38 ustawy o prawach konsumenta). Rozpoczęcie prac
+      na żądanie konsumenta przed upływem terminu może wiązać się z obowiązkiem zapłaty za świadczenia
+      spełnione do chwili odstąpienia.
+    </p>
+
+    <h2 id="par-12">§12. Pozasądowe rozwiązywanie sporów</h2>
+    <p>
+      Konsument może skorzystać z pozasądowych sposobów rozpatrywania reklamacji i dochodzenia
+      roszczeń, w tym z platformy internetowego rozstrzygania sporów (ODR) dostępnej pod adresem
+      <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a>.
+      Skorzystanie z tych metod ma charakter dobrowolny.
+    </p>
+
+    <h2 id="par-13">§13. Ochrona danych osobowych</h2>
+    <p>
+      Zasady przetwarzania danych osobowych w związku z korzystaniem z Serwisu opisuje
       <a href="/polityka-prywatnosci">Polityka prywatności</a>.
     </p>
 
+    <h2 id="par-14">§14. Postanowienia końcowe</h2>
+    <p>
+      W sprawach nieuregulowanych stosuje się przepisy prawa polskiego, w szczególności Kodeksu
+      cywilnego, ustawy o świadczeniu usług drogą elektroniczną, ustawy o prawach konsumenta oraz
+      ustawy o prawie autorskim i prawach pokrewnych. Wykonawca może zmienić Regulamin z ważnych
+      przyczyn (zmiana przepisów, zakresu usług, względy techniczne); zmiany nie naruszają praw nabytych
+      Klientów z umów zawartych przed zmianą. Aktualna wersja Regulaminu jest zawsze dostępna w Serwisie.
+    </p>
+
     <p class="legal__meta">Ostatnia aktualizacja: {updated}.</p>
-    <p><a href="/">← Powrót na stronę główną</a></p>
+    <p class="legal__back"><a href="/">← Powrót na stronę główną</a> &nbsp;·&nbsp; <a href="/polityka-prywatnosci">Polityka prywatności</a></p>
   </article>
 </LajfLayout>
 
 <style>
-  .legal {
-    padding-block: 4rem 5rem;
-    max-width: 52rem;
+  .legal { padding-block: 4.5rem 5.5rem; max-width: 52rem; }
+  .legal__eyebrow {
+    display: inline-block; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 700; color: var(--acc); margin-bottom: 0.7rem;
   }
-  .legal h1 {
-    font-size: var(--text-h1, 2.4rem);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    margin-bottom: 1rem;
+  .legal h1 { font-size: clamp(2rem, 5vw, 2.7rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; }
+  .legal__lead { color: var(--mut); font-size: 1.08rem; line-height: 1.7; margin-bottom: 2rem; }
+  .legal__toc {
+    border: 1px solid var(--line); border-radius: 16px; padding: 1.4rem 1.6rem; margin-bottom: 2.5rem;
+    background: var(--card); box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
   }
-  .legal__lead {
-    color: var(--color-text-soft);
-    font-size: 1.1rem;
-    margin-bottom: 2.5rem;
-  }
+  .legal__toc-title { font-weight: 700; margin-bottom: 0.6rem; font-size: 0.95rem; }
+  .legal__toc ol { margin: 0; padding-left: 1.3rem; display: grid; gap: 0.35rem; }
+  .legal__toc a { color: var(--mut); text-decoration: none; }
+  .legal__toc a:hover { color: var(--acc); }
   .legal h2 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin: 2.2rem 0 0.75rem;
+    font-size: 1.32rem; font-weight: 700; margin: 2.6rem 0 0.8rem; padding-left: 0.85rem;
+    border-left: 3px solid var(--acc); scroll-margin-top: 6rem;
   }
-  .legal p,
-  .legal li {
-    line-height: 1.7;
-    color: var(--color-text);
-  }
-  .legal ul {
-    padding-left: 1.25rem;
-    display: grid;
-    gap: 0.4rem;
-  }
-  .legal a {
-    color: var(--color-brand);
-  }
-  .legal__meta {
-    margin-top: 2.5rem;
-    font-size: 0.9rem;
-    color: var(--color-text-soft);
-  }
+  .legal p, .legal li { line-height: 1.75; color: var(--txt); }
+  .legal ul, .legal ol { padding-left: 1.3rem; display: grid; gap: 0.45rem; margin: 0.6rem 0; }
+  .legal strong { color: var(--txt); }
+  .legal a { color: var(--acc); }
+  .legal__meta { margin-top: 3rem; font-size: 0.9rem; color: var(--mut); }
+  .legal__back { margin-top: 0.6rem; }
 </style>

@@ -1,133 +1,243 @@
 ---
 /**
- * Polityka prywatności (RODO). Treść bazowa — dane administratora z site.config.
- * Strona zbiera dane przez formularz kontaktowy + lead magnet.
+ * Polityka prywatności (RODO) — wersja rozbudowana, profesjonalna.
+ * Dane administratora z site.config; podmioty przetwarzające nazwane wprost.
+ * Serwis zbiera dane przez formularz kontaktowy + korespondencję e-mail.
  */
 import LajfLayout from '../layouts/lajf-layout.astro';
 import { siteConfig } from '../../site.config';
 
 const { brandName, company } = siteConfig;
-const updated = '20 czerwca 2026';
+const updated = '30 czerwca 2026';
 const addressLine = [company.address, company.taxId].filter(Boolean).join(', ');
+
+const toc = [
+  ['1', 'Administrator danych i kontakt'],
+  ['2', 'Jakie dane przetwarzamy, w jakim celu i na jakiej podstawie'],
+  ['3', 'Okres przechowywania danych'],
+  ['4', 'Odbiorcy danych i podmioty przetwarzające'],
+  ['5', 'Przekazywanie danych poza Europejski Obszar Gospodarczy'],
+  ['6', 'Twoje prawa'],
+  ['7', 'Dobrowolność podania danych'],
+  ['8', 'Profilowanie i decyzje automatyczne'],
+  ['9', 'Pliki cookie i podobne technologie'],
+  ['10', 'Bezpieczeństwo danych'],
+  ['11', 'Zmiany polityki'],
+];
 ---
 
 <LajfLayout
   title={`Polityka prywatności | ${brandName}`}
-  description={`Polityka prywatności serwisu ${brandName} — zasady przetwarzania danych osobowych zgodnie z RODO.`}
+  description={`Polityka prywatności serwisu ${brandName} — pełne zasady przetwarzania danych osobowych zgodnie z RODO: cele, podstawy prawne, podmioty przetwarzające, prawa osób.`}
 >
   <article class="legal container">
+    <span class="legal__eyebrow">Dokumenty</span>
     <h1>Polityka prywatności</h1>
     <p class="legal__lead">
-      Niniejsza polityka opisuje, jak przetwarzamy dane osobowe osób korzystających z serwisu
-      <strong>{brandName}</strong>, zgodnie z RODO (rozporządzenie 2016/679).
+      Dbamy o Twoją prywatność tak samo, jak o prywatność danych naszych klientów. Poniżej
+      przejrzyście opisujemy, jakie dane osobowe przetwarzamy w serwisie <strong>{brandName}</strong>,
+      w jakim celu, na jakiej podstawie prawnej i jakie masz wobec nich prawa — zgodnie z RODO
+      (rozporządzenie Parlamentu Europejskiego i Rady (UE) 2016/679).
     </p>
 
-    <h2>1. Administrator danych</h2>
+    <nav class="legal__toc" aria-label="Spis treści">
+      <p class="legal__toc-title">Spis treści</p>
+      <ol>
+        {toc.map(([n, label]) => <li><a href={`#sek-${n}`}>{label}</a></li>)}
+      </ol>
+    </nav>
+
+    <h2 id="sek-1">1. Administrator danych i kontakt</h2>
     <p>
-      Administratorem danych jest <strong>{company.legalName}</strong>{addressLine && `, ${addressLine}`}.
-      Kontakt w sprawach danych:
-      <a href={`mailto:${company.email}`}>{company.email}</a>, tel. {company.phone}.
+      Administratorem Twoich danych osobowych jest <strong>{company.legalName}</strong>{addressLine && `, ${addressLine}`}
+      (dalej: „Administrator", „my").
     </p>
-
-    <h2>2. Jakie dane zbieramy</h2>
     <p>
-      Przez formularz kontaktowy oraz formularz pobrania próbki (lead magnet) zbieramy dane,
-      które podajesz dobrowolnie: <strong>imię</strong> (opcjonalnie), <strong>adres e-mail</strong>
-      oraz treść wiadomości. Nie zbieramy danych szczególnych kategorii (art. 9 RODO).
+      We wszystkich sprawach dotyczących ochrony danych osobowych możesz skontaktować się z nami:
     </p>
-
-    <h2>3. Cel i podstawa prawna</h2>
     <ul>
-      <li>
-        odpowiedź na zapytanie i kontakt w sprawie usługi — <strong>art. 6 ust. 1 lit. b RODO</strong>
-        (czynności przed zawarciem umowy) oraz <strong>lit. f</strong> (uzasadniony interes:
-        prowadzenie korespondencji);
-      </li>
-      <li>
-        wysyłka zamówionej próbki/materiału na podany e-mail — na podstawie Twojej prośby
-        (art. 6 ust. 1 lit. b/f RODO).
-      </li>
+      <li>e-mail: <a href={`mailto:${company.email}`}>{company.email}</a>,</li>
+      <li>telefon: {company.phone},</li>
+      <li>pisemnie: na adres siedziby podany powyżej.</li>
+    </ul>
+    <p>
+      Nie wyznaczyliśmy Inspektora Ochrony Danych — w sprawach danych kontaktuj się bezpośrednio
+      pod powyższymi danymi.
+    </p>
+
+    <h2 id="sek-2">2. Jakie dane przetwarzamy, w jakim celu i na jakiej podstawie</h2>
+    <p>Przetwarzamy wyłącznie dane niezbędne do realizacji konkretnego celu:</p>
+
+    <h3>a) Formularz kontaktowy</h3>
+    <p>
+      Gdy wysyłasz zapytanie przez formularz, przetwarzamy Twój <strong>adres e-mail</strong> oraz
+      informacje, które samodzielnie podajesz: rodzaj projektu, orientacyjny budżet, termin i treść
+      wiadomości. Cel: udzielenie odpowiedzi, kontakt i przedstawienie oferty.
+    </p>
+    <p class="legal__basis">
+      Podstawa prawna: <strong>art. 6 ust. 1 lit. b RODO</strong> (działania przed zawarciem umowy,
+      na Twoje żądanie) oraz <strong>lit. f</strong> (nasz uzasadniony interes — prowadzenie
+      korespondencji i obsługa zapytań).
+    </p>
+
+    <h3>b) Bieżąca korespondencja e-mail</h3>
+    <p>
+      Prowadząc z Tobą korespondencję (np. odpowiadając na maile na skrzynki @lajf.eu), przetwarzamy
+      dane zawarte w wiadomościach.
+    </p>
+    <p class="legal__basis">Podstawa prawna: <strong>art. 6 ust. 1 lit. f RODO</strong> (uzasadniony interes — komunikacja).</p>
+
+    <h3>c) Zawarcie i realizacja umowy</h3>
+    <p>
+      Jeśli zdecydujesz się na współpracę, przetwarzamy dane niezbędne do zawarcia i wykonania umowy
+      (dane kontaktowe, dane do faktury, dane firmy).
+    </p>
+    <p class="legal__basis">
+      Podstawa prawna: <strong>art. 6 ust. 1 lit. b RODO</strong> (wykonanie umowy) oraz
+      <strong>lit. c</strong> (obowiązki prawne — wystawienie i przechowywanie faktur, rozliczenia
+      podatkowe).
+    </p>
+
+    <h3>d) Logi serwera i bezpieczeństwo</h3>
+    <p>
+      Serwer i usługi dostarczające stronę automatycznie zapisują techniczne dane (np. adres IP,
+      typ przeglądarki, czas żądania) w celu zapewnienia bezpieczeństwa i poprawnego działania serwisu.
+    </p>
+    <p class="legal__basis">Podstawa prawna: <strong>art. 6 ust. 1 lit. f RODO</strong> (uzasadniony interes — bezpieczeństwo IT).</p>
+
+    <h3>e) Statystyka i analityka (opcjonalnie)</h3>
+    <p>
+      Za Twoją zgodą możemy korzystać z narzędzi analitycznych, by zrozumieć, jak używana jest strona,
+      i ją ulepszać (patrz sekcja 9 — Pliki cookie).
+    </p>
+    <p class="legal__basis">Podstawa prawna: <strong>art. 6 ust. 1 lit. a RODO</strong> (zgoda).</p>
+
+    <p>Nie przetwarzamy danych szczególnych kategorii (art. 9 RODO) ani danych o wyrokach (art. 10 RODO).</p>
+
+    <h2 id="sek-3">3. Okres przechowywania danych</h2>
+    <ul>
+      <li>zapytania z formularza i korespondencja — do <strong>12 miesięcy</strong> od ostatniego kontaktu, chyba że przekształcą się we współpracę;</li>
+      <li>dane związane z umową — przez czas jej trwania oraz przez okres przedawnienia roszczeń (zwykle do <strong>6 lat</strong>);</li>
+      <li>dane na dokumentach księgowych (faktury) — przez okres wymagany prawem podatkowym (co do zasady <strong>5 lat</strong> od końca roku podatkowego);</li>
+      <li>dane przetwarzane na podstawie zgody — do czasu jej wycofania;</li>
+      <li>logi techniczne — przez okres niezbędny dla bezpieczeństwa, zgodnie z polityką dostawców usług.</li>
     </ul>
 
-    <h2>4. Okres przechowywania</h2>
+    <h2 id="sek-4">4. Odbiorcy danych i podmioty przetwarzające</h2>
     <p>
-      Dane przechowujemy przez czas niezbędny do obsługi zapytania i prowadzenia korespondencji,
-      a następnie przez okres przedawnienia ewentualnych roszczeń. Dane usuwamy, gdy przestają być
-      potrzebne.
+      Twoje dane mogą być powierzane zaufanym dostawcom, którzy wspierają nas technicznie i
+      organizacyjnie — wyłącznie w zakresie niezbędnym i na podstawie umów powierzenia przetwarzania.
+      Należą do nich m.in.:
     </p>
-
-    <h2>5. Odbiorcy danych</h2>
-    <p>
-      Dane mogą być powierzone podmiotom przetwarzającym, które świadczą nam usługi techniczne:
-      dostawca hostingu, poczty oraz wysyłki wiadomości e-mail. Podmioty te działają na podstawie
-      umów powierzenia i stosują odpowiednie zabezpieczenia, w tym mechanizmy legalizujące ewentualny
-      transfer poza EOG (standardowe klauzule umowne / DPF).
-    </p>
-
-    <h2>6. Twoje prawa</h2>
-    <p>Masz prawo do:</p>
     <ul>
-      <li>dostępu do danych oraz otrzymania ich kopii,</li>
-      <li>sprostowania, usunięcia lub ograniczenia przetwarzania,</li>
-      <li>wniesienia sprzeciwu wobec przetwarzania opartego na uzasadnionym interesie,</li>
+      <li><strong>Cloudflare, Inc.</strong> — hosting i dostarczanie strony (CDN), ochrona i bezpieczeństwo ruchu;</li>
+      <li><strong>Resend (Plus Five Five, Inc.)</strong> — obsługa wysyłki wiadomości e-mail z formularza kontaktowego;</li>
+      <li><strong>lh.pl (H88 S.A.)</strong> — hosting poczty e-mail (skrzynki w domenie @lajf.eu);</li>
+      <li><strong>Google Ireland Ltd.</strong> — narzędzia statystyczne (Google Analytics / Search Console), o ile aktywne i za Twoją zgodą;</li>
+      <li><strong>biuro rachunkowe</strong> — w zakresie danych na dokumentach księgowych klientów;</li>
+      <li>uprawnione organy państwowe — gdy obowiązek wynika z przepisów prawa.</li>
+    </ul>
+
+    <h2 id="sek-5">5. Przekazywanie danych poza Europejski Obszar Gospodarczy</h2>
+    <p>
+      Część dostawców (np. Cloudflare, Resend, Google) może przetwarzać dane na serwerach poza EOG,
+      m.in. w USA. Transfer odbywa się wyłącznie z zachowaniem mechanizmów legalizujących wymaganych
+      przez RODO — w szczególności <strong>standardowych klauzul umownych</strong> (SCC) zatwierdzonych
+      przez Komisję Europejską oraz, tam gdzie ma to zastosowanie, ram <strong>Data Privacy Framework
+      (DPF)</strong>. Masz prawo uzyskać kopię stosowanych zabezpieczeń, kontaktując się z nami.
+    </p>
+
+    <h2 id="sek-6">6. Twoje prawa</h2>
+    <p>W związku z przetwarzaniem danych przysługuje Ci prawo do:</p>
+    <ul>
+      <li>dostępu do danych oraz uzyskania ich kopii,</li>
+      <li>sprostowania (poprawienia) danych,</li>
+      <li>usunięcia danych („prawo do bycia zapomnianym"),</li>
+      <li>ograniczenia przetwarzania,</li>
       <li>przenoszenia danych,</li>
-      <li>wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (uodo.gov.pl).</li>
+      <li>wniesienia sprzeciwu wobec przetwarzania opartego na uzasadnionym interesie,</li>
+      <li>cofnięcia zgody w dowolnym momencie (bez wpływu na zgodność z prawem przetwarzania sprzed cofnięcia),</li>
+      <li>wniesienia skargi do organu nadzorczego — <strong>Prezesa Urzędu Ochrony Danych Osobowych</strong>, ul. Stawki 2, 00-193 Warszawa (<a href="https://uodo.gov.pl" target="_blank" rel="noopener">uodo.gov.pl</a>).</li>
     </ul>
-
-    <h2>7. Dobrowolność i automatyzacja</h2>
     <p>
-      Podanie danych jest dobrowolne, ale niezbędne do udzielenia odpowiedzi na zapytanie.
-      Nie stosujemy profilowania ani zautomatyzowanego podejmowania decyzji.
+      Aby skorzystać z praw, napisz na <a href={`mailto:${company.email}`}>{company.email}</a>.
+      Odpowiadamy bez zbędnej zwłoki, najpóźniej w terminie miesiąca.
     </p>
 
-    <h2>8. Pliki cookie</h2>
+    <h2 id="sek-7">7. Dobrowolność podania danych</h2>
     <p>
-      Serwis nie wykorzystuje plików cookie do celów marketingowych ani analitycznych.
-      Używane mogą być wyłącznie pliki techniczne niezbędne do działania strony.
+      Podanie danych jest dobrowolne, jednak niezbędne do udzielenia odpowiedzi na zapytanie lub
+      zawarcia umowy. Brak podania danych może uniemożliwić kontakt lub realizację usługi.
+    </p>
+
+    <h2 id="sek-8">8. Profilowanie i decyzje automatyczne</h2>
+    <p>
+      Nie podejmujemy wobec Ciebie decyzji opartych wyłącznie na zautomatyzowanym przetwarzaniu,
+      w tym profilowaniu, które wywoływałyby skutki prawne lub w podobny sposób istotnie na Ciebie
+      wpływały (art. 22 RODO).
+    </p>
+
+    <h2 id="sek-9">9. Pliki cookie i podobne technologie</h2>
+    <p>Serwis korzysta z plików cookie w dwóch kategoriach:</p>
+    <ul>
+      <li>
+        <strong>niezbędne</strong> — konieczne do prawidłowego działania strony i zapamiętania Twoich
+        preferencji dotyczących prywatności; nie wymagają zgody;
+      </li>
+      <li>
+        <strong>analityczne</strong> (opcjonalne) — pozwalają mierzyć ruch i ulepszać serwis;
+        instalowane <strong>wyłącznie po wyrażeniu zgody</strong> w banerze cookie.
+      </li>
+    </ul>
+    <p>
+      Zgodę możesz w każdej chwili zmienić lub wycofać, a pliki cookie usunąć i ograniczyć w
+      ustawieniach swojej przeglądarki. Wyłączenie plików niezbędnych może wpłynąć na działanie strony.
+    </p>
+
+    <h2 id="sek-10">10. Bezpieczeństwo danych</h2>
+    <p>
+      Stosujemy odpowiednie środki techniczne i organizacyjne chroniące dane przed nieuprawnionym
+      dostępem, utratą czy zniszczeniem — w tym szyfrowanie połączenia (SSL/TLS), ograniczenie dostępu
+      do danych oraz dobór dostawców zapewniających wysoki poziom bezpieczeństwa.
+    </p>
+
+    <h2 id="sek-11">11. Zmiany polityki</h2>
+    <p>
+      Politykę możemy aktualizować, gdy zmienią się przepisy lub sposób działania serwisu. Aktualna
+      wersja jest zawsze dostępna na tej stronie, z podaną datą ostatniej aktualizacji.
     </p>
 
     <p class="legal__meta">Ostatnia aktualizacja: {updated}.</p>
-    <p><a href="/">← Powrót na stronę główną</a></p>
+    <p class="legal__back"><a href="/">← Powrót na stronę główną</a> &nbsp;·&nbsp; <a href="/regulamin">Regulamin</a></p>
   </article>
 </LajfLayout>
 
 <style>
-  .legal {
-    padding-block: 4rem 5rem;
-    max-width: 52rem;
+  .legal { padding-block: 4.5rem 5.5rem; max-width: 52rem; }
+  .legal__eyebrow {
+    display: inline-block; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 700; color: var(--acc); margin-bottom: 0.7rem;
   }
-  .legal h1 {
-    font-size: var(--text-h1, 2.4rem);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    margin-bottom: 1rem;
+  .legal h1 { font-size: clamp(2rem, 5vw, 2.7rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; }
+  .legal__lead { color: var(--mut); font-size: 1.08rem; line-height: 1.7; margin-bottom: 2rem; }
+  .legal__toc {
+    border: 1px solid var(--line); border-radius: 16px; padding: 1.4rem 1.6rem; margin-bottom: 2.5rem;
+    background: var(--card); box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
   }
-  .legal__lead {
-    color: var(--color-text-soft);
-    font-size: 1.1rem;
-    margin-bottom: 2.5rem;
-  }
+  .legal__toc-title { font-weight: 700; margin-bottom: 0.6rem; font-size: 0.95rem; }
+  .legal__toc ol { margin: 0; padding-left: 1.3rem; display: grid; gap: 0.35rem; }
+  .legal__toc a { color: var(--mut); text-decoration: none; }
+  .legal__toc a:hover { color: var(--acc); }
   .legal h2 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin: 2.2rem 0 0.75rem;
+    font-size: 1.32rem; font-weight: 700; margin: 2.6rem 0 0.8rem; padding-left: 0.85rem;
+    border-left: 3px solid var(--acc); scroll-margin-top: 6rem;
   }
-  .legal p,
-  .legal li {
-    line-height: 1.7;
-    color: var(--color-text);
-  }
-  .legal ul {
-    padding-left: 1.25rem;
-    display: grid;
-    gap: 0.4rem;
-  }
-  .legal a {
-    color: var(--color-brand);
-  }
-  .legal__meta {
-    margin-top: 2.5rem;
-    font-size: 0.9rem;
-    color: var(--color-text-soft);
-  }
+  .legal h3 { font-size: 1.02rem; font-weight: 700; margin: 1.4rem 0 0.4rem; color: var(--txt); }
+  .legal p, .legal li { line-height: 1.75; color: var(--txt); }
+  .legal__basis { font-size: 0.92rem; color: var(--mut); margin-top: 0.2rem; }
+  .legal ul, .legal ol { padding-left: 1.3rem; display: grid; gap: 0.45rem; margin: 0.6rem 0; }
+  .legal strong { color: var(--txt); }
+  .legal a { color: var(--acc); }
+  .legal__meta { margin-top: 3rem; font-size: 0.9rem; color: var(--mut); }
+  .legal__back { margin-top: 0.6rem; }
 </style>
