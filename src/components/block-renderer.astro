@@ -1,0 +1,96 @@
+---
+/**
+ * Mapper: blok treści -> komponent sekcji. Jedyne miejsce, które wie,
+ * jak typ bloku przekłada się na sekcję. Nowa sekcja = jeden case tutaj.
+ */
+import type { Block } from '../lib/content';
+import Hero from './sections/hero.astro';
+import Services from './sections/services.astro';
+import Portfolio from './sections/portfolio.astro';
+import Stats from './sections/stats.astro';
+import Testimonials from './sections/testimonials.astro';
+import Author from './sections/author.astro';
+import Faq from './sections/faq.astro';
+import LeadMagnet from './sections/lead-magnet.astro';
+import Gallery from './sections/gallery.astro';
+import Contact from './sections/contact.astro';
+
+interface Props {
+  blocks: Block[];
+}
+
+const { blocks } = Astro.props;
+---
+
+{
+  blocks.map((block) => {
+    switch (block.type) {
+      case 'hero':
+        return (
+          <Hero
+            variant={block.variant}
+            title={block.title}
+            subtitle={block.subtitle}
+            ctaLabel={block.ctaLabel}
+            ctaHref={block.ctaHref}
+            imageUrl={block.imageUrl}
+          />
+        );
+      case 'services':
+        return <Services title={block.title} subtitle={block.subtitle} items={block.items} />;
+      case 'portfolio':
+        return <Portfolio title={block.title} subtitle={block.subtitle} items={block.items} />;
+      case 'stats':
+        return <Stats items={block.items} />;
+      case 'testimonials':
+        return (
+          <Testimonials
+            title={block.title}
+            subtitle={block.subtitle}
+            items={block.items}
+            anchor={block.anchor}
+            kicker={block.kicker}
+          />
+        );
+      case 'author':
+        return (
+          <Author
+            name={block.name}
+            bio={block.bio}
+            pillars={block.pillars}
+            imageUrl={block.imageUrl}
+            anchor={block.anchor}
+          />
+        );
+      case 'faq':
+        return (
+          <Faq
+            title={block.title}
+            subtitle={block.subtitle}
+            items={block.items}
+            anchor={block.anchor}
+            kicker={block.kicker}
+          />
+        );
+      case 'lead-magnet':
+        return (
+          <LeadMagnet
+            title={block.title}
+            description={block.description}
+            buttonLabel={block.buttonLabel}
+          />
+        );
+      case 'gallery':
+        return (
+          <Gallery
+            title={block.title}
+            subtitle={block.subtitle}
+            items={block.items}
+            anchor={block.anchor}
+          />
+        );
+      case 'contact':
+        return <Contact title={block.title} subtitle={block.subtitle} />;
+    }
+  })
+}

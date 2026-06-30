@@ -1,0 +1,134 @@
+---
+/**
+ * Sekcja: opinie klientów (social proof). Karty cytatów w siatce — duży znak
+ * cudzysłowu w akcencie, treść, podpis autor + rola. Skaluje się na N opinii.
+ */
+import Section from '../primitives/section.astro';
+import type { TestimonialItem } from '../../lib/content';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  items: TestimonialItem[];
+  anchor?: string;
+  kicker?: string;
+}
+
+const { title, subtitle, items, anchor, kicker } = Astro.props;
+---
+
+<Section id={anchor ?? 'opinie'} tone="muted">
+  <header class="section-head">
+    {kicker && <span class="section-head__kicker">{kicker}</span>}
+    <h2>{title}</h2>
+    {subtitle && <p class="section-head__sub">{subtitle}</p>}
+  </header>
+
+  <div class="tgrid">
+    {
+      items.map((item) => (
+        <figure class="tcard">
+          <span class="tcard__mark" aria-hidden="true">&ldquo;</span>
+          <blockquote class="tcard__quote">{item.quote}</blockquote>
+          <figcaption class="tcard__by">
+            <span class="tcard__author">{item.author}</span>
+            <span class="tcard__role">{item.role}</span>
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  .section-head {
+    max-width: 56ch;
+    margin-bottom: 2.75rem;
+  }
+  .section-head__kicker {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-brand);
+    margin-bottom: 0.9rem;
+  }
+  .section-head h2 {
+    font-size: var(--text-h2);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  .section-head__sub {
+    color: var(--color-text-soft);
+    font-size: 1.12rem;
+    margin-top: 0.85rem;
+    line-height: var(--leading-body);
+  }
+
+  .tgrid {
+    display: grid;
+    gap: var(--space-gap);
+    grid-template-columns: 1fr;
+  }
+  .tcard {
+    position: relative;
+    margin: 0;
+    padding: 2.4rem 1.8rem 1.7rem;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow), var(--highlight-top);
+    display: flex;
+    flex-direction: column;
+  }
+  .tcard__mark {
+    position: absolute;
+    top: 0.4rem;
+    left: 1.3rem;
+    font-size: 4.5rem;
+    line-height: 1;
+    font-family: var(--font-heading);
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    opacity: 0.85;
+    pointer-events: none;
+  }
+  .tcard__quote {
+    margin: 0;
+    color: var(--color-text);
+    font-size: 1.04rem;
+    line-height: var(--leading-body);
+  }
+  .tcard__by {
+    margin-top: 1.5rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .tcard__author {
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+  }
+  .tcard__role {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-brand);
+  }
+
+  @media (min-width: 52rem) {
+    .tgrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

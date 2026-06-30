@@ -1,0 +1,261 @@
+---
+/**
+ * Sticky header: logo, nawigacja, przełącznik języka i CTA. Część silnika.
+ * Dane przychodzą propsami z base-layout (per język) — komponent nie czyta
+ * configu, więc jest łatwy do reużycia i testów. Pusta nav → tylko logo + CTA.
+ * Mobilne menu: dostępny hamburger (aria-expanded), zamykany Esc i kliknięciem.
+ */
+import type { NavLink } from '../../site.config';
+import type { Locale } from '../lib/i18n';
+
+interface Alternate {
+  locale: Locale;
+  href: string;
+}
+
+interface Props {
+  brandName: string;
+  logoUrl?: string | null;
+  nav: NavLink[];
+  cta: NavLink;
+  locale: Locale;
+  alternates: Alternate[];
+}
+
+const { brandName, logoUrl, nav, cta, locale, alternates } = Astro.props;
+const hasNav = nav.length > 0;
+const showLang = alternates.length > 1;
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-header__logo" href={locale === 'pl' ? '/' : `/${locale}`} aria-label={brandName}>
+      {logoUrl ? <img class="site-header__logo-img" src={logoUrl} alt={brandName} /> : brandName}
+    </a>
+
+    {hasNav && (
+      <nav class="site-header__nav" aria-label="Główna">
+        {nav.map((link) => <a href={link.href}>{link.label}</a>)}
+      </nav>
+    )}
+
+    {showLang && (
+      <div class="site-header__lang" role="group" aria-label="Język / Language">
+        {alternates.map((alt) => (
+          <a
+            href={alt.href}
+            class:list={['site-header__lang-link', { 'is-current': alt.locale === locale }]}
+            aria-current={alt.locale === locale ? 'true' : undefined}
+          >
+            {alt.locale.toUpperCase()}
+          </a>
+        ))}
+      </div>
+    )}
+
+    <a class="site-header__cta" href={cta.href}>{cta.label}</a>
+
+    {hasNav && (
+      <button
+        type="button"
+        class="site-header__burger"
+        aria-label="Otwórz menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    )}
+  </div>
+
+  {hasNav && (
+    <nav id="mobile-nav" class="site-header__mobile" aria-label="Mobilna" hidden>
+      {nav.map((link) => <a href={link.href}>{link.label}</a>)}
+      <a class="site-header__mobile-cta" href={cta.href}>{cta.label}</a>
+    </nav>
+  )}
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: 4rem;
+  }
+  .site-header__logo {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    font-size: 1.15rem;
+    color: var(--color-text);
+    text-decoration: none;
+    margin-inline-end: auto;
+  }
+  .site-header__logo-img {
+    height: 2rem;
+    width: auto;
+    display: block;
+  }
+  .site-header__nav {
+    display: none;
+    gap: 1.5rem;
+  }
+  .site-header__nav a {
+    position: relative;
+    color: var(--color-text-soft);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  .site-header__nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 2px;
+    background: var(--color-brand);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  .site-header__nav a:hover {
+    color: var(--color-text);
+  }
+  .site-header__nav a:hover::after {
+    transform: scaleX(1);
+  }
+  .site-header__lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .site-header__lang-link {
+    padding: 0.2rem 0.4rem;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-soft);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .site-header__lang-link.is-current {
+    color: var(--color-brand);
+    background: color-mix(in srgb, var(--color-brand) 12%, transparent);
+  }
+  .site-header__cta {
+    display: none; /* mobile: CTA jest w menu hamburgera */
+    padding: 0.55rem 1.1rem;
+    border-radius: var(--radius-sm);
+    background: var(--gradient-brand);
+    color: var(--color-on-brand);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: var(--shadow-brand);
+  }
+  .site-header__burger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    cursor: pointer;
+  }
+  .site-header__burger span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    margin-inline: auto;
+    background: var(--color-text);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .site-header__burger[aria-expanded='true'] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .site-header__burger[aria-expanded='true'] span:nth-child(2) {
+    opacity: 0;
+  }
+  .site-header__burger[aria-expanded='true'] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+  .site-header__mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.75rem var(--container-pad) 1.25rem;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-bg);
+  }
+  .site-header__mobile[hidden] {
+    display: none;
+  }
+  .site-header__mobile a {
+    padding: 0.7rem 0.25rem;
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .site-header__mobile-cta {
+    margin-top: 0.5rem;
+    border-bottom: 0 !important;
+    color: var(--color-brand) !important;
+    font-weight: 700 !important;
+  }
+  @media (min-width: 56rem) {
+    .site-header__nav {
+      display: flex;
+      margin-inline-end: 0.5rem;
+    }
+    .site-header__cta {
+      display: inline-block;
+    }
+    .site-header__burger,
+    .site-header__mobile {
+      display: none;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var burger = document.querySelector('.site-header__burger');
+    var panel = document.getElementById('mobile-nav');
+    if (!burger || !panel) return;
+    function close() {
+      burger.setAttribute('aria-expanded', 'false');
+      burger.setAttribute('aria-label', 'Otwórz menu');
+      panel.hidden = true;
+    }
+    function open() {
+      burger.setAttribute('aria-expanded', 'true');
+      burger.setAttribute('aria-label', 'Zamknij menu');
+      panel.hidden = false;
+    }
+    burger.addEventListener('click', function () {
+      if (burger.getAttribute('aria-expanded') === 'true') close();
+      else open();
+    });
+    panel.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', close);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') close();
+    });
+  })();
+</script>

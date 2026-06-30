@@ -1,0 +1,150 @@
+---
+/**
+ * Homepage lajf.eu — bespoke "2C+ Aurora" (kinetic dark).
+ * Chrome (tło/nawigacja/stopka/skrypty) z lajf-layout. Tu: hero kinetyczny + sekcje + rotacja.
+ */
+import LajfLayout from '../layouts/lajf-layout.astro';
+
+const title = 'Lajf — strony WWW, SEO i RODO dla firm i gabinetów | pełna obecność pod klucz';
+const description =
+  'Tworzymy strony dla firm i podmiotów medycznych: treść, SEO, konfiguracja Google, firmowe maile i stopki — gotowa marka od pierwszego dnia. Strony zgodne z RODO. Jawne ceny.';
+
+const realizacje = [
+  { t: 'moje-rodo', c: 'System zgodności RODO dla medycyny', tag: 'SaaS · RODO', href: 'https://moje-rodo.pl', img: '/images/realizacje/moje-rodo.jpg' },
+  { t: 'Układ Komediowy', c: 'Strona + terminarz kabaretu', tag: 'web · rozrywka', href: 'https://ukladkomediowy.pl', img: '/images/realizacje/uklad.jpg' },
+  { t: 'Dźwięk Dobry', c: 'Studio pisania piosenek', tag: 'web · muzyka', href: 'https://dzwiekdobry.pl', img: '/images/realizacje/dzwiek.jpg' },
+  { t: 'Innova Biological', c: 'Strona B2B marki chemicznej', tag: 'web · B2B', href: 'https://innova-biological.pages.dev', img: '/images/realizacje/innova.jpg' },
+  { t: 'EkoPanel Serwis', c: 'Serwis kolektorów słonecznych', tag: 'web · usługa', href: 'https://ekopanelserwis.pages.dev', img: '/images/realizacje/ekopanel.jpg' },
+  { t: 'Klaudia Pałka', c: 'One-pager wokalistki', tag: 'web · artysta', href: 'https://klaudia-palka.pages.dev', img: '/images/realizacje/klaudia.jpg' },
+];
+---
+
+<LajfLayout title={title} description={description}>
+  <header class="hero"><div class="wrap hero-in">
+    <span class="label stagger d1">Pełna obecność firmy w sieci — pod klucz</span>
+    <h1 class="stagger d2">Robimy strony,<br />które <span class="mask"><span class="rot" id="rot">przyciągają klientów</span></span></h1>
+    <p class="lead stagger d4">Strona, treść, SEO, Google i firmowe maile — gotowe od pierwszego dnia. Jeden wykonawca zamiast pięciu. Dla gabinetów: zgodne z RODO.</p>
+    <div class="hero-cta stagger d5">
+      <a href="#kontakt" class="btn btn-primary magnetic">Zamów bezpłatną konsultację →</a>
+      <a href="#realizacje" class="btn btn-ghost">Zobacz realizacje</a>
+    </div>
+    <div class="chips stagger d5"><a class="chip" href="/strony-www">Strony WWW</a><a class="chip" href="/rodo-i-cyber">RODO &amp; cyber</a><a class="chip" href="/oprogramowanie">Oprogramowanie</a><a class="chip" href="/muzyka">Muzyka</a></div>
+    <div class="proofbar stagger d5"><span><b>100%</b> pod klucz</span><span><b>4</b> dyscypliny, 1 wykonawca</span><span><b>Jawne</b> ceny</span><span><b>RODO</b> od dnia 1</span></div>
+  </div>
+  </header>
+
+  <section id="co"><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Co robimy</span><h2>Cztery rzeczy, jeden wykonawca</h2><p>Web jest sercem. Resztę dokładamy, gdy rośniesz — bez zlecania pięciu różnym ludziom.</p></div>
+    <div class="pillars">
+      <a class="pillar tilt reveal" href="/strony-www" style="--pc:rgba(91,140,255,.18);--pcb:#5b8cff"><div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18"/></svg></div><h3>Strony WWW dla firm</h3><p>Nie szablon z internetu. Strona z Twoją treścią, zoptymalizowana pod Google, z firmowymi mailami i Wizytówką. Gotowa marka — nie sam plik.</p><span class="pmore">Zobacz pakiety →</span></a>
+      <a class="pillar tilt reveal" href="/rodo-i-cyber" style="--pc:rgba(43,212,168,.18);--pcb:#2bd4a8"><div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3.1 7.8-7 9-3.9-1.2-7-4.4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>RODO &amp; cyber dla medycyny</h3><p>Strony dla gabinetów zgodne z RODO od pierwszego kliknięcia. Pełną zgodność prowadzi nasz osobny podmiot — moje-rodo.</p><span class="pmore">Dla gabinetu →</span></a>
+      <a class="pillar tilt reveal" href="/oprogramowanie" style="--pc:rgba(255,122,89,.18);--pcb:#ff7a59"><div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4"/><path d="M16 8l4 4-4 4"/><path d="M13.5 6l-3 12"/></svg></div><h3>Oprogramowanie na miarę</h3><p>Gdy gotowiec nie wystarcza: aplikacja, panel, płatności, workflow. Robiliśmy m.in. system dla szpitala.</p><span class="pmore">Zobacz →</span></a>
+      <a class="pillar tilt reveal" href="/muzyka" style="--pc:rgba(255,47,126,.18);--pcb:#ff2f7e"><div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="18" r="2.4"/><circle cx="17" cy="16" r="2.4"/><path d="M8.4 18V7l11-2.2V16"/></svg></div><h3>Muzyka i studio</h3><p>Dźwięk Dobry — piosenka na prezent, tekst, produkcja. Bo markę buduje się też dźwiękiem.</p><span class="pmore">Posłuchaj →</span></a>
+    </div>
+  </div></section>
+
+  <section id="realizacje"><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Realizacje</span><h2>Robota, nie obietnice</h2><p>Sześć realizacji, sześć różnych stylów. Dobieramy formę do marki — nie klepiemy szablonu.</p></div>
+    <div class="work">
+      {realizacje.map((r) => (
+        <a class="frame reveal" href={r.href} target="_blank" rel="noopener noreferrer">
+          <div class="fbar"><i></i><i></i><i></i><span class="furl">{r.href.replace('https://', '')}</span></div>
+          <img class="fimg" src={r.img} alt={`Realizacja Lajf — ${r.t}`} loading="lazy" width="800" height="500" />
+          <div class="fmeta"><div><span class="fm-t">{r.t}</span><span class="fm-d">{r.c}</span></div><span class="ftag">{r.tag}</span></div>
+        </a>
+      ))}
+    </div>
+  </div></section>
+
+  <section id="o-mnie"><div class="wrap">
+    <div class="founder">
+      <div class="founder-photo reveal"><img src="/images/roman.jpg" alt="Roman Jońca — założyciel Lajf" width="1100" height="715" loading="lazy" /></div>
+      <div class="founder-text reveal">
+        <span class="label">Kto za tym stoi</span>
+        <h2>Cześć, jestem Roman.</h2>
+        <p>Robię strony, ogarniam RODO i cyberbezpieczeństwo, piszę oprogramowanie — i zajmuję się produkcją muzyczną. Ta różnorodność to nie przypadek: dzięki niej patrzę na Twój projekt szerzej niż typowa agencja.</p>
+        <p>Masz jeden kontakt i jedną osobę odpowiedzialną za całość — od pierwszej rozmowy po launch. A kiedy projekt tego wymaga, za mną stoi sprawdzony zespół. Bez przerzucania Cię między działami, bez znikania po oddaniu pliku.</p>
+        <p>Wolę zrobić mniej projektów — ale każdy tak, żebym mógł się pod nim podpisać.</p>
+        <a href="#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
+      </div>
+    </div>
+    <div class="team-head reveal"><span class="label">Zespół</span><h3>Jeden kontakt — za nim ludzie od każdej działki</h3></div>
+    <div class="team">
+      <div class="role"><span class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></svg></span><div class="rt"><b>Roman</b><span>Proces, strategia, odpowiedzialność za całość</span></div></div>
+      <div class="role"><span class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l4 4"/><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z"/></svg></span><div class="rt"><b>Grafik</b><span>Identyfikacja wizualna i design</span></div></div>
+      <div class="role"><span class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><div class="rt"><b>Copywriter</b><span>Treść, która sprzedaje</span></div></div>
+      <div class="role"><span class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4"/><path d="M16 8l4 4-4 4"/><path d="M13.5 6l-3 12"/></svg></span><div class="rt"><b>Programista</b><span>Wdrożenie i kod</span></div></div>
+      <div class="role"><span class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 3 3 6-7"/><path d="M15 8h4v4"/></svg></span><div class="rt"><b>SEO i reklama</b><span>SEO, Google Ads, Meta Ads, GA4</span></div></div>
+      <div class="role"><span class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 14l2 2 4-4"/></svg></span><div class="rt"><b>Wsparcie prawne</b><span>RODO, umowy, zgodność</span></div></div>
+    </div>
+  </div></section>
+
+  <section id="proces"><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Jak działamy</span><h2>Dostarczamy metodę i spokój</h2><p>Nie oddajemy pliku i nie znikamy. Przeprowadzamy Cię przez cały start — krok po kroku.</p></div>
+    <div class="steps">
+      <div class="step reveal"><div class="n">1</div><h4>Analiza i treść</h4><p>Zaczynamy od Twojego klienta, nie od kolorów. Piszemy treść, która do niego mówi. Zero „lorem ipsum".</p></div>
+      <div class="step reveal"><div class="n">2</div><h4>SEO</h4><p>Stronę widać tylko, gdy znajdzie ją Google. Robimy SEO techniczne i piszemy pod frazy Twoich klientów.</p></div>
+      <div class="step reveal"><div class="n">3</div><h4>Konfiguracja Google</h4><p>Search Console, Analytics i Wizytówka. Dla lokalnej firmy Wizytówka to często więcej telefonów niż sama strona.</p></div>
+      <div class="step reveal"><div class="n">4</div><h4>Maile, stopki, launch</h4><p>Firmowe skrzynki, profesjonalne stopki, wdrożenie. Wychodzisz z gotową marką — nie z listą rzeczy do dokończenia.</p></div>
+    </div>
+  </div></section>
+
+  <section id="oferta"><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Oferta</span><h2>Jawne pakiety. Bez „zapytaj o wycenę".</h2><p>Wybierasz budżet, my mówimy wprost, co w nim dostajesz. Konkurencja chowa ceny — my je pokazujemy.</p></div>
+    <div class="center reveal" style="margin-bottom:38px"><span class="slots"><span class="dot"></span>Przyjmuję ograniczoną liczbę projektów naraz — zapytaj o wolny termin</span></div>
+    <div class="tiers">
+      <div class="tier reveal"><div class="tag">Start</div><h3>Marka pod klucz</h3><div class="price">od 9 500 zł <small>netto</small></div><div class="ab">+ od 600 zł/mc opieki</div><ul><li>Strona + analiza i napisanie treści</li><li>SEO techniczne</li><li>Google: Search Console, Analytics, Wizytówka</li><li>Firmowe maile + stopki</li></ul><a href="#kontakt" class="btn btn-ghost">Wybieram</a></div>
+      <div class="tier featured reveal"><div class="tag">Najczęściej wybierane</div><h3>Sprzedaż online</h3><div class="price">od 12 500 zł <small>netto</small></div><div class="ab">+ od 1 000 zł/mc opieki</div><ul><li>Wszystko z „Marka pod klucz"</li><li>Płatności online (Paynow)</li><li>Rezerwacje / booking</li><li>Formularze transakcyjne + lejek</li></ul><a href="#kontakt" class="btn btn-primary magnetic">Wybieram</a></div>
+      <div class="tier reveal"><div class="tag">Pro</div><h3>Sklep / e-commerce</h3><div class="price">od 18 000 zł <small>netto</small></div><div class="ab">+ od 1 500 zł/mc opieki</div><ul><li>Katalog + koszyk + płatności</li><li>Workflow zamówień</li><li>Integracje (magazyn, kurier)</li><li>Panel zarządzania</li></ul><a href="#kontakt" class="btn btn-ghost">Porozmawiajmy</a></div>
+    </div>
+  </div></section>
+
+  <section id="rodo"><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Dla gabinetów i przychodni</span><h2>Strona dla gabinetu, która nie naraża Cię na karę</h2><p>Wyciek danych pacjentów to kara do 20 mln euro lub 4% obrotu — i utrata zaufania, którego nie odkupisz. Budujemy strony medyczne zgodne z RODO od pierwszego dnia. Pełną, ciągłą zgodność prowadzi nasz osobny podmiot — moje-rodo.</p></div>
+    <ul class="feats" style="margin-bottom:40px">
+      <li class="reveal"><span class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><div class="ftxt"><b>Bezpieczne formularze</b><span>Dane pacjentów szyfrowane, bez wycieków do third-party.</span></div></li>
+      <li class="reveal"><span class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></svg></span><div class="ftxt"><b>Hosting w Unii Europejskiej</b><span>Dane nie wypływają poza UE — zgodność na poziomie infrastruktury.</span></div></li>
+      <li class="reveal"><span class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg></span><div class="ftxt"><b>Polityki i klauzule</b><span>Polityka prywatności, cookies, klauzule art. 13 — gotowe.</span></div></li>
+      <li class="reveal"><span class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span><div class="ftxt"><b>Dostępność WCAG 2.1</b><span>Czytelna dla każdego pacjenta i zgodna z wymaganiami.</span></div></li>
+    </ul>
+    <div class="center"><a href="/rodo-i-cyber" class="btn btn-primary magnetic">Więcej dla gabinetu →</a></div>
+  </div></section>
+
+  <section id="kontakt"><div class="wrap">
+    <div class="formcard reveal">
+      <h2>Powiedz, czego potrzebujesz</h2>
+      <p class="sub">Krótki formularz, konkretna odpowiedź w 24 godziny. Bez zobowiązań.</p>
+      <form name="kontakt" data-engine-form>
+        <div class="frow">
+          <div class="field"><label>Typ projektu</label><select name="typ"><option>Strona dla firmy</option><option>Strona + sprzedaż online</option><option>Sklep / e-commerce</option><option>RODO / gabinet medyczny</option><option>Oprogramowanie na miarę</option></select></div>
+          <div class="field"><label>Orientacyjny budżet</label><select name="budzet"><option>do 10 000 zł</option><option>10–15 000 zł</option><option>15–25 000 zł</option><option>powyżej 25 000 zł</option></select></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label>Termin</label><select name="termin"><option>Bez pośpiechu</option><option>1–2 miesiące</option><option>Pilne (do 4 tyg.)</option></select></div>
+          <div class="field"><label>E-mail</label><input type="email" name="email" placeholder="ty@firma.pl" required /></div>
+        </div>
+        <div class="field" style="margin-bottom:20px"><label>W dwóch zdaniach: o co chodzi</label><input name="opis" placeholder="np. gabinet stomatologiczny — strona + Wizytówka Google" /></div>
+        <button type="submit" class="btn btn-primary magnetic" style="width:100%;justify-content:center">Wyślij — odezwę się w 24h</button>
+        <p class="qnote">Pytamy o typ projektu i budżet, żeby od razu odpowiedzieć konkretem — a nie zgadywać. Jeśli nie jesteśmy dla Ciebie, powiemy wprost i polecimy kogoś.</p>
+      </form>
+    </div>
+  </div></section>
+</LajfLayout>
+
+<script>
+  // Hero — rotacja końcówki-benefitu; odpalana po każdym wejściu na stronę (View Transitions)
+  var lajfHeroTimer;
+  function lajfHero(){
+    var rot=document.getElementById('rot');
+    if(lajfHeroTimer){clearInterval(lajfHeroTimer);lajfHeroTimer=null;}
+    if(!rot) return;
+    var F=["przyciągają klientów","sprzedają","budują markę","robią robotę"];
+    var i=0;
+    lajfHeroTimer=setInterval(function(){
+      i=(i+1)%F.length;
+      rot.style.transform='translateY(105%)';rot.style.opacity=0;rot.style.filter='blur(8px)';
+      setTimeout(function(){rot.textContent=F[i];rot.style.transform='translateY(0)';rot.style.opacity=1;rot.style.filter='blur(0)';},360);
+    },2800);
+  }
+  document.addEventListener('astro:page-load', lajfHero);
+</script>

@@ -1,0 +1,118 @@
+---
+/**
+ * Sekcja: pasek liczb (szybki, twardy dowód wiarygodności). Subtelny — duże
+ * gradientowe cyfry + małe etykiety mono. Bez nagłówka, nie zaburza rytmu strony.
+ * Liczby odliczają od 0 przy wejściu w kadr (wyłączone przy reduced-motion).
+ */
+import Section from '../primitives/section.astro';
+import type { StatItem } from '../../lib/content';
+
+interface Props {
+  items: StatItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<Section tone="default">
+  <dl class="stats">
+    {
+      items.map((item) => (
+        <div class="stat">
+          <dt class="stat__value" data-count={item.value}>
+            {item.value}
+          </dt>
+          <dd class="stat__label">{item.label}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</Section>
+
+<style>
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 0;
+    padding: 2rem 0;
+    border-block: 1px solid var(--color-border);
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat__value {
+    font-size: clamp(2.6rem, 5.5vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .stat__label {
+    margin: 0.7rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-text-soft);
+  }
+  @media (min-width: 48rem) {
+    .stats {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .stat + .stat {
+      border-left: 1px solid var(--color-border);
+    }
+  }
+</style>
+
+<script>
+  // Count-up: liczby odliczają od 0 przy wejściu w kadr (easeOutExpo).
+  const nums = document.querySelectorAll<HTMLElement>('.stat__value[data-count]');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (nums.length && 'IntersectionObserver' in window && !reduceMotion) {
+    const easeOutExpo = (t: number) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
+
+    const parse = (raw: string) => ({
+      target: parseInt(raw.replace(/\D/g, ''), 10) || 0,
+      suffix: raw.replace(/[0-9\s]/g, ''),
+    });
+
+    nums.forEach((el) => {
+      const { suffix } = parse(el.dataset.count ?? '');
+      el.textContent = '0' + suffix;
+    });
+
+    const run = (el: HTMLElement) => {
+      const { target, suffix } = parse(el.dataset.count ?? '');
+      const duration = 1800;
+      let start: number | undefined;
+      const step = (ts: number) => {
+        if (start === undefined) start = ts;
+        const p = Math.min((ts - start) / duration, 1);
+        el.textContent = Math.floor(easeOutExpo(p) * target) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = target + suffix;
+      };
+      requestAnimationFrame(step);
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            run(entry.target as HTMLElement);
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    nums.forEach((el) => io.observe(el));
+  }
+</script>

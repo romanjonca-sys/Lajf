@@ -1,0 +1,41 @@
+---
+/**
+ * Routing data-driven + i18n: strony i kolejność bloków pochodzą z adaptera
+ * treści (per język), nie z kodu. Domyślny język bez prefiksu (pl → /),
+ * pozostałe z prefiksem (en → /en/). Dodanie strony nie rusza tego pliku.
+ */
+import BaseLayout from '../layouts/base-layout.astro';
+import BlockRenderer from '../components/block-renderer.astro';
+import { getAllPages } from '../lib/content';
+import { LOCALES, DEFAULT_LOCALE, localizedPath } from '../lib/i18n';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const locale of LOCALES) {
+    const pages = await getAllPages(locale);
+    for (const page of pages) {
+      if (!page.slug) continue; // home renderowany bespoke w src/pages/index.astro (kinetic 2C+)
+      const slug =
+        locale === DEFAULT_LOCALE
+          ? page.slug || undefined
+          : page.slug
+            ? `${locale}/${page.slug}`
+            : locale;
+      const alternates = LOCALES.map((l) => ({ locale: l, href: localizedPath(l, page.slug) }));
+      paths.push({ params: { slug }, props: { page, locale, alternates } });
+    }
+  }
+  return paths;
+}
+
+const { page, locale, alternates } = Astro.props;
+---
+
+<BaseLayout
+  title={page.seo.title}
+  description={page.seo.description}
+  locale={locale}
+  alternates={alternates}
+>
+  <BlockRenderer blocks={page.blocks} />
+</BaseLayout>

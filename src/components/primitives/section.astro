@@ -1,0 +1,42 @@
+---
+/**
+ * Primitive: wrapper sekcji. Ujednolica pionowy rytm, tło i reveal-on-scroll.
+ * Każda sekcja silnika opakowuje treść w ten primitive.
+ * tone="ink" = ciemna sekcja (kontrastowy akcent na jasnej skórze).
+ */
+type Tone = 'default' | 'muted' | 'ink';
+
+interface Props {
+  id?: string;
+  tone?: Tone;
+}
+
+const { id, tone = 'default' } = Astro.props;
+---
+
+<section id={id} class:list={['section', `section--${tone}`]} data-reveal>
+  <div class="container">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    position: relative;
+    padding-block: var(--space-section);
+    scroll-margin-top: 5rem;
+  }
+  .section--muted {
+    background: var(--gradient-surface);
+  }
+  .section--ink {
+    background: var(--color-ink);
+    color: var(--color-ink-soft);
+  }
+  .section--ink :is(h1, h2, h3) {
+    color: var(--color-on-ink);
+  }
+  .section--ink a {
+    color: var(--color-accent);
+  }
+</style>

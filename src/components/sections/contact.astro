@@ -1,0 +1,110 @@
+---
+/**
+ * Sekcja: kontakt. Formularz + klauzula RODO (treść z site.config) + dane firmy.
+ * Formularz oznaczony `data-engine-form` — przejmie go Cloudflare Function + Resend.
+ */
+import Section from '../primitives/section.astro';
+import Button from '../primitives/button.astro';
+import { siteConfig } from '../../../site.config';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+}
+
+const { title, subtitle } = Astro.props;
+const { company, privacy } = siteConfig;
+---
+
+<Section id="kontakt" tone="muted">
+  <div class="contact">
+    <div class="contact__intro">
+      <h2>{title}</h2>
+      {subtitle && <p class="contact__sub">{subtitle}</p>}
+      <ul class="contact__details">
+        <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
+        <li><a href={`tel:${company.phone.replace(/\s/g, '')}`}>{company.phone}</a></li>
+        {company.address && <li>{company.address}</li>}
+      </ul>
+    </div>
+
+    <form class="contact__form" name="contact" data-engine-form>
+      <input type="text" name="name" placeholder="Imię i nazwisko" required />
+      <input type="email" name="email" placeholder="E-mail" required />
+      <textarea name="message" rows="4" placeholder="W czym mogę pomóc?" required></textarea>
+
+      <p class="contact__notice">
+        Administrator danych: {privacy.controllerName}. Zasady przetwarzania w
+        <a href="/polityka-prywatnosci">Polityce prywatności</a>.
+      </p>
+
+      <Button href="#" label="Wyślij wiadomość" tone="primary" />
+    </form>
+  </div>
+</Section>
+
+<style>
+  .contact {
+    display: grid;
+    gap: var(--space-gap);
+  }
+  .contact__sub {
+    color: var(--color-text-soft);
+    margin-top: 0.75rem;
+  }
+  .contact__details {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+    color: var(--color-text-soft);
+    display: grid;
+    gap: 0.35rem;
+  }
+  .contact__details a {
+    color: var(--color-brand);
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.2s ease;
+  }
+  .contact__details a:hover {
+    opacity: 0.75;
+  }
+  .contact__form {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1.75rem;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .contact__form input,
+  .contact__form textarea {
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font: inherit;
+    background: var(--color-bg);
+    color: var(--color-text);
+  }
+  .contact__form input::placeholder,
+  .contact__form textarea::placeholder {
+    color: var(--color-text-soft);
+  }
+  .contact__form input:focus,
+  .contact__form textarea:focus {
+    outline: none;
+    border-color: var(--color-brand);
+  }
+  .contact__notice {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--color-text-soft);
+    line-height: 1.45;
+  }
+  @media (min-width: 48rem) {
+    .contact {
+      grid-template-columns: 0.9fr 1.1fr;
+    }
+  }
+</style>

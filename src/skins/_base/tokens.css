@@ -1,0 +1,71 @@
+/**
+ * SKÓRA — _base. Jedyne miejsce z konkretnymi wartościami marki.
+ * Klon klienta = kopia tego pliku do skins/<klient>/ i podmiana wartości.
+ * Silnik i sekcje czytają WYŁĄCZNIE var(--...). Nigdy wartości wprost.
+ */
+:root {
+  /* Kolory marki */
+  --color-brand: #2969f1;
+  --color-brand-strong: #1b4fc4;
+  --color-accent: #14b8a6;
+
+  /* Neutralne (jasny editorial) */
+  --color-bg: #ffffff;
+  --color-bg-muted: #f5f7fb;
+  --color-text: #15233b;
+  --color-text-soft: #51607a;
+  --color-border: #e7ecf4;
+  --color-on-brand: #ffffff;
+
+  /* Gradienty — głębia i nowoczesność (stonujesz per klient tutaj) */
+  --gradient-brand: linear-gradient(135deg, #3b78ff 0%, #1b4fc4 100%);
+  --gradient-surface: linear-gradient(180deg, #ffffff 0%, #eef2fb 100%);
+  --gradient-glow: radial-gradient(
+    60% 60% at 70% 30%,
+    rgba(41, 105, 241, 0.18) 0%,
+    rgba(41, 105, 241, 0) 70%
+  );
+
+  /* Typografia (Inter Variable ładowany w base-layout przez @fontsource-variable) */
+  --font-heading: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --text-hero: clamp(2.2rem, 5vw, 3.6rem);
+  --text-h2: clamp(1.6rem, 3vw, 2.2rem);
+  --text-body: 1.05rem;
+  --leading-tight: 1.15;
+  --leading-body: 1.6;
+
+  /* Przestrzeń / rytm */
+  --space-section: clamp(3.5rem, 8vw, 6rem);
+  --space-gap: 1.5rem;
+  --container-max: 72rem;
+  --container-pad: 1.25rem;
+
+  /* Kształt */
+  --radius: 18px;
+  --radius-sm: 10px;
+
+  /* Cienie — warstwowe i miękkie (głębia 3D). Skala sm -> lg + glow pod CTA */
+  --shadow-sm: 0 2px 6px -2px rgba(21, 35, 59, 0.1),
+    0 4px 12px -4px rgba(21, 35, 59, 0.06);
+  --shadow: 0 10px 24px -12px rgba(21, 35, 59, 0.2),
+    0 18px 48px -24px rgba(21, 35, 59, 0.14);
+  --shadow-lg: 0 24px 48px -16px rgba(21, 35, 59, 0.26),
+    0 40px 80px -32px rgba(21, 35, 59, 0.18);
+  --shadow-brand: 0 14px 30px -10px rgba(41, 105, 241, 0.45);
+
+  /* Efekty silnika — sterowalne per skóra (jasny _base: wyłączone/neutralne) */
+  --heading-shadow: none;          /* ciemne skóry: 0 2px 16px rgba(0,0,0,.3) */
+  --grain-opacity: 0;              /* ciemne/premium skóry: ~0.04 */
+  --color-error: #d92d20;          /* status błędu formularza */
+
+  /* Ciemna sekcja (tone="ink") — kontrastowy akcent na jasnej stronie */
+  --color-ink: #0f1729;
+  --color-ink-soft: #aeb9cc;
+  --color-on-ink: #ffffff;
+
+  /* Powierzchnie i detale używane przez sekcje (stats/testimonials/author) */
+  --color-bg-elevated: #ffffff;    /* karta uniesiona nad tłem muted */
+  --highlight-top: none;           /* ciemne skóry: inset 0 1px 0 rgba(255,255,255,.07) */
+  --font-mono: ui-monospace, 'SFMono-Regular', 'Menlo', monospace;
+}

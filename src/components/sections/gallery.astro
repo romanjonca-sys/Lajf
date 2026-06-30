@@ -1,0 +1,190 @@
+---
+/**
+ * Sekcja: galeria "Kadry". Wizualny dowód — scena, studio, fortepian.
+ * Bez podpisów; klik w zdjęcie otwiera powiększenie (lightbox).
+ */
+import Section from '../primitives/section.astro';
+import type { GalleryItem } from '../../lib/content';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  items: GalleryItem[];
+  anchor?: string;
+}
+
+const { title, subtitle, items, anchor } = Astro.props;
+---
+
+<Section id={anchor}>
+  <header class="gallery__head">
+    <h2>{title}</h2>
+    {subtitle && <p class="gallery__subtitle">{subtitle}</p>}
+  </header>
+  <div class="gallery__grid">
+    {
+      items.map((item) => (
+        <button
+          type="button"
+          class="gallery__item"
+          data-full={item.imageUrl}
+          aria-label="Powiększ zdjęcie"
+        >
+          <img src={item.imageUrl} alt={item.caption ?? title} loading="lazy" />
+        </button>
+      ))
+    }
+  </div>
+</Section>
+
+<div class="lightbox" id="gallery-lightbox" hidden>
+  <button class="lightbox__close" type="button" aria-label="Zamknij">&times;</button>
+  <img class="lightbox__img" id="gallery-lightbox-img" src="" alt="" />
+</div>
+
+<style>
+  .gallery__head {
+    margin-bottom: var(--space-gap);
+  }
+  .gallery__head h2 {
+    font-size: var(--text-h2);
+    font-weight: 800;
+    letter-spacing: -0.015em;
+  }
+  .gallery__subtitle {
+    color: var(--color-text-soft);
+    font-size: 1.1rem;
+    margin-top: 0.75rem;
+    max-width: 54ch;
+  }
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-gap);
+  }
+  .gallery__item {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: none;
+    cursor: zoom-in;
+    overflow: hidden;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    aspect-ratio: 4 / 3;
+    background: var(--color-bg-muted);
+    transition: transform 0.35s ease;
+  }
+  .gallery__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .gallery__item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid transparent;
+    border-radius: var(--radius);
+    transition: border-color 0.35s ease;
+    pointer-events: none;
+  }
+  .gallery__item:hover {
+    transform: translateY(-4px);
+  }
+  .gallery__item:hover img {
+    transform: scale(1.06);
+  }
+  .gallery__item:hover::after {
+    border-color: var(--color-brand);
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vw;
+    background: rgba(8, 12, 24, 0.92);
+    backdrop-filter: blur(6px);
+    cursor: zoom-out;
+  }
+  .lightbox[hidden] {
+    display: none;
+  }
+  .lightbox__img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    cursor: default;
+  }
+  .lightbox__close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .lightbox__close:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  @media (min-width: 48rem) {
+    .gallery__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gallery__item,
+    .gallery__item img {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const lightbox = document.getElementById('gallery-lightbox') as HTMLElement | null;
+  const lightboxImg = document.getElementById('gallery-lightbox-img') as HTMLImageElement | null;
+
+  if (lightbox && lightboxImg) {
+    const open = (src: string, alt: string) => {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+      lightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+    };
+    const close = () => {
+      lightbox.hidden = true;
+      lightboxImg.src = '';
+      document.body.style.overflow = '';
+    };
+
+    document.querySelectorAll<HTMLButtonElement>('.gallery__item').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const src = btn.dataset.full;
+        const img = btn.querySelector('img');
+        if (src) open(src, img?.alt ?? '');
+      });
+    });
+
+    lightbox.addEventListener('click', (event) => {
+      if (event.target !== lightboxImg) close();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !lightbox.hidden) close();
+    });
+  }
+</script>

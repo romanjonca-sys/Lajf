@@ -1,0 +1,142 @@
+---
+/**
+ * Baner zgody na cookies (UODO/RODO). Pokazuje się tylko, gdy użytkownik
+ * jeszcze nie zdecydował (wybór w localStorage). Cookies niezbędne działają
+ * zawsze; analityka/marketing dopiero po akceptacji.
+ * Inne skrypty gatują się przez window.lajfConsent lub event 'lajf:consent'.
+ * Teksty per język z UI[locale].
+ */
+import { DEFAULT_LOCALE, UI, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = DEFAULT_LOCALE } = Astro.props;
+const ui = UI[locale];
+---
+
+<div
+  id="cookie-consent"
+  class="cc"
+  role="dialog"
+  aria-label="Cookies"
+  aria-live="polite"
+  hidden
+>
+  <div class="container cc__inner">
+    <p class="cc__text">
+      {ui.cookieText} {ui.cookieDetails}
+      <a href={ui.privacyHref}>{ui.privacyLabel}</a>.
+    </p>
+    <div class="cc__actions">
+      <button type="button" class="cc__btn cc__btn--ghost" data-consent="essential">
+        {ui.cookieEssential}
+      </button>
+      <button type="button" class="cc__btn cc__btn--solid" data-consent="all">
+        {ui.cookieAccept}
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cc {
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 9998;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+  }
+  .cc__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-block: 1rem;
+  }
+  .cc__text {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--color-text-soft);
+    line-height: var(--leading-body);
+  }
+  .cc__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .cc__btn {
+    padding: 0.6rem 1.1rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.92rem;
+    cursor: pointer;
+    border: 1px solid var(--color-border);
+  }
+  .cc__btn--ghost {
+    background: transparent;
+    color: var(--color-text);
+  }
+  .cc__btn--solid {
+    background: var(--gradient-brand);
+    color: var(--color-on-brand);
+    border-color: transparent;
+    box-shadow: var(--shadow-brand);
+  }
+  @media (min-width: 48rem) {
+    .cc {
+      left: auto;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      max-width: 32rem;
+    }
+    .cc__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cc__actions {
+      flex-shrink: 0;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var KEY = 'lajf-consent';
+    var bar = document.getElementById('cookie-consent');
+    if (!bar) return;
+
+    function apply(value) {
+      window.lajfConsent = value;
+      document.dispatchEvent(new CustomEvent('lajf:consent', { detail: value }));
+    }
+
+    var saved = null;
+    try {
+      saved = localStorage.getItem(KEY);
+    } catch (e) {
+      saved = null;
+    }
+    if (saved) {
+      apply(saved);
+      return;
+    }
+
+    bar.hidden = false;
+    bar.querySelectorAll('[data-consent]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var value = btn.getAttribute('data-consent');
+        try {
+          localStorage.setItem(KEY, value);
+        } catch (e) {}
+        bar.hidden = true;
+        apply(value);
+      });
+    });
+  })();
+</script>

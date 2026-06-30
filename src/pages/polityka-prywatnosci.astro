@@ -1,0 +1,133 @@
+---
+/**
+ * Polityka prywatności (RODO). Treść bazowa — dane administratora z site.config.
+ * Strona zbiera dane przez formularz kontaktowy + lead magnet.
+ */
+import LajfLayout from '../layouts/lajf-layout.astro';
+import { siteConfig } from '../../site.config';
+
+const { brandName, company } = siteConfig;
+const updated = '20 czerwca 2026';
+const addressLine = [company.address, company.taxId].filter(Boolean).join(', ');
+---
+
+<LajfLayout
+  title={`Polityka prywatności | ${brandName}`}
+  description={`Polityka prywatności serwisu ${brandName} — zasady przetwarzania danych osobowych zgodnie z RODO.`}
+>
+  <article class="legal container">
+    <h1>Polityka prywatności</h1>
+    <p class="legal__lead">
+      Niniejsza polityka opisuje, jak przetwarzamy dane osobowe osób korzystających z serwisu
+      <strong>{brandName}</strong>, zgodnie z RODO (rozporządzenie 2016/679).
+    </p>
+
+    <h2>1. Administrator danych</h2>
+    <p>
+      Administratorem danych jest <strong>{company.legalName}</strong>{addressLine && `, ${addressLine}`}.
+      Kontakt w sprawach danych:
+      <a href={`mailto:${company.email}`}>{company.email}</a>, tel. {company.phone}.
+    </p>
+
+    <h2>2. Jakie dane zbieramy</h2>
+    <p>
+      Przez formularz kontaktowy oraz formularz pobrania próbki (lead magnet) zbieramy dane,
+      które podajesz dobrowolnie: <strong>imię</strong> (opcjonalnie), <strong>adres e-mail</strong>
+      oraz treść wiadomości. Nie zbieramy danych szczególnych kategorii (art. 9 RODO).
+    </p>
+
+    <h2>3. Cel i podstawa prawna</h2>
+    <ul>
+      <li>
+        odpowiedź na zapytanie i kontakt w sprawie usługi — <strong>art. 6 ust. 1 lit. b RODO</strong>
+        (czynności przed zawarciem umowy) oraz <strong>lit. f</strong> (uzasadniony interes:
+        prowadzenie korespondencji);
+      </li>
+      <li>
+        wysyłka zamówionej próbki/materiału na podany e-mail — na podstawie Twojej prośby
+        (art. 6 ust. 1 lit. b/f RODO).
+      </li>
+    </ul>
+
+    <h2>4. Okres przechowywania</h2>
+    <p>
+      Dane przechowujemy przez czas niezbędny do obsługi zapytania i prowadzenia korespondencji,
+      a następnie przez okres przedawnienia ewentualnych roszczeń. Dane usuwamy, gdy przestają być
+      potrzebne.
+    </p>
+
+    <h2>5. Odbiorcy danych</h2>
+    <p>
+      Dane mogą być powierzone podmiotom przetwarzającym, które świadczą nam usługi techniczne:
+      dostawca hostingu, poczty oraz wysyłki wiadomości e-mail. Podmioty te działają na podstawie
+      umów powierzenia i stosują odpowiednie zabezpieczenia, w tym mechanizmy legalizujące ewentualny
+      transfer poza EOG (standardowe klauzule umowne / DPF).
+    </p>
+
+    <h2>6. Twoje prawa</h2>
+    <p>Masz prawo do:</p>
+    <ul>
+      <li>dostępu do danych oraz otrzymania ich kopii,</li>
+      <li>sprostowania, usunięcia lub ograniczenia przetwarzania,</li>
+      <li>wniesienia sprzeciwu wobec przetwarzania opartego na uzasadnionym interesie,</li>
+      <li>przenoszenia danych,</li>
+      <li>wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (uodo.gov.pl).</li>
+    </ul>
+
+    <h2>7. Dobrowolność i automatyzacja</h2>
+    <p>
+      Podanie danych jest dobrowolne, ale niezbędne do udzielenia odpowiedzi na zapytanie.
+      Nie stosujemy profilowania ani zautomatyzowanego podejmowania decyzji.
+    </p>
+
+    <h2>8. Pliki cookie</h2>
+    <p>
+      Serwis nie wykorzystuje plików cookie do celów marketingowych ani analitycznych.
+      Używane mogą być wyłącznie pliki techniczne niezbędne do działania strony.
+    </p>
+
+    <p class="legal__meta">Ostatnia aktualizacja: {updated}.</p>
+    <p><a href="/">← Powrót na stronę główną</a></p>
+  </article>
+</LajfLayout>
+
+<style>
+  .legal {
+    padding-block: 4rem 5rem;
+    max-width: 52rem;
+  }
+  .legal h1 {
+    font-size: var(--text-h1, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .legal__lead {
+    color: var(--color-text-soft);
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+  }
+  .legal h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 2.2rem 0 0.75rem;
+  }
+  .legal p,
+  .legal li {
+    line-height: 1.7;
+    color: var(--color-text);
+  }
+  .legal ul {
+    padding-left: 1.25rem;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .legal a {
+    color: var(--color-brand);
+  }
+  .legal__meta {
+    margin-top: 2.5rem;
+    font-size: 0.9rem;
+    color: var(--color-text-soft);
+  }
+</style>

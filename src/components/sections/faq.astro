@@ -1,0 +1,144 @@
+---
+/**
+ * Sekcja: FAQ. Dostępny akordeon na natywnych <details>/<summary> (bez JS,
+ * obsługa klawiatury z pudełka) + structured data FAQPage (rich snippets / AI).
+ */
+import Section from '../primitives/section.astro';
+import type { FaqItem } from '../../lib/content';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  items: FaqItem[];
+  anchor?: string;
+  kicker?: string;
+}
+
+const { title, subtitle, items, anchor, kicker } = Astro.props;
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer },
+  })),
+};
+---
+
+<Section id={anchor ?? 'faq'} tone="default">
+  <header class="faq-head">
+    {kicker && <span class="faq-head__kicker">{kicker}</span>}
+    <h2>{title}</h2>
+    {subtitle && <p class="faq-head__sub">{subtitle}</p>}
+  </header>
+
+  <div class="faq">
+    {
+      items.map((item) => (
+        <details class="faq__item">
+          <summary class="faq__q">
+            <span>{item.question}</span>
+            <span class="faq__icon" aria-hidden="true" />
+          </summary>
+          <div class="faq__a">
+            <p>{item.answer}</p>
+          </div>
+        </details>
+      ))
+    }
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Section>
+
+<style>
+  .faq-head {
+    max-width: 56ch;
+    margin-bottom: 2.5rem;
+  }
+  .faq-head__kicker {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-brand);
+    margin-bottom: 0.9rem;
+  }
+  .faq-head h2 {
+    font-size: var(--text-h2);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  .faq-head__sub {
+    color: var(--color-text-soft);
+    font-size: 1.12rem;
+    margin-top: 0.85rem;
+  }
+
+  .faq {
+    display: grid;
+    gap: 0.75rem;
+    max-width: 52rem;
+  }
+  .faq__item {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-elevated);
+    box-shadow: var(--shadow-sm);
+  }
+  .faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.3rem;
+    font-weight: 600;
+    color: var(--color-text);
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq__q::-webkit-details-marker {
+    display: none;
+  }
+  .faq__icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+  }
+  .faq__icon::before,
+  .faq__icon::after {
+    content: '';
+    position: absolute;
+    background: var(--color-brand);
+    transition: transform 0.2s ease;
+  }
+  .faq__icon::before {
+    top: 6px;
+    left: 0;
+    width: 14px;
+    height: 2px;
+  }
+  .faq__icon::after {
+    top: 0;
+    left: 6px;
+    width: 2px;
+    height: 14px;
+  }
+  .faq__item[open] .faq__icon::after {
+    transform: scaleY(0);
+  }
+  .faq__a {
+    padding: 0 1.3rem 1.2rem;
+    color: var(--color-text-soft);
+    line-height: var(--leading-body);
+  }
+  .faq__a p {
+    margin: 0;
+  }
+</style>

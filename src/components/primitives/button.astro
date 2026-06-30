@@ -1,0 +1,44 @@
+---
+/**
+ * Primitive: button/link. Jedyne źródło stylu przycisku w całym szablonie.
+ * Wygląd wyłącznie przez tokeny — zmiana globalna idzie tutaj.
+ */
+type Tone = 'primary' | 'ghost';
+
+interface Props {
+  href: string;
+  label: string;
+  tone?: Tone;
+}
+
+const { href, label, tone = 'primary' } = Astro.props;
+---
+
+<a class:list={['btn', `btn--${tone}`]} href={href}>{label}</a>
+
+<style>
+  .btn {
+    display: inline-block;
+    padding: 0.85rem 1.6rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.12s ease, background 0.12s ease;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+  .btn--primary {
+    background: var(--gradient-brand);
+    color: var(--color-on-brand);
+    box-shadow: var(--shadow-brand);
+  }
+  .btn--primary:hover {
+    filter: brightness(1.06);
+  }
+  .btn--ghost {
+    background: transparent;
+    color: var(--color-brand);
+    border: 1px solid var(--color-border);
+  }
+</style>

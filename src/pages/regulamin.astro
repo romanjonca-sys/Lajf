@@ -1,0 +1,126 @@
+---
+/**
+ * Regulamin świadczenia usług. Treść bazowa — dane usługodawcy z site.config.
+ * Zakres usług dostosuj per klient (sekcja §2).
+ */
+import LajfLayout from '../layouts/lajf-layout.astro';
+import { siteConfig } from '../../site.config';
+
+const { brandName, company } = siteConfig;
+const updated = '20 czerwca 2026';
+const addressLine = [company.address, company.taxId].filter(Boolean).join(', ');
+---
+
+<LajfLayout
+  title={`Regulamin | ${brandName}`}
+  description={`Regulamin świadczenia usług w serwisie ${brandName}.`}
+>
+  <article class="legal container">
+    <h1>Regulamin świadczenia usług</h1>
+    <p class="legal__lead">
+      Regulamin określa zasady świadczenia usług za pośrednictwem serwisu
+      <strong>{brandName}</strong>.
+    </p>
+
+    <h2>§1. Postanowienia ogólne</h2>
+    <p>
+      Usługodawcą jest <strong>{company.legalName}</strong>{addressLine && `, ${addressLine}`}
+      (dalej: „Wykonawca"). Kontakt:
+      <a href={`mailto:${company.email}`}>{company.email}</a>, tel. {company.phone}.
+    </p>
+
+    <h2>§2. Zakres usług</h2>
+    <p>
+      Wykonawca świadczy usługi zgodnie z zakresem i ofertą przedstawioną w serwisie. Szczegółowy
+      zakres każdego zlecenia ustalany jest indywidualnie z Klientem przed rozpoczęciem prac.
+    </p>
+
+    <h2>§3. Zawarcie umowy i realizacja</h2>
+    <p>
+      Kontakt przez formularz nie jest zamówieniem. Współpraca rozpoczyna się po ustaleniu zakresu,
+      ceny i terminu (w formie dokumentowej — e-mail) oraz akceptacji wyceny przez Klienta. Zakres,
+      cena i termin są ustalane indywidualnie dla każdego zlecenia.
+    </p>
+
+    <h2>§4. Wynagrodzenie i płatności</h2>
+    <p>
+      Wynagrodzenie ustalane jest indywidualnie i potwierdzane przed rozpoczęciem prac. Płatność
+      następuje na podstawie faktury, w terminie i na zasadach ustalonych przy zamówieniu (możliwa
+      zaliczka). Ceny prezentowane w serwisie („od…") mają charakter orientacyjny.
+    </p>
+
+    <h2>§5. Prawa autorskie</h2>
+    <p>
+      Autorskie prawa osobiste do utworów (autorstwo) są niezbywalne i pozostają przy twórcy.
+      Zakres przeniesienia autorskich praw majątkowych lub udzielenia licencji do utworu ustalany
+      jest indywidualnie w umowie/zamówieniu i następuje po zapłacie pełnego wynagrodzenia, o ile
+      strony nie ustalą inaczej.
+    </p>
+
+    <h2>§6. Reklamacje</h2>
+    <p>
+      Reklamacje można składać na adres <a href={`mailto:${company.email}`}>{company.email}</a>.
+      Wykonawca rozpatruje reklamację w terminie 14 dni od jej otrzymania, informując Klienta o
+      sposobie rozpatrzenia.
+    </p>
+
+    <h2>§7. Prawo odstąpienia (konsument)</h2>
+    <p>
+      Konsumentowi co do zasady przysługuje prawo odstąpienia od umowy zawartej na odległość w
+      terminie 14 dni. Prawo to <strong>nie przysługuje</strong> m.in. w odniesieniu do usług
+      tworzonych według indywidualnej specyfikacji Klienta oraz treści cyfrowych dostarczonych za
+      wyraźną zgodą Klienta przed upływem terminu odstąpienia (art. 38 ustawy o prawach konsumenta).
+    </p>
+
+    <h2>§8. Postanowienia końcowe</h2>
+    <p>
+      W sprawach nieuregulowanych stosuje się przepisy prawa polskiego, w tym Kodeksu cywilnego oraz
+      ustawy o prawie autorskim i prawach pokrewnych. Zasady przetwarzania danych opisuje
+      <a href="/polityka-prywatnosci">Polityka prywatności</a>.
+    </p>
+
+    <p class="legal__meta">Ostatnia aktualizacja: {updated}.</p>
+    <p><a href="/">← Powrót na stronę główną</a></p>
+  </article>
+</LajfLayout>
+
+<style>
+  .legal {
+    padding-block: 4rem 5rem;
+    max-width: 52rem;
+  }
+  .legal h1 {
+    font-size: var(--text-h1, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .legal__lead {
+    color: var(--color-text-soft);
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+  }
+  .legal h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 2.2rem 0 0.75rem;
+  }
+  .legal p,
+  .legal li {
+    line-height: 1.7;
+    color: var(--color-text);
+  }
+  .legal ul {
+    padding-left: 1.25rem;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .legal a {
+    color: var(--color-brand);
+  }
+  .legal__meta {
+    margin-top: 2.5rem;
+    font-size: 0.9rem;
+    color: var(--color-text-soft);
+  }
+</style>

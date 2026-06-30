@@ -1,0 +1,65 @@
+---
+/**
+ * Primitive: card. Wspólny atom dla usług i portfolio.
+ * Klikalna, gdy podano `href`. Styl wyłącznie przez tokeny.
+ */
+interface Props {
+  title: string;
+  body?: string;
+  eyebrow?: string;
+  imageUrl?: string;
+  href?: string;
+}
+
+const { title, body, eyebrow, imageUrl, href } = Astro.props;
+const CardTag = href ? 'a' : 'article';
+---
+
+<CardTag class="card" href={href}>
+  {imageUrl && <img class="card__media" src={imageUrl} alt="" loading="lazy" />}
+  <div class="card__body">
+    {eyebrow && <span class="card__eyebrow">{eyebrow}</span>}
+    <h3 class="card__title">{title}</h3>
+    {body && <p class="card__text">{body}</p>}
+  </div>
+</CardTag>
+
+<style>
+  .card {
+    display: block;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.16s ease, box-shadow 0.16s ease;
+  }
+  a.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+  }
+  .card__media {
+    width: 100%;
+    aspect-ratio: 13 / 9;
+    object-fit: cover;
+  }
+  .card__body {
+    padding: 1.5rem;
+  }
+  .card__eyebrow {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-brand);
+    margin-bottom: 0.5rem;
+  }
+  .card__title {
+    font-size: 1.25rem;
+  }
+  .card__text {
+    color: var(--color-text-soft);
+    margin-top: 0.5rem;
+  }
+</style>

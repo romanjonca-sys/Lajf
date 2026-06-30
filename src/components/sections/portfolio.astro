@@ -1,0 +1,57 @@
+---
+/**
+ * Sekcja: portfolio. Siatka klikalnych kart z miniaturą (`items`).
+ */
+import Section from '../primitives/section.astro';
+import Card from '../primitives/card.astro';
+import type { PortfolioItem } from '../../lib/content';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  items: PortfolioItem[];
+}
+
+const { title, subtitle, items } = Astro.props;
+---
+
+<Section id="realizacje" tone="muted">
+  <header class="section-head">
+    <h2>{title}</h2>
+    {subtitle && <p class="section-head__sub">{subtitle}</p>}
+  </header>
+  <div class="grid">
+    {
+      items.map((item) => (
+        <Card
+          title={item.title}
+          eyebrow={item.tag}
+          imageUrl={item.imageUrl}
+          href={item.href}
+        />
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  .section-head {
+    max-width: 46ch;
+    margin-bottom: 2.5rem;
+  }
+  .section-head__sub {
+    color: var(--color-text-soft);
+    font-size: 1.1rem;
+    margin-top: 0.75rem;
+  }
+  .grid {
+    display: grid;
+    gap: var(--space-gap);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 48rem) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

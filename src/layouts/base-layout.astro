@@ -1,0 +1,306 @@
+---
+/**
+ * Layout bazowy: <head>, SEO, wpięcie skóry i silnika.
+ * Import skóry to jedyne miejsce sterujące wyglądem całej strony.
+ */
+import '@fontsource-variable/inter';
+import '../skins/_base/tokens.css';
+import '../styles/engine.css';
+import { siteConfig } from '../../site.config';
+import SiteHeader from '../components/site-header.astro';
+import CookieConsent from '../components/cookie-consent.astro';
+import { DEFAULT_LOCALE, OG_LOCALE, UI, type Locale } from '../lib/i18n';
+import type { NavLink } from '../../site.config';
+
+interface Alternate {
+  locale: Locale;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  locale?: Locale;
+  alternates?: Alternate[];
+}
+
+const { title, description, locale = DEFAULT_LOCALE, alternates = [] } = Astro.props;
+const year = new Date().getFullYear();
+const { socials, credit, seo, brandName, company, nav, headerCta, logoUrl } = siteConfig;
+const ui = UI[locale];
+const navLinks: NavLink[] = nav[locale] ?? [];
+const cta: NavLink = (headerCta && headerCta[locale]) ?? { label: 'Kontakt', href: '#kontakt' };
+const siteUrl = Astro.site ?? new URL('https://example.com');
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImageUrl = new URL(seo.ogImage, siteUrl).href;
+const hreflangs = alternates.map((alt) => ({
+  locale: alt.locale,
+  href: new URL(alt.href, siteUrl).href,
+}));
+const sameAs = [socials.instagram, socials.facebook].filter(Boolean);
+// Person, gdy podano stanowisko (wizytówka osoby); inaczej Organization.
+const structuredData = seo.jobTitle
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: company.legalName,
+      alternateName: brandName,
+      url: siteUrl.href,
+      image: ogImageUrl,
+      jobTitle: seo.jobTitle,
+      description,
+      email: company.email,
+      telephone: company.phone,
+      sameAs,
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: brandName,
+      legalName: company.legalName,
+      url: siteUrl.href,
+      logo: ogImageUrl,
+      description,
+      email: company.email,
+      telephone: company.phone,
+      sameAs,
+    };
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#2969f1" />
+    {seo.googleVerification && (
+      <meta name="google-site-verification" content={seo.googleVerification} />
+    )}
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {hreflangs.map((alt) => (
+      <link rel="alternate" hreflang={alt.locale} href={alt.href} />
+    ))}
+    {hreflangs.length > 0 && (
+      <link
+        rel="alternate"
+        hreflang="x-default"
+        href={hreflangs.find((a) => a.locale === DEFAULT_LOCALE)?.href ?? hreflangs[0].href}
+      />
+    )}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={brandName} />
+    <meta property="og:locale" content={OG_LOCALE[locale]} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <slot name="head" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">{ui.skip}</a>
+    <SiteHeader
+      brandName={brandName}
+      logoUrl={logoUrl}
+      nav={navLinks}
+      cta={cta}
+      locale={locale}
+      alternates={alternates}
+    />
+    <div class="grain" aria-hidden="true"></div>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <p class="site-footer__copy">© {year} {brandName}</p>
+        <nav class="site-footer__links" aria-label="Stopka">
+          {socials.instagram && (
+            <a
+              href={socials.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="site-footer__icon"
+              aria-label="Instagram"
+            >
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 2.16c-3.14 0-3.51.01-4.75.07-.9.04-1.39.19-1.71.32-.43.17-.74.37-1.06.69-.32.32-.52.63-.69 1.06-.13.32-.28.81-.32 1.71-.06 1.24-.07 1.61-.07 4.75s.01 3.51.07 4.75c.04.9.19 1.39.32 1.71.17.43.37.74.69 1.06.32.32.63.52 1.06.69.32.13.81.28 1.71.32 1.24.06 1.61.07 4.75.07s3.51-.01 4.75-.07c.9-.04 1.39-.19 1.71-.32.43-.17.74-.37 1.06-.69.32-.32.52-.63.69-1.06.13-.32.28-.81.32-1.71.06-1.24.07-1.61.07-4.75s-.01-3.51-.07-4.75c-.04-.9-.19-1.39-.32-1.71-.17-.43-.37-.74-.69-1.06-.32-.32-.63-.52-1.06-.69-.32-.13-.81-.28-1.71-.32-1.24-.06-1.61-.07-4.75-.07zm0 3.68a4.16 4.16 0 110 8.32 4.16 4.16 0 010-8.32zm0 6.86a2.7 2.7 0 100-5.4 2.7 2.7 0 000 5.4zm5.3-7.1a.97.97 0 11-1.94 0 .97.97 0 011.94 0z" />
+              </svg>
+            </a>
+          )}
+          {socials.facebook && (
+            <a
+              href={socials.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="site-footer__icon"
+              aria-label="Facebook"
+            >
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                <path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6.03 4.39 11.02 10.13 11.93v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07z" />
+              </svg>
+            </a>
+          )}
+          <a href={ui.privacyHref}>{ui.privacyLabel}</a>
+          <a href={ui.termsHref}>{ui.termsLabel}</a>
+        </nav>
+        {credit && (
+          <p class="site-footer__credit">
+            {ui.realizedBy}: <a href={credit.url} target="_blank" rel="noopener noreferrer">{credit.name}</a>
+          </p>
+        )}
+      </div>
+    </footer>
+
+    <style>
+      .site-footer {
+        padding-block: 2.5rem;
+        border-top: 1px solid var(--color-border);
+        color: var(--color-text-soft);
+        font-size: 0.95rem;
+      }
+      .site-footer__inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem 1.5rem;
+      }
+      .site-footer__copy {
+        margin: 0;
+        font-weight: 600;
+      }
+      .site-footer__links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 1.25rem;
+      }
+      .site-footer__links a {
+        color: var(--color-text-soft);
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+      .site-footer__links a:hover {
+        color: var(--color-brand);
+      }
+      .site-footer__icon {
+        display: inline-flex;
+        align-items: center;
+      }
+      .site-footer__credit {
+        margin: 0;
+        font-size: 0.85rem;
+        opacity: 0.75;
+        flex-basis: 100%;
+      }
+      .site-footer__credit a {
+        color: var(--color-text-soft);
+        font-weight: 600;
+      }
+      .site-footer__credit a:hover {
+        color: var(--color-brand);
+      }
+    </style>
+    <script is:inline>
+      document.querySelectorAll('form[data-engine-form]').forEach((form) => {
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const btn = form.querySelector('.btn');
+          const original = btn ? btn.textContent : '';
+          if (btn) {
+            btn.setAttribute('disabled', 'true');
+            btn.textContent = 'Wysyłam…';
+          }
+          const payload = Object.fromEntries(new FormData(form).entries());
+          payload.form = form.getAttribute('name') || 'contact';
+          try {
+            const res = await fetch('/api/contact', {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              body: JSON.stringify(payload),
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error((data.error && data.error.message) || 'Błąd wysyłki.');
+            form.innerHTML =
+              '<p class="form-status form-status--ok">Dzięki! Odezwę się najszybciej, jak się da.</p>';
+          } catch (err) {
+            if (btn) {
+              btn.removeAttribute('disabled');
+              btn.textContent = original;
+            }
+            let note = form.querySelector('.form-status--err');
+            if (!note) {
+              note = document.createElement('p');
+              note.className = 'form-status form-status--err';
+              form.appendChild(note);
+            }
+            note.textContent = err && err.message ? err.message : 'Nie udało się wysłać.';
+          }
+        });
+      });
+    </script>
+    <script is:inline>
+      const els = document.querySelectorAll('.section[data-reveal]');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -10% 0px' }
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
+    <script>
+      import Lenis from 'lenis';
+
+      const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Momentum scroll tylko na desktopie wskaźnikowym i bez reduced-motion.
+      if (!coarsePointer && !reduceMotion) {
+        const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+
+        const raf = (time: number) => {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        };
+        requestAnimationFrame(raf);
+
+        // Kotwice: płynny zjazd przez Lenis zamiast natywnego skoku.
+        document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
+          link.addEventListener('click', (event) => {
+            const href = link.getAttribute('href');
+            if (!href || href === '#') return;
+            const target = document.querySelector(href);
+            if (target) {
+              event.preventDefault();
+              lenis.scrollTo(target as HTMLElement);
+            }
+          });
+        });
+      }
+    </script>
+    <CookieConsent locale={locale} />
+  </body>
+</html>

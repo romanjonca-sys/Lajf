@@ -1,0 +1,156 @@
+---
+/**
+ * Layout "Kinetic Aurora" — wspólny dla homepage i pillarów lajf.eu.
+ * Daje: <head>/SEO/JSON-LD, tło (aurora), nawigację, stopkę, skrypty interakcji.
+ * Treść strony idzie do <slot />. Kolor akcentu sterowany propem `accent`.
+ */
+import '@fontsource-variable/inter';
+import '@fontsource-variable/space-grotesk';
+import '../styles/lajf-kinetic.css';
+import { siteConfig } from '../../site.config';
+import CookieConsent from '../components/cookie-consent.astro';
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+  title: string;
+  description: string;
+  accent?: string;
+}
+
+const { title, description, accent = '#5b8cff' } = Astro.props;
+const { brandName, company } = siteConfig;
+const year = new Date().getFullYear();
+
+const siteUrl = Astro.site ?? new URL('https://lajf.eu');
+const canonical = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = new URL('/images/og-default.jpg', siteUrl).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: brandName,
+  legalName: company.legalName,
+  url: siteUrl.href,
+  email: company.email,
+  telephone: company.phone,
+  address: company.address,
+  description,
+};
+---
+
+<!doctype html>
+<html lang="pl" style={`--acc:${accent}`}>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#070510" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={brandName} />
+<meta property="og:locale" content="pl_PL" />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+<ClientRouter />
+</head>
+<body>
+<div class="bg"></div>
+<div class="mesh"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="grain"></div><div class="vig"></div><div class="spot" id="spot"></div>
+<div class="prog" id="prog"></div>
+
+<nav><div class="wrap nav-in">
+  <a class="logo" href="/">{brandName}<b>.</b></a>
+  <div class="nav-links"><a href="/strony-www">Strony WWW</a><a href="/rodo-i-cyber">RODO &amp; cyber</a><a href="/oprogramowanie">Oprogramowanie</a><a href="/muzyka">Muzyka</a><a href="/#realizacje">Realizacje</a><a href="/#o-mnie">O mnie</a></div>
+  <a href="/#kontakt" class="btn btn-primary magnetic" style="padding:11px 20px">Konsultacja</a>
+</div></nav>
+
+<slot />
+
+<footer><div class="wrap">
+  <div class="foot-top">
+    <div class="foot-brand">
+      <span class="logo">{brandName}<b>.</b></span>
+      <p>Pełna obecność firmy w sieci — pod klucz. Strony, RODO, oprogramowanie i muzyka, prowadzone przez jedną osobę odpowiedzialną za całość.</p>
+      <div class="foot-contact">
+        <a href={`mailto:${company.email}`}>{company.email}</a>
+        <a href={`tel:${company.phone.replace(/\s/g, '')}`}>{company.phone}</a>
+        <span>Jaworzno, PL</span>
+      </div>
+    </div>
+    <div class="foot-cols">
+      <div class="foot-col"><h4>Usługi</h4><a href="/strony-www">Strony WWW</a><a href="/rodo-i-cyber">RODO &amp; cyber</a><a href="/oprogramowanie">Oprogramowanie</a><a href="/muzyka">Muzyka</a></div>
+      <div class="foot-col"><h4>Firma</h4><a href="/#realizacje">Realizacje</a><a href="/#o-mnie">O mnie</a><a href="/#kontakt">Kontakt</a></div>
+      <div class="foot-col"><h4>Informacje</h4><a href="/polityka-prywatnosci">Polityka prywatności</a><a href="/regulamin">Regulamin</a><span>RODO · WCAG · hosting EU</span></div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© {year} {company.legalName}{company.taxId ? ` · NIP ${company.taxId}` : ''}</span>
+    <span>Hosting w UE · zgodne z RODO</span>
+  </div>
+</div></footer>
+
+<script>
+  // Inicjalizacja interakcji — odpalana też po każdym przejściu (View Transitions)
+  function lajfInit(){
+    window.__lajfSpot=document.getElementById('spot');
+    window.__lajfProg=document.getElementById('prog');
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.14});
+      document.querySelectorAll('.reveal:not(.in)').forEach(function(el){io.observe(el);});
+    } else { document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');}); }
+    document.querySelectorAll('.magnetic').forEach(function(b){
+      if(b.__mag) return; b.__mag=true; var r=null;
+      b.addEventListener('pointerenter',function(){r=b.getBoundingClientRect();});
+      b.addEventListener('pointermove',function(e){if(!r)r=b.getBoundingClientRect();var x=e.clientX-r.left-r.width/2;var y=e.clientY-r.top-r.height/2;b.style.transform='translate('+x*.25+'px,'+y*.35+'px)';});
+      b.addEventListener('pointerleave',function(){b.style.transform='';r=null;});
+    });
+    document.querySelectorAll('.tilt').forEach(function(el){
+      if(el.__tilt) return; el.__tilt=true; var r=null;
+      el.addEventListener('pointerenter',function(){r=el.getBoundingClientRect();});
+      el.addEventListener('pointermove',function(e){if(!r)r=el.getBoundingClientRect();var px=(e.clientX-r.left)/r.width-.5;var py=(e.clientY-r.top)/r.height-.5;el.style.transform='perspective(800px) rotateY('+px*7+'deg) rotateX('+(-py*7)+'deg) translateY(-4px)';});
+      el.addEventListener('pointerleave',function(){el.style.transform='';r=null;});
+    });
+    document.querySelectorAll('form[data-engine-form]').forEach(function(form){
+      if(form.__bound) return; form.__bound=true;
+      form.addEventListener('submit',async function(event){
+        event.preventDefault();
+        var btn=form.querySelector('button[type=submit]');var original=btn?btn.textContent:'';
+        if(btn){btn.setAttribute('disabled','true');btn.textContent='Wysyłam…';}
+        var payload=Object.fromEntries(new FormData(form).entries());payload.form=form.getAttribute('name')||'kontakt';
+        try{
+          var res=await fetch('/api/contact',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)});
+          var data=await res.json().catch(function(){return {};});
+          if(!res.ok) throw new Error((data.error&&data.error.message)||'Błąd wysyłki.');
+          form.innerHTML='<p class="form-status form-status--ok">Dzięki! Odezwę się najszybciej, jak się da.</p>';
+        }catch(err){
+          if(btn){btn.removeAttribute('disabled');btn.textContent=original;}
+          var note=form.querySelector('.form-status--err');
+          if(!note){note=document.createElement('p');note.className='form-status form-status--err';form.appendChild(note);}
+          note.textContent=err&&err.message?err.message:'Nie udało się wysłać.';
+        }
+      });
+    });
+  }
+  if(!window.__lajfGlobals){
+    window.__lajfGlobals=true;
+    addEventListener('pointermove',function(e){var s=window.__lajfSpot;if(s){s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';}});
+    addEventListener('scroll',function(){var p=window.__lajfProg;if(p){var h=document.documentElement;p.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';}});
+  }
+  document.addEventListener('astro:page-load', lajfInit);
+</script>
+<CookieConsent locale="pl" />
+</body>
+</html>

@@ -1,0 +1,84 @@
+---
+/**
+ * Sekcja: lead magnet. E-mail w zamian za materiał.
+ * Formularz oznaczony `data-engine-form` — przejmie go Cloudflare Function.
+ */
+import Section from '../primitives/section.astro';
+import Button from '../primitives/button.astro';
+import { siteConfig } from '../../../site.config';
+
+interface Props {
+  title: string;
+  description: string;
+  buttonLabel: string;
+}
+
+const { title, description, buttonLabel } = Astro.props;
+const { privacy } = siteConfig;
+---
+
+<Section>
+  <div class="magnet">
+    <div class="magnet__copy">
+      <h2>{title}</h2>
+      <p>{description}</p>
+    </div>
+    <div class="magnet__action">
+      <form class="magnet__form" name="lead-magnet" data-engine-form>
+        <input type="email" name="email" placeholder="Twój e-mail" required />
+        <Button href="#" label={buttonLabel} tone="primary" />
+      </form>
+      <p class="magnet__consent">
+        Wysyłając, akceptujesz <a href="/polityka-prywatnosci">Politykę prywatności</a>.
+        Administrator: {privacy.controllerName}.
+      </p>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .magnet {
+    display: grid;
+    gap: var(--space-gap);
+    align-items: center;
+    padding: 2.5rem;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .magnet p {
+    color: var(--color-text-soft);
+    margin-top: 0.75rem;
+  }
+  .magnet__action {
+    display: grid;
+    gap: 0.6rem;
+  }
+  .magnet__form {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .magnet__consent {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--color-text-soft);
+    line-height: 1.4;
+  }
+  .magnet__consent a {
+    color: var(--color-brand);
+  }
+  .magnet__form input {
+    flex: 1;
+    min-width: 14rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+  @media (min-width: 48rem) {
+    .magnet {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+  }
+</style>

@@ -1,0 +1,108 @@
+---
+/**
+ * Sekcja: autor / zespół (buduje zaufanie — pokazuje człowieka i rzemiosło).
+ * Portret (imageUrl, opcjonalny) + bio + filary (pillars).
+ */
+import Section from '../primitives/section.astro';
+
+interface Props {
+  name: string;
+  bio: string;
+  pillars: string[];
+  imageUrl?: string;
+  anchor?: string;
+}
+
+const { name, bio, pillars, imageUrl, anchor } = Astro.props;
+---
+
+<Section id={anchor ?? 'autor'} tone="muted">
+  <div class:list={['author', { 'author--with-photo': imageUrl }]}>
+    {imageUrl && (
+      <div class="author__photo">
+        <img src={imageUrl} alt={name} loading="lazy" />
+      </div>
+    )}
+    <div class="author__text">
+      <span class="author__kicker">Kto za tym stoi</span>
+      <h2>{name}</h2>
+      <p class="author__bio">{bio}</p>
+      <ul class="author__pillars">
+        {pillars.map((pillar) => <li class="author__pillar">{pillar}</li>)}
+      </ul>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .author {
+    display: grid;
+    gap: var(--space-gap);
+    align-items: center;
+  }
+  .author__kicker {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-brand);
+    margin-bottom: 0.9rem;
+  }
+  .author h2 {
+    font-size: var(--text-h2);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  .author__bio {
+    color: var(--color-text-soft);
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    max-width: 56ch;
+    line-height: var(--leading-body);
+  }
+  .author__photo {
+    position: relative;
+  }
+  .author__photo img {
+    width: 100%;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    object-fit: cover;
+    aspect-ratio: 4 / 5;
+  }
+  .author__pillars {
+    list-style: none;
+    padding: 0;
+    margin: 1.9rem 0 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .author__pillar {
+    position: relative;
+    padding: 1rem 1.25rem 1rem 2.85rem;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    font-weight: 600;
+    line-height: 1.45;
+  }
+  .author__pillar::before {
+    content: '✓';
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    color: var(--color-accent);
+    font-weight: 800;
+  }
+  @media (min-width: 48rem) {
+    .author--with-photo {
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 3rem;
+    }
+  }
+</style>
