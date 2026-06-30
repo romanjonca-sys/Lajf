@@ -213,7 +213,7 @@ const toc = [
 </LajfLayout>
 
 <style>
-  .legal { padding-block: 4.5rem 5.5rem; max-width: 52rem; }
+  .legal { padding-block: 4.5rem 5.5rem; max-width: 52rem; position: relative; z-index: 1; }
   .legal__eyebrow {
     display: inline-block; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
     font-weight: 700; color: var(--acc); margin-bottom: 0.7rem;
@@ -221,12 +221,13 @@ const toc = [
   .legal h1 { font-size: clamp(2rem, 5vw, 2.7rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; }
   .legal__lead { color: var(--mut); font-size: 1.08rem; line-height: 1.7; margin-bottom: 2rem; }
   .legal__toc {
+    position: static; backdrop-filter: none;
     border: 1px solid var(--line); border-radius: 16px; padding: 1.4rem 1.6rem; margin-bottom: 2.5rem;
-    background: var(--card); box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    background: rgba(16,13,26,.96); box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
   }
   .legal__toc-title { font-weight: 700; margin-bottom: 0.6rem; font-size: 0.95rem; }
   .legal__toc ol { margin: 0; padding-left: 1.3rem; display: grid; gap: 0.35rem; }
-  .legal__toc a { color: var(--mut); text-decoration: none; }
+  .legal__toc a { color: var(--txt); text-decoration: none; }
   .legal__toc a:hover { color: var(--acc); }
   .legal h2 {
     font-size: 1.32rem; font-weight: 700; margin: 2.6rem 0 0.8rem; padding-left: 0.85rem;
