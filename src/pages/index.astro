@@ -12,6 +12,8 @@ const description =
 const realizacje = [
   { t: 'moje-rodo', c: 'System zgodności RODO dla medycyny', tag: 'SaaS · RODO', href: 'https://moje-rodo.pl', img: '/images/realizacje/moje-rodo.jpg' },
   { t: 'Układ Komediowy', c: 'Strona + terminarz kabaretu', tag: 'web · rozrywka', href: 'https://ukladkomediowy.pl', img: '/images/realizacje/uklad.jpg' },
+  { t: 'Krzysztof Stanio', c: 'Pracownia praktyk teatralnych', tag: 'web · kultura', href: 'https://krzysztof-stanio.pages.dev', img: '/images/realizacje/stanio.jpg' },
+  { t: 'Grzegorz Kapołka', c: 'Strona bluesowego gitarzysty', tag: 'web · muzyk', href: 'https://kapolka-web.pages.dev', img: '/images/realizacje/kapolka.jpg' },
   { t: 'Dźwięk Dobry', c: 'Studio pisania piosenek', tag: 'web · muzyka', href: 'https://dzwiekdobry.pl', img: '/images/realizacje/dzwiek.jpg' },
   { t: 'Innova Biological', c: 'Strona B2B marki chemicznej', tag: 'web · B2B', href: 'https://innova-biological.pages.dev', img: '/images/realizacje/innova.jpg' },
   { t: 'EkoPanel Serwis', c: 'Serwis kolektorów słonecznych', tag: 'web · usługa', href: 'https://ekopanelserwis.pages.dev', img: '/images/realizacje/ekopanel.jpg' },
@@ -44,7 +46,7 @@ const realizacje = [
   </div></section>
 
   <section id="realizacje"><div class="wrap">
-    <div class="sec-head reveal"><span class="label">Realizacje</span><h2>Robota, nie obietnice</h2><p>Sześć realizacji, sześć różnych stylów. Dobieramy formę do marki — nie klepiemy szablonu.</p></div>
+    <div class="sec-head reveal"><span class="label">Realizacje</span><h2>Robota, nie obietnice</h2><p>Osiem realizacji, osiem różnych stylów. Dobieramy formę do marki — nie klepiemy szablonu.</p></div>
     <div class="work">
       {realizacje.map((r) => (
         <a class="frame reveal" href={r.href} target="_blank" rel="noopener noreferrer">
@@ -149,3 +151,11 @@ const realizacje = [
   }
   document.addEventListener('astro:page-load', lajfHero);
 </script>
+
+<style>
+  /* Realizacje: sztywna siatka 4 kolumn na desktopie → 8 kafelków w 2 równych rzędach.
+     Nadpisuje auto-fit z silnika (lajf-kinetic.css) tylko dla tej sekcji — engine nietknięty. */
+  #realizacje .work { grid-template-columns: 1fr; }
+  @media (min-width: 40rem) { #realizacje .work { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 64rem) { #realizacje .work { grid-template-columns: repeat(4, 1fr); } }
+</style>
