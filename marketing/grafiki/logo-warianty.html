@@ -1,0 +1,59 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1350px;overflow:hidden}
+body{font-family:-apple-system,"Helvetica Neue",Arial,sans-serif;background:#070510;position:relative}
+.bg{position:absolute;inset:0;background:linear-gradient(160deg,#0b1226 0%,#070510 60%,#0a0714 100%)}
+.hd{position:absolute;top:48px;left:60px;right:60px;color:#fff}
+.hd .k{font-family:ui-monospace,monospace;font-size:20px;letter-spacing:.2em;text-transform:uppercase;color:#3ce0b4}
+.hd .t{font-size:40px;font-weight:800;margin-top:8px}
+.rows{position:absolute;top:190px;left:60px;right:60px;bottom:50px;display:flex;flex-direction:column}
+.row{flex:1;display:flex;align-items:center;gap:36px;border-top:1px solid rgba(255,255,255,.1)}
+.lab{width:210px;flex:none;color:#8aa0c8}
+.lab b{display:block;color:#fff;font-size:30px;font-weight:800;margin-bottom:6px}
+.lab span{font-size:20px;line-height:1.35}
+.lock{flex:1;display:flex;align-items:center;gap:18px}
+/* browser mark */
+.mk{width:60px;height:47px;position:relative;flex:none}
+.mk .win{position:absolute;inset:0;border:4px solid #5b8cff;border-radius:10px}
+.mk .bar{position:absolute;top:14px;left:0;right:0;height:3px;background:#5b8cff}
+.mk .d{position:absolute;top:6px;width:6px;height:6px;border-radius:50%}
+.d1{left:8px;background:#ff7a59}.d2{left:20px;background:#3ce0b4}.d3{left:32px;background:#5b8cff}
+.wm{font-size:60px;font-weight:800;letter-spacing:-.02em;color:#fff;line-height:1}
+.eu{color:#5b8cff}
+.euT{color:#3ce0b4}
+/* B: url in browser */
+.mkB{width:330px;height:96px;border:4px solid #5b8cff;border-radius:14px;position:relative;flex:none}
+.mkB .top{position:absolute;top:0;left:0;right:0;height:26px;border-bottom:3px solid #5b8cff}
+.mkB .d{position:absolute;top:8px;width:8px;height:8px;border-radius:50%}
+.mkB .url{position:absolute;top:40px;left:20px;font-size:38px;font-weight:800;color:#fff}
+/* C terminal */
+.term{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:58px;font-weight:700;color:#fff;display:flex;align-items:center}
+.cur{display:inline-block;width:22px;height:56px;background:#3ce0b4;margin-left:12px;border-radius:3px}
+/* D badge */
+.badge{width:92px;height:92px;border-radius:22px;background:#2969f1;display:flex;align-items:center;justify-content:center;flex:none}
+.badge .g{width:46px;height:36px;position:relative}
+.badge .g .win{position:absolute;inset:0;border:4px solid #fff;border-radius:8px}
+.badge .g .bar{position:absolute;top:11px;left:0;right:0;height:3px;background:#fff}
+.badge .g .dd{position:absolute;top:5px;width:5px;height:5px;border-radius:50%;background:#fff}
+</style></head><body>
+<div class="bg"></div>
+<div class="hd"><div class="k">Logo Lajf.eu — warianty</div><div class="t">Wybierz jeden, dopracuję</div></div>
+<div class="rows">
+  <div class="row">
+    <div class="lab"><b>A</b><span>Znak + wordmark, „.eu" na niebiesko</span></div>
+    <div class="lock"><div class="mk"><div class="win"></div><div class="bar"></div><div class="d d1"></div><div class="d d2"></div><div class="d d3"></div></div><div class="wm">Lajf<span class="eu">.eu</span></div></div>
+  </div>
+  <div class="row">
+    <div class="lab"><b>B</b><span>Domena w oknie przeglądarki (mówi „robimy strony")</span></div>
+    <div class="lock"><div class="mkB"><div class="top"></div><span class="d d1" style="left:12px"></span><span class="d d2" style="left:30px"></span><span class="d d3" style="left:48px"></span><div class="url">lajf<span class="eu">.eu</span></div></div></div>
+  </div>
+  <div class="row">
+    <div class="lab"><b>C</b><span>Terminal / kursor — techowo</span></div>
+    <div class="lock"><div class="term">lajf<span class="euT">.eu</span><span class="cur"></span></div></div>
+  </div>
+  <div class="row">
+    <div class="lab"><b>D</b><span>Kwadratowy znaczek (dobry na awatar) + wordmark</span></div>
+    <div class="lock"><div class="badge"><div class="g"><div class="win"></div><div class="bar"></div><span class="dd" style="left:6px"></span><span class="dd" style="left:15px"></span><span class="dd" style="left:24px"></span></div></div><div class="wm">Lajf<span class="eu">.eu</span></div></div>
+  </div>
+</div>
+</body></html>
