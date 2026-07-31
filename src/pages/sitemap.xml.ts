@@ -18,7 +18,9 @@ const PAGES = [
 
 export const GET: APIRoute = ({ site }) => {
   const base = (site ?? new URL('https://lajf.eu')).href.replace(/\/$/, '');
-  const locs = PAGES.map((path) => (path ? `${base}/${path}` : `${base}/`));
+  // Ukośnik na końcu = adres kanoniczny (Pages robi 308 z wersji bez ukośnika;
+  // sitemap nie powinien listować adresów przekierowujących).
+  const locs = PAGES.map((path) => (path ? `${base}/${path}/` : `${base}/`));
 
   const urls = locs.map((loc) => `  <url><loc>${loc}</loc></url>`).join('\n');
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

@@ -15,9 +15,11 @@ interface Props {
   title: string;
   description: string;
   accent?: string;
+  /** Dodatkowy JSON-LD strony (np. Service z ofertą) — dokładany obok Organization. */
+  schema?: Record<string, unknown>;
 }
 
-const { title, description, accent = '#5b8cff' } = Astro.props;
+const { title, description, accent = '#5b8cff', schema } = Astro.props;
 const { brandName, company } = siteConfig;
 const year = new Date().getFullYear();
 
@@ -63,6 +65,7 @@ const jsonLd = {
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImage} />
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+{schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 <ClientRouter />
 </head>
 <body>

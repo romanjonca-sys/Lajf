@@ -3,8 +3,35 @@ import LajfLayout from '../layouts/lajf-layout.astro';
 const title = 'Strony WWW dla firm — abonament 399 zł/mc albo projekt pod klucz | Lajf';
 const description =
   'Strona www w abonamencie 399 zł netto/mc: domena, serwer, poczta, analityka GA4 + Cloudflare i całoroczna obsługa — bez opłaty za wykonanie. Dla praktyk lekarskich, firm sprzątających, mechaników, elektryków. Większe projekty od 3 900 zł.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Strona www w abonamencie dla usług lokalnych',
+  serviceType: 'Projektowanie i utrzymanie stron internetowych',
+  description:
+    'Strona www z treścią, domeną, serwerem, firmową pocztą, analityką (GA4 + Cloudflare), wizytówką Google i całoroczną obsługą w abonamencie — bez opłaty za wykonanie.',
+  provider: { '@type': 'Organization', name: 'Lajf', url: 'https://lajf.eu/' },
+  areaServed: 'PL',
+  audience: {
+    '@type': 'BusinessAudience',
+    name: 'Usługi lokalne: praktyki lekarskie, firmy sprzątające, mechanicy, elektrycy',
+  },
+  offers: {
+    '@type': 'Offer',
+    priceSpecification: {
+      '@type': 'UnitPriceSpecification',
+      price: 399,
+      priceCurrency: 'PLN',
+      unitCode: 'MON',
+      valueAddedTaxIncluded: false,
+    },
+    availability: 'https://schema.org/InStock',
+    url: 'https://lajf.eu/strony-www/#abonament',
+  },
+};
 ---
-<LajfLayout title={title} description={description} accent="#5b8cff">
+<LajfLayout title={title} description={description} accent="#5b8cff" schema={schema}>
   <header class="phero"><div class="wrap pin">
     <span class="label">Strony WWW dla firm</span>
     <h1>Strony, które <span class="hl">przyciągają klientów</span></h1>
