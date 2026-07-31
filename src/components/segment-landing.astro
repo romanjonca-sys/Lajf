@@ -1,0 +1,147 @@
+---
+/**
+ * Landing segmentowy pod frazę "strona www dla X" (SEO lokalne).
+ * Jedna struktura, treść per segment z propsów — cztery strony, zero duplikacji layoutu.
+ * Karta abonamentu 399 zł/mc jest wspólna (to ta sama oferta co na /strony-www).
+ */
+import LajfLayout from '../layouts/lajf-layout.astro';
+
+export interface FaqItem {
+  q: string;
+  a: string;
+}
+
+export interface PainItem {
+  b: string;
+  s: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  label: string;
+  /** H1 — część przed wyróżnieniem. */
+  h1: string;
+  /** H1 — wyróżniona fraza (kolor akcentu). */
+  h1hl: string;
+  lead: string;
+  painsTitle: string;
+  painsSub: string;
+  pains: PainItem[];
+  whyTitle: string;
+  whySub: string;
+  why: PainItem[];
+  faq: FaqItem[];
+  /** Nazwa usługi do schema.org Service. */
+  serviceName: string;
+  audienceName: string;
+}
+
+const {
+  title, description, label, h1, h1hl, lead,
+  painsTitle, painsSub, pains, whyTitle, whySub, why, faq,
+  serviceName, audienceName,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? new URL('https://lajf.eu')).href;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Service',
+      name: serviceName,
+      serviceType: 'Projektowanie i utrzymanie stron internetowych',
+      description,
+      provider: { '@type': 'Organization', name: 'Lajf', url: 'https://lajf.eu/' },
+      areaServed: 'PL',
+      audience: { '@type': 'BusinessAudience', name: audienceName },
+      offers: {
+        '@type': 'Offer',
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price: 399,
+          priceCurrency: 'PLN',
+          unitCode: 'MON',
+          valueAddedTaxIncluded: false,
+        },
+        availability: 'https://schema.org/InStock',
+        url: canonical,
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faq.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
+    },
+  ],
+};
+
+const ICONS = [
+  'M3 17l5-6 4 4 6-8 3 4M3 21h18',
+  'M12 22s7-6 7-12a7 7 0 1 0-14 0c0 6 7 12 7 12zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
+  'M4 20l4-1L19 8l-3-3L5 16zM14.5 6.5l3 3',
+  'M12 3l7 4v5c0 4.5-3 8.5-7 9-4-.5-7-4.5-7-9V7z',
+];
+---
+<LajfLayout title={title} description={description} accent="#5b8cff" schema={schema}>
+  <header class="phero"><div class="wrap pin">
+    <span class="label">{label}</span>
+    <h1>{h1} <span class="hl">{h1hl}</span></h1>
+    <p class="lead">{lead}</p>
+    <div class="center"><a href="/#kontakt" class="btn btn-primary magnetic">Zamów bezpłatną konsultację →</a></div>
+  </div></header>
+
+  <section><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Znasz to?</span><h2>{painsTitle}</h2><p>{painsSub}</p></div>
+    <ul class="feats">
+      {pains.map((p, i) => (
+        <li class="reveal"><span class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d={ICONS[i % ICONS.length]} /></svg></span><div class="ftxt"><b>{p.b}</b><span>{p.s}</span></div></li>
+      ))}
+    </ul>
+  </div></section>
+
+  <section id="abonament"><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Oferta</span><h2>Wszystko w abonamencie <span class="hl">399 zł netto/mc</span></h2><p>Za wykonanie strony nie płacisz ani grosza z góry. Pierwsza płatność dopiero po akceptacji gotowej strony — ryzyko jest po naszej stronie, nie po Twojej.</p></div>
+    <div class="abon">
+      <div class="reveal">
+        <h3 style="font-size:20px;font-weight:700">{whyTitle}</h3>
+        <p style="color:var(--mut);margin-top:10px">{whySub}</p>
+        <ul class="feats" style="margin-top:22px">
+          {why.map((w) => (
+            <li class="reveal" style="grid-column:1/-1"><div class="ftxt"><b>{w.b}</b><span>{w.s}</span></div></li>
+          ))}
+        </ul>
+      </div>
+      <div class="tier featured reveal"><div class="tag">Wszystko w cenie</div><h3>Abonament</h3><div class="price">399 zł <small>netto / mc</small></div><div class="ab">zero opłaty wdrożeniowej · umowa 12 mc</div><ul>
+        <li>Wykonanie strony www — projekt i treść pod Twojego klienta</li>
+        <li>Domena, serwer, certyfikat SSL, kopie zapasowe</li>
+        <li>Firmowa poczta e-mail</li>
+        <li>Konfiguracja analityki: GA4 + Cloudflare</li>
+        <li>Wizytówka Google</li>
+        <li>Całoroczna obsługa — zmiany treści bez limitu</li>
+        <li>Powiadomienia o zapytaniach klientów (e-mail / SMS)</li>
+      </ul><a href="/#kontakt" class="btn btn-primary magnetic">Chcę taki abonament →</a></div>
+    </div>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Pytania</span><h2>Najczęstsze pytania</h2></div>
+    <div class="lfaq reveal">
+      {faq.map((item) => (
+        <details><summary>{item.q}</summary><p>{item.a}</p></details>
+      ))}
+    </div>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Porozmawiajmy o Twojej stronie</h2>
+      <p>Napisz, czym się zajmujesz — odpiszę z konkretem w 24h. Bez zobowiązań. Pełną ofertę znajdziesz na stronie <a href="/strony-www/" style="color:var(--acc)">Strony WWW</a>.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Zamów konsultację →</a>
+    </div>
+  </div></section>
+</LajfLayout>

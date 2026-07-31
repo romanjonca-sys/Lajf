@@ -9,6 +9,10 @@ import type { APIRoute } from 'astro';
 const PAGES = [
   '', // homepage
   'strony-www',
+  'strona-www-dla-lekarza',
+  'strona-www-dla-firmy-sprzatajacej',
+  'strona-www-dla-mechanika',
+  'strona-www-dla-elektryka',
   'rodo-i-cyber',
   'oprogramowanie',
   'muzyka',
