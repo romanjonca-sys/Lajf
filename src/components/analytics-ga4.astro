@@ -1,69 +1,86 @@
 ---
 /**
- * Google Analytics 4 z Consent Mode v2 — spięty z banerem `cookie-consent.astro`.
+ * Analityka z Consent Mode v2 — spięta z banerem `cookie-consent.astro`.
  *
- * Zasada: skrypt ładuje się ZAWSZE, ale startuje ze stanem `denied` (Consent Mode
- * advanced). Dopóki użytkownik nie zaakceptuje, Google dostaje wyłącznie bezcookie
- * pingi zgodności — bez identyfikatorów i bez zapisu na urządzeniu. Pełny pomiar
- * rusza dopiero po `consent update`, wywołanym przez zdarzenie `lajf:consent`.
+ * Obsługuje DWA warianty, wybierane zmienną środowiskową:
+ *   PUBLIC_GTM_ID (np. GTM-XXXXXXX)  → Tag Manager: GA4, Meta Pixel i resztę
+ *                                      dodajesz potem klikaniem, bez deployu.
+ *   PUBLIC_GA4_ID (np. G-XXXXXXXXXX) → sam GA4, bez pośrednika (lżej o jeden request).
+ * Gdy ustawione są obie, wygrywa GTM — inaczej GA4 zliczałby wejścia dwa razy.
  *
- * Baner zapisuje wybór w localStorage pod kluczem `lajf-consent`
- * ('all' = zgoda na analitykę, 'essential' = tylko niezbędne) — ten sam klucz
- * czytamy przy starcie, żeby powracający użytkownik nie musiał klikać dwa razy.
+ * Zasada wspólna: skrypt ładuje się ZAWSZE, ale startuje ze stanem `denied`
+ * (Consent Mode advanced). Bez zgody Google dostaje wyłącznie bezcookie pingi —
+ * bez identyfikatorów i bez zapisu na urządzeniu. Pełny pomiar rusza dopiero
+ * po `consent update`, wywołanym zdarzeniem `lajf:consent` z banera.
  *
- * ID w `PUBLIC_GA4_ID` (zmienna środowiskowa) — bez niej komponent nic nie renderuje,
- * więc lokalne uruchomienie i podglądy nie zaśmiecają statystyk.
+ * Baner trzyma wybór w localStorage pod kluczem `lajf-consent`
+ * ('all' = zgoda na analitykę, 'essential' = tylko niezbędne) — czytamy go przy
+ * starcie, żeby powracający użytkownik nie musiał klikać drugi raz.
+ *
+ * Bez żadnej ze zmiennych komponent nie renderuje nic — lokalne uruchomienia
+ * i podglądy nie zaśmiecają statystyk.
  */
+const gtmId = import.meta.env.PUBLIC_GTM_ID ?? '';
 const gaId = import.meta.env.PUBLIC_GA4_ID ?? '';
+const tryb = gtmId ? 'gtm' : gaId ? 'ga4' : 'brak';
 ---
 
-{gaId && (
-  <>
-    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-    <script is:inline define:vars={{ gaId }}>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        window.dataLayer.push(arguments);
-      }
-      window.gtag = gtag;
+{tryb !== 'brak' && (
+  <script is:inline define:vars={{ gtmId, gaId, tryb }}>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      window.dataLayer.push(arguments);
+    }
+    window.gtag = gtag;
 
-      // Consent Mode v2 — stan domyślny PRZED jakimkolwiek pomiarem.
-      gtag('consent', 'default', {
-        ad_storage: 'denied',
-        ad_user_data: 'denied',
-        ad_personalization: 'denied',
-        analytics_storage: 'denied',
-        functionality_storage: 'granted',
-        security_storage: 'granted',
-        wait_for_update: 500,
+    // Consent Mode v2 — MUSI stać przed jakimkolwiek tagiem, inaczej Google
+    // przyjmie stan domyślny „granted" i wyśle dane przed decyzją użytkownika.
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      functionality_storage: 'granted',
+      security_storage: 'granted',
+      wait_for_update: 500,
+    });
+
+    function zastosujZgode(wartosc) {
+      var zgoda = wartosc === 'all' ? 'granted' : 'denied';
+      gtag('consent', 'update', {
+        analytics_storage: zgoda,
+        ad_storage: zgoda,
+        ad_user_data: zgoda,
+        ad_personalization: zgoda,
       });
+    }
 
-      function zastosujZgode(wartosc) {
-        var zgoda = wartosc === 'all' ? 'granted' : 'denied';
-        gtag('consent', 'update', {
-          analytics_storage: zgoda,
-          ad_storage: zgoda,
-          ad_user_data: zgoda,
-          ad_personalization: zgoda,
-        });
+    try {
+      var zapisana = localStorage.getItem('lajf-consent');
+      if (zapisana) {
+        zastosujZgode(zapisana);
       }
+    } catch (e) {
+      // Prywatne okno bez localStorage — zostaje stan domyślny (denied).
+    }
 
-      // Powracający użytkownik: odtwarzamy jego decyzję, zanim padnie page_view.
-      try {
-        var zapisana = localStorage.getItem('lajf-consent');
-        if (zapisana) {
-          zastosujZgode(zapisana);
-        }
-      } catch (e) {
-        // Prywatne okno bez localStorage — zostaje stan domyślny (denied).
-      }
+    document.addEventListener('lajf:consent', function (event) {
+      zastosujZgode(event.detail);
+    });
 
-      document.addEventListener('lajf:consent', function (event) {
-        zastosujZgode(event.detail);
-      });
-
+    if (tryb === 'gtm') {
+      window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+      var g = document.createElement('script');
+      g.async = true;
+      g.src = 'https://www.googletagmanager.com/gtm.js?id=' + gtmId;
+      document.head.appendChild(g);
+    } else {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
+      document.head.appendChild(s);
       gtag('js', new Date());
       gtag('config', gaId);
-    </script>
-  </>
+    }
+  </script>
 )}
