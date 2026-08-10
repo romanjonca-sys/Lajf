@@ -8,6 +8,7 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/space-grotesk';
 import '../styles/lajf-kinetic.css';
 import { siteConfig } from '../../site.config';
+import AnalyticsGa4 from '../components/analytics-ga4.astro';
 import CookieConsent from '../components/cookie-consent.astro';
 import { ClientRouter } from 'astro:transitions';
 
@@ -67,6 +68,7 @@ const jsonLd = {
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 <ClientRouter />
+  <AnalyticsGa4 />
 </head>
 <body>
 <div class="bg"></div>
