@@ -27,6 +27,12 @@ const tryb = gtmId ? 'gtm' : gaId ? 'ga4' : 'brak';
 
 {tryb !== 'brak' && (
   <script is:inline define:vars={{ gtmId, gaId, tryb }}>
+    // Strona używa View Transitions — przy nawigacji Astro potrafi wykonać
+    // skrypty z <head> ponownie. Bez tej blokady dublowałyby się nasłuchy zgody
+    // i każda odsłona liczyłaby się wielokrotnie.
+    if (window.__lajfAnalytics) return;
+    window.__lajfAnalytics = true;
+
     window.dataLayer = window.dataLayer || [];
     function gtag() {
       window.dataLayer.push(arguments);
@@ -45,6 +51,20 @@ const tryb = gtmId ? 'gtm' : gaId ? 'ga4' : 'brak';
       wait_for_update: 500,
     });
 
+    // Czy pierwsza odsłona już poszła. Potrzebne, bo zgoda kliknięta PO wejściu
+    // na stronę zastaje odsłonę już wysłaną w trybie `denied` — takie trafienie
+    // nie trafia do raportów, więc po zgodzie trzeba je powtórzyć.
+    var odslonaWyslana = false;
+    var mamyZgode = false;
+
+    function wyslijOdslone() {
+      if (tryb !== 'ga4') return;
+      gtag('event', 'page_view', {
+        page_location: location.href,
+        page_title: document.title,
+      });
+    }
+
     function zastosujZgode(wartosc) {
       var zgoda = wartosc === 'all' ? 'granted' : 'denied';
       gtag('consent', 'update', {
@@ -53,6 +73,11 @@ const tryb = gtmId ? 'gtm' : gaId ? 'ga4' : 'brak';
         ad_user_data: zgoda,
         ad_personalization: zgoda,
       });
+      var byloBezZgody = !mamyZgode;
+      mamyZgode = zgoda === 'granted';
+      if (mamyZgode && byloBezZgody && odslonaWyslana) {
+        wyslijOdslone();
+      }
     }
 
     try {
@@ -80,7 +105,16 @@ const tryb = gtmId ? 'gtm' : gaId ? 'ga4' : 'brak';
       s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
       document.head.appendChild(s);
       gtag('js', new Date());
-      gtag('config', gaId);
+      // send_page_view: false — odsłony wysyłamy sami na `astro:page-load`.
+      // Automatyczna leci tylko przy pełnym załadowaniu dokumentu, a przy
+      // View Transitions kolejne podstrony nie przeładowują dokumentu wcale.
+      gtag('config', gaId, { send_page_view: false });
     }
+
+    // Odpala się przy pierwszym wejściu ORAZ po każdej tranzycji między podstronami.
+    document.addEventListener('astro:page-load', function () {
+      odslonaWyslana = true;
+      wyslijOdslone();
+    });
   </script>
 )}
