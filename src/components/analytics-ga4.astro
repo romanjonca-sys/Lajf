@@ -116,5 +116,29 @@ const tryb = gtmId ? 'gtm' : gaId ? 'ga4' : 'brak';
       odslonaWyslana = true;
       wyslijOdslone();
     });
+
+    // ——— Pomiar leadów ———
+    // `generate_lead` to standardowe zdarzenie GA4 — wystarczy oznaczyć je raz jako
+    // kluczowe w panelu. Parametr `method` rozdziela kanały, a page_location (dokładany
+    // automatycznie) pokazuje, KTÓRA podstrona przyniosła kontakt.
+    function wyslijLead(metoda) {
+      gtag('event', 'generate_lead', {
+        method: metoda,
+        page_location: location.href,
+      });
+    }
+
+    // Delegacja na document — przetrwa tranzycje i obejmie linki dodane później.
+    document.addEventListener('click', function (event) {
+      var link = event.target.closest && event.target.closest('a[href^="tel:"], a[href^="mailto:"]');
+      if (!link) return;
+      wyslijLead(link.getAttribute('href').indexOf('tel:') === 0 ? 'telefon' : 'email');
+    });
+
+    // Emitowane przez layout dopiero po udanej odpowiedzi z /api/contact —
+    // nieudane próby wysyłki nie są leadem.
+    document.addEventListener('lajf:lead', function (event) {
+      wyslijLead((event.detail && event.detail.metoda) || 'formularz');
+    });
   </script>
 )}

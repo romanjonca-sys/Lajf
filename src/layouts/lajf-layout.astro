@@ -140,6 +140,9 @@ const jsonLd = {
           var data=await res.json().catch(function(){return {};});
           if(!res.ok) throw new Error((data.error&&data.error.message)||'Błąd wysyłki.');
           form.innerHTML='<p class="form-status form-status--ok">Dzięki! Odezwę się najszybciej, jak się da.</p>';
+          // Lead liczymy dopiero po potwierdzeniu z serwera. Analityka nasłuchuje
+          // tego zdarzenia — layout nie musi wiedzieć, czy stoi na niej GA4 czy GTM.
+          document.dispatchEvent(new CustomEvent('lajf:lead',{detail:{metoda:'formularz'}}));
         }catch(err){
           if(btn){btn.removeAttribute('disabled');btn.textContent=original;}
           var note=form.querySelector('.form-status--err');

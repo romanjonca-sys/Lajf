@@ -238,6 +238,8 @@ const structuredData = seo.jobTitle
             if (!res.ok) throw new Error((data.error && data.error.message) || 'Błąd wysyłki.');
             form.innerHTML =
               '<p class="form-status form-status--ok">Dzięki! Odezwę się najszybciej, jak się da.</p>';
+            // Lead liczymy dopiero po potwierdzeniu z serwera — analityka nasłuchuje.
+            document.dispatchEvent(new CustomEvent('lajf:lead', { detail: { metoda: 'formularz' } }));
           } catch (err) {
             if (btn) {
               btn.removeAttribute('disabled');
