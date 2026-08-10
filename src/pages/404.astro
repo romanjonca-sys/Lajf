@@ -1,0 +1,44 @@
+---
+/**
+ * Strona 404 — obecność tego pliku jest wymagana funkcjonalnie, nie tylko dla wygody.
+ * Cloudflare Pages, gdy nie znajdzie `404.html`, serwuje `index.html` z kodem 200
+ * dla KAŻDEGO nieznanego adresu. Google widzi wtedy nieskończenie wiele duplikatów
+ * strony głównej (soft 404) i usuwa podstrony z indeksu. Build musi wygenerować
+ * `dist/client/404.html` — inaczej wraca ten sam problem.
+ *
+ * Bez `noindex` — wystarczy sam kod 404, którego Google nie indeksuje. Layout nie ma
+ * slotu w <head>, więc dokładanie meta wymagałoby zmiany wspólnego layoutu bez zysku.
+ */
+import LajfLayout from '../layouts/lajf-layout.astro';
+
+const title = 'Nie znaleziono strony (404) | Lajf';
+const description = 'Ten adres nie istnieje. Sprawdź ofertę stron WWW, RODO i cyberbezpieczeństwa albo napisz do nas.';
+---
+
+<LajfLayout title={title} description={description}>
+  <header class="phero"><div class="wrap pin">
+    <span class="label">Błąd 404</span>
+    <h1>Tego adresu <span class="hl">tu nie ma</span></h1>
+    <p class="lead">
+      Strona mogła zmienić adres albo w linku jest literówka. Poniżej to, czego
+      najczęściej szukają osoby, które tu trafiają.
+    </p>
+    <div class="center"><a href="/" class="btn btn-primary magnetic">Wróć na stronę główną →</a></div>
+  </div></header>
+
+  <section class="sec"><div class="wrap">
+    <div class="center">
+      <p class="lead">
+        <a href="/strony-www">Strony WWW i cennik</a> ·
+        <a href="/rodo-i-cyber">RODO i cyberbezpieczeństwo</a> ·
+        <a href="/oprogramowanie">Oprogramowanie</a> ·
+        <a href="/muzyka">Muzyka</a>
+      </p>
+      <p class="lead">
+        Nadal nie to, czego szukasz? Napisz na
+        <a href="mailto:kontakt@lajf.eu">kontakt@lajf.eu</a> albo zadzwoń:
+        <a href="tel:+48608101623">+48 608 101 623</a>.
+      </p>
+    </div>
+  </div></section>
+</LajfLayout>
