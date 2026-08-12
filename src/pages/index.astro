@@ -20,6 +20,22 @@ const realizacje = [
   { t: 'R&L Serwis', c: 'Sprzątanie domów, biur i gabinetów', tag: 'web · usługa', href: 'https://rlserwis.pl', img: '/images/realizacje/rlserwis.jpg' },
   { t: 'Klaudia Pałka', c: 'One-pager wokalistki', tag: 'web · artysta', href: 'https://klaudia-palka.pages.dev', img: '/images/realizacje/klaudia.jpg' },
 ];
+
+/**
+ * Opinie klientów.
+ *
+ * ZASADA: wpis trafia tu DOPIERO po pisemnej zgodzie klienta (mail „ok" w archiwum).
+ * Gotowe teksty do autoryzacji leżą w mojezycie:
+ * `plany/2026-08-12-lajf-eu-opinie-do-autoryzacji.md` — wysyłamy klientowi propozycję,
+ * on potwierdza albo poprawia, dopiero wtedy wklejamy tutaj.
+ *
+ * Nie wstawiamy opinii wymyślonych „na chwilę". Od 1.01.2023 (dyrektywa Omnibus)
+ * prezentowanie niezweryfikowanych opinii jest praktyką wprowadzającą w błąd —
+ * a Lajf sprzedaje zgodność, więc to ostatnie miejsce na taki skrót.
+ *
+ * Pusta tablica = sekcja się nie renderuje. Wystarczy dopisać wpis i zrobić deploy.
+ */
+const opinie: { cytat: string; kto: string; rola: string }[] = [];
 ---
 
 <LajfLayout title={title} description={description}>
@@ -51,7 +67,7 @@ const realizacje = [
   </div></section>
 
   <section id="realizacje"><div class="wrap">
-    <div class="sec-head reveal"><span class="label">Realizacje</span><h2>Robota, nie obietnice</h2><p>Osiem realizacji, osiem różnych stylów. Dobieramy formę do marki — nie klepiemy szablonu.</p></div>
+    <div class="sec-head reveal"><span class="label">Realizacje</span><h2>Robota, nie obietnice</h2><p>Dziewięć realizacji, dziewięć różnych stylów. Dobieramy formę do marki — nie klepiemy szablonu.</p></div>
     <div class="work">
       {realizacje.map((r) => (
         <a class="frame reveal" href={r.href} target="_blank" rel="noopener noreferrer">
@@ -62,6 +78,24 @@ const realizacje = [
       ))}
     </div>
   </div></section>
+
+  {opinie.length > 0 && (
+    <section id="opinie"><div class="wrap">
+      <div class="sec-head reveal">
+        <span class="label">Opinie</span>
+        <h2>Co mówią ci, dla których to zrobiłem</h2>
+        <p>Każda opinia jest autoryzowana przez klienta. Chcesz zapytać kogoś wprost, jak się z nami pracuje — podamy numer.</p>
+      </div>
+      <div class="opinie-grid">
+        {opinie.map((o) => (
+          <figure class="opinia reveal">
+            <blockquote>{o.cytat}</blockquote>
+            <figcaption><span class="op-kto">{o.kto}</span><span class="op-rola">{o.rola}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div></section>
+  )}
 
   <section id="o-mnie"><div class="wrap">
     <div class="founder">
@@ -184,4 +218,25 @@ const realizacje = [
   #realizacje .work { grid-template-columns: 1fr; }
   @media (min-width: 40rem) { #realizacje .work { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 64rem) { #realizacje .work { grid-template-columns: repeat(4, 1fr); } }
+
+  /* Opinie: sekcja renderuje się dopiero, gdy jest choć jedna autoryzowana. */
+  #opinie .opinie-grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+  @media (min-width: 48rem) { #opinie .opinie-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 72rem) { #opinie .opinie-grid { grid-template-columns: repeat(3, 1fr); } }
+  #opinie .opinia {
+    margin: 0; padding: 1.6rem 1.7rem; display: flex; flex-direction: column; gap: 1.1rem;
+    border: 1px solid var(--stroke, rgba(255, 255, 255, 0.12));
+    border-radius: 16px; background: var(--panel, rgba(255, 255, 255, 0.03));
+  }
+  #opinie blockquote {
+    margin: 0; font-size: 1.02rem; line-height: 1.65; color: var(--text, #f5f7fc);
+  }
+  /* Cudzysłów jako znak graficzny — sygnalizuje cytat bez dokładania grafiki. */
+  #opinie blockquote::before {
+    content: '„'; display: block; font-size: 2.6rem; line-height: 0.6;
+    color: var(--brand, #2969f1); margin-bottom: 0.5rem;
+  }
+  #opinie figcaption { display: flex; flex-direction: column; gap: 0.15rem; margin-top: auto; }
+  #opinie .op-kto { font-weight: 700; color: var(--text, #f5f7fc); }
+  #opinie .op-rola { font-size: 0.88rem; color: var(--text-soft, #99a2b6); }
 </style>
