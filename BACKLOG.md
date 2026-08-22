@@ -123,3 +123,40 @@ deployu na każdego klienta.
 
 ### D3. `docs/STAN-PRACY.md` i `docs/CO-DALEJ.md` w Social OS
 Nie wiedzą o marce LAJF ani o zmianach z 22.08.
+
+---
+
+## E. Stare wdrożenia podglądowe *.lajf-eu.pages.dev 🔴
+
+Ustalone 22.08.2026. **Nic nie skasowane — czeka na decyzję.**
+
+Każdy `wrangler pages deploy` tworzy trwały, publiczny adres `<hash>.lajf-eu.pages.dev`,
+który nie wygasa. Jest ich **25**. **22 z nich serwuje stare pozycjonowanie**
+(„Lajf — strony WWW, SEO i RODO dla firm i gabinetów", „Robimy strony, które…",
+„Pełna obecność firmy w sieci — pod klucz") razem ze starym OG image.
+
+Adresy są indeksowalne: `robots.txt` mówi `Allow: /`, nie ma `meta robots`.
+Jest `canonical` → `https://lajf.eu/`, ale to sygnał dla Google, nie nakaz —
+inne crawlery, scrapery i podglądy linków w komunikatorach go ignorują.
+
+**Do zachowania (aktualna treść):** `e84e8d6e` (bieżąca produkcja),
+`85891944`, `5f3216a4`.
+
+**Do usunięcia (stare pozycjonowanie):** 22 pozostałe, m.in. `957c4c75`,
+`05431716`, `b98ed528`, `ba5280df`, `1814422e`, `3597ca29`, `623c3aea`,
+`8d1da32e`, `71ecc601`, `d9958826`, `4acf4354`, `414342d4`, `2e3ab07b`,
+`332e025e`, `d5a97028`, `48daf1a2`, `8bf09c3a`, `e3509479`, `6ecc11eb`,
+`2ec0f2a2`, `b3870d15`, `94c4b9b5`.
+
+**Kolejność działania** (od najbezpieczniejszego):
+1. Włączyć w panelu Cloudflare kontrolę dostępu do wdrożeń podglądowych
+   (Pages → lajf-eu → Settings → Deployment access) — odcina crawlery
+   bez kasowania czegokolwiek, odwracalne jednym kliknięciem.
+2. Dopiero potem kasować pojedynczo: `wrangler pages deployment delete <id>`,
+   zaczynając od najstarszych. Zostawić trzy najnowsze — kasowanie zabiera
+   możliwość rollbacku do danego wdrożenia.
+3. Na przyszłość rozważyć wdrażanie na gałąź podglądową i promowanie,
+   zamiast mnożyć wdrożenia produkcyjne.
+
+⚠️ Nie da się tego załatwić przez `robots.txt` ani `X-Robots-Tag` w `_headers` —
+te pliki są częścią wdrożenia, więc stare wdrożenia zachowują własne, stare kopie.
