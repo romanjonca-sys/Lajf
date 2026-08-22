@@ -5,9 +5,9 @@
  */
 import LajfLayout from '../layouts/lajf-layout.astro';
 
-const title = 'Lajf — strony WWW, SEO i RODO dla firm i gabinetów | pełna obecność pod klucz';
+const title = 'Lajf — cyfrowa opieka nad firmą | audyt, technologia, automatyzacje';
 const description =
-  'Tworzymy strony dla firm i podmiotów medycznych: treść, SEO, konfiguracja Google, firmowe maile i stopki — gotowa marka od pierwszego dnia. Strony zgodne z RODO. Jawne ceny.';
+  'Sprawdzamy, naprawiamy i rozwijamy cyfrowe funkcjonowanie firmy — od strony WWW i analityki po bezpieczeństwo i automatyzacje. Zaczynamy od Audytu Cyfrowego: 1490 zł netto.';
 
 const realizacje = [
   { t: 'moje-rodo', c: 'System zgodności RODO dla medycyny', tag: 'SaaS · RODO', href: 'https://moje-rodo.pl', img: '/images/realizacje/moje-rodo.jpg' },
@@ -40,29 +40,43 @@ const opinie: { cytat: string; kto: string; rola: string }[] = [];
 
 <LajfLayout title={title} description={description}>
   <header class="hero"><div class="wrap hero-in">
-    <span class="label stagger d1">Pełna obecność firmy w sieci — pod klucz</span>
-    <h1 class="stagger d2">Robimy strony,<br />które <span class="mask"><span class="rot" id="rot">przyciągają klientów</span></span></h1>
-    <p class="lead stagger d4">Strona, treść, SEO, Google i firmowe maile — gotowe od pierwszego dnia. Jeden wykonawca zamiast pięciu. Dla gabinetów: zgodne z RODO.</p>
+    <span class="label stagger d1">Technologia dla małych firm i placówek medycznych</span>
+    <h1 class="stagger d2">Cyfrowa opieka <br />nad <span class="hl">Twoją firmą</span>.</h1>
+    <p class="lead stagger d4">Sprawdzamy, naprawiamy i rozwijamy cyfrowe funkcjonowanie firmy — od strony WWW i analityki po bezpieczeństwo i automatyzacje. Jeden partner zamiast pięciu wykonawców.</p>
     <div class="hero-cta stagger d5">
-      <a href="#kontakt" class="btn btn-primary magnetic">Zamów bezpłatną konsultację →</a>
-      <a href="#realizacje" class="btn btn-ghost">Zobacz realizacje</a>
+      <a href="/audyt-placowki-medycznej/" class="btn btn-primary magnetic">Sprawdź swoją firmę →</a>
+      <a href="#model" class="btn btn-ghost">Zobacz, jak możemy pomóc</a>
     </div>
-    <div class="chips stagger d5"><a class="chip" href="/strony-www">Strony WWW</a><a class="chip" href="/rodo-i-cyber">RODO &amp; cyber</a><a class="chip" href="/oprogramowanie">Oprogramowanie</a><a class="chip" href="/muzyka">Muzyka</a></div>
-    <div class="proofbar stagger d5"><span><b>100%</b> pod klucz</span><span><b>4</b> dyscypliny, 1 wykonawca</span><span><b>Jawne</b> ceny</span><span><b>RODO</b> od dnia 1</span></div>
+    <div class="chips stagger d5"><a class="chip" href="/audyt-placowki-medycznej/">Audyty cyfrowe</a><a class="chip" href="/strony-www">Technologia</a><a class="chip" href="#automatyzacje">Automatyzacje</a><a class="chip" href="#model">Opieka</a></div>
+    <div class="proofbar stagger d5"><span><b>Audyt Cyfrowy</b> — 1490 zł netto</span><span><b>Jeden</b> partner</span><span><b>Konkretne</b> rekomendacje</span><span><b>Bez</b> zobowiązania do wdrożenia</span></div>
   </div>
   </header>
 
-  <section id="co"><div class="wrap">
-    <div class="sec-head reveal"><span class="label">Co robimy</span><h2>Cztery rzeczy, jeden wykonawca</h2><p>Web jest sercem. Resztę dokładamy, gdy rośniesz — bez zlecania pięciu różnym ludziom.</p></div>
-    <div class="pillars">
-      <a class="pillar tilt reveal" href="/strony-www" style="--pc:rgba(91,140,255,.18);--pcb:#5b8cff"><div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18"/></svg></div><h3>Strony WWW dla firm</h3><p>Nie szablon z internetu. Strona z Twoją treścią, zoptymalizowana pod Google, z firmowymi mailami i Wizytówką. Gotowa marka — nie sam plik.</p><span class="pmore">Zobacz pakiety →</span></a>
-      <a class="pillar tilt reveal" href="/rodo-i-cyber" style="--pc:rgba(43,212,168,.18);--pcb:#2bd4a8"><div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3.1 7.8-7 9-3.9-1.2-7-4.4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>RODO &amp; cyber dla medycyny</h3><p>Strony dla gabinetów zgodne z RODO od pierwszego kliknięcia. Pełną zgodność prowadzi nasz osobny podmiot — moje-rodo.</p><span class="pmore">Dla gabinetu →</span></a>
-      <a class="pillar tilt reveal" href="/oprogramowanie" style="--pc:rgba(255,122,89,.18);--pcb:#ff7a59"><div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4"/><path d="M16 8l4 4-4 4"/><path d="M13.5 6l-3 12"/></svg></div><h3>Oprogramowanie na miarę</h3><p>Gdy gotowiec nie wystarcza: aplikacja, panel, płatności, workflow. Robiliśmy m.in. system dla szpitala.</p><span class="pmore">Zobacz →</span></a>
-      <a class="pillar tilt reveal" href="/muzyka" style="--pc:rgba(255,47,126,.18);--pcb:#ff2f7e"><div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="18" r="2.4"/><circle cx="17" cy="16" r="2.4"/><path d="M8.4 18V7l11-2.2V16"/></svg></div><h3>Muzyka i studio</h3><p>Dźwięk Dobry — piosenka na prezent, tekst, produkcja. Bo markę buduje się też dźwiękiem.</p><span class="pmore">Posłuchaj →</span></a>
+  <section id="model"><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Jak pracujemy</span><h2>Sprawdzamy → naprawiamy → pilnujemy</h2><p>Nie zaczynamy od przebudowy. Zaczynamy od sprawdzenia, co naprawdę działa, a co tylko wygląda, że działa.</p></div>
+    <div class="steps">
+      <div class="step reveal"><div class="n">01</div><h4>Diagnoza — sprawdzamy</h4><p>Audyt Cyfrowy: strona, Google, analityka, bezpieczeństwo techniczne, formularze i dane, ścieżka klienta oraz procesy, które da się zautomatyzować. Dostajesz raport z priorytetami i omówienie wyników.</p><a href="/audyt-placowki-medycznej/" class="pmore">Zobacz, co sprawdzamy →</a></div>
+      <div class="step reveal"><div class="n">02</div><h4>Wdrożenie — naprawiamy i budujemy</h4><p>Strona WWW, analityka i pomiar, bezpieczeństwo techniczne, integracje, oprogramowanie na miarę i automatyzacje. Zakres wynika z audytu, nie z gotowego cennika.</p><a href="/strony-www" class="pmore">Zobacz, co robimy →</a></div>
+      <div class="step reveal"><div class="n">03</div><h4>Cyfrowa Opieka — pilnujemy i rozwijamy</h4><p>Stała opieka nad cyfrową stroną firmy: pilnujemy, mierzymy, poprawiamy. Żebyś nie wracał do tego samego punktu za rok.</p><a href="#kontakt" class="pmore">Porozmawiajmy →</a></div>
     </div>
-    <p class="center reveal" style="margin-top:28px;color:var(--mut);max-width:760px;margin-left:auto;margin-right:auto">
-      <strong style="color:var(--fg)">Płacisz z góry — płacisz mniej:</strong> 2 490 zł za stronę na własność od pierwszego dnia, plus 99 zł/mc obsługi technicznej — <strong style="color:var(--fg)">3 678 zł w pierwszym roku</strong>.
-      W abonamencie 4 788 zł: nie wykładasz nic na starcie, a w cenie masz dodatkowo Wizytówkę Google, analitykę, firmową pocztę i zmiany treści przez cały rok.
+    <div class="pillars" style="margin-top:34px">
+      <a class="pillar tilt reveal" href="/strony-www" style="--pc:rgba(91,140,255,.18);--pcb:#5b8cff"><div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18"/></svg></div><h3>Strony WWW</h3><p>Strona z Twoją treścią, zoptymalizowana pod Google, z firmowymi mailami i Wizytówką.</p><span class="pmore">Zobacz pakiety →</span></a>
+      <a class="pillar tilt reveal" href="/rodo-i-cyber" style="--pc:rgba(43,212,168,.18);--pcb:#2bd4a8"><div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3.1 7.8-7 9-3.9-1.2-7-4.4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Bezpieczeństwo i dane</h3><p>Certyfikaty, nagłówki, formularze i skrypty. Techniczna strona ochrony danych na stronie firmy.</p><span class="pmore">Dla gabinetu →</span></a>
+      <a class="pillar tilt reveal" href="/oprogramowanie" style="--pc:rgba(255,122,89,.18);--pcb:#ff7a59"><div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4"/><path d="M16 8l4 4-4 4"/><path d="M13.5 6l-3 12"/></svg></div><h3>Oprogramowanie na miarę</h3><p>Gdy gotowiec nie wystarcza: aplikacja, panel, płatności, obieg pracy.</p><span class="pmore">Zobacz →</span></a>
+      <a class="pillar tilt reveal" href="#automatyzacje" style="--pc:rgba(155,182,255,.18);--pcb:#9bb6ff"><div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3"/></svg></div><h3>Automatyzacje</h3><p>Powtarzalna robota, którą ktoś u Ciebie wciąż wykonuje ręcznie.</p><span class="pmore">Zobacz przykłady →</span></a>
+    </div>
+  </div></section>
+
+  <section id="automatyzacje"><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Automatyzacje</span><h2>Powtarzalną robotę da się zdjąć z ludzi</h2><p>Nie mówimy o „AI w firmie". Mówimy o konkretnych czynnościach, które ktoś u Ciebie wykonuje ręcznie co tydzień.</p></div>
+    <ul class="feats">
+      <li class="reveal"><div class="ftxt"><b>System dokumentów w Google Workspace</b><span>Dokumenty powstają i rozchodzą się same — na Google Workspace i Apps Script.</span></div></li>
+      <li class="reveal"><div class="ftxt"><b>Panel Lajf</b><span>Własne narzędzie do analizy danych i obsługi sprzedaży. Używamy go codziennie u siebie.</span></div></li>
+      <li class="reveal"><div class="ftxt"><b>Social OS</b><span>Własny system do planowania i prowadzenia komunikacji marek.</span></div></li>
+      <li class="reveal"><div class="ftxt"><b>Moje RODO</b><span>System dla placówek medycznych, zbudowany od zera i rozwijany do dziś.</span></div></li>
+    </ul>
+    <p class="center reveal" style="margin-top:26px;color:var(--mut);max-width:700px;margin-left:auto;margin-right:auto">
+      To rozwiązania, które sami zbudowaliśmy — nie przykłady z prezentacji.
     </p>
   </div></section>
 
@@ -102,7 +116,7 @@ const opinie: { cytat: string; kto: string; rola: string }[] = [];
   </div></section>
 
   <section id="realizacje"><div class="wrap">
-    <div class="sec-head reveal"><span class="label">Realizacje</span><h2>Robota, nie obietnice</h2><p>Dziewięć realizacji, dziewięć różnych stylów. Dobieramy formę do marki — nie klepiemy szablonu.</p></div>
+    <div class="sec-head reveal"><span class="label">Realizacje</span><h2>Robota, nie obietnice</h2><p>Dziewięć wdrożeń, dziewięć różnych stylów. Formę dobieramy do marki — nie klepiemy szablonu.</p></div>
     <div class="work">
       {realizacje.map((r) => (
         <a class="frame reveal" href={r.href} target="_blank" rel="noopener noreferrer">
@@ -138,9 +152,9 @@ const opinie: { cytat: string; kto: string; rola: string }[] = [];
       <div class="founder-text reveal">
         <span class="label">Kto za tym stoi</span>
         <h2>Cześć, jestem Roman.</h2>
-        <p>Robię strony, ogarniam RODO i cyberbezpieczeństwo, piszę oprogramowanie — i zajmuję się produkcją muzyczną. Ta różnorodność to nie przypadek: dzięki niej patrzę na Twój projekt szerzej niż typowa agencja.</p>
-        <p>Masz jeden kontakt i jedną osobę odpowiedzialną za całość — od pierwszej rozmowy po launch. A kiedy projekt tego wymaga, za mną stoi sprawdzony zespół. Bez przerzucania Cię między działami, bez znikania po oddaniu pliku.</p>
-        <p>Wolę zrobić mniej projektów — ale każdy tak, żebym mógł się pod nim podpisać.</p>
+        <p>Sprawdzam, jak działa cyfrowa strona firmy, i naprawiam to, co nie działa: stronę, analitykę, bezpieczeństwo, dane i procesy, które da się zautomatyzować. Buduję też własne produkty — dzięki temu wiem, jak te rzeczy wyglądają od środka, a nie tylko z prezentacji.</p>
+        <p>Masz jeden kontakt i jedną osobę odpowiedzialną za całość — od pierwszej rozmowy po wdrożenie. A kiedy projekt tego wymaga, za mną stoi sprawdzony zespół. Bez przerzucania Cię między działami, bez znikania po oddaniu pliku.</p>
+        <p>Wolę zrobić mniej projektów — ale każdy tak, żebym mógł się pod nim podpisać. Poza tym zajmuję się produkcją muzyczną — to osobna marka, <a href="/muzyka" style="color:var(--acc)">Dźwięk Dobry</a>.</p>
         <a href="#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
       </div>
     </div>
@@ -166,7 +180,7 @@ const opinie: { cytat: string; kto: string; rola: string }[] = [];
   </div></section>
 
   <section id="oferta"><div class="wrap">
-    <div class="sec-head reveal"><span class="label">Oferta</span><h2>Jawne pakiety. Bez „zapytaj o wycenę".</h2><p>Wybierasz budżet, my mówimy wprost, co w nim dostajesz. Konkurencja chowa ceny — my je pokazujemy.</p></div>
+    <div class="sec-head reveal"><span class="label">Oferta</span><h2>Jawne pakiety. Bez „zapytaj o wycenę".</h2><p>Jeśli już wiesz, czego potrzebujesz — poniżej ceny za konkretne wdrożenia. Jeśli nie wiesz, zacznij od audytu.</p></div>
     <div class="center reveal" style="margin-bottom:38px"><span class="slots"><span class="dot"></span>Przyjmuję ograniczoną liczbę projektów naraz — zapytaj o wolny termin</span></div>
     <div class="abon" style="margin-bottom:38px">
       <div class="reveal">
@@ -198,7 +212,7 @@ const opinie: { cytat: string; kto: string; rola: string }[] = [];
   </div></section>
 
   <section id="rodo"><div class="wrap">
-    <div class="sec-head reveal"><span class="label">Dla gabinetów i przychodni</span><h2>Strona dla gabinetu, która pilnuje danych pacjentów</h2><p>Formularz w gabinecie zbiera dane o zdrowiu — najbardziej chronioną kategorię danych. Budujemy strony medyczne tak, żeby te dane zostawały tam, gdzie powinny: bezpieczny formularz, hosting w Unii, gotowe polityki i klauzule. Pełną, ciągłą zgodność prowadzi nasz osobny podmiot — moje-rodo.</p></div>
+    <div class="sec-head reveal"><span class="label">Dla gabinetów i przychodni</span><h2>Strona dla gabinetu, która pilnuje danych pacjentów</h2><p>Formularz na stronie placówki potrafi zbierać dane, które wymagają szczególnej ostrożności. Sprawdzamy i ustawiamy techniczną stronę ich ochrony: co strona zbiera, dokąd to wysyła i jakie skrypty działają w tle. Dokumentację, rejestry i obowiązki administratora prowadzi nasza wyspecjalizowana marka — moje-rodo.</p></div>
     <ul class="feats" style="margin-bottom:40px">
       <li class="reveal"><span class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><div class="ftxt"><b>Bezpieczne formularze</b><span>Dane pacjentów szyfrowane, bez wycieków do third-party.</span></div></li>
       <li class="reveal"><span class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></svg></span><div class="ftxt"><b>Hosting w Unii Europejskiej</b><span>Dane nie wypływają poza UE — zgodność na poziomie infrastruktury.</span></div></li>
@@ -229,24 +243,6 @@ const opinie: { cytat: string; kto: string; rola: string }[] = [];
     </div>
   </div></section>
 </LajfLayout>
-
-<script>
-  // Hero — rotacja końcówki-benefitu; odpalana po każdym wejściu na stronę (View Transitions)
-  var lajfHeroTimer;
-  function lajfHero(){
-    var rot=document.getElementById('rot');
-    if(lajfHeroTimer){clearInterval(lajfHeroTimer);lajfHeroTimer=null;}
-    if(!rot) return;
-    var F=["przyciągają klientów","sprzedają","budują markę","robią robotę"];
-    var i=0;
-    lajfHeroTimer=setInterval(function(){
-      i=(i+1)%F.length;
-      rot.style.transform='translateY(105%)';rot.style.opacity=0;rot.style.filter='blur(8px)';
-      setTimeout(function(){rot.textContent=F[i];rot.style.transform='translateY(0)';rot.style.opacity=1;rot.style.filter='blur(0)';},360);
-    },2800);
-  }
-  document.addEventListener('astro:page-load', lajfHero);
-</script>
 
 <style>
   /* Realizacje: sztywna siatka 4 kolumn na desktopie → 8 kafelków w 2 równych rzędach.
