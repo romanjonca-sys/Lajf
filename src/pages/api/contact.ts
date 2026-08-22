@@ -3,28 +3,14 @@ export const prerender = false;
 import type { APIRoute } from 'astro';
 import { env } from 'cloudflare:workers';
 import { siteConfig } from '../../../site.config';
-import { renderAutoReplyEmail, renderNotificationEmail, type LeadData } from '../../lib/email-templates';
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const MAX_LEN = 4000;
-
-interface FormPayload {
-  form?: string;
-  name?: string;
-  email?: string;
-  message?: string;
-  recording?: string;
-}
+import { buildLead, isHoneypotTripped } from '../../lib/lead-fields';
+import { renderAutoReplyEmail, renderNotificationEmail } from '../../lib/email-templates';
 
 function json(data: unknown, status: number): Response {
   return new Response(JSON.stringify(data), {
     status,
     headers: { 'content-type': 'application/json' },
   });
-}
-
-function clean(value: unknown): string {
-  return typeof value === 'string' ? value.trim().slice(0, MAX_LEN) : '';
 }
 
 interface ResendMessage {
@@ -45,15 +31,23 @@ async function sendResendEmail(apiKey: string, message: ResendMessage): Promise<
 }
 
 export const POST: APIRoute = async ({ request }) => {
-  let payload: FormPayload;
+  let payload: Record<string, unknown>;
   try {
-    payload = (await request.json()) as FormPayload;
+    payload = (await request.json()) as Record<string, unknown>;
   } catch {
     return json({ error: { code: 'bad_request', message: 'Nieprawidłowe dane.' } }, 400);
   }
 
-  const email = clean(payload.email);
-  if (!EMAIL_RE.test(email)) {
+  // Bot dostaje tę samą odpowiedź co człowiek — inaczej od razu wie, że pułapka
+  // istnieje, i przy następnej próbie ominie ukryte pole.
+  if (isHoneypotTripped(payload)) {
+    return json({ data: { ok: true } }, 200);
+  }
+
+  // Całe zgłoszenie idzie do maila, nie wybrane cztery pola. Powód i testy:
+  // src/lib/lead-fields.ts oraz src/lib/lead-fields.test.mjs.
+  const lead = buildLead(payload);
+  if (!lead) {
     return json({ error: { code: 'invalid_email', message: 'Podaj poprawny adres e-mail.' } }, 422);
   }
 
@@ -74,21 +68,12 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  const formLabel = payload.form === 'lead-magnet' ? 'Lead magnet (próbka)' : 'Kontakt';
-  const lead: LeadData = {
-    email,
-    formLabel,
-    name: clean(payload.name) || undefined,
-    message: clean(payload.message) || undefined,
-    recording: clean(payload.recording) || undefined,
-  };
-
   // 1. Powiadomienie do właściciela — krytyczne (bez niego lead przepada).
   const notified = await sendResendEmail(apiKey, {
     from,
     to,
-    reply_to: email,
-    subject: `Nowe zapytanie (${formLabel}) — ${siteConfig.brandName}`,
+    reply_to: lead.email,
+    subject: `Nowe zapytanie (${lead.formLabel}) — ${siteConfig.brandName}`,
     html: renderNotificationEmail(lead),
   });
 
@@ -102,7 +87,7 @@ export const POST: APIRoute = async ({ request }) => {
   // 2. Auto-odpowiedź do klienta — best-effort, nie blokuje sukcesu zgłoszenia.
   await sendResendEmail(apiKey, {
     from,
-    to: email,
+    to: lead.email,
     subject: `Dziękuję za wiadomość — ${siteConfig.brandName}`,
     html: renderAutoReplyEmail(lead),
   }).catch(() => false);

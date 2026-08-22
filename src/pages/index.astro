@@ -66,6 +66,41 @@ const opinie: { cytat: string; kto: string; rola: string }[] = [];
     </p>
   </div></section>
 
+  <section id="audyt"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Produkt wejściowy</span>
+      <h2>Zacznij od sprawdzenia, co masz</h2>
+      <p>Zanim cokolwiek przebudujemy, warto wiedzieć, co naprawdę działa, a co tylko wygląda, że działa.</p>
+    </div>
+    <div class="abon">
+      <div class="reveal">
+        <h3 style="font-size:clamp(20px,2.6vw,26px);font-weight:700">Audyt Cyfrowy Placówki lub Firmy</h3>
+        <p style="color:var(--mut);margin-top:12px">
+          Sprawdzamy, czy cyfrowa strona Twojej firmy rzeczywiście działa tak, jak powinna — od WWW i Google,
+          przez analitykę i bezpieczeństwo, po formularze, dane i procesy, które można usprawnić.
+          Dostajesz raport z priorytetami, konkretne rekomendacje i omówienie wyników.
+        </p>
+        <p style="color:var(--mut);margin-top:12px">
+          Zaczynamy od <strong style="color:var(--fg)">bezpłatnego pre-audytu</strong> — krótkiego spojrzenia z zewnątrz
+          i rozmowy. Dopiero potem decydujesz, czy robimy pełny audyt.
+        </p>
+      </div>
+      <div class="tier featured reveal">
+        <div class="tag">Pierwszy krok</div>
+        <h3>Audyt Cyfrowy</h3>
+        <div class="price">1 490 zł <small>netto</small></div>
+        <div class="ab">pre-audyt bezpłatny · bez zobowiązania</div>
+        <ul>
+          <li>WWW, Google, analityka, bezpieczeństwo</li>
+          <li>Formularze, dane i ścieżka klienta</li>
+          <li>Procesy, które da się zautomatyzować</li>
+          <li>Raport PDF z priorytetami i omówieniem</li>
+        </ul>
+        <a href="/audyt-placowki-medycznej/" class="btn btn-primary magnetic">Zobacz, co sprawdzamy →</a>
+      </div>
+    </div>
+  </div></section>
+
   <section id="realizacje"><div class="wrap">
     <div class="sec-head reveal"><span class="label">Realizacje</span><h2>Robota, nie obietnice</h2><p>Dziewięć realizacji, dziewięć różnych stylów. Dobieramy formę do marki — nie klepiemy szablonu.</p></div>
     <div class="work">
@@ -163,7 +198,7 @@ const opinie: { cytat: string; kto: string; rola: string }[] = [];
   </div></section>
 
   <section id="rodo"><div class="wrap">
-    <div class="sec-head reveal"><span class="label">Dla gabinetów i przychodni</span><h2>Strona dla gabinetu, która nie naraża Cię na karę</h2><p>Wyciek danych pacjentów to kara do 20 mln euro lub 4% obrotu — i utrata zaufania, którego nie odkupisz. Budujemy strony medyczne zgodne z RODO od pierwszego dnia. Pełną, ciągłą zgodność prowadzi nasz osobny podmiot — moje-rodo.</p></div>
+    <div class="sec-head reveal"><span class="label">Dla gabinetów i przychodni</span><h2>Strona dla gabinetu, która pilnuje danych pacjentów</h2><p>Formularz w gabinecie zbiera dane o zdrowiu — najbardziej chronioną kategorię danych. Budujemy strony medyczne tak, żeby te dane zostawały tam, gdzie powinny: bezpieczny formularz, hosting w Unii, gotowe polityki i klauzule. Pełną, ciągłą zgodność prowadzi nasz osobny podmiot — moje-rodo.</p></div>
     <ul class="feats" style="margin-bottom:40px">
       <li class="reveal"><span class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><div class="ftxt"><b>Bezpieczne formularze</b><span>Dane pacjentów szyfrowane, bez wycieków do third-party.</span></div></li>
       <li class="reveal"><span class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></svg></span><div class="ftxt"><b>Hosting w Unii Europejskiej</b><span>Dane nie wypływają poza UE — zgodność na poziomie infrastruktury.</span></div></li>
@@ -187,6 +222,7 @@ const opinie: { cytat: string; kto: string; rola: string }[] = [];
           <div class="field"><label>E-mail</label><input type="email" name="email" placeholder="ty@firma.pl" required /></div>
         </div>
         <div class="field" style="margin-bottom:20px"><label>W dwóch zdaniach: o co chodzi</label><input name="opis" placeholder="np. gabinet stomatologiczny — strona + Wizytówka Google" /></div>
+        <div class="hp" aria-hidden="true"><label for="k-gotcha">Nie wypełniaj tego pola</label><input id="k-gotcha" name="_gotcha" tabindex="-1" autocomplete="off" /></div>
         <button type="submit" class="btn btn-primary magnetic" style="width:100%;justify-content:center">Wyślij — odezwę się w 24h</button>
         <p class="qnote">Pytamy o typ projektu i budżet, żeby od razu odpowiedzieć konkretem — a nie zgadywać. Jeśli nie jesteśmy dla Ciebie, powiemy wprost i polecimy kogoś.</p>
       </form>

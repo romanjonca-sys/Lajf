@@ -4,19 +4,13 @@
  * Branding sterowany przez site.config (brandName, akcent z var akcentu skóry).
  */
 import { siteConfig } from '../../site.config';
+import type { Lead } from './lead-fields';
 
 const ACCENT = '#2969f1';
 const INK = '#0f0f10';
 const MUTED = '#6b6b70';
 const BORDER = '#e6e6e9';
 
-export interface LeadData {
-  name?: string;
-  email: string;
-  message?: string;
-  recording?: string;
-  formLabel: string;
-}
 
 function escapeHtml(value: string): string {
   return value
@@ -71,14 +65,33 @@ function row(label: string, value: string): string {
   </tr>`;
 }
 
+/**
+ * Wartość pola w mailu. Telefon i adres strony stają się linkami, bo z maila
+ * z leadem zwykle od razu się dzwoni albo otwiera stronę. Reszta idzie tekstem,
+ * z zachowaniem podziału na wiersze.
+ */
+function formatValue(field: { label: string; value: string }): string {
+  const safe = escapeHtml(field.value);
+  if (field.label === 'Telefon') {
+    return `<a href="tel:${safe.replace(/[^+0-9]/g, '')}" style="color:${INK};">${safe}</a>`;
+  }
+  if (field.label === 'Strona WWW' || field.label === 'Załącznik') {
+    const href = /^https?:\/\//.test(field.value) ? safe : `https://${safe}`;
+    return `<a href="${href}" style="color:${ACCENT};">${safe}</a>`;
+  }
+  return safe.replace(/\n/g, '<br>');
+}
+
 /** Powiadomienie do właściciela — nowy lead. */
-export function renderNotificationEmail(data: LeadData): string {
+export function renderNotificationEmail(data: Lead): string {
   const { brandName } = siteConfig;
   const rows: string[] = [];
   if (data.name) rows.push(row('Imię', escapeHtml(data.name)));
   rows.push(row('E-mail', `<a href="mailto:${escapeHtml(data.email)}" style="color:${INK};">${escapeHtml(data.email)}</a>`));
-  if (data.recording) rows.push(row('Załącznik', `<a href="${escapeHtml(data.recording)}" style="color:${ACCENT};">${escapeHtml(data.recording)}</a>`));
-  if (data.message) rows.push(row('Wiadomość', escapeHtml(data.message).replace(/\n/g, '<br>')));
+  // Wszystko, co przyszło z formularza — kolejność i etykiety ustala lead-fields.
+  for (const field of data.fields) {
+    rows.push(row(escapeHtml(field.label), formatValue(field)));
+  }
 
   const inner = `
     <p style="margin:0 0 4px;font-size:13px;font-weight:600;color:${ACCENT};text-transform:uppercase;letter-spacing:0.06em;">${escapeHtml(data.formLabel)}</p>
@@ -89,7 +102,7 @@ export function renderNotificationEmail(data: LeadData): string {
 }
 
 /** Auto-odpowiedź do klienta — potwierdzenie. */
-export function renderAutoReplyEmail(data: LeadData): string {
+export function renderAutoReplyEmail(data: Lead): string {
   const { brandName, company } = siteConfig;
   const greeting = data.name ? `Cześć ${escapeHtml(data.name.split(' ')[0])},` : 'Cześć,';
   const inner = `

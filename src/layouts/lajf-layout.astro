@@ -22,6 +22,7 @@ interface Props {
 
 const { title, description, accent = '#5b8cff', schema } = Astro.props;
 const { brandName, company } = siteConfig;
+const telHref = `tel:${company.phone.replace(/\s/g, '')}`;
 const year = new Date().getFullYear();
 
 const siteUrl = Astro.site ?? new URL('https://lajf.eu');
@@ -78,8 +79,28 @@ const jsonLd = {
 
 <nav><div class="wrap nav-in">
   <a class="logo" href="/">{brandName}<b>.</b></a>
-  <div class="nav-links"><a href="/strony-www">Strony WWW</a><a href="/rodo-i-cyber">RODO &amp; cyber</a><a href="/oprogramowanie">Oprogramowanie</a><a href="/muzyka">Muzyka</a><a href="/#realizacje">Realizacje</a><a href="/#o-mnie">O mnie</a></div>
-  <a href="/#kontakt" class="btn btn-primary magnetic" style="padding:11px 20px">Konsultacja</a>
+  <div class="nav-links"><a href="/audyt-placowki-medycznej/">Audyt cyfrowy</a><a href="/strony-www">Strony WWW</a><a href="/rodo-i-cyber">RODO &amp; cyber</a><a href="/oprogramowanie">Oprogramowanie</a><a href="/#realizacje">Realizacje</a><a href="/#o-mnie">O mnie</a></div>
+  <div class="nav-actions">
+    <a class="nav-tel" href={telHref} aria-label={`Zadzwoń: ${company.phone}`}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+      <span>{company.phone}</span>
+    </a>
+    <a href="/#kontakt" class="btn btn-primary magnetic nav-cta" style="padding:11px 20px">Konsultacja</a>
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-mobile" aria-label="Otwórz menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</div>
+<div class="nav-mobile" id="nav-mobile" hidden>
+  <a class="nav-mobile-tel" href={telHref}>Zadzwoń: {company.phone}</a>
+  <a href="/audyt-placowki-medycznej/">Audyt cyfrowy placówki</a>
+  <a href="/strony-www">Strony WWW</a>
+  <a href="/rodo-i-cyber">RODO &amp; cyber</a>
+  <a href="/oprogramowanie">Oprogramowanie</a>
+  <a href="/muzyka">Muzyka</a>
+  <a href="/#realizacje">Realizacje</a>
+  <a href="/#o-mnie">O mnie</a>
+  <a class="nav-mobile-cta" href="/#kontakt">Napisz do nas</a>
 </div></nav>
 
 <slot />
@@ -128,6 +149,19 @@ const jsonLd = {
       el.addEventListener('pointermove',function(e){if(!r)r=el.getBoundingClientRect();var px=(e.clientX-r.left)/r.width-.5;var py=(e.clientY-r.top)/r.height-.5;el.style.transform='perspective(800px) rotateY('+px*7+'deg) rotateX('+(-py*7)+'deg) translateY(-4px)';});
       el.addEventListener('pointerleave',function(){el.style.transform='';r=null;});
     });
+    const przelacznik=document.getElementById('nav-toggle');
+    const panel=document.getElementById('nav-mobile');
+    if(przelacznik&&panel&&!przelacznik.dataset.bound){
+      przelacznik.dataset.bound='1';
+      const zamknij=function(){panel.hidden=true;przelacznik.setAttribute('aria-expanded','false');przelacznik.setAttribute('aria-label','Otwórz menu');przelacznik.classList.remove('open');};
+      przelacznik.addEventListener('click',function(){
+        if(przelacznik.getAttribute('aria-expanded')==='true'){zamknij();return;}
+        panel.hidden=false;przelacznik.setAttribute('aria-expanded','true');przelacznik.setAttribute('aria-label','Zamknij menu');przelacznik.classList.add('open');
+      });
+      // Klik w link ma zamknąć panel — przy kotwicach (#kontakt) strona się nie przeładowuje.
+      panel.addEventListener('click',function(e){if(e.target instanceof Element&&e.target.closest('a')) zamknij();});
+      document.addEventListener('keydown',function(e){if(e.key==='Escape') zamknij();});
+    }
     document.querySelectorAll('form[data-engine-form]').forEach(function(form){
       if(form.__bound) return; form.__bound=true;
       form.addEventListener('submit',async function(event){
@@ -142,7 +176,7 @@ const jsonLd = {
           form.innerHTML='<p class="form-status form-status--ok">Dzięki! Odezwę się najszybciej, jak się da.</p>';
           // Lead liczymy dopiero po potwierdzeniu z serwera. Analityka nasłuchuje
           // tego zdarzenia — layout nie musi wiedzieć, czy stoi na niej GA4 czy GTM.
-          document.dispatchEvent(new CustomEvent('lajf:lead',{detail:{metoda:'formularz'}}));
+          document.dispatchEvent(new CustomEvent('lajf:lead',{detail:{metoda:form.getAttribute('data-lead-method')||'formularz'}}));
         }catch(err){
           if(btn){btn.removeAttribute('disabled');btn.textContent=original;}
           var note=form.querySelector('.form-status--err');
@@ -154,6 +188,36 @@ const jsonLd = {
   }
   if(!window.__lajfGlobals){
     window.__lajfGlobals=true;
+    // Kotwice wewnątrz strony. Bez tego klik w „Zamów audyt" (#zamow) czy
+    // „Zamów bezpłatną konsultację" (#kontakt) nie robi nic: router View Transitions
+    // przejmuje kliknięcie w link, a że adres różni się tylko fragmentem, nie ma
+    // dokąd nawigować i natywne przewinięcie do kotwicy nie następuje.
+    addEventListener('click',function(e){
+      const link=e.target instanceof Element?e.target.closest('a[href*="#"]'):null;
+      if(!link) return;
+      const href=link.getAttribute('href')||'';
+      const pozycja=href.indexOf('#');
+      const hash=href.slice(pozycja);
+      if(hash.length<2) return;
+      // Link z inną ścieżką prowadzi na inną stronę — zostawiamy go routerowi.
+      const sciezka=href.slice(0,pozycja);
+      if(sciezka&&sciezka!==location.pathname&&sciezka+'/'!==location.pathname) return;
+      let cel=null;
+      try{ cel=document.querySelector(hash); }catch(err){ return; }
+      if(!cel) return;
+      e.preventDefault();
+      // Skok pomija naturalne wejście sekcji w kadr, więc animacja odsłaniania
+      // mogłaby jej nie odpalić i użytkownik wylądowałby na przezroczystej treści.
+      // Odsłaniamy docelową sekcję z góry — obserwator i tak pomija to, co ma już klasę.
+      if(cel.classList.contains('reveal')) cel.classList.add('in');
+      cel.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});
+      // Przewijamy natychmiast, nie płynnie. Na tej stronie płynne przewijanie
+      // nie rusza z miejsca (sprawdzone: scrollTo z behavior 'smooth' po 2,5 s
+      // wciąż na zerze, przy kolejnej próbie zawiesił się renderer — podejrzenie
+      // pada na animowane rozmycia w tle). Kotwica ma działać, nie ładnie wyglądać.
+      cel.scrollIntoView({behavior:'instant',block:'start'});
+      history.pushState(null,'',hash);
+    });
     addEventListener('pointermove',function(e){var s=window.__lajfSpot;if(s){s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';}});
     addEventListener('scroll',function(){var p=window.__lajfProg;if(p){var h=document.documentElement;p.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';}});
   }

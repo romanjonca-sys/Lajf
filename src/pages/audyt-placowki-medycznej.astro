@@ -1,0 +1,263 @@
+---
+/**
+ * Landing produktu wejściowego: Audyt Cyfrowy Placówki Medycznej.
+ * Strona, którą Roman podaje przez telefon — ma odpowiedzieć na sześć pytań
+ * (kto, co sprawdza, komu ufać, co dostaję, ile kosztuje, co dalej) bez scrollowania w nieskończoność.
+ *
+ * Świadomie NIE używa `segment-landing.astro`: tamten komponent ma wbitą
+ * kartę abonamentu 399 zł/mc razem z ceną w schema.org, a tu obowiązuje
+ * jedna cena 1490 zł netto. Reszta (layout, klasy, formularz) jest wspólna.
+ */
+import LajfLayout from '../layouts/lajf-layout.astro';
+import { siteConfig } from '../../site.config';
+
+const title = 'Audyt Cyfrowy Placówki Medycznej — 1490 zł netto | Lajf';
+const description =
+  'Sprawdzamy, czy cyfrowa strona Twojej placówki działa tak, jak powinna: WWW, Google, analityka, bezpieczeństwo techniczne, formularze i procesy do automatyzacji. Raport, priorytety i omówienie. 1490 zł netto.';
+
+const telHref = `tel:${siteConfig.company.phone.replace(/\s/g, '')}`;
+
+const sprawdzamy = [
+  {
+    b: 'Strona WWW i technika',
+    s: 'Szybkość, działanie na telefonie, błędy, których nie widać z zewnątrz, i to, czy strona w ogóle prowadzi pacjenta do kontaktu.',
+    d: 'M3 5h18v11H3zM8 20h8M12 16v4',
+  },
+  {
+    b: 'Google i podstawy widoczności',
+    s: 'Wizytówka, Search Console, indeksowanie, opisy stron. Czyli czy pacjent, który szuka Twojej specjalizacji w okolicy, ma szansę Cię znaleźć.',
+    d: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4',
+  },
+  {
+    b: 'Analityka i pomiar konwersji',
+    s: 'Czy w ogóle mierzysz, skąd biorą się pacjenci, i czy to, co mierzysz, jest prawdą. Najczęstsze znalezisko: pomiar jest, ale liczy nie to, co trzeba.',
+    d: 'M4 19V9M10 19V5M16 19v-7M22 19H2',
+  },
+  {
+    b: 'Bezpieczeństwo techniczne',
+    s: 'Certyfikat, nagłówki bezpieczeństwa, aktualność tego, na czym stoi strona, dostępy i kopie zapasowe. Przegląd konfiguracji, nie test włamaniowy.',
+    d: 'M12 3l7 3v5c0 4.6-3.1 7.8-7 9-3.9-1.2-7-4.4-7-9V6l7-3zM9 12l2 2 4-4',
+  },
+  {
+    b: 'Formularze, cookies i dane',
+    s: 'Co Twoja strona zbiera, dokąd to wysyła i jakie skrypty siedzą w tle. Techniczna strona ochrony danych, nie opinia prawna.',
+    d: 'M6 3h9l4 4v14H6zM15 3v4h4M9 13h6M9 17h4',
+  },
+  {
+    b: 'Ścieżka pacjenta',
+    s: 'Droga od wejścia na stronę do umówienia wizyty. Gdzie pacjent się zatrzymuje, czego nie znajduje i w którym miejscu rezygnuje.',
+    d: 'M4 20s2-8 8-8 8 8 8 8M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
+  },
+  {
+    b: 'Procesy do automatyzacji',
+    s: 'Powtarzalna robota, którą ktoś u Ciebie wciąż wykonuje ręcznie: przepisywanie, wysyłanie, przypominanie. Wskazujemy, co da się zdjąć z ludzi.',
+    d: 'M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1',
+  },
+];
+
+const otrzymujesz = [
+  { b: 'Raport PDF', s: 'Komplet ustaleń na piśmie, opisany po ludzku. Zostaje u Ciebie i możesz go pokazać komukolwiek.' },
+  { b: 'Podsumowanie najważniejszych ustaleń', s: 'Skrót na początku raportu: co znaleźliśmy, zanim wejdziesz w szczegóły.' },
+  { b: 'Priorytety problemów', s: 'Co naprawić najpierw, co potem, a co może spokojnie poczekać.' },
+  { b: 'Konkretne rekomendacje', s: 'Przy każdym znalezisku napisane, co z nim zrobić. Bez „należy rozważyć optymalizację".' },
+  { b: 'Roadmapa dalszych działań', s: 'Kolejność kroków po audycie, żebyś wiedział, w co się pakujesz, zanim się w to spakujesz.' },
+  { b: 'Omówienie wyników', s: 'Rozmowa, na której przechodzimy przez raport i odpowiadam na pytania. Raport bez omówienia zwykle ląduje w szufladzie.' },
+];
+
+const dowody = [
+  { b: 'Moje RODO', s: 'System dla placówek medycznych zbudowany przez nas od zera — nie strona o systemie, tylko działający produkt.', href: 'https://moje-rodo.pl' },
+  { b: 'Panel Lajf', s: 'Własne narzędzie do analizy danych i obsługi sprzedaży. Używamy go codziennie u siebie.', href: null },
+  { b: 'Social OS', s: 'Własny system do prowadzenia komunikacji marek. Też zbudowany u nas i utrzymywany na bieżąco.', href: null },
+  { b: 'Automatyzacje Google Workspace', s: 'Automatyzacja dokumentacji w Google Workspace i Apps Script — powtarzalna robota robi się sama.', href: null },
+  { b: 'Realizacje, które można kliknąć', s: 'Dziewięć wdrożonych stron z linkami do żywych serwisów. Sprawdź je, zanim zdecydujesz.', href: '/#realizacje' },
+];
+
+const wspolpraca = [
+  { n: '1', h: 'Bezpłatny pre-audyt', p: 'Krótkie sprawdzenie z zewnątrz i rozmowa. Mówię wprost, czy widzę u Ciebie coś, co warto naprawiać. Jeśli nie widzę, też to powiem.' },
+  { n: '2', h: 'Audyt Cyfrowy', p: 'Pełny przegląd siedmiu obszarów, raport PDF z priorytetami i rekomendacjami, omówienie wyników. 1490 zł netto.' },
+  { n: '3', h: 'Wdrożenie', p: 'Naprawiamy to, co wyszło w audycie. Zakres i wycena wynikają z raportu, nie z cennika ustalonego przed sprawdzeniem czegokolwiek.' },
+  { n: '4', h: 'Cyfrowa Opieka Lajf', p: 'Stała opieka nad cyfrową stroną placówki: pilnujemy, mierzymy, poprawiamy. Żebyś nie wracał do tego samego punktu za rok.' },
+];
+
+const faq = [
+  {
+    q: 'Czy to jest audyt RODO?',
+    a: 'Nie. Sprawdzamy techniczną stronę ochrony danych: co zbierają Twoje formularze, dokąd to wędruje, jakie skrypty działają w tle i jak ustawione są cookies. To nie jest opinia prawna ani pełny audyt zgodności — tym zajmuje się nasz osobny podmiot moje-rodo i jeśli okaże się potrzebny, powiem to wprost w raporcie.',
+  },
+  {
+    q: 'Czy to test bezpieczeństwa typu włamanie?',
+    a: 'Nie. Robimy przegląd konfiguracji: certyfikat, nagłówki, aktualność oprogramowania, dostępy, kopie zapasowe. Nie próbujemy się włamywać do Twoich systemów i nie testujemy ich odporności na atak. To osobna usługa, która wymaga osobnej umowy i zgody na piśmie.',
+  },
+  {
+    q: 'Mam informatyka / agencję. Po co mi audyt?',
+    a: 'Audyt nie jest przeciwko nim. Jest spojrzeniem z zewnątrz na całość — bo informatyk zwykle odpowiada za serwer, agencja za reklamy, a nikt za to, czy to wszystko razem prowadzi pacjenta do rejestracji. Raport możesz przekazać swoim ludziom i zlecić naprawę im. Wielu klientów tak robi.',
+  },
+  {
+    q: 'Czy po audycie muszę zlecić wam wdrożenie?',
+    a: 'Nie. Raport jest Twój i możesz z nim zrobić, co chcesz — wdrożyć samodzielnie, zlecić komu innemu albo odłożyć. Nie ma tu żadnego zobowiązania, a rekomendacje piszemy tak, żeby dało się je wykonać bez nas.',
+  },
+  {
+    q: 'Czym różni się bezpłatny pre-audyt od płatnego audytu?',
+    a: 'Pre-audyt to szybkie spojrzenie z zewnątrz i rozmowa — sprawdzam, czy w ogóle jest o czym rozmawiać. Płatny audyt to przejście przez siedem obszarów, raport na piśmie z priorytetami i rekomendacjami oraz omówienie wyników. Pre-audyt jest bezpłatny i do niczego nie zobowiązuje.',
+  },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Service',
+      name: 'Audyt Cyfrowy Placówki Medycznej',
+      serviceType: 'Audyt cyfrowy',
+      description,
+      provider: { '@type': 'Organization', name: 'Lajf', url: 'https://lajf.eu/' },
+      areaServed: 'PL',
+      audience: { '@type': 'BusinessAudience', name: 'Prywatne placówki medyczne i gabinety' },
+      offers: {
+        '@type': 'Offer',
+        price: 1490,
+        priceCurrency: 'PLN',
+        valueAddedTaxIncluded: false,
+        availability: 'https://schema.org/InStock',
+        url: 'https://lajf.eu/audyt-placowki-medycznej/',
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faq.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
+    },
+  ],
+};
+---
+
+<LajfLayout title={title} description={description} schema={schema}>
+  <header class="phero"><div class="wrap pin">
+    <span class="label">Dla prywatnych placówek medycznych i gabinetów</span>
+    <h1>Audyt Cyfrowy <span class="hl">Placówki Medycznej</span></h1>
+    <p class="lead">
+      Sprawdzamy, czy cyfrowa strona Twojej placówki rzeczywiście działa tak, jak powinna — od WWW i Google,
+      przez analitykę i bezpieczeństwo, po formularze, dane i procesy, które można usprawnić.
+    </p>
+    <div class="hero-cta center">
+      <a href="#zamow" class="btn btn-primary magnetic">Zamów audyt — 1490 zł netto</a>
+      <a href={telHref} class="btn btn-ghost">Zadzwoń: {siteConfig.company.phone}</a>
+    </div>
+  </div></header>
+
+  <section id="co-sprawdzamy"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Zakres</span>
+      <h2>Co sprawdzamy</h2>
+      <p>Siedem obszarów, które razem decydują o tym, czy pacjent trafia do Twojej rejestracji — czy do kogoś innego.</p>
+    </div>
+    <ul class="feats">
+      {sprawdzamy.map((item) => (
+        <li class="reveal">
+          <span class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d={item.d} /></svg></span>
+          <div class="ftxt"><b>{item.b}</b><span>{item.s}</span></div>
+        </li>
+      ))}
+    </ul>
+    <p class="center reveal" style="margin-top:30px;color:var(--mut);max-width:720px;margin-left:auto;margin-right:auto">
+      Dwie rzeczy, których ten audyt <strong style="color:var(--fg)">nie obejmuje</strong>: nie jest pełnym audytem
+      prawnym RODO ani testem penetracyjnym. Jeśli któryś z nich okaże się potrzebny, napiszę to w raporcie wprost.
+    </p>
+  </div></section>
+
+  <section id="co-dostajesz"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Rezultat</span>
+      <h2>Co dostajesz</h2>
+      <p>Dokument, z którym możesz pójść do kogokolwiek — także do swojego informatyka.</p>
+    </div>
+    <ul class="feats">
+      {otrzymujesz.map((item) => (
+        <li class="reveal" style="grid-column:1/-1"><div class="ftxt"><b>{item.b}</b><span>{item.s}</span></div></li>
+      ))}
+    </ul>
+  </div></section>
+
+  <section id="cena" data-audit-price><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Cena</span><h2>Jedna cena. Bez pakietów.</h2></div>
+    <div class="center reveal">
+      <div class="tier featured" style="max-width:460px;margin:0 auto;text-align:left">
+        <div class="tag">Produkt wejściowy</div>
+        <h3>Audyt Cyfrowy Placówki Medycznej</h3>
+        <div class="price">1 490 zł <small>netto</small></div>
+        <div class="ab">pre-audyt przed nim jest bezpłatny</div>
+        <ul>
+          <li>Siedem obszarów sprawdzonych po kolei</li>
+          <li>Raport PDF z priorytetami i rekomendacjami</li>
+          <li>Roadmapa dalszych działań</li>
+          <li>Omówienie wyników na rozmowie</li>
+          <li>Bez zobowiązania do dalszej współpracy</li>
+        </ul>
+        <a href="#zamow" class="btn btn-primary magnetic">Zamów audyt →</a>
+      </div>
+    </div>
+  </div></section>
+
+  <section id="dlaczego"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Dlaczego Lajf</span>
+      <h2>Budujemy to, o czym mówimy</h2>
+      <p>Lajf powstał z praktyki — budujemy własne produkty, systemy i automatyzacje, których sami używamy.</p>
+    </div>
+    <ul class="feats">
+      {dowody.map((item) => (
+        <li class="reveal">
+          <div class="ftxt">
+            <b>{item.href ? <a href={item.href} style="color:inherit">{item.b} →</a> : item.b}</b>
+            <span>{item.s}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div></section>
+
+  <section id="wspolpraca"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Jak to idzie</span>
+      <h2>Cztery kroki, w tej kolejności</h2>
+      <p>Każdy kolejny jest Twoją decyzją, nie automatem. Można zatrzymać się na dowolnym.</p>
+    </div>
+    <div class="steps">
+      {wspolpraca.map((item) => (
+        <div class="step reveal"><div class="n">{item.n}</div><h4>{item.h}</h4><p>{item.p}</p></div>
+      ))}
+    </div>
+  </div></section>
+
+  <section id="pytania"><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Pytania</span><h2>Najczęstsze pytania</h2></div>
+    <div class="lfaq reveal">
+      {faq.map((item) => (
+        <details><summary>{item.q}</summary><p>{item.a}</p></details>
+      ))}
+    </div>
+  </div></section>
+
+  <section id="zamow"><div class="wrap">
+    <div class="formcard reveal">
+      <h2>Zamów audyt albo bezpłatny pre-audyt</h2>
+      <p class="sub">Cztery pola. Odezwę się w 24 godziny i zaczniemy od pre-audytu — bezpłatnie.</p>
+      <form name="audyt" data-engine-form data-lead-method="formularz-audyt">
+        <div class="frow">
+          <div class="field"><label for="a-placowka">Nazwa placówki</label><input id="a-placowka" name="placowka" placeholder="np. Przychodnia Zdrowie" required /></div>
+          <div class="field"><label for="a-www">Adres strony</label><input id="a-www" name="www" placeholder="np. przychodnia-zdrowie.pl" /></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label for="a-telefon">Telefon</label><input id="a-telefon" name="telefon" type="tel" placeholder="np. 600 100 200" /></div>
+          <div class="field"><label for="a-email">E-mail</label><input id="a-email" name="email" type="email" placeholder="kontakt@placowka.pl" required /></div>
+        </div>
+        <div class="hp" aria-hidden="true"><label for="a-gotcha">Nie wypełniaj tego pola</label><input id="a-gotcha" name="_gotcha" tabindex="-1" autocomplete="off" /></div>
+        <button type="submit" class="btn btn-primary magnetic" style="width:100%;justify-content:center">Wyślij — odezwę się w 24h</button>
+        <p class="qnote">Pytamy o adres strony, żeby na pre-audycie mieć już co oglądać. O budżet nie pytamy — audyt ma jedną cenę.</p>
+      </form>
+    </div>
+  </div></section>
+</LajfLayout>

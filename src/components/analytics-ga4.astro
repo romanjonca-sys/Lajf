@@ -136,9 +136,39 @@ const tryb = gtmId ? 'gtm' : gaId ? 'ga4' : 'brak';
     });
 
     // Emitowane przez layout dopiero po udanej odpowiedzi z /api/contact —
-    // nieudane próby wysyłki nie są leadem.
+    // nieudane próby wysyłki nie są leadem. Metoda pochodzi z atrybutu
+    // `data-lead-method` formularza, więc audytowy raportuje się osobno.
     document.addEventListener('lajf:lead', function (event) {
       wyslijLead((event.detail && event.detail.metoda) || 'formularz');
+    });
+
+    // ——— Dojście do ceny audytu ———
+    // Zdarzenie własne, nie `view_item`: to nie jest karta produktu w e-commerce,
+    // a GA4 zestawia `view_item` z listą pozycji i wartością koszyka, których tu nie ma.
+    // Mierzy, ilu czytających w ogóle dociera do kwoty — pierwszy sygnał, czy landing
+    // gubi ludzi przed ceną, czy dopiero na niej.
+    var cenaZgloszona = false;
+    function obserwujCene() {
+      if (cenaZgloszona || !('IntersectionObserver' in window)) return;
+      var sekcja = document.querySelector('[data-audit-price]');
+      if (!sekcja) return;
+      var obserwator = new IntersectionObserver(function (wpisy) {
+        wpisy.forEach(function (wpis) {
+          if (!wpis.isIntersecting || cenaZgloszona) return;
+          cenaZgloszona = true;
+          obserwator.disconnect();
+          gtag('event', 'audit_price_view', {
+            page_location: location.href,
+          });
+        });
+      }, { threshold: 0.4 });
+      obserwator.observe(sekcja);
+    }
+
+    document.addEventListener('astro:page-load', function () {
+      // Nowa podstrona = nowa sekcja ceny, więc licznik zeruje się przy przejściu.
+      cenaZgloszona = false;
+      obserwujCene();
     });
   </script>
 )}
