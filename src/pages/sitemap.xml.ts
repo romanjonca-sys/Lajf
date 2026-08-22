@@ -9,6 +9,7 @@ import type { APIRoute } from 'astro';
 const PAGES = [
   '', // homepage
   'audyt-placowki-medycznej',
+  'audyt-firmy',
   'strony-www',
   'strona-www-dla-lekarza',
   'strona-www-dla-firmy-sprzatajacej',

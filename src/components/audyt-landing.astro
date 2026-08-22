@@ -1,0 +1,424 @@
+---
+/**
+ * Wspólny układ landingu Audytu Cyfrowego. Treść przychodzi w propsie `zestaw`
+ * z `src/lib/audyt-tresc.ts` — tu jest wyłącznie struktura, style i pomiar.
+ *
+ * Wydzielone z `audyt-placowki-medycznej.astro` przy budowie wariantu dla firm.
+ * Znaczniki i style przeniesione bez zmian, żeby zaakceptowany landing medyczny
+ * wyglądał po refaktorze identycznie.
+ *
+ * Świadomie NIE używa `segment-landing.astro`: tamten ma wbitą kartę abonamentu
+ * 399 zł/mc razem z ceną w schema.org, a tu obowiązuje jedna cena 1490 zł netto.
+ */
+import LajfLayout from '../layouts/lajf-layout.astro';
+import { siteConfig } from '../../site.config';
+import { czteryPytania, type ZestawAudytu } from '../lib/audyt-tresc';
+
+interface Props {
+  zestaw: ZestawAudytu;
+}
+
+const { zestaw } = Astro.props;
+const telHref = `tel:${siteConfig.company.phone.replace(/\s/g, '')}`;
+const pytania = czteryPytania(zestaw);
+const adres = `https://lajf.eu${zestaw.sciezka}`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Service',
+      name: zestaw.schemaNazwa,
+      serviceType: 'Audyt cyfrowy',
+      description: zestaw.opis,
+      provider: { '@type': 'Organization', name: 'Lajf', url: 'https://lajf.eu/' },
+      areaServed: 'PL',
+      audience: { '@type': 'BusinessAudience', name: zestaw.schemaOdbiorcy },
+      offers: {
+        '@type': 'Offer',
+        price: 1490,
+        priceCurrency: 'PLN',
+        valueAddedTaxIncluded: false,
+        availability: 'https://schema.org/InStock',
+        url: adres,
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: zestaw.faq.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
+    },
+  ],
+};
+---
+
+<LajfLayout title={zestaw.tytul} description={zestaw.opis} schema={schema}>
+  <header class="phero"><div class="wrap pin">
+    <span class="label">{zestaw.etykietaHero}</span>
+    <h1>{zestaw.h1} <span class="hl">{zestaw.h1Wyroznione}</span></h1>
+    <p class="lead lead-claim">{zestaw.claim}</p>
+    {zestaw.opisHero.map((akapit) => <p class="lead lead-opis">{akapit}</p>)}
+    <div class="center hero-akcja">
+      <a href="#zamow" class="btn btn-primary magnetic">Zamów audyt — 1 490 zł netto</a>
+      <p class="hero-drugi">
+        Zanim zdecydujesz, możemy zrobić <a href="#zamow">bezpłatny pre-audyt</a>.
+        Albo zadzwoń: <a href={telHref}>{siteConfig.company.phone}</a>.
+      </p>
+    </div>
+  </div></header>
+
+  <section id="co-sprawdzamy"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Zakres</span>
+      <h2>Co sprawdzamy</h2>
+      <p>{zestaw.zakresPodtytul}</p>
+    </div>
+    <ul class="zakres">
+      {zestaw.zakres.map((item) => (
+        <li class="reveal">
+          <span class="zakres-nr">{item.nr}</span>
+          <span class="zakres-ikona"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d={item.d} /></svg></span>
+          <div class="zakres-txt"><b>{item.b}</b><span>{item.s}</span></div>
+        </li>
+      ))}
+    </ul>
+    <p class="zastrzezenie reveal">
+      Audyt <strong>nie jest</strong> pełnym audytem prawnym RODO ani testem penetracyjnym.
+      Jeśli któryś z nich okaże się potrzebny, napiszę to w raporcie wprost.
+    </p>
+  </div></section>
+
+  <section id="wynik"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Podgląd produktu</span>
+      <h2>Co zobaczysz po audycie</h2>
+      <p>{zestaw.wynikPodtytul}</p>
+    </div>
+
+    <div class="wynik-uklad">
+      <div class="raport reveal">
+        <div class="raport-pasek">
+          <span class="raport-marka">Lajf<b>.</b></span>
+          <span class="raport-tytul">Audyt Cyfrowy — fragment raportu</span>
+        </div>
+        <div class="raport-tresc">
+          {zestaw.ustalenia.map((u) => (
+            <div class="ustalenie">
+              <span class={`waga ${u.klasa}`}>{u.waga}</span>
+              <p>{u.tresc}</p>
+            </div>
+          ))}
+        </div>
+        <p class="raport-stopka">Przykładowe ustalenia — ilustracja układu raportu, nie opis konkretnej {zestaw.podmiotWZastrzezeniu}.</p>
+      </div>
+
+      <div class="pytania-lista reveal">
+        <p class="pytania-wstep">Przy każdym ustaleniu odpowiadamy na cztery pytania:</p>
+        {pytania.map((p) => (
+          <div class="pytanie">
+            <span class="pytanie-nr">{p.nr}</span>
+            <div><b>{p.q}</b><span>{p.s}</span></div>
+          </div>
+        ))}
+        <a href="#zamow" class="btn btn-primary magnetic pytania-cta">Zamów audyt →</a>
+      </div>
+    </div>
+  </div></section>
+
+  <section id="co-dostajesz"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Zakres dostawy</span>
+      <h2>Co dostajesz</h2>
+      <p>Dokument, z którym możesz pójść do kogokolwiek — także do swojego informatyka.</p>
+    </div>
+    <ul class="dostawa">
+      {zestaw.otrzymujesz.map((item) => (
+        <li class="reveal"><b>{item.b}</b><span>{item.s}</span></li>
+      ))}
+    </ul>
+  </div></section>
+
+  <section id="dlaczego"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Kto to robi</span>
+      <h2>Nie tylko doradzamy. Sami budujemy i prowadzimy systemy cyfrowe.</h2>
+      <p>Audyt wykonuje ktoś, kto na co dzień projektuje strony, systemy, automatyzacje i procesy — i odpowiada za ich działanie.</p>
+    </div>
+    <ul class="dowody">
+      {zestaw.dowody.map((item) => (
+        <li class="reveal">
+          <b>{item.href ? <a href={item.href}>{item.b} →</a> : item.b}</b>
+          <span>{item.s}</span>
+        </li>
+      ))}
+    </ul>
+  </div></section>
+
+  <section id="wspolpraca"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Jak to idzie</span>
+      <h2>Cztery etapy, jedna ścieżka</h2>
+      <p><strong>Możesz zatrzymać się po każdym etapie.</strong> Każdy kolejny jest Twoją decyzją, nie automatem.</p>
+    </div>
+    <ol class="sciezka">
+      {zestaw.wspolpraca.map((item) => (
+        <li class="reveal">
+          <span class="sciezka-nr">{item.n}</span>
+          <div class="sciezka-txt"><b>{item.h}</b><span>{item.p}</span></div>
+        </li>
+      ))}
+    </ol>
+  </div></section>
+
+  <section id="cena" data-audit-price><div class="wrap">
+    <div class="cennik reveal">
+      <div class="cennik-lewa">
+        <span class="label">Cena</span>
+        <h2 set:html={zestaw.cenaNazwa} />
+        <div class="cennik-kwota"><strong>1 490 zł</strong><span>netto</span></div>
+        <p class="cennik-nota">Jedna cena, bez pakietów. Pre-audyt przed nim jest bezpłatny.</p>
+        <a href="#zamow" class="btn btn-primary magnetic">Zamów audyt →</a>
+      </div>
+      <ul class="cennik-lista">
+        <li>Siedem obszarów sprawdzonych po kolei</li>
+        <li>Raport PDF z priorytetami i rekomendacjami</li>
+        <li>Odpowiedź na cztery pytania przy każdym ustaleniu</li>
+        <li>Roadmapa dalszych działań</li>
+        <li>Omówienie wyników na rozmowie</li>
+        <li>Bez zobowiązania do dalszej współpracy</li>
+      </ul>
+    </div>
+  </div></section>
+
+  <section id="pytania"><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Pytania</span><h2>Najczęstsze pytania</h2></div>
+    <div class="lfaq reveal">
+      {zestaw.faq.map((item) => (
+        <details><summary>{item.q}</summary><p>{item.a}</p></details>
+      ))}
+    </div>
+  </div></section>
+
+  <section id="zamow"><div class="wrap">
+    <div class="formcard reveal">
+      <h2>{zestaw.formularz.naglowek}</h2>
+      <p class="sub">{zestaw.formularz.opis}</p>
+      <form name={zestaw.nazwaFormularza} data-engine-form data-lead-method={zestaw.metodaLeada}>
+        <div class="frow">
+          <div class="field"><label for="a-placowka">{zestaw.formularz.etykietaNazwy}</label><input id="a-placowka" name="placowka" placeholder={zestaw.formularz.podpowiedzNazwy} required /></div>
+          <div class="field"><label for="a-www">Adres WWW</label><input id="a-www" name="www" placeholder={zestaw.formularz.podpowiedzWww} /></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label for="a-telefon">Telefon</label><input id="a-telefon" name="telefon" type="tel" placeholder="np. 600 100 200" /></div>
+          <div class="field"><label for="a-email">E-mail</label><input id="a-email" name="email" type="email" placeholder={zestaw.formularz.podpowiedzEmail} required /></div>
+        </div>
+        <div class="hp" aria-hidden="true"><label for="a-gotcha">Nie wypełniaj tego pola</label><input id="a-gotcha" name="_gotcha" tabindex="-1" autocomplete="off" /></div>
+        <button type="submit" class="btn btn-primary magnetic" style="width:100%;justify-content:center">{zestaw.formularz.cta}</button>
+        <p class="qnote">Bez zobowiązań. Pełny Audyt Cyfrowy kosztuje 1 490 zł netto.</p>
+      </form>
+    </div>
+  </div></section>
+</LajfLayout>
+
+<style>
+  /* ——— Hero ——— */
+  /* Claim niesie obietnicę, opis ją rozwija — stąd różnica wielkości i koloru. */
+  .lead-claim {
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+    font-size: clamp(19px, 2.3vw, 25px);
+    font-weight: 600;
+    color: var(--txt);
+    margin-bottom: 18px;
+  }
+  .lead-opis { font-size: 16px; margin-bottom: 10px; }
+  .hero-akcja { margin-top: 30px; }
+  /* Pre-audyt obniża barierę wejścia, więc jest zdaniem, nie drugim przyciskiem. */
+  .hero-drugi { margin-top: 16px; font-size: 15px; color: var(--mut); }
+  .hero-drugi a { color: var(--acc); }
+
+  /* ——— Siedem obszarów ——— */
+  /* Poprzednio: cztery kolumny po 261 px, karty 310–336 px wysokie, bo tekst
+     łamał się na siedem linii. Trzy szersze kolumny mieszczą opis w trzech
+     wierszach i skracają sekcję o połowę bez zmiany estetyki. */
+  .zakres { display: grid; gap: 14px; grid-template-columns: 1fr; list-style: none; padding: 0; }
+  @media (min-width: 48rem) { .zakres { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 72rem) { .zakres { grid-template-columns: repeat(3, 1fr); } }
+  .zakres li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 18px 18px 18px 16px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--card);
+  }
+  .zakres-nr {
+    position: absolute; top: 14px; right: 16px;
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 700; letter-spacing: .04em;
+    color: color-mix(in srgb, var(--acc) 55%, transparent);
+  }
+  .zakres-ikona {
+    width: 38px; height: 38px; border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--acc);
+    background: color-mix(in srgb, var(--acc) 13%, transparent);
+    border: 1px solid color-mix(in srgb, var(--acc) 28%, transparent);
+  }
+  .zakres-ikona svg { width: 20px; height: 20px; display: block; }
+  .zakres-txt b {
+    display: block; margin-bottom: 4px; padding-right: 30px;
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+    font-size: 16px; line-height: 1.3;
+  }
+  .zakres-txt span { color: var(--mut); font-size: 14px; line-height: 1.55; }
+
+  .zastrzezenie {
+    max-width: 680px; margin: 28px auto 0; text-align: center;
+    color: var(--mut); font-size: 14.5px; line-height: 1.6;
+  }
+  .zastrzezenie strong { color: var(--txt); }
+
+  /* ——— Podgląd raportu ——— */
+  .wynik-uklad { display: grid; gap: 26px; grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 64rem) { .wynik-uklad { grid-template-columns: 1.15fr 1fr; gap: 34px; } }
+
+  /* Mockup ma czytać się jak dokument, nie jak kolejna karta strony —
+     stąd jaśniejsza płaszczyzna i pasek tytułowy u góry. */
+  .raport {
+    border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+    background: color-mix(in srgb, var(--card) 70%, #0d0b16);
+    box-shadow: 0 22px 60px -30px rgba(0, 0, 0, .9);
+  }
+  .raport-pasek {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 13px 18px; border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--acc) 7%, transparent);
+  }
+  .raport-marka {
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+    font-size: 16px; font-weight: 700; color: var(--txt);
+  }
+  .raport-marka b { color: var(--acc); }
+  .raport-tytul { font-size: 12.5px; color: var(--mut); letter-spacing: .02em; }
+  .raport-tresc { padding: 6px 18px 10px; }
+  .ustalenie { padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .ustalenie:last-child { border-bottom: 0; }
+  .ustalenie p { margin: 9px 0 0; font-size: 14.5px; line-height: 1.55; color: var(--txt); }
+  .waga {
+    display: inline-block; padding: 4px 10px; border-radius: 6px;
+    font-size: 10.5px; font-weight: 800; letter-spacing: .1em;
+  }
+  .waga.pilne { color: #ff8f9a; background: rgba(255, 77, 96, .14); border: 1px solid rgba(255, 77, 96, .3); }
+  .waga.wazne { color: #ffcf7a; background: rgba(255, 176, 46, .13); border: 1px solid rgba(255, 176, 46, .28); }
+  .waga.szansa { color: #6fe3c0; background: rgba(43, 212, 168, .13); border: 1px solid rgba(43, 212, 168, .3); }
+  .raport-stopka {
+    margin: 0; padding: 12px 18px 15px; border-top: 1px solid var(--line);
+    font-size: 12px; color: var(--mut); line-height: 1.5;
+  }
+
+  .pytania-wstep { margin: 0 0 18px; color: var(--mut); font-size: 15px; }
+  .pytanie { display: grid; grid-template-columns: 32px 1fr; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); }
+  .pytanie:last-of-type { border-bottom: 0; }
+  .pytanie-nr {
+    width: 32px; height: 32px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+    font-size: 14px; font-weight: 700; color: var(--acc);
+    background: color-mix(in srgb, var(--acc) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--acc) 26%, transparent);
+  }
+  .pytanie b {
+    display: block; margin-bottom: 3px;
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif; font-size: 16px;
+  }
+  .pytanie span { color: var(--mut); font-size: 14px; line-height: 1.5; }
+  .pytania-cta { margin-top: 22px; }
+
+  /* ——— Co dostajesz ——— */
+  .dostawa { display: grid; gap: 12px; grid-template-columns: 1fr; list-style: none; padding: 0; }
+  @media (min-width: 48rem) { .dostawa { grid-template-columns: repeat(2, 1fr); } }
+  .dostawa li { padding: 16px 18px; border: 1px solid var(--line); border-radius: 13px; background: var(--card); }
+  .dostawa b {
+    display: block; margin-bottom: 4px;
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif; font-size: 15.5px;
+  }
+  .dostawa span { color: var(--mut); font-size: 14px; line-height: 1.55; }
+
+  /* ——— Dowody ——— */
+  .dowody { display: grid; gap: 14px; grid-template-columns: 1fr; list-style: none; padding: 0; }
+  @media (min-width: 48rem) { .dowody { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 72rem) { .dowody { grid-template-columns: repeat(4, 1fr); } }
+  .dowody li { padding: 20px 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+  .dowody b {
+    display: block; margin-bottom: 6px;
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif; font-size: 16px;
+  }
+  .dowody b a { color: inherit; }
+  .dowody b a:hover { color: var(--acc); }
+  .dowody span { color: var(--mut); font-size: 14px; line-height: 1.55; }
+
+  /* ——— Ścieżka współpracy ——— */
+  /* Linia łącząca robi ze zbioru kart progresję. Na wąskim ekranie biegnie
+     pionowo, więc kolejność etapów pozostaje czytelna bez zmiany treści. */
+  .sciezka { display: grid; gap: 22px; grid-template-columns: 1fr; list-style: none; padding: 0; position: relative; }
+  @media (min-width: 64rem) { .sciezka { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+  .sciezka li { position: relative; padding-left: 56px; }
+  @media (min-width: 64rem) { .sciezka li { padding-left: 0; padding-top: 54px; } }
+  .sciezka-nr {
+    position: absolute; left: 0; top: 0;
+    width: 40px; height: 40px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+    font-size: 14px; font-weight: 700; color: var(--acc);
+    background: color-mix(in srgb, var(--acc) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--acc) 30%, transparent);
+  }
+  /* Odcinek do następnego etapu; ostatni go nie ma. */
+  .sciezka li::after {
+    content: ''; position: absolute; background: var(--line);
+    left: 19px; top: 46px; width: 1px; height: calc(100% - 34px);
+  }
+  .sciezka li:last-child::after { display: none; }
+  @media (min-width: 64rem) {
+    .sciezka li::after { left: 50px; top: 20px; width: calc(100% - 34px); height: 1px; }
+  }
+  .sciezka-txt b {
+    display: block; margin-bottom: 5px;
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif; font-size: 17px;
+  }
+  .sciezka-txt span { color: var(--mut); font-size: 14px; line-height: 1.55; }
+
+  /* ——— Cena ——— */
+  /* Cena ma być najmocniejszym punktem strony po hero, więc dostaje własną
+     płaszczyznę i poświatę zamiast być jedną z kart w rzędzie. */
+  .cennik {
+    display: grid; grid-template-columns: 1fr; gap: 28px;
+    padding: 34px; border-radius: 20px;
+    border: 1px solid color-mix(in srgb, var(--acc) 34%, var(--line));
+    background:
+      radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--acc) 13%, transparent), transparent 60%),
+      var(--card);
+    box-shadow: 0 26px 70px -34px color-mix(in srgb, var(--acc) 60%, transparent);
+  }
+  @media (min-width: 64rem) { .cennik { grid-template-columns: 1fr 1fr; gap: 44px; padding: 44px; align-items: center; } }
+  .cennik h2 { font-size: clamp(26px, 3.2vw, 36px); font-weight: 700; letter-spacing: -.03em; margin: 10px 0 18px; }
+  .cennik-kwota { display: flex; align-items: baseline; gap: 10px; }
+  .cennik-kwota strong {
+    font-family: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+    font-size: clamp(44px, 6vw, 66px); font-weight: 700; letter-spacing: -.04em; line-height: 1;
+  }
+  .cennik-kwota span { color: var(--mut); font-size: 17px; }
+  .cennik-nota { color: var(--mut); font-size: 14.5px; margin: 14px 0 22px; }
+  .cennik-lista { list-style: none; padding: 0; display: grid; gap: 11px; }
+  .cennik-lista li { position: relative; padding-left: 26px; font-size: 15px; line-height: 1.5; }
+  .cennik-lista li::before {
+    content: ''; position: absolute; left: 4px; top: 8px;
+    width: 7px; height: 7px; border-radius: 50%; background: var(--acc);
+  }
+</style>
