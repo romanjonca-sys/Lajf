@@ -170,13 +170,16 @@ const opinie: { cytat: string; kto: string; rola: string }[] = [];
   </div></section>
 
   <section id="proces"><div class="wrap">
-    <div class="sec-head reveal"><span class="label">Jak działamy</span><h2>Dostarczamy metodę i spokój</h2><p>Nie oddajemy pliku i nie znikamy. Przeprowadzamy Cię przez cały start — krok po kroku.</p></div>
+    <div class="sec-head reveal"><span class="label">Ścieżka współpracy</span><h2>Sześć kroków, każdy Twoją decyzją</h2><p>Zaczynamy od czegoś bezpłatnego i niezobowiązującego. Na każdym etapie możesz się zatrzymać.</p></div>
     <div class="steps">
-      <div class="step reveal"><div class="n">1</div><h4>Analiza i treść</h4><p>Zaczynamy od Twojego klienta, nie od kolorów. Piszemy treść, która do niego mówi. Zero „lorem ipsum".</p></div>
-      <div class="step reveal"><div class="n">2</div><h4>SEO</h4><p>Stronę widać tylko, gdy znajdzie ją Google. Robimy SEO techniczne i piszemy pod frazy Twoich klientów.</p></div>
-      <div class="step reveal"><div class="n">3</div><h4>Konfiguracja Google</h4><p>Search Console, Analytics i Wizytówka. Dla lokalnej firmy Wizytówka to często więcej telefonów niż sama strona.</p></div>
-      <div class="step reveal"><div class="n">4</div><h4>Maile, stopki, launch</h4><p>Firmowe skrzynki, profesjonalne stopki, wdrożenie. Wychodzisz z gotową marką — nie z listą rzeczy do dokończenia.</p></div>
+      <div class="step reveal"><div class="n">1</div><h4>Bezpłatny pre-audyt</h4><p>Krótkie sprawdzenie Twojej firmy z zewnątrz. Bez opłaty i bez zobowiązania.</p></div>
+      <div class="step reveal"><div class="n">2</div><h4>Rozmowa</h4><p>Mówię wprost, co widzę i czy w ogóle jest o czym rozmawiać. Jeśli nie ma — też to powiem.</p></div>
+      <div class="step reveal"><div class="n">3</div><h4>Audyt Cyfrowy</h4><p>Przejście przez siedem obszarów: strona, Google, analityka, bezpieczeństwo, dane, ścieżka klienta, automatyzacje. 1490 zł netto.</p></div>
+      <div class="step reveal"><div class="n">4</div><h4>Rekomendacje</h4><p>Raport z priorytetami i konkretnymi zaleceniami, omówiony na rozmowie. Raport jest Twój.</p></div>
+      <div class="step reveal"><div class="n">5</div><h4>Wdrożenie</h4><p>Naprawiamy to, co wyszło w audycie. Zakres wynika z raportu. Możesz też zlecić to komu innemu.</p></div>
+      <div class="step reveal"><div class="n">6</div><h4>Cyfrowa Opieka <span style="opacity:.6;font-weight:400">— opcjonalnie</span></h4><p>Stała opieka nad cyfrową stroną firmy. Jeśli wolisz dalej sam, to też w porządku.</p></div>
     </div>
+    <div class="center reveal" style="margin-top:34px"><a href="/audyt-placowki-medycznej/" class="btn btn-primary magnetic">Zacznij od bezpłatnego pre-audytu →</a></div>
   </div></section>
 
   <section id="oferta"><div class="wrap">
@@ -245,6 +248,10 @@ const opinie: { cytat: string; kto: string; rola: string }[] = [];
 </LajfLayout>
 
 <style>
+  /* Ścieżka współpracy ma sześć kroków — w siatce z silnika (4 kolumny)
+     rozpadłyby się na 4+2. Tu potrzeba dwóch równych rzędów po trzy. */
+  @media (min-width: 64rem) { #proces .steps { grid-template-columns: repeat(3, 1fr); } }
+
   /* Realizacje: sztywna siatka 4 kolumn na desktopie → 8 kafelków w 2 równych rzędach.
      Nadpisuje auto-fit z silnika (lajf-kinetic.css) tylko dla tej sekcji — engine nietknięty. */
   #realizacje .work { grid-template-columns: 1fr; }

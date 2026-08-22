@@ -1,0 +1,28 @@
+# Nagłówki bezpieczeństwa dla lajf.eu (Cloudflare Pages).
+#
+# Adapter Astro dopisuje do tego pliku własną regułę cache dla /_astro/* przy
+# każdym buildzie — dlatego trzymamy tu tylko to, czego on nie generuje.
+#
+# CSP jest dobrana pod to, co strona NAPRAWDĘ ładuje (sprawdzone w kodzie i na
+# produkcji), a nie pod szablon z internetu:
+#   - jedyny zewnętrzny skrypt to Google Tag Manager (gtag dla GA4),
+#   - dane pomiarowe idą do *.google-analytics.com (w tym region1),
+#   - fonty i style są bundlowane lokalnie (@fontsource → /_astro/),
+#   - formularz woła własne /api/contact (ten sam origin).
+#
+# 'unsafe-inline' w script-src jest konieczne: strona ma pięć bloków skryptów
+# inline (layout, analityka, baner zgód), a Cloudflare Pages serwuje statyczne
+# pliki, więc nie ma jak nadać im nonce przy każdym żądaniu. CSP i tak odcina
+# ładowanie kodu z obcych domen, co jest tu głównym zyskiem.
+#
+# HSTS celowo BEZ includeSubDomains i BEZ preload: pod lajf.eu działają
+# subdomeny (panel, socialos, serwis), a preload jest praktycznie nieodwracalny.
+# Do rozszerzenia dopiero po sprawdzeniu każdej subdomeny z osobna.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=31536000
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=()
