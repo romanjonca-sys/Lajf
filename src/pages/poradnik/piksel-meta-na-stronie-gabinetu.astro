@@ -1,0 +1,93 @@
+---
+import ArtykulPoradnika from '../../components/artykul-poradnika.astro';
+---
+<ArtykulPoradnika slug="piksel-meta-na-stronie-gabinetu">
+  <p>Gabinet uruchamia kampanię na Facebooku. Agencja albo wtyczka dokłada na stronę piksel Meta i od tego dnia każda odsłona podstrony wysyła informację do Meta. Na stronie sklepu z butami to rutyna. Na stronie gabinetu z podstronami o leczeniu kanałowym, depresji albo usuwaniu znamion ta sama informacja mówi, z czym ktoś przyszedł.</p>
+  <p>Poniżej opisuję, co dokładnie wychodzi ze strony, kiedy robi się z tego problem prawny, za co ukarano dwie szwedzkie apteki internetowe i jak w pięć minut sprawdzić własną stronę samą przeglądarką. Na końcu jest lista pytań, które warto zadać agencji albo wykonawcy strony.</p>
+
+  <h2>Co piksel wysyła przy każdej odsłonie</h2>
+  <p>Piksel to skrypt, który przy wejściu na stronę wysyła do Meta zdarzenie <code>PageView</code>. W żądaniu jest pełny adres oglądanej podstrony (parametr <code>dl</code>) i adres strony, z której ktoś przyszedł. Do tego dochodzi identyfikator przeglądarki zapisany w pliku cookie <code>_fbp</code>. Jeśli odwiedzający jest zalogowany do Facebooka albo Instagrama w tej samej przeglądarce, Meta może połączyć te odsłony z jego kontem.</p>
+  <p>Adres podstrony gabinetu rzadko jest neutralny. <code>/leczenie-depresji/</code>, <code>/in-vitro/</code> albo <code>/usuwanie-zmian-skornych/</code> to informacja o tym, czego ktoś szuka dla siebie albo bliskiej osoby.</p>
+  <p>Adres to nie wszystko. Poniżej pełniejsza lista tego, co może wyjść ze strony gabinetu. Nie każda strona wysyła wszystkie te elementy, zależy to od konfiguracji.</p>
+  <div class="art-table">
+    <table>
+      <thead><tr><th>Co wychodzi</th><th>Gdzie to widać</th><th>Kiedy robi się problem</th></tr></thead>
+      <tbody>
+        <tr><td>Adres oglądanej podstrony</td><td>parametr <code>dl</code></td><td>Adres zawiera nazwę zabiegu, schorzenia albo poradni.</td></tr>
+        <tr><td>Adres poprzedniej strony</td><td>parametr <code>rl</code></td><td>Ktoś przeszedł z podstrony zabiegu na stronę kontaktu.</td></tr>
+        <tr><td>Tekst klikniętego przycisku</td><td>konfiguracja automatyczna</td><td>Przycisk nazywa zabieg, na przykład „Umów konsultację implantologiczną”.</td></tr>
+        <tr><td>Nazwa i parametry zdarzenia</td><td>parametry <code>ev</code> oraz <code>cd[nazwa]</code></td><td>Zdarzenie albo jego parametr nazywa usługę medyczną.</td></tr>
+        <tr><td>Skróty danych z formularza</td><td>parametry zaczynające się od <code>ud</code></td><td>Włączone dopasowanie zaawansowane.</td></tr>
+        <tr><td>Identyfikator przeglądarki</td><td>plik cookie <code>_fbp</code></td><td>Zawsze, bo łączy pojedyncze odsłony w historię jednej osoby.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Kiedy odsłona staje się daną o zdrowiu</h2>
+  <p>RODO traktuje dane dotyczące zdrowia jako szczególną kategorię (art. 9). Ich przetwarzanie jest co do zasady zakazane, a wyjątki są wąskie. Trybunał Sprawiedliwości UE czyta tę kategorię szeroko. W sprawie C-184/20 uznał, że liczą się także dane, z których informację wrażliwą da się wywnioskować pośrednio. W sprawie C-21/23 orzekł, że dane podawane przy zamawianiu przez internet leków dostępnych tylko w aptece są danymi o zdrowiu, choć nie ma pewności, że lek jest dla zamawiającego.</p>
+  <p>Pojedyncze wejście na podstronę o leczeniu nie przesądza o chorobie. Zarzut robi się mocny, gdy do adresu podstrony dochodzi identyfikator konkretnej osoby. A to jest dokładnie to, co robi piksel. Dlatego w audycie strony medycznej pierwsze pytanie nie brzmi „czy jest piksel”, tylko „co idzie razem z nim”.</p>
+
+  <h2>Dopasowanie zaawansowane, czyli e-mail pacjenta w skrócie</h2>
+  <p>Automatyczne dopasowanie zaawansowane (Automatic Advanced Matching) to opcja w Menedżerze zdarzeń Meta. Po jej włączeniu piksel odczytuje z formularzy na stronie adres e-mail, numer telefonu czy imię. Zamienia je na skrót (hash) i wysyła do Meta, żeby lepiej dopasować zdarzenie do konta.</p>
+  <p>Skrót adresu e-mail nie jest anonimowy. Służy przecież do tego, żeby wskazać konkretną osobę. W języku RODO to dana pseudonimizowana (art. 4 pkt 5), która nadal jest daną osobową.</p>
+  <p>Na tej funkcji potknęły się dwie szwedzkie sieci aptek internetowych. Po włączeniu nowej funkcji piksela do Meta trafiały informacje o zakupach klientów, w tym o lekach bez recepty na konkretne dolegliwości, testach do samodzielnego wykonania i produktach związanych ze zdrowiem seksualnym. Szwedzki urząd ochrony danych (IMY) nałożył na Apoteket karę 37 mln koron, a na Apohem 8 mln koron. Najważniejszy wątek decyzji dotyczy procedur. Firmy nie wykryły problemu same, dowiedziały się o nim od osób z zewnątrz.</p>
+
+  <h2>„Meta sama odfiltruje dane o zdrowiu”. Nie licz na to</h2>
+  <p>Meta deklaruje, że wykrywa część niedozwolonych danych i odrzuca je po swojej stronie. W szwedzkiej sprawie ten argument nie pomógł. Filtr działa dopiero wtedy, gdy dane już opuściły stronę, a za to, co strona wysyła, odpowiada jej właściciel. Dla gabinetu wniosek jest prosty. Kontrola ma się odbywać na stronie, przed wysłaniem.</p>
+
+  <h2>Baner zgód nie załatwia sprawy</h2>
+  <p>Piksel zapisuje pliki cookie, więc potrzebuje zgody odwiedzającego (art. 399 Prawa komunikacji elektronicznej). To warunek konieczny, ale przy danych o zdrowiu niewystarczający. Wyjątek z art. 9 ust. 2 lit. a RODO wymaga zgody wyraźnej, udzielonej na konkretny cel. Kliknięcie „Akceptuję wszystkie” na banerze trudno uznać za wyraźną zgodę na przekazanie Meta informacji, że ktoś czytał o leczeniu depresji.</p>
+  <p>Sama Meta też tego nie chce. Warunki narzędzi biznesowych Meta zabraniają przekazywania danych opartych na informacjach o zdrowiu. Od 2 września 2025 roku Meta oznacza konwersje niestandardowe, których nazwa lub reguła sugeruje stan zdrowia. Takich konwersji nie da się użyć w nowych kampaniach.</p>
+
+  <h2>A co z Google Analytics i tagiem Google Ads?</h2>
+  <p>Te same pytania dotyczą narzędzi Google. GA4 również wysyła adres oglądanej podstrony, a tag Google Ads potrafi budować listy odbiorców z osób, które odwiedziły wybrane strony. Różnice są dwie. Przy dobrze ustawionym trybie zgody GA4 bez zgody nie zapisuje identyfikatora w przeglądarce. Z kolei Google w swoich zasadach zakazuje kierowania reklam o tematyce zdrowotnej do list odbiorców budowanych przez reklamodawcę, więc lista „odwiedzili podstronę leczenia depresji” jest sprzeczna także z regułami samego Google.</p>
+  <p>O pomiarze, który szanuje zgody, piszemy w artykule <a href="/poradnik/ga4-pokazuje-mniej-wizyt-niz-search-console/">o różnicach między GA4 a Search Console</a>. O reklamach gabinetu, łącznie z polskim zakazem reklamy działalności leczniczej, w tekście <a href="/poradnik/remarketing-gabinetu-google-meta/">o remarketingu gabinetu</a>.</p>
+
+  <h2>Jak sprawdzić własną stronę w pięć minut</h2>
+  <ol>
+    <li>Otwórz Chrome w oknie incognito, żeby nie mieć wcześniej udzielonych zgód.</li>
+    <li>Wejdź na podstronę konkretnego zabiegu, nie na stronę główną. Banera zgód na razie nie klikaj.</li>
+    <li>Naciśnij <code>F12</code>, przejdź do zakładki Network (Sieć) i wpisz w filtr <code>facebook.com/tr</code>. Odśwież stronę.</li>
+    <li>Jeśli pojawiły się żądania, piksel działa przed zgodą. Kliknij jedno z nich i znajdź parametr <code>dl</code>. To adres, który dostała Meta.</li>
+    <li>Teraz kliknij zgodę, wypełnij formularz kontaktowy testowymi danymi i wyślij go. Parametry zaczynające się od <code>ud</code> oznaczają, że do Meta idą dane z formularza w postaci skrótu.</li>
+    <li>Powtórz test z filtrem <code>google-analytics.com</code> i <code>googleadservices.com</code>, żeby zobaczyć, co dostaje Google.</li>
+  </ol>
+  <p>Nie widzisz żadnego żądania? To jeszcze nie dowód. Zdarzenia mogą iść z serwera przez Conversions API i wtedy przeglądarka ich nie pokazuje. Zapytaj wykonawcę strony, czy takie wdrożenie istnieje.</p>
+
+  <h2>Pytania do agencji albo wykonawcy strony</h2>
+  <p>Jeśli stronę albo kampanie prowadzi ktoś z zewnątrz, zadaj te pytania na piśmie. Dobra agencja odpowie na nie w jeden dzień, bo ma te informacje pod ręką.</p>
+  <ol>
+    <li>Jakie narzędzia śledzące są na stronie i na których podstronach się ładują?</li>
+    <li>Czy któreś z nich startuje przed wyborem w banerze zgód?</li>
+    <li>Czy w Menedżerze zdarzeń Meta jest włączone automatyczne dopasowanie zaawansowane?</li>
+    <li>Jakie zdarzenia wysyłamy, jak się nazywają i jakie mają parametry?</li>
+    <li>Czy korzystamy z Conversions API i jakie dane wysyła serwer?</li>
+    <li>Czy listy odbiorców w reklamach powstają z odwiedzin podstron zabiegów?</li>
+    <li>Kto sprawdza, czy konfiguracja nie zmieniła się po aktualizacji wtyczki albo narzędzia?</li>
+  </ol>
+
+  <h2>Co zmienić</h2>
+  <ul>
+    <li><strong>Piksel dopiero po zgodzie.</strong> Skrypt ma się ładować po wyborze w banerze, nie przy wejściu na stronę.</li>
+    <li><strong>Bez piksela na podstronach zabiegów i przy formularzach.</strong> Tam, gdzie adres albo treść mówi o zdrowiu, piksela po prostu nie ma.</li>
+    <li><strong>Dopasowanie zaawansowane wyłączone.</strong> Na stronie, której formularze zbierają dane pacjentów, ta opcja nie ma racji bytu.</li>
+    <li><strong>Zdarzenia z serwera, pod kontrolą.</strong> Conversions API pozwala wysłać tylko to, co gabinet sam wybierze. Na przykład samo „wysłano formularz” bez adresu podstrony.</li>
+    <li><strong>Neutralne nazwy zdarzeń.</strong> <code>wyslanie_formularza</code> zamiast <code>konsultacja_implanty</code>.</li>
+    <li><strong>Okresowa kontrola.</strong> W Szwecji wystarczyło włączenie jednej nowej funkcji piksela. Ktoś musi co jakiś czas powtórzyć test z poprzedniej sekcji.</li>
+  </ul>
+
+  <div class="art-box">
+    <p><strong>Dokumentacja RODO to osobny temat.</strong></p>
+    <p>Ten artykuł dotyczy tego, co wysyła strona. Rejestr czynności, klauzule i upoważnienia dla gabinetu prowadzi nasz siostrzany serwis <a href="https://moje-rodo.pl/rodo-dla-praktyk-medycznych">moje-rodo.pl</a>.</p>
+  </div>
+
+  <h2>Źródła</h2>
+  <ul class="art-src">
+    <li><a href="https://www.imy.se/en/news/administrative-fines-against-apoteket-and-apohem-for-transferring-personal-data-to-meta/" rel="noopener">IMY, kary dla Apoteket i Apohem za przekazywanie danych do Meta</a></li>
+    <li><a href="https://developers.facebook.com/docs/meta-pixel/implementation/conversion-tracking/" rel="noopener">Meta for Developers, śledzenie konwersji i ograniczenia konwersji niestandardowych</a></li>
+    <li><a href="https://www.facebook.com/legal/technology_terms" rel="noopener">Warunki narzędzi biznesowych Meta</a></li>
+    <li><a href="https://support.google.com/adspolicy/answer/16701855" rel="noopener">Google, zdrowie w reklamach spersonalizowanych</a></li>
+    <li><a href="https://curia.europa.eu/juris/liste.jsf?num=C-184/20" rel="noopener">TSUE, wyrok w sprawie C-184/20</a></li>
+    <li><a href="https://curia.europa.eu/juris/liste.jsf?num=C-21/23" rel="noopener">TSUE, wyrok w sprawie C-21/23 (Lindenapotheke)</a></li>
+  </ul>
+</ArtykulPoradnika>

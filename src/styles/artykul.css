@@ -1,0 +1,37 @@
+/**
+ * Poradnik lajf.eu: typografia długiej treści na tle "Kinetic Aurora".
+ * Importowany wyłącznie przez src/components/artykul.astro i spis poradnika.
+ */
+.art-hero{padding-bottom:12px}
+.art-hero h1{font-size:clamp(34px,5.6vw,58px);line-height:1.05}
+.art-crumbs{display:flex;justify-content:center;gap:8px;font-size:13px;color:var(--mut);margin-bottom:14px}
+.art-crumbs a:hover{color:var(--acc)}
+.art-meta{font-size:14px;color:var(--mut)}
+.art-section{padding-top:24px}
+
+.art-body{max-width:720px;margin:0 auto;font-size:17.5px;line-height:1.75;color:#ddd8ea}
+.art-body > * + *{margin-top:1.1em}
+.art-body h2{font-size:clamp(24px,3.2vw,32px);line-height:1.2;letter-spacing:-.02em;color:var(--txt);margin-top:2.2em}
+.art-body h3{font-size:20px;line-height:1.3;color:var(--txt);margin-top:1.8em}
+.art-body a{color:var(--acc);text-decoration:underline;text-underline-offset:3px}
+.art-body ul,.art-body ol{padding-left:1.3em}
+.art-body li + li{margin-top:.45em}
+.art-body strong{color:var(--txt)}
+.art-body code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:6px;padding:.1em .4em;overflow-wrap:anywhere}
+.art-box{border:1px solid color-mix(in srgb,var(--acc) 35%,transparent);background:color-mix(in srgb,var(--acc) 8%,var(--card));border-radius:16px;padding:20px 22px}
+.art-box > * + *{margin-top:.6em}
+.art-table{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.art-table table{width:100%;min-width:560px;border-collapse:collapse;font-size:15px;line-height:1.5}
+.art-table th,.art-table td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid var(--line)}
+.art-table th{font-family:'Space Grotesk Variable','Space Grotesk',sans-serif;font-size:14px;color:var(--txt);background:rgba(255,255,255,.04)}
+.art-table tr:last-child td{border-bottom:0}
+.art-src{font-size:14px;color:var(--mut)}
+.art-src li + li{margin-top:.3em}
+
+.art-list{max-width:760px;margin:0 auto;display:grid;gap:12px;list-style:none}
+.art-list a{display:block;border:1px solid var(--line);border-radius:16px;background:var(--card);backdrop-filter:blur(12px);padding:18px 22px;transition:border-color .3s}
+.art-list a:hover{border-color:var(--acc)}
+.art-list b{display:block;font-family:'Space Grotesk Variable','Space Grotesk',sans-serif;font-size:18px;line-height:1.3;margin-bottom:6px}
+.art-list span{display:block;font-size:14px;color:var(--mut)}
+
+@media(max-width:520px){.art-body{font-size:16.5px}.art-box{padding:16px 18px}}

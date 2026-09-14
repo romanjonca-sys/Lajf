@@ -1,0 +1,48 @@
+---
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import { ARTYKULY, sciezkaArtykulu } from '../../lib/artykuly';
+import '../../styles/artykul.css';
+
+const title = 'Poradnik dla gabinetów, strona i pomiar zgodne z RODO | Lajf';
+const description =
+  'Artykuły dla gabinetów i przychodni o tym, co strona wysyła do Google i Meta, jak liczyć zapytania pacjentów i gdzie zostają kopie ich danych.';
+const siteUrl = Astro.site ?? new URL('https://lajf.eu');
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Poradnik dla gabinetów',
+  description,
+  url: new URL('/poradnik/', siteUrl).href,
+  inLanguage: 'pl-PL',
+  hasPart: ARTYKULY.map((a) => ({
+    '@type': 'Article',
+    headline: `${a.h1} ${a.h1hl}`,
+    url: new URL(sciezkaArtykulu(a.slug), siteUrl).href,
+    datePublished: a.published,
+  })),
+};
+---
+<LajfLayout title={title} description={description} accent="#2bd4a8" schema={schema}>
+  <header class="phero art-hero"><div class="wrap pin">
+    <span class="label">Poradnik dla gabinetów</span>
+    <h1>Strona gabinetu <span class="hl">od kuchni</span></h1>
+    <p class="lead">Piszemy o tym, co widzimy w audytach stron medycznych. Co wychodzi ze strony do Google i Meta, jak liczyć zapytania pacjentów i gdzie zostają kopie ich danych.</p>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <ul class="art-list">
+      {ARTYKULY.map((a) => (
+        <li><a href={sciezkaArtykulu(a.slug)}><b>{a.h1} {a.h1hl}</b><span>{a.description}</span></a></li>
+      ))}
+    </ul>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Wolisz, żeby ktoś sprawdził to za Ciebie?</h2>
+      <p>Audyt Cyfrowy placówki pokazuje, co Twoja strona naprawdę wysyła, z dowodami, które da się sprawdzić samemu w przeglądarce.</p>
+      <a href="/audyt-placowki-medycznej/" class="btn btn-primary magnetic">Zobacz audyt placówki →</a>
+    </div>
+  </div></section>
+</LajfLayout>

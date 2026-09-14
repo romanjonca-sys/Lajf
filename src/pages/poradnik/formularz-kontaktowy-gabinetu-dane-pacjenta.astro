@@ -1,0 +1,71 @@
+---
+import ArtykulPoradnika from '../../components/artykul-poradnika.astro';
+---
+<ArtykulPoradnika slug="formularz-kontaktowy-gabinetu-dane-pacjenta">
+  <p>Pacjentka wpisuje w formularz na stronie gabinetu imię, telefon i dwa zdania o tym, co ją boli. Klika „Wyślij”. Rejestracja dostaje maila i oddzwania. Dla gabinetu to jedna wiadomość. Technicznie powstało co najmniej kilka kopii, a każda ma innego właściciela i inny czas życia.</p>
+  <p>Poniżej opisuję cztery miejsca, w których te kopie lądują, jak długo je trzymać, co napisać przy formularzu i jak w godzinę uporządkować formularz na istniejącej stronie.</p>
+
+  <h2>Dlaczego formularz gabinetu to dane o zdrowiu</h2>
+  <p>Nikt nie projektuje formularza kontaktowego jako dokumentacji medycznej. Pacjenci i tak piszą w polu „wiadomość” o objawach, lekach albo o tym, że szukają pomocy dla dziecka. Sam fakt kontaktu z poradnią psychiatryczną też coś mówi. Bezpieczniej założyć, że formularz zbiera dane o zdrowiu (art. 9 RODO). Zabezpieczenia trzeba dobrać do tego poziomu.</p>
+
+  <h2>Kopia pierwsza, baza danych strony</h2>
+  <p>Wiele wtyczek do WordPressa zapisuje każde zgłoszenie w bazie strony. Formularze Elementora Pro mają do tego osobną akcję zbierania zgłoszeń. Contact Form 7 zaczyna to robić po dodaniu popularnego rozszerzenia Flamingo.</p>
+  <p>Taka kopia nie znika sama. Po trzech latach w panelu strony leżą setki wiadomości od pacjentów, widoczne dla każdego, kto ma konto administratora. Łącznie z agencją, która kiedyś robiła stronę.</p>
+
+  <h2>Kopia druga, skrzynka pocztowa</h2>
+  <p>Powiadomienie o zgłoszeniu zawiera całą treść wiadomości. Ląduje w skrzynce rejestracji, synchronizuje się z telefonami pracowników, bywa przekierowane na prywatnego Gmaila lekarza. Każde z tych miejsc to kolejna kopia danych o zdrowiu, zwykle bez żadnej zasady usuwania.</p>
+  <p>Jeśli skrzynki działają u zewnętrznego dostawcy, na przykład w Google Workspace czy Microsoft 365, ten dostawca przetwarza dane w imieniu gabinetu. Potrzebna jest z nim umowa powierzenia. U dużych dostawców zawiera się ją zwykle przez akceptację warunków w panelu administratora, więc wystarczy sprawdzić, czy ktoś to zrobił.</p>
+
+  <h2>Kopia trzecia, dziennik wysyłek i kopie zapasowe</h2>
+  <p>Tego miejsca prawie nikt nie sprawdza. Wtyczki poprawiające wysyłkę maili z WordPressa, na przykład WP Mail SMTP, mają opcję zapisywania treści wysłanych wiadomości w bazie strony. Włączona raz, żeby sprawdzić, czemu maile nie dochodzą, potrafi zostać na lata i zbierać kopię każdego powiadomienia z formularza. Producent sam zaleca wyłączenie jej po zakończeniu diagnozy.</p>
+  <p>Do tego dochodzą kopie zapasowe. Wtyczki do kopii potrafią wysyłać całą bazę strony na zewnętrzny dysk w chmurze, razem ze wszystkimi zapisanymi zgłoszeniami. Warto wiedzieć, gdzie te kopie lądują, jak długo są trzymane i kto ma do nich dostęp.</p>
+
+  <h2>Kopia czwarta, dostawcy zewnętrzni</h2>
+  <p>Formularz osadzony z zewnętrznej usługi, na przykład Google Forms, Typeform czy Jotform, zapisuje odpowiedzi na serwerach tej usługi. Zabezpieczenie przed spamem typu reCAPTCHA wysyła do Google dane o zachowaniu odwiedzającego na stronie. Widżet czatu przechowuje całą rozmowę u swojego dostawcy.</p>
+  <p>Każdy taki dostawca przetwarza dane w imieniu gabinetu, więc potrzebna jest umowa powierzenia (art. 28 RODO). Przy dostawcach spoza Unii dochodzi pytanie o podstawę przekazania danych.</p>
+  <p>Nie każde zabezpieczenie przed spamem musi coś wysyłać. Ukryte pole, którego człowiek nie widzi, a automat je wypełnia (tak zwany honeypot), odsiewa sporą część spamu bez udziału zewnętrznej firmy.</p>
+
+  <h2>Najbardziej ryzykowne pole to „wiadomość”</h2>
+  <p>RODO wymaga zbierania tylko tych danych, które są potrzebne (art. 5 ust. 1 lit. c). Do oddzwonienia gabinet potrzebuje imienia, telefonu i ewentualnie preferowanego terminu. Opis objawów przyda się dopiero na wizycie.</p>
+  <p>Dobrze działa lista wyboru zamiast wolnego pola, na przykład „pierwsza wizyta”, „kontrola”, „inna sprawa”. Lista nie powinna nazywać schorzeń, bo wtedy sam wybór staje się informacją o zdrowiu. Obok przycisku wystarczy jedno zdanie. „Prosimy nie opisywać objawów w formularzu, porozmawiamy o nich w gabinecie.” Część pacjentów i tak napisze więcej, ale ryzyko wyraźnie spada.</p>
+
+  <h2>Jak długo trzymać zgłoszenia</h2>
+  <p>RODO nie podaje liczby miesięcy. Wymaga, żeby dane nie leżały dłużej, niż potrzeba do celu (art. 5 ust. 1 lit. e). Cel formularza to odpowiedź i umówienie wizyty. Praktyczna zasada może wyglądać tak.</p>
+  <ul>
+    <li><strong>Zgłoszenie zakończone wizytą.</strong> To, co potrzebne do leczenia, trafia do dokumentacji. Sama wiadomość w skrzynce przestaje być potrzebna.</li>
+    <li><strong>Zgłoszenie bez wizyty.</strong> Gabinet usuwa je po okresie, który sam ustali i zapisze, na przykład po kilku miesiącach.</li>
+    <li><strong>Kopie w bazie strony i w dzienniku wysyłek.</strong> Wyłączone albo czyszczone automatycznie. Trzymanie tych samych danych w trzech miejscach nie służy żadnemu celowi.</li>
+  </ul>
+  <p>Ustalony okres najlepiej wpisać do rejestru czynności przetwarzania. Jeśli gabinet go jeszcze nie ma, zacznij od <a href="https://moje-rodo.pl/dokumentacja-rodo-gabinet-lekarski">dokumentacji RODO dla gabinetu lekarskiego</a>.</p>
+
+  <h2>Co napisać przy formularzu</h2>
+  <p>Osoba wysyłająca formularz musi dostać informacje z art. 13 RODO. Pełna klauzula jest długa, więc przy samym formularzu wystarczy krótka pierwsza warstwa z odnośnikiem do polityki prywatności. Przykład do dostosowania.</p>
+  <div class="art-box">
+    <p>„Administratorem Twoich danych jest [nazwa i adres gabinetu]. Dane z formularza wykorzystamy wyłącznie po to, żeby odpowiedzieć na wiadomość i umówić wizytę. Prosimy nie opisywać objawów, porozmawiamy o nich w gabinecie. Szczegóły, w tym Twoje prawa, znajdziesz w polityce prywatności.”</p>
+  </div>
+  <p>Gotowy wzór pełnej klauzuli znajdziesz we <a href="https://moje-rodo.pl/klauzula-informacyjna-pacjent-wzor">wzorze klauzuli informacyjnej dla pacjenta</a>.</p>
+
+  <h2>Lista kontrolna na godzinę pracy</h2>
+  <ol>
+    <li>Sprawdź w panelu strony, czy wtyczka formularza zapisuje zgłoszenia. Jeśli tak, ustaw automatyczne usuwanie albo wyłącz zapis, skoro wiadomości i tak trafiają do skrzynki.</li>
+    <li>Sprawdź, czy wtyczka do wysyłki maili nie zapisuje treści wiadomości. Jeśli zapisuje, wyłącz tę opcję i usuń zebrany dziennik.</li>
+    <li>Ustal, dokąd trafiają kopie zapasowe strony, jak długo są trzymane i kto ma do nich dostęp.</li>
+    <li>Przejrzyj listę kont administratora strony. Usuń te, które należą do osób już niepracujących przy stronie.</li>
+    <li>Ustal, dokąd idą powiadomienia. Wyłącz przekierowania na prywatne skrzynki.</li>
+    <li>Spisz zewnętrznych dostawców formularza, CAPTCHA, poczty i czatu. Sprawdź, czy z każdym masz umowę powierzenia.</li>
+    <li>Zamień wolne pole „wiadomość” na listę wyboru albo dodaj prośbę, żeby nie opisywać objawów.</li>
+    <li>Dodaj przy formularzu pierwszą warstwę informacji z art. 13 RODO z odnośnikiem do polityki prywatności.</li>
+    <li>Upewnij się, że treść formularza nie trafia do piksela Meta ani do GA4 jako parametr zdarzenia. Opisujemy to w artykule o <a href="/poradnik/piksel-meta-na-stronie-gabinetu/">pikselu Meta na stronie gabinetu</a>.</li>
+  </ol>
+
+  <div class="art-box">
+    <p><strong>Nie wiesz, co robi formularz na Twojej stronie?</strong></p>
+    <p>Sprawdzamy to w Audycie Cyfrowym placówki, razem z tym, co strona wysyła do Google i Meta. Więcej na stronie <a href="/rodo-i-cyber/">Bezpieczeństwo i dane</a>.</p>
+  </div>
+
+  <h2>Źródła</h2>
+  <ul class="art-src">
+    <li><a href="https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32016R0679" rel="noopener">RODO, tekst rozporządzenia 2016/679</a></li>
+    <li><a href="https://wpmailsmtp.com/docs/how-to-set-up-email-logging/" rel="noopener">WP Mail SMTP, ustawienia dziennika wysyłek</a></li>
+  </ul>
+</ArtykulPoradnika>

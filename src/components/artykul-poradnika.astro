@@ -1,0 +1,65 @@
+---
+/**
+ * Szkielet artykułu poradnika: nagłówek, treść ze slotu, FAQ, wezwanie do działania i pozostałe wpisy.
+ * Metadane (tytuł, opis, FAQ, daty) pochodzą z src/lib/artykuly.ts, więc sitemap i schema
+ * nie rozjadą się z treścią strony.
+ */
+import LajfLayout from '../layouts/lajf-layout.astro';
+import { ARTYKULY, AUTOR, getArtykul, schemaArtykulu, sciezkaArtykulu } from '../lib/artykuly';
+import '../styles/artykul.css';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const artykul = getArtykul(slug);
+const siteUrl = Astro.site ?? new URL('https://lajf.eu');
+const schema = schemaArtykulu(artykul, siteUrl.href);
+const pozostale = ARTYKULY.filter((a) => a.slug !== slug);
+const dataPublikacji = new Date(`${artykul.published}T12:00:00Z`).toLocaleDateString('pl-PL', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'Europe/Warsaw',
+});
+---
+<LajfLayout title={artykul.title} description={artykul.description} accent="#2bd4a8" schema={schema}>
+  <header class="phero art-hero"><div class="wrap pin">
+    <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/poradnik/">Poradnik</a></div>
+    <span class="label">Poradnik dla gabinetów</span>
+    <h1>{artykul.h1} <span class="hl">{artykul.h1hl}</span></h1>
+    <p class="lead">{artykul.lead}</p>
+    <p class="art-meta">{AUTOR.name} · <time datetime={artykul.published}>{dataPublikacji}</time></p>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <article class="art-body"><slot /></article>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Pytania</span><h2>Najczęstsze pytania</h2></div>
+    <div class="lfaq reveal">
+      {artykul.faq.map((item) => (
+        <details><summary>{item.q}</summary><p>{item.a}</p></details>
+      ))}
+    </div>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Sprawdzimy to na Twojej stronie</h2>
+      <p>W Audycie Cyfrowym placówki pokazujemy konkretne żądania wysłane z Twojej strony do Google i Meta, a nie ogólne ostrzeżenia.</p>
+      <a href="/audyt-placowki-medycznej/" class="btn btn-primary magnetic">Zobacz audyt placówki →</a>
+    </div>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Poradnik</span><h2>Czytaj dalej</h2></div>
+    <ul class="art-list">
+      {pozostale.map((a) => (
+        <li><a href={sciezkaArtykulu(a.slug)}><b>{a.h1} {a.h1hl}</b><span>{a.description}</span></a></li>
+      ))}
+    </ul>
+  </div></section>
+</LajfLayout>

@@ -2,9 +2,12 @@ export const prerender = true;
 
 import type { APIRoute } from 'astro';
 
+import { sciezkiPoradnika } from '../lib/artykuly';
+
 /**
  * lajf.eu używa stron plikowych (.astro), nie content-engine — sitemap listuje je wprost.
  * '' = homepage. Dodając nową podstronę, dopisz jej slug tutaj.
+ * Artykuły poradnika dochodzą same z src/lib/artykuly.ts.
  */
 const PAGES = [
   '', // homepage
@@ -20,6 +23,7 @@ const PAGES = [
   'muzyka',
   'polityka-prywatnosci',
   'regulamin',
+  ...sciezkiPoradnika(),
 ];
 
 export const GET: APIRoute = ({ site }) => {

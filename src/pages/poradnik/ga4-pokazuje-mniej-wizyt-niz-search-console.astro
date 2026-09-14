@@ -1,0 +1,77 @@
+---
+import ArtykulPoradnika from '../../components/artykul-poradnika.astro';
+---
+<ArtykulPoradnika slug="ga4-pokazuje-mniej-wizyt-niz-search-console">
+  <p>Właściciel gabinetu otwiera dwa raporty. Search Console pokazuje 120 kliknięć z Google w miesiącu, Google Analytics 4 pokazuje 50 użytkowników z wyszukiwarki. Pierwsza myśl to zepsuta analityka. Czasem tak jest. Częściej obie liczby są prawdziwe, tylko liczą co innego.</p>
+  <p>W tym artykule wyjaśniam, skąd bierze się różnica, jak porównać oba narzędzia uczciwie, po czym poznać prawdziwy błąd wdrożenia i które trzy ustawienia GA4 warto zmienić od razu.</p>
+
+  <h2>Dwa narzędzia liczą dwie różne rzeczy</h2>
+  <p>Search Console liczy kliknięcia w wynikach wyszukiwania. Zapisuje je Google po swojej stronie, zanim ktokolwiek dotrze do Twojej strony. Nie potrzebuje do tego żadnego skryptu ani zgody.</p>
+  <p>GA4 liczy wizyty w przeglądarce. Żeby wizyta się pojawiła, skrypt Google musi się wczytać, nie może go zablokować rozszerzenie przeglądarki, a odwiedzający musi zgodzić się na analitykę. Każdy z tych warunków odcina część ruchu.</p>
+
+  <h2>Search Console też nie pokazuje wszystkiego</h2>
+  <p>Łatwo założyć, że Search Console jest wzorcem, a GA4 się myli. Tymczasem Search Console ma własne ograniczenia.</p>
+  <ul>
+    <li><strong>Zapytania anonimowe.</strong> Frazy wpisywane przez niewielką liczbę osób nie pojawiają się w tabeli zapytań, choć ich kliknięcia są wliczone w sumę nad wykresem. Dlatego suma wierszy tabeli prawie nigdy nie zgadza się z liczbą na górze raportu.</li>
+    <li><strong>Ruch spoza Polski.</strong> Na jednym z naszych serwisów medycznych co czwarte wyświetlenie pochodziło z USA, Holandii albo Niemiec, z wysokich pozycji i bez żadnych kliknięć. Zapytania zawierały operatory w rodzaju <code>-site:reddit.com</code>, typowe dla automatów i agentów AI, a nie dla pacjentów. Przed porównaniem odfiltruj kraj.</li>
+    <li><strong>Opóźnienie.</strong> Dane z ostatnich dwóch, trzech dni są niepełne. Porównuj zakończone okresy.</li>
+  </ul>
+
+  <h2>Baner zgód zjada część ruchu i tak ma być</h2>
+  <p>Żadna strona nie może zapisywać plików cookie analityki bez zgody (art. 399 Prawa komunikacji elektronicznej). Strona gabinetu tym bardziej nie powinna tego robić. Google pozwala pogodzić to z pomiarem na dwa sposoby, czyli w dwóch wariantach trybu zgody (Consent Mode).</p>
+  <ul>
+    <li><strong>Wariant podstawowy.</strong> Skrypt Google nie ładuje się wcale, dopóki ktoś nie zgodzi się na analitykę. Kto odmówi, dla GA4 nie istnieje.</li>
+    <li><strong>Wariant zaawansowany.</strong> Skrypt ładuje się od razu, a przy braku zgody wysyła sygnały bez plików cookie. Google może na ich podstawie szacować brakujący ruch, jeśli strona ma go wystarczająco dużo.</li>
+  </ul>
+  <p>Na jednym z naszych serwisów dla branży medycznej świadomie działa wariant podstawowy. GA4 pokazuje tam mniej więcej połowę tego, co Search Console. To nie usterka. To cena tego, że osoba, która odmówiła, naprawdę nie jest śledzona.</p>
+  <p>Jedna rzecz jest obowiązkowa niezależnie od wariantu. Od marca 2024 roku Google wymaga, żeby strony z ruchem z Europejskiego Obszaru Gospodarczego przekazywały mu sygnały zgody, jeśli dane mają trafiać do funkcji reklamowych, takich jak remarketing czy pomiar konwersji w Google Ads. Bez tego te funkcje przestają działać dla ruchu z Unii.</p>
+
+  <h2>Jak porównać oba narzędzia uczciwie</h2>
+  <ol>
+    <li>W Search Console otwórz raport Skuteczność. Ustaw typ wyszukiwania na „internet”, dodaj filtr kraju „Polska” i wybierz pełny miesiąc zakończony co najmniej trzy dni temu.</li>
+    <li>W GA4 otwórz Raporty, potem Pozyskiwanie i Pozyskiwanie ruchu. Wybierz ten sam okres i znajdź wiersz <code>google / organic</code> w wymiarze źródło/medium sesji.</li>
+    <li>Porównuj sesje z GA4 z kliknięciami z Search Console. Użytkownicy to inna miara, jedna osoba potrafi wejść kilka razy.</li>
+    <li>Zamiast jednej liczby porównaj trend z kilku miesięcy. Jeśli oba wykresy rosną i spadają razem, pomiar działa, nawet przy dużej różnicy w poziomie.</li>
+  </ol>
+
+  <h2>Kiedy różnica oznacza błąd</h2>
+  <ul>
+    <li><strong>GA4 nie widzi prawie nic.</strong> Przy uczciwym banerze zostaje zwykle spora część ruchu. Kilka wizyt w miesiącu przy setkach kliknięć w Search Console oznacza błąd wdrożenia.</li>
+    <li><strong>Liczy się tylko pierwsza odsłona.</strong> Strony, które przechodzą między podstronami bez przeładowania (aplikacje w React, Astro z płynnymi przejściami), wysyłają odsłonę tylko przy wejściu. Chyba że ktoś dopisał obsługę przejść.</li>
+    <li><strong>Wizyta ginie przy kliknięciu zgody.</strong> Pierwsza odsłona poszła, zanim ktoś kliknął baner, więc Google jej nie zapisał. Po zgodzie strona powinna wysłać ją ponownie.</li>
+    <li><strong>Ruch z Google w GA4 jest większy niż w Search Console.</strong> Zwykle to podwójny tag, na przykład GA4 wklejone w kod strony i drugi raz przez Menedżera tagów.</li>
+    <li><strong>Połowa ruchu to Ty.</strong> Filtr ruchu wewnętrznego w GA4 ma dwa stany, testowanie i aktywny. Tylko aktywny naprawdę wycina Twoje wejścia z raportów.</li>
+  </ul>
+
+  <h2>Jak sprawdzić wdrożenie samodzielnie</h2>
+  <ol>
+    <li>Otwórz stronę w oknie incognito, naciśnij <code>F12</code> i w zakładce Network wpisz filtr <code>collect</code>.</li>
+    <li>Zanim klikniesz baner, sprawdź, czy są żądania. Przy wariancie podstawowym nie powinno być żadnych. Przy zaawansowanym parametr <code>gcs</code> ma wartość <code>G100</code>, czyli odmowę.</li>
+    <li>Zgódź się na analitykę. Nowe żądanie powinno mieć <code>gcs=G111</code>.</li>
+    <li>Przejdź na inną podstronę. Jeśli nie pojawi się kolejne żądanie, odsłony podstron nie są liczone.</li>
+    <li>Wyślij formularz testowy. Jeśli strona mierzy zapytania, pojawi się żądanie z nazwą zdarzenia, na przykład <code>en=generate_lead</code>.</li>
+  </ol>
+
+  <h2>Trzy ustawienia GA4, które warto zmienić od razu</h2>
+  <ul>
+    <li><strong>Czas przechowywania danych.</strong> Domyślnie GA4 trzyma szczegółowe dane przez 2 miesiące. W Administracji znajdź ustawienie przechowywania danych i zmień je na 14 miesięcy. Inaczej za pół roku nie porównasz sezonów, a utraconych danych nie da się odzyskać.</li>
+    <li><strong>Zapytanie jako zdarzenie kluczowe.</strong> Wysłanie formularza, kliknięcie w numer telefonu i w adres e-mail warto wysyłać jako jedno zdarzenie, na przykład <code>generate_lead</code>. Potem oznacz je w Administracji jako kluczowe. Bez tego GA4 nie pokaże, które źródło przynosi zapytania.</li>
+    <li><strong>Aktywny filtr ruchu wewnętrznego.</strong> Oznacz adres IP gabinetu jako ruch wewnętrzny, a potem przełącz filtr z testowania na aktywny. Filtr działa tylko w przód, więc im wcześniej, tym lepiej.</li>
+  </ul>
+
+  <h2>Zapytania od pacjentów licz poza GA4</h2>
+  <p>GA4 dobrze pokazuje kształt ścieżki, czyli którędy ludzie chodzą po stronie i gdzie odpadają. Do liczenia pieniędzy się nie nadaje, bo widzi tylko tych, którzy się zgodzili. Zgłoszenie z formularza warto zapisywać na serwerze razem ze źródłem wejścia. Wtedy liczba zapytań jest pełna niezależnie od banera, a dane pacjenta nie wychodzą do Google.</p>
+
+  <div class="art-box">
+    <p><strong>Pomiar to jedno, a co wysyła strona, to drugie</strong></p>
+    <p>Jeśli na stronie gabinetu jest też piksel Meta, przeczytaj, <a href="/poradnik/piksel-meta-na-stronie-gabinetu/">co potrafi wysłać do Facebooka</a>.</p>
+  </div>
+
+  <h2>Źródła</h2>
+  <ul class="art-src">
+    <li><a href="https://developers.google.com/tag-platform/security/concepts/consent-mode" rel="noopener">Google, tryb zgody (Consent Mode)</a></li>
+    <li><a href="https://www.google.com/about/company/user-consent-policy/" rel="noopener">Google, polityka zgody użytkowników z UE</a></li>
+    <li><a href="https://support.google.com/webmasters/answer/7576553" rel="noopener">Search Console, raport Skuteczność</a></li>
+    <li><a href="https://developers.google.com/search/blog/2022/10/performance-data-deep-dive" rel="noopener">Google Search Central, filtrowanie i limity danych o skuteczności</a></li>
+  </ul>
+</ArtykulPoradnika>
