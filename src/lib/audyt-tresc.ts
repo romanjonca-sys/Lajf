@@ -121,12 +121,19 @@ const OTRZYMUJESZ: PozycjaZListy[] = [
   { b: 'Omówienie wyników', s: 'Rozmowa, na której przechodzimy przez raport i odpowiadam na pytania. Raport bez omówienia zwykle ląduje w szufladzie.' },
 ];
 
-const DOWODY: Dowod[] = [
-  { b: 'Moje RODO', s: 'Działający system zgodności dla placówek medycznych.', href: 'https://moje-rodo.pl' },
-  { b: 'Panel Lajf', s: 'Własny system sprzedaży i obsługi klientów.', href: null },
-  { b: 'Social OS', s: 'Własne narzędzie do zarządzania komunikacją marek.', href: null },
-  { b: 'Realizacje', s: 'Działające serwisy, które można samemu sprawdzić.', href: '/#realizacje' },
-];
+const DOWOD_MOJE_RODO: Dowod = { b: 'Moje RODO', s: 'Działający system zgodności dla placówek medycznych.', href: 'https://moje-rodo.pl' };
+const DOWOD_PANEL: Dowod = { b: 'Panel Lajf', s: 'Własny system sprzedaży i obsługi klientów.', href: null };
+const DOWOD_SOCIAL_OS: Dowod = { b: 'Social OS', s: 'Własne narzędzie do zarządzania komunikacją marek.', href: null };
+const DOWOD_REALIZACJE: Dowod = { b: 'Realizacje', s: 'Działające serwisy, które można samemu sprawdzić.', href: '/#realizacje' };
+
+/** Tylko w wersji medycznej, zamiast Social OS: dowód, że umiemy pracować na danych pacjentów. */
+const DOWOD_REJESTR_BADANIA: Dowod = {
+  b: 'Rejestr badania',
+  s: 'Aplikacja na dane zdrowotne pacjentów: pseudonimizacja, dziennik zmian, kopie w UE.',
+  href: '/realizacje/rejestr-badania-klinicznego/',
+};
+
+const DOWODY: Dowod[] = [DOWOD_MOJE_RODO, DOWOD_PANEL, DOWOD_SOCIAL_OS, DOWOD_REALIZACJE];
 
 export const MEDYCZNY: ZestawAudytu = {
   sciezka: '/audyt-placowki-medycznej/',
@@ -159,7 +166,7 @@ export const MEDYCZNY: ZestawAudytu = {
   podmiotWZastrzezeniu: 'placówki',
   skutekDlaKogo: 'dla placówki i dla pacjenta',
   otrzymujesz: OTRZYMUJESZ,
-  dowody: DOWODY,
+  dowody: [DOWOD_MOJE_RODO, DOWOD_REJESTR_BADANIA, DOWOD_PANEL, DOWOD_REALIZACJE],
   wspolpraca: [
     { n: '01', h: 'Pre-audyt', p: 'Bezpłatne sprawdzenie z zewnątrz i rozmowa. Mówię wprost, czy widzę coś, co warto naprawiać.' },
     { n: '02', h: 'Audyt Cyfrowy', p: 'Siedem obszarów, raport z priorytetami i rekomendacjami, omówienie wyników.' },
