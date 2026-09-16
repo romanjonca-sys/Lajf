@@ -10,6 +10,7 @@ const description =
   'Sprawdzamy, naprawiamy i rozwijamy cyfrowe funkcjonowanie firmy — od strony WWW i analityki po bezpieczeństwo i automatyzacje. Zaczynamy od Audytu Cyfrowego: 1490 zł netto.';
 
 const realizacje = [
+  { t: 'Rejestr badania', c: 'Aplikacja do badania klinicznego', tag: 'app · medycyna', href: '/realizacje/rejestr-badania-klinicznego/', img: '/images/realizacje/rejestr-badania.jpg' },
   { t: 'moje-rodo', c: 'System zgodności RODO dla medycyny', tag: 'SaaS · RODO', href: 'https://moje-rodo.pl', img: '/images/realizacje/moje-rodo.jpg' },
   { t: 'Układ Komediowy', c: 'Strona + terminarz kabaretu', tag: 'web · rozrywka', href: 'https://ukladkomediowy.pl', img: '/images/realizacje/uklad.jpg' },
   { t: 'Krzysztof Stanio', c: 'Pracownia praktyk teatralnych', tag: 'web · kultura', href: 'https://krzysztofstanio.pl', img: '/images/realizacje/stanio.jpg' },
@@ -116,11 +117,11 @@ const opinie: { cytat: string; kto: string; rola: string }[] = [];
   </div></section>
 
   <section id="realizacje"><div class="wrap">
-    <div class="sec-head reveal"><span class="label">Realizacje</span><h2>Robota, nie obietnice</h2><p>Dziewięć wdrożeń, dziewięć różnych stylów. Formę dobieramy do marki — nie klepiemy szablonu.</p></div>
+    <div class="sec-head reveal"><span class="label">Realizacje</span><h2>Robota, nie obietnice</h2><p>Dziesięć wdrożeń, dziesięć różnych stylów. Formę dobieramy do marki — nie klepiemy szablonu.</p></div>
     <div class="work">
       {realizacje.map((r) => (
-        <a class="frame reveal" href={r.href} target="_blank" rel="noopener noreferrer">
-          <div class="fbar"><i></i><i></i><i></i><span class="furl">{r.href.replace('https://', '')}</span></div>
+        <a class="frame reveal" href={r.href} {...(r.href.startsWith('/') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}>
+          <div class="fbar"><i></i><i></i><i></i><span class="furl">{r.href.startsWith('/') ? 'lajf.eu/realizacje' : r.href.replace('https://', '')}</span></div>
           <img class="fimg" src={r.img} alt={`Realizacja Lajf — ${r.t}`} loading="lazy" width="800" height="500" />
           <div class="fmeta"><div><span class="fm-t">{r.t}</span><span class="fm-d">{r.c}</span></div><span class="ftag">{r.tag}</span></div>
         </a>

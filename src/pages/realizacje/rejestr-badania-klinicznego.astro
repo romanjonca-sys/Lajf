@@ -1,0 +1,129 @@
+---
+/**
+ * Realizacja: rejestr danych badania klinicznego (MIZS).
+ * Zgoda prowadzącej badanie na publikację: 17.09.2026, przez Romana.
+ * Zrzuty WYŁĄCZNIE z lokalnej bazy demo z wymyślonymi pacjentami, nigdy z produkcji.
+ * Nazwy ośrodka i skali badania nie podajemy bez osobnej zgody.
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import '../../styles/artykul.css';
+
+const title = 'Rejestr danych do badania klinicznego | Realizacja Lajf';
+const description =
+  'Arkusz Excela z danymi pacjentów zastąpiony rejestrem z pseudonimizacją, obliczeniami klinicznymi, dziennikiem zmian i kopiami zapasowymi w UE.';
+
+const ZRZUTY = '/images/realizacje/rejestr-badania';
+---
+<LajfLayout title={title} description={description} accent="#2bd4a8">
+  <header class="phero art-hero"><div class="wrap pin">
+    <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/#realizacje">Realizacje</a></div>
+    <span class="label">Aplikacja medyczna</span>
+    <h1>Rejestr danych do <span class="hl">badania klinicznego</span></h1>
+    <p class="lead">Lekarka prowadząca badanie naukowe u dzieci z młodzieńczym idiopatycznym zapaleniem stawów zbierała dane z wizyt w Excelu. Zbudowaliśmy rejestr, który liczy wskaźniki kliniczne sam, pamięta każdą zmianę i robi kopie zapasowe w Unii Europejskiej.</p>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <article class="art-body">
+      <h2>Punkt wyjścia</h2>
+      <p>Dane z kolejnych wizyt, wyniki laboratoryjne, badania USG oraz ocena aktywności choroby trafiały do jednego arkusza. Arkusz nie pokazuje, kto co zmienił. Łatwo w nim o literówkę, która rozbija statystykę, bo „MIZS - ERA” i „MIZS-ERA” to dla programu statystycznego dwie różne grupy. A plik z danymi zdrowotnymi dzieci krąży między komputerami.</p>
+      <p>Gotowe systemy dla badań klinicznych okazały się za ciężkie dla małego zespołu. Potrzebne było narzędzie, które lekarz otwiera w przerwie między pacjentami i wypełnia bez szkolenia.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/panel.jpg`} alt="Panel badania: liczba pacjentów w obserwacji, pacjenci do wezwania na wizytę, wizyty do uzupełnienia" width="1600" height="1000" loading="lazy" />
+        <figcaption>Panel badania: kogo wezwać, co dokończyć, gdzie jest badanie. Dane przykładowe.</figcaption>
+      </figure>
+
+      <h2>Pacjenci bez danych osobowych</h2>
+      <ul>
+        <li>Każdy pacjent dostaje automatycznie kod badania, bez imienia, nazwiska i numeru PESEL.</li>
+        <li>Status udziału w badaniu: w obserwacji, wstrzymany, zakończony, wycofany, utracony z obserwacji.</li>
+        <li>Wyszukiwarka po kodzie i skrócie pacjenta.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/pacjenci.jpg`} alt="Lista pacjentów z kodami badania, statusem udziału, wiekiem i liczbą wizyt" width="1600" height="1000" loading="lazy" />
+        <figcaption>Lista pacjentów. Kody zamiast nazwisk. Dane przykładowe.</figcaption>
+      </figure>
+
+      <h2>Wizyta w kilku zakładkach</h2>
+      <ul>
+        <li>Dane podstawowe, morfologia, biochemia, immunologia, badanie kliniczne oraz USG stawów.</li>
+        <li>Wartości z poprzedniej wizyty podpowiadane od razu, żeby nie przepisywać wagi, leczenia czy rozpoznania.</li>
+        <li>Ostrzeżenia przy podejrzanych wartościach, na przykład nagłym skoku aktywności choroby albo zmianie wagi o kilka kilogramów.</li>
+        <li>Wyniki laboratoryjne wczytywane z pliku zamiast ręcznego przepisywania.</li>
+      </ul>
+
+      <h2>Obliczenia, które wcześniej robiło się w osobnym kalkulatorze</h2>
+      <ul>
+        <li>Wskaźniki aktywności choroby stosowane w reumatologii dziecięcej: JADAS-27 i cJADAS.</li>
+        <li>Odpowiedź na leczenie według kryteriów ACR Pedi.</li>
+        <li>Kryteria nieaktywnej choroby.</li>
+        <li>Centyl BMI według siatek WHO.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/wizyta.jpg`} alt="Formularz wizyty z wyliczonym JADAS-27, cJADAS i oceną nieaktywnej choroby oraz stopniami zmian w USG" width="1600" height="1000" loading="lazy" />
+        <figcaption>Wizyta: wskaźniki liczą się same z wpisanych składowych. Dane przykładowe.</figcaption>
+      </figure>
+
+      <h2>Praca z wynikami</h2>
+      <ul>
+        <li>Wykres zmian w czasie dla każdego pacjenta, z włączaniem i wyłączaniem serii.</li>
+        <li>Karta pacjenta do PDF.</li>
+        <li>Eksport danych do analizy statystycznej, tylko dla uprawnionych ról.</li>
+        <li>Plan badania z listą pacjentów do wezwania na kolejną wizytę.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/trend.jpg`} alt="Karta pacjenta z wykresem spadku JADAS-27 i OB na kolejnych wizytach" width="1600" height="1000" loading="lazy" />
+        <figcaption>Trend aktywności choroby i OB u jednego pacjenta. Dane przykładowe.</figcaption>
+      </figure>
+
+      <h2>Bezpieczeństwo i RODO</h2>
+      <ul>
+        <li>Role użytkowników: administrator badania, lekarz wprowadzający dane oraz statystyk z dostępem wyłącznie do odczytu i eksportu.</li>
+        <li>Dostęp do danych ograniczony na poziomie bazy danych, a nie tylko w interfejsie.</li>
+        <li>Dziennik zmian: każda zmiana zapisuje, kto, kiedy i co zmienił. Wpisów nie da się po cichu skasować.</li>
+        <li>Serwery bazy danych we Frankfurcie.</li>
+        <li>Automatyczna kopia zapasowa dwa razy w tygodniu, przechowywana w UE, z raportem mailowym po każdym przebiegu, także nieudanym.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/dziennik.jpg`} alt="Dziennik zmian z datą, użytkownikiem, rodzajem operacji i rekordem" width="1600" height="1000" loading="lazy" />
+        <figcaption>Dziennik zmian z filtrami. Dane przykładowe.</figcaption>
+      </figure>
+
+      <h2>Technologia</h2>
+      <p>React i TypeScript w przeglądarce, Supabase (PostgreSQL z kontrolą dostępu na poziomie wierszy) jako baza danych, Cloudflare dla aplikacji i kopii zapasowych. Ponad 500 testów automatycznych pilnuje między innymi obliczeń klinicznych.</p>
+
+      <h2>Efekt</h2>
+      <p>Jeden rejestr zamiast arkusza, spójne dane gotowe do analizy statystycznej, pełna historia zmian oraz kopie zapasowe, których wcześniej nie było wcale.</p>
+    </article>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Prowadzisz badanie albo rejestr pacjentów?</h2>
+      <p>Opowiedz, jakie dane zbierasz i kto z nimi pracuje. Odpiszę z konkretem, co da się zbudować i jak zabezpieczyć dane.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
+    </div>
+  </div></section>
+</LajfLayout>
+
+<style>
+  .zrzut {
+    margin: 2.2rem 0;
+  }
+  .zrzut img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+  .zrzut figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--mut);
+  }
+</style>

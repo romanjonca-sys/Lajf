@@ -20,6 +20,7 @@ const PAGES = [
   'strona-www-dla-elektryka',
   'rodo-i-cyber',
   'oprogramowanie',
+  'realizacje/rejestr-badania-klinicznego',
   'muzyka',
   'polityka-prywatnosci',
   'regulamin',
