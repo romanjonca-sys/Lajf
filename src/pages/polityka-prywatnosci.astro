@@ -6,10 +6,11 @@
  */
 import LajfLayout from '../layouts/lajf-layout.astro';
 import { siteConfig } from '../../site.config';
+import { daneRejestrowe } from '../lib/dane-firmy';
 
 const { brandName, company } = siteConfig;
 const updated = '30 czerwca 2026';
-const addressLine = [company.address, company.taxId].filter(Boolean).join(', ');
+const addressLine = daneRejestrowe(company);
 
 const toc = [
   ['1', 'Administrator danych i kontakt'],
@@ -105,7 +106,22 @@ const toc = [
     </p>
     <p class="legal__basis">Podstawa prawna: <strong>art. 6 ust. 1 lit. f RODO</strong> (uzasadniony interes — bezpieczeństwo IT).</p>
 
-    <h3>e) Statystyka i analityka (opcjonalnie)</h3>
+    <h3>e) Kontakt przez WhatsApp</h3>
+    <p>
+      Na stronie udostępniamy przycisk otwierający rozmowę na WhatsAppie. Sam przycisk to zwykły
+      odnośnik — dopóki go nie klikniesz, nic nie jest wysyłane. Jeśli napiszesz do nas tą drogą,
+      przetwarzamy treść korespondencji i Twój numer telefonu tak samo jak wiadomość e-mail,
+      czyli w celu obsługi sprawy, z którą się zgłaszasz.
+    </p>
+    <p>
+      Samą usługę WhatsApp dostarcza <strong>WhatsApp Ireland Limited</strong>, które przetwarza
+      dane jako <strong>odrębny administrator</strong> na podstawie własnej polityki prywatności —
+      nie jest naszym podmiotem przetwarzającym i nie mamy wpływu na zakres tego przetwarzania.
+      Jeśli wolisz tego uniknąć, napisz do nas e-mailem albo zadzwoń; każdy kanał traktujemy tak samo.
+    </p>
+    <p class="legal__basis">Podstawa prawna: <strong>art. 6 ust. 1 lit. b i f RODO</strong> (podjęcie działań przed zawarciem umowy oraz uzasadniony interes — obsługa korespondencji).</p>
+
+    <h3>f) Statystyka i analityka (opcjonalnie)</h3>
     <p>
       Za Twoją zgodą możemy korzystać z narzędzi analitycznych, by zrozumieć, jak używana jest strona,
       i ją ulepszać (patrz sekcja 9 — Pliki cookie).
@@ -134,6 +150,7 @@ const toc = [
       <li><strong>Resend (Plus Five Five, Inc.)</strong> — obsługa wysyłki wiadomości e-mail z formularza kontaktowego;</li>
       <li><strong>lh.pl (H88 S.A.)</strong> — hosting poczty e-mail (skrzynki w domenie @lajf.eu);</li>
       <li><strong>Google Ireland Ltd.</strong> — narzędzia statystyczne (Google Analytics / Search Console), o ile aktywne i za Twoją zgodą;</li>
+      <li><strong>WhatsApp Ireland Ltd.</strong> — komunikator, jeśli sam wybierzesz ten kanał kontaktu; działa jako odrębny administrator, nie jako nasz podmiot przetwarzający;</li>
       <li><strong>biuro rachunkowe</strong> — w zakresie danych na dokumentach księgowych klientów;</li>
       <li>uprawnione organy państwowe — gdy obowiązek wynika z przepisów prawa.</li>
     </ul>
@@ -208,7 +225,7 @@ const toc = [
     </p>
 
     <p class="legal__meta">Ostatnia aktualizacja: {updated}.</p>
-    <p class="legal__back"><a href="/">← Powrót na stronę główną</a> &nbsp;·&nbsp; <a href="/regulamin">Regulamin</a></p>
+    <p class="legal__back"><a href="/">← Powrót na stronę główną</a> &nbsp;·&nbsp; <a href="/regulamin/">Regulamin</a></p>
   </article>
 </LajfLayout>
 

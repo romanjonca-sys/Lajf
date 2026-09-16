@@ -8,6 +8,7 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/space-grotesk';
 import '../styles/lajf-kinetic.css';
 import { siteConfig } from '../../site.config';
+import Whatsapp from '../components/whatsapp.astro';
 import AnalyticsGa4 from '../components/analytics-ga4.astro';
 import CookieConsent from '../components/cookie-consent.astro';
 import { ClientRouter } from 'astro:transitions';
@@ -38,6 +39,8 @@ const jsonLd = {
   email: company.email,
   telephone: company.phone,
   address: company.address,
+  ...(company.taxId ? { vatID: `PL${company.taxId.replace(/\D/g, '')}`, taxID: company.taxId } : {}),
+  ...(company.krs ? { identifier: `KRS ${company.krs}` } : {}),
   description,
   slogan: 'Cyfrowa opieka nad firmą',
   knowsAbout: [
@@ -90,7 +93,7 @@ const jsonLd = {
 
 <nav><div class="wrap nav-in">
   <a class="logo" href="/" aria-label={brandName}>{brandName}<b><svg class="logo-puls" viewBox="45 36 50 33" aria-hidden="true"><path d="M50 54 h5 l5 -14 l6.5 25 l5 -11 h4" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="86" cy="54" r="5.5" fill="currentColor"/></svg></b></a>
-  <div class="nav-links"><a href="/audyt-placowki-medycznej/">Audyt cyfrowy</a><a href="/strony-www">Strony WWW</a><a href="/rodo-i-cyber">Bezpieczeństwo i dane</a><a href="/oprogramowanie">Oprogramowanie</a><a href="/#realizacje">Realizacje</a><a href="/#o-mnie">O mnie</a></div>
+  <div class="nav-links"><a href="/audyt-placowki-medycznej/">Audyt cyfrowy</a><a href="/strony-www/">Strony WWW</a><a href="/rodo-i-cyber/">Bezpieczeństwo i dane</a><a href="/oprogramowanie/">Oprogramowanie</a><a href="/#realizacje">Realizacje</a><a href="/#o-mnie">O mnie</a></div>
   <div class="nav-actions">
     <a class="nav-tel" href={telHref} aria-label={`Zadzwoń: ${company.phone}`}>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
@@ -105,10 +108,10 @@ const jsonLd = {
 <div class="nav-mobile" id="nav-mobile" hidden>
   <a class="nav-mobile-tel" href={telHref}>Zadzwoń: {company.phone}</a>
   <a href="/audyt-placowki-medycznej/">Audyt cyfrowy placówki</a>
-  <a href="/strony-www">Strony WWW</a>
-  <a href="/rodo-i-cyber">Bezpieczeństwo i dane</a>
-  <a href="/oprogramowanie">Oprogramowanie</a>
-  <a href="/muzyka">Muzyka</a>
+  <a href="/strony-www/">Strony WWW</a>
+  <a href="/rodo-i-cyber/">Bezpieczeństwo i dane</a>
+  <a href="/oprogramowanie/">Oprogramowanie</a>
+  <a href="/muzyka/">Muzyka</a>
   <a href="/#realizacje">Realizacje</a>
   <a href="/#o-mnie">O mnie</a>
   <a class="nav-mobile-cta" href="/#kontakt">Napisz do nas</a>
@@ -128,36 +131,58 @@ const jsonLd = {
       </div>
     </div>
     <div class="foot-cols">
-      <div class="foot-col"><h4>Usługi</h4><a href="/audyt-placowki-medycznej/">Audyt Cyfrowy</a><a href="/strony-www">Strony WWW</a><a href="/rodo-i-cyber">Bezpieczeństwo i dane</a><a href="/oprogramowanie">Oprogramowanie</a><a href="/muzyka">Muzyka</a></div>
+      <div class="foot-col"><h4>Usługi</h4><a href="/audyt-placowki-medycznej/">Audyt Cyfrowy</a><a href="/strony-www/">Strony WWW</a><a href="/rodo-i-cyber/">Bezpieczeństwo i dane</a><a href="/oprogramowanie/">Oprogramowanie</a><a href="/muzyka/">Muzyka</a></div>
       <div class="foot-col"><h4>Firma</h4><a href="/#realizacje">Realizacje</a><a href="/#o-mnie">O mnie</a><a href="/#kontakt">Kontakt</a></div>
-      <div class="foot-col"><h4>Informacje</h4><a href="/polityka-prywatnosci">Polityka prywatności</a><a href="/regulamin">Regulamin</a><span>RODO · WCAG · hosting EU</span></div>
+      <div class="foot-col"><h4>Informacje</h4><a href="/polityka-prywatnosci/">Polityka prywatności</a><a href="/regulamin/">Regulamin</a><span>RODO · WCAG · hosting EU</span></div>
     </div>
   </div>
   <div class="foot-bottom">
-    <span>© {year} {company.legalName}{company.taxId ? ` · NIP ${company.taxId}` : ''}</span>
+    <span>
+      © {year} {company.legalName}{company.krs ? ` · KRS ${company.krs}` : ''}{company.taxId ? ` · NIP ${company.taxId}` : ''}{company.regon ? ` · REGON ${company.regon}` : ''}
+    </span>
     <span>Hosting w UE · zgodne z RODO</span>
   </div>
 </div></footer>
 
 <script>
   // Inicjalizacja interakcji — odpalana też po każdym przejściu (View Transitions)
+  //
+  // ⛔ STAN TRZYMAMY W ZAKRESIE MODUŁU, NIE NA `window`. Skrypt jest pakowany raz
+  // i przeżywa przejścia View Transitions, więc zwykłe zmienne wystarczą. Wcześniej
+  // były tu `window.__lajfSpot`, `window.__lajfProg` i `window.__lajfGlobals`, czyli
+  // właściwości, których typ `Window` nie zna — stąd błędy ts(2339). Zamiast je
+  // deklarować, prościej ich nie tworzyć.
+  let spot: HTMLElement | null = null;
+  let prog: HTMLElement | null = null;
+
+  // Znaczniki „już podpięte" zamiast doklejania pól do elementów DOM (`el.__mag`).
+  // WeakSet nie trzyma elementów przy życiu, więc usunięty węzeł zwalnia pamięć sam.
+  const zPrzyciaganiem = new WeakSet<Element>();
+  const zPochyleniem = new WeakSet<Element>();
+  const zObsluga = new WeakSet<Element>();
+
   function lajfInit(){
-    window.__lajfSpot=document.getElementById('spot');
-    window.__lajfProg=document.getElementById('prog');
+    spot=document.getElementById('spot');
+    prog=document.getElementById('prog');
     if('IntersectionObserver' in window){
-      var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.14});
+      const io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.14});
       document.querySelectorAll('.reveal:not(.in)').forEach(function(el){io.observe(el);});
     } else { document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');}); }
-    document.querySelectorAll('.magnetic').forEach(function(b){
-      if(b.__mag) return; b.__mag=true; var r=null;
+
+    // Generyk przy querySelectorAll daje HTMLElement zamiast Element — dzięki temu
+    // `.style` istnieje, a zdarzenie wskaźnika ma typ PointerEvent z clientX/clientY.
+    document.querySelectorAll<HTMLElement>('.magnetic').forEach(function(b){
+      if(zPrzyciaganiem.has(b)) return; zPrzyciaganiem.add(b);
+      let r: DOMRect | null = null;
       b.addEventListener('pointerenter',function(){r=b.getBoundingClientRect();});
-      b.addEventListener('pointermove',function(e){if(!r)r=b.getBoundingClientRect();var x=e.clientX-r.left-r.width/2;var y=e.clientY-r.top-r.height/2;b.style.transform='translate('+x*.25+'px,'+y*.35+'px)';});
+      b.addEventListener('pointermove',function(e){if(!r)r=b.getBoundingClientRect();const x=e.clientX-r.left-r.width/2;const y=e.clientY-r.top-r.height/2;b.style.transform='translate('+x*.25+'px,'+y*.35+'px)';});
       b.addEventListener('pointerleave',function(){b.style.transform='';r=null;});
     });
-    document.querySelectorAll('.tilt').forEach(function(el){
-      if(el.__tilt) return; el.__tilt=true; var r=null;
+    document.querySelectorAll<HTMLElement>('.tilt').forEach(function(el){
+      if(zPochyleniem.has(el)) return; zPochyleniem.add(el);
+      let r: DOMRect | null = null;
       el.addEventListener('pointerenter',function(){r=el.getBoundingClientRect();});
-      el.addEventListener('pointermove',function(e){if(!r)r=el.getBoundingClientRect();var px=(e.clientX-r.left)/r.width-.5;var py=(e.clientY-r.top)/r.height-.5;el.style.transform='perspective(800px) rotateY('+px*7+'deg) rotateX('+(-py*7)+'deg) translateY(-4px)';});
+      el.addEventListener('pointermove',function(e){if(!r)r=el.getBoundingClientRect();const px=(e.clientX-r.left)/r.width-.5;const py=(e.clientY-r.top)/r.height-.5;el.style.transform='perspective(800px) rotateY('+px*7+'deg) rotateX('+(-py*7)+'deg) translateY(-4px)';});
       el.addEventListener('pointerleave',function(){el.style.transform='';r=null;});
     });
     const przelacznik=document.getElementById('nav-toggle');
@@ -173,67 +198,69 @@ const jsonLd = {
       panel.addEventListener('click',function(e){if(e.target instanceof Element&&e.target.closest('a')) zamknij();});
       document.addEventListener('keydown',function(e){if(e.key==='Escape') zamknij();});
     }
-    document.querySelectorAll('form[data-engine-form]').forEach(function(form){
-      if(form.__bound) return; form.__bound=true;
+    document.querySelectorAll<HTMLFormElement>('form[data-engine-form]').forEach(function(form){
+      if(zObsluga.has(form)) return; zObsluga.add(form);
       form.addEventListener('submit',async function(event){
         event.preventDefault();
-        var btn=form.querySelector('button[type=submit]');var original=btn?btn.textContent:'';
+        const btn=form.querySelector<HTMLButtonElement>('button[type=submit]');const original=btn?btn.textContent:'';
         if(btn){btn.setAttribute('disabled','true');btn.textContent='Wysyłam…';}
-        var payload=Object.fromEntries(new FormData(form).entries());payload.form=form.getAttribute('name')||'kontakt';
+        const payload: Record<string, unknown>=Object.fromEntries(new FormData(form).entries());payload.form=form.getAttribute('name')||'kontakt';
         try{
-          var res=await fetch('/api/contact',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)});
-          var data=await res.json().catch(function(){return {};});
-          if(!res.ok) throw new Error((data.error&&data.error.message)||'Błąd wysyłki.');
+          const res=await fetch('/api/contact',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)});
+          // Kształt odpowiedzi błędu z /api/contact: { error: { code, message } }.
+          const data=await res.json().catch(function(){return {};}) as { error?: { message?: string } };
+          if(!res.ok) throw new Error(data.error?.message||'Błąd wysyłki.');
           form.innerHTML='<p class="form-status form-status--ok">Dzięki! Odezwę się najszybciej, jak się da.</p>';
           // Lead liczymy dopiero po potwierdzeniu z serwera. Analityka nasłuchuje
           // tego zdarzenia — layout nie musi wiedzieć, czy stoi na niej GA4 czy GTM.
           document.dispatchEvent(new CustomEvent('lajf:lead',{detail:{metoda:form.getAttribute('data-lead-method')||'formularz'}}));
         }catch(err){
           if(btn){btn.removeAttribute('disabled');btn.textContent=original;}
-          var note=form.querySelector('.form-status--err');
+          let note=form.querySelector<HTMLElement>('.form-status--err');
           if(!note){note=document.createElement('p');note.className='form-status form-status--err';form.appendChild(note);}
-          note.textContent=err&&err.message?err.message:'Nie udało się wysłać.';
+          note.textContent=err instanceof Error&&err.message?err.message:'Nie udało się wysłać.';
         }
       });
     });
   }
-  if(!window.__lajfGlobals){
-    window.__lajfGlobals=true;
-    // Kotwice wewnątrz strony. Bez tego klik w „Zamów audyt" (#zamow) czy
-    // „Zamów bezpłatną konsultację" (#kontakt) nie robi nic: router View Transitions
-    // przejmuje kliknięcie w link, a że adres różni się tylko fragmentem, nie ma
-    // dokąd nawigować i natywne przewinięcie do kotwicy nie następuje.
-    addEventListener('click',function(e){
-      const link=e.target instanceof Element?e.target.closest('a[href*="#"]'):null;
-      if(!link) return;
-      const href=link.getAttribute('href')||'';
-      const pozycja=href.indexOf('#');
-      const hash=href.slice(pozycja);
-      if(hash.length<2) return;
-      // Link z inną ścieżką prowadzi na inną stronę — zostawiamy go routerowi.
-      const sciezka=href.slice(0,pozycja);
-      if(sciezka&&sciezka!==location.pathname&&sciezka+'/'!==location.pathname) return;
-      let cel=null;
-      try{ cel=document.querySelector(hash); }catch(err){ return; }
-      if(!cel) return;
-      e.preventDefault();
-      // Skok pomija naturalne wejście sekcji w kadr, więc animacja odsłaniania
-      // mogłaby jej nie odpalić i użytkownik wylądowałby na przezroczystej treści.
-      // Odsłaniamy docelową sekcję z góry — obserwator i tak pomija to, co ma już klasę.
-      if(cel.classList.contains('reveal')) cel.classList.add('in');
-      cel.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});
-      // Przewijamy natychmiast, nie płynnie. Na tej stronie płynne przewijanie
-      // nie rusza z miejsca (sprawdzone: scrollTo z behavior 'smooth' po 2,5 s
-      // wciąż na zerze, przy kolejnej próbie zawiesił się renderer — podejrzenie
-      // pada na animowane rozmycia w tle). Kotwica ma działać, nie ładnie wyglądać.
-      cel.scrollIntoView({behavior:'instant',block:'start'});
-      history.pushState(null,'',hash);
-    });
-    addEventListener('pointermove',function(e){var s=window.__lajfSpot;if(s){s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';}});
-    addEventListener('scroll',function(){var p=window.__lajfProg;if(p){var h=document.documentElement;p.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';}});
-  }
+
+  // Nasłuchy globalne podpinamy raz — moduł wykonuje się jednokrotnie, więc nie
+  // trzeba już pilnować tego flagą na `window`.
+  // Kotwice wewnątrz strony. Bez tego klik w „Zamów audyt" (#zamow) czy
+  // „Zamów bezpłatną konsultację" (#kontakt) nie robi nic: router View Transitions
+  // przejmuje kliknięcie w link, a że adres różni się tylko fragmentem, nie ma
+  // dokąd nawigować i natywne przewinięcie do kotwicy nie następuje.
+  addEventListener('click',function(e){
+    const link=e.target instanceof Element?e.target.closest('a[href*="#"]'):null;
+    if(!link) return;
+    const href=link.getAttribute('href')||'';
+    const pozycja=href.indexOf('#');
+    const hash=href.slice(pozycja);
+    if(hash.length<2) return;
+    // Link z inną ścieżką prowadzi na inną stronę — zostawiamy go routerowi.
+    const sciezka=href.slice(0,pozycja);
+    if(sciezka&&sciezka!==location.pathname&&sciezka+'/'!==location.pathname) return;
+    let cel: Element | null=null;
+    try{ cel=document.querySelector(hash); }catch{ return; }
+    if(!cel) return;
+    e.preventDefault();
+    // Skok pomija naturalne wejście sekcji w kadr, więc animacja odsłaniania
+    // mogłaby jej nie odpalić i użytkownik wylądowałby na przezroczystej treści.
+    // Odsłaniamy docelową sekcję z góry — obserwator i tak pomija to, co ma już klasę.
+    if(cel.classList.contains('reveal')) cel.classList.add('in');
+    cel.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});
+    // Przewijamy natychmiast, nie płynnie. Na tej stronie płynne przewijanie
+    // nie rusza z miejsca (sprawdzone: scrollTo z behavior 'smooth' po 2,5 s
+    // wciąż na zerze, przy kolejnej próbie zawiesił się renderer — podejrzenie
+    // pada na animowane rozmycia w tle). Kotwica ma działać, nie ładnie wyglądać.
+    cel.scrollIntoView({behavior:'instant',block:'start'});
+    history.pushState(null,'',hash);
+  });
+  addEventListener('pointermove',function(e){if(spot){spot.style.left=e.clientX+'px';spot.style.top=e.clientY+'px';}});
+  addEventListener('scroll',function(){if(prog){const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';}});
   document.addEventListener('astro:page-load', lajfInit);
 </script>
 <CookieConsent locale="pl" />
+<Whatsapp />
 </body>
 </html>

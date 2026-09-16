@@ -5,10 +5,11 @@
  */
 import LajfLayout from '../layouts/lajf-layout.astro';
 import { siteConfig } from '../../site.config';
+import { daneRejestrowe } from '../lib/dane-firmy';
 
 const { brandName, company } = siteConfig;
 const updated = '30 czerwca 2026';
-const addressLine = [company.address, company.taxId].filter(Boolean).join(', ');
+const addressLine = daneRejestrowe(company);
 
 const toc = [
   ['1', 'Postanowienia ogólne i definicje'],
@@ -89,7 +90,7 @@ const toc = [
       Formularz służy do nawiązania kontaktu i przesłania zapytania. Wysłanie formularza
       <strong>nie jest zamówieniem ani zawarciem umowy</strong> — stanowi zaproszenie do rozmowy o
       współpracy. Klient zobowiązuje się podać dane prawdziwe. Zasady przetwarzania danych z
-      formularza opisuje <a href="/polityka-prywatnosci">Polityka prywatności</a>.
+      formularza opisuje <a href="/polityka-prywatnosci/">Polityka prywatności</a>.
     </p>
 
     <h2 id="par-6">§6. Zawarcie i realizacja umowy</h2>
@@ -161,7 +162,7 @@ const toc = [
     <h2 id="par-13">§13. Ochrona danych osobowych</h2>
     <p>
       Zasady przetwarzania danych osobowych w związku z korzystaniem z Serwisu opisuje
-      <a href="/polityka-prywatnosci">Polityka prywatności</a>.
+      <a href="/polityka-prywatnosci/">Polityka prywatności</a>.
     </p>
 
     <h2 id="par-14">§14. Postanowienia końcowe</h2>
@@ -174,7 +175,7 @@ const toc = [
     </p>
 
     <p class="legal__meta">Ostatnia aktualizacja: {updated}.</p>
-    <p class="legal__back"><a href="/">← Powrót na stronę główną</a> &nbsp;·&nbsp; <a href="/polityka-prywatnosci">Polityka prywatności</a></p>
+    <p class="legal__back"><a href="/">← Powrót na stronę główną</a> &nbsp;·&nbsp; <a href="/polityka-prywatnosci/">Polityka prywatności</a></p>
   </article>
 </LajfLayout>
 
