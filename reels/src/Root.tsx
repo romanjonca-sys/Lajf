@@ -1,6 +1,7 @@
 import React from 'react';
 import { Composition } from 'remotion';
-import { Reel, ReelProps } from './Reel';
+import { Reel } from './Reel';
+import type { ReelProps } from './Reel';
 
 const TECH = 'audio/tech-1.mp3';
 type Def = { id: string } & ReelProps;

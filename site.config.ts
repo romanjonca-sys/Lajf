@@ -6,8 +6,23 @@
 export interface CompanyInfo {
   legalName: string;
   taxId: string | null;
+  /** Numer KRS. `null` dla JDG i innych podmiotów spoza rejestru sądowego. */
+  krs: string | null;
+  /** REGON, wersja 9-cyfrowa. */
+  regon: string | null;
+  /** Sąd rejestrowy prowadzący akta — podawany razem z KRS (art. 206 §1 KSH). */
+  registryCourt: string | null;
+  /** Kapitał zakładowy w formie gotowej do wyświetlenia. Tylko spółki kapitałowe. */
+  shareCapital: string | null;
   email: string;
   phone: string;
+  /**
+   * Numer odbierający WhatsAppa. `null` = przycisku nie ma.
+   *
+   * Osobne pole od `phone`, bo to nie musi być ten sam numer, a odnośnik do
+   * numeru bez konta WhatsApp pokazuje odwiedzającemu błąd.
+   */
+  whatsapp: string | null;
   address: string;
 }
 
@@ -78,14 +93,19 @@ export const siteConfig: SiteConfig = {
     en: { label: 'Contact', href: '/#kontakt' },
   },
   company: {
-    legalName: 'Lajf - Roman Jońca',
-    taxId: '632-141-07-33',
+    legalName: 'Lajf sp. z o.o.',
+    taxId: '632-204-51-64',
+    krs: '0001265327',
+    regon: '545668517',
+    registryCourt: 'Sąd Rejonowy Katowice-Wschód w Katowicach, VIII Wydział Gospodarczy KRS',
+    shareCapital: '5 000,00 zł',
     email: 'kontakt@lajf.eu',
-    phone: '+48 608 101 623',
+    phone: '+48 880 133 640',
+    whatsapp: '+48 880 133 640',
     address: 'ul. Wiosenna 6, 43-607 Jaworzno',
   },
   privacy: {
-    controllerName: 'Lajf - Roman Jońca',
+    controllerName: 'Lajf sp. z o.o.',
     contactEmail: 'kontakt@lajf.eu',
   },
   integrations: {

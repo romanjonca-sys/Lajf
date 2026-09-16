@@ -7,6 +7,7 @@ import '@fontsource-variable/inter';
 import '../skins/_base/tokens.css';
 import '../styles/engine.css';
 import { siteConfig } from '../../site.config';
+import Whatsapp from '../components/whatsapp.astro';
 import SiteHeader from '../components/site-header.astro';
 import AnalyticsGa4 from '../components/analytics-ga4.astro';
 import CookieConsent from '../components/cookie-consent.astro';
@@ -306,5 +307,6 @@ const structuredData = seo.jobTitle
       }
     </script>
     <CookieConsent locale={locale} />
-  </body>
+  <Whatsapp />
+</body>
 </html>

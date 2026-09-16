@@ -1,0 +1,54 @@
+---
+/**
+ * Przycisk WhatsApp w rogu — zamiast dymka czatu. Wzorzec sprawdzony na bec-web.
+ *
+ * ⛔ ZERO JAVASCRIPTU I ZERO OBCYCH SKRYPTÓW. To zwykły odnośnik, więc nie
+ * spowalnia strony, nie wymaga zgody na cookies i działa przy wyłączonym JS.
+ *
+ * Numer stoi w `site.config`. `null` = przycisku nie ma, i taki jest stan do
+ * czasu, aż klient potwierdzi, który numer odbiera WhatsAppa — odnośnik do
+ * numeru bez konta pokazuje błąd i wygląda gorzej niż brak przycisku.
+ */
+import { siteConfig } from '../../site.config';
+
+const numer = siteConfig.company.whatsapp;
+// Format wa.me: same cyfry z numerem kierunkowym, bez plusa i bez spacji.
+const adres = numer === null ? null : `https://wa.me/${numer.replace(/\D/g, '')}`;
+---
+
+{adres && (
+  <a class="whatsapp" href={adres} target="_blank" rel="noopener" aria-label="Napisz na WhatsApp">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
+      <path d="M12 .5A11.4 11.4 0 0 0 2.1 17.6L.5 23.5l6-1.6A11.4 11.4 0 1 0 12 .5zm0 20.8c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-3.6 1 1-3.5-.2-.4a9.4 9.4 0 1 1 8.3 4.5zm5.2-7c-.3-.2-1.7-.8-1.9-.9-.3-.1-.5-.2-.7.1s-.8.9-1 1.1c-.2.2-.4.2-.7.1a7.7 7.7 0 0 1-3.8-3.3c-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.6l-.9-2.1c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.1 2.2.9 3 1 4.1.8.7-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z" />
+    </svg>
+  </a>
+)}
+
+<style>
+  .whatsapp {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 50%;
+    /* Kolor marki WhatsApp, nie marki Lajf: ludzie rozpoznają ten przycisk
+       po zieleni i po znaku, a nierozpoznany przycisk nie zostaje kliknięty. */
+    background: #25d366;
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgb(0 0 0 / 35%);
+    transition: transform 0.2s ease;
+  }
+  .whatsapp:hover {
+    transform: scale(1.06);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .whatsapp {
+      transition: none;
+    }
+  }
+</style>

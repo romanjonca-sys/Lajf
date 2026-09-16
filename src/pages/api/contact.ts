@@ -26,7 +26,7 @@ export const POST: APIRoute = async () => {
     JSON.stringify({
       error: {
         code: 'wrong_layer',
-        message: 'Wysyłka jest chwilowo niedostępna. Napisz na kontakt@lajf.eu albo zadzwoń: +48 608 101 623.',
+        message: 'Wysyłka jest chwilowo niedostępna. Napisz na kontakt@lajf.eu albo zadzwoń: +48 880 133 640.',
       },
     }),
     { status: 503, headers: { 'content-type': 'application/json' } }
