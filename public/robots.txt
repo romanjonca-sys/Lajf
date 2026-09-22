@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://lajf.eu/sitemap.xml
+Sitemap: https://lajf.eu/sitemap-index.xml
