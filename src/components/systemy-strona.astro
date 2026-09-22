@@ -7,6 +7,7 @@
  * tylko do jednej z nich. Tu poprawka idzie w jedno miejsce.
  */
 import { trescSystemow } from '../lib/systemy-tresc';
+import IkonaSystemu from './ikona-systemu.astro';
 import type { Locale } from '../lib/i18n';
 
 interface Props {
@@ -33,6 +34,7 @@ const t = trescSystemow(locale);
   <ul class="feats">
     {t.filaryPodejscia.map((filar) => (
       <li class="reveal">
+        <span class="ficon"><IkonaSystemu nazwa={filar.ikona} /></span>
         <div class="ftxt"><b>{filar.naglowek}</b><span>{filar.tekst}</span></div>
       </li>
     ))}
@@ -45,14 +47,14 @@ const t = trescSystemow(locale);
     <h2>{t.naglowekKatalog}</h2>
     <p>{t.wstepKatalog}</p>
   </div>
-  <div class="steps kat">
+  <ul class="feats kat">
     {t.katalog.map((pozycja) => (
-      <div class="step reveal">
-        <h4>{pozycja.naglowek}</h4>
-        <p>{pozycja.tekst}</p>
-      </div>
+      <li class="reveal">
+        <span class="ficon"><IkonaSystemu nazwa={pozycja.ikona} /></span>
+        <div class="ftxt"><b>{pozycja.naglowek}</b><span>{pozycja.tekst}</span></div>
+      </li>
     ))}
-  </div>
+  </ul>
 </div></section>
 
 <section id="poziomy"><div class="wrap">
@@ -102,15 +104,17 @@ const t = trescSystemow(locale);
 </div></section>
 
 <style>
-  /* Katalog ma dziewięć pozycji — w siatce silnika (4 kolumny) rozpadłby się
-     na 4+4+1. Trzy kolumny dają trzy równe rzędy. */
-  @media (min-width: 48rem) { #katalog .kat { grid-template-columns: repeat(2, 1fr); } }
+  /* Karty w obu siatkach mają równą wysokość w rzędzie. Auto-fit z silnika
+     dopuszcza różne wysokości, przez co dolne krawędzie się rozjeżdżają. */
+  #podejscie .feats li,
+  #katalog .feats li { height: 100%; }
+
+  /* Katalog ma dziewięć pozycji — przy auto-fit rozpadał się na 4+4+1.
+     Trzy kolumny dają trzy równe rzędy. */
+  #katalog .kat { grid-template-columns: 1fr; }
+  @media (min-width: 40rem) { #katalog .kat { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 64rem) { #katalog .kat { grid-template-columns: repeat(3, 1fr); } }
 
   /* Poziomy wdrożenia: trzy kroki obok siebie zamiast czterech kolumn z luką. */
   @media (min-width: 64rem) { #poziomy .steps { grid-template-columns: repeat(3, 1fr); } }
-
-  /* Filary podejścia czytają się jak lista argumentów, bez ikon — ikona nic tu
-     nie wnosi, a puste miejsce po niej psułoby rytm. */
-  #podejscie .feats li { padding-left: 0; }
 </style>

@@ -22,24 +22,24 @@ export const PL: TrescSystemow = {
     'Większość czasu w projektach informatycznych zjada budowanie rzeczy, których klient nawet nie widzi: logowania, uprawnień, historii zmian, eksportu. My mamy to gotowe, więc pracę zaczynamy od Twojego procesu.',
   filaryPodejscia: [
     {
-      naglowek: 'Pierwszego dnia masz fundament',
-      tekst:
-        'Logowanie, role i uprawnienia, rozdział danych między firmami, historia zmian przy każdym rekordzie, eksport i wyszukiwanie. To jest punkt startu, nie efekt trzech miesięcy pracy.',
+      ikona: 'fundament',
+      naglowek: 'Fundament od pierwszego dnia',
+      tekst: 'Logowanie, role, historia zmian i eksport są na starcie, nie po trzech miesiącach.',
     },
     {
+      ikona: 'pola',
       naglowek: 'Pola definiujesz sam',
-      tekst:
-        'Twoja ewidencja ma pola, których potrzebujesz Ty, a nie te, które ktoś wymyślił dla innej branży. Dołożenie kolejnego nie wymaga przepisywania systemu.',
+      tekst: 'Ewidencja ma Twoje pola, nie te wymyślone dla innej branży. Kolejne dokładasz bez przebudowy.',
     },
     {
+      ikona: 'rosnie',
       naglowek: 'Rośnie razem z firmą',
-      tekst:
-        'Zaczynasz od jednego procesu. Kolejne dokładamy wtedy, gdy są potrzebne, na tym samym fundamencie i bez migracji danych na nowy system.',
+      tekst: 'Kolejne procesy dokładamy na tym samym fundamencie, bez migracji na nowy system.',
     },
     {
-      naglowek: 'Wychodzisz z tego, co masz',
-      tekst:
-        'Dane wjeżdżają z arkuszy, które już prowadzicie. Nikt nie przepisuje ręcznie dwóch tysięcy pozycji, żeby zacząć korzystać z nowego narzędzia.',
+      ikona: 'start',
+      naglowek: 'Start z Twoich danych',
+      tekst: 'Arkusze, które już prowadzicie, wjeżdżają do systemu. Nikt nie przepisuje ich ręcznie.',
     },
   ],
 
@@ -49,49 +49,49 @@ export const PL: TrescSystemow = {
     'Zwykle zaczyna się od jednej pozycji z tej listy. Reszta dokłada się później, gdy pierwsza zaczyna zarabiać na siebie.',
   katalog: [
     {
+      ikona: 'rejestr',
       naglowek: 'Rejestry i ewidencje',
-      tekst:
-        'Jedno miejsce zamiast siedmiu arkuszy krążących mailem. Pola ustawiasz pod siebie, a każda zmiana ma autora i datę.',
+      tekst: 'Jedno miejsce zamiast siedmiu arkuszy krążących mailem. Każda zmiana ma autora i datę.',
     },
     {
+      ikona: 'obieg',
       naglowek: 'Obieg i akceptacje',
-      tekst:
-        'Dokument nie idzie dalej, dopóki ktoś go nie zatwierdzi. System pamięta, kto i kiedy, więc nikt nie szuka tego w skrzynce.',
+      tekst: 'Dokument nie idzie dalej, dopóki ktoś go nie zatwierdzi. System pamięta kto i kiedy.',
     },
     {
+      ikona: 'portal',
       naglowek: 'Portal dla Twoich klientów',
-      tekst:
-        'Klienci logują się na własne konta, widzą wyłącznie swoje sprawy i sami uzupełniają braki: wgrywają dokumenty i wpisują dane. Ty weryfikujesz i zatwierdzasz.',
+      tekst: 'Widzą wyłącznie swoje sprawy i sami uzupełniają braki. Ty weryfikujesz i zatwierdzasz.',
     },
     {
-      naglowek: 'Kontakty i historia współpracy',
-      tekst:
-        'Firmy, osoby, zadania i terminy w jednym miejscu. Korespondencja wpięta przy sprawie, a nie w prywatnej skrzynce pracownika, który akurat jest na urlopie.',
+      ikona: 'kontakty',
+      naglowek: 'Kontakty i historia',
+      tekst: 'Firmy, osoby, zadania i terminy razem. Korespondencja przy sprawie, nie w cudzej skrzynce.',
     },
     {
+      ikona: 'magazyn',
       naglowek: 'Oferty, zamówienia, magazyn',
-      tekst:
-        'Od wyceny po wydanie towaru. Stany, przyjęcia i inwentaryzacja, jeśli prowadzisz magazyn.',
+      tekst: 'Od wyceny po wydanie towaru. Stany, przyjęcia i inwentaryzacja, jeśli masz magazyn.',
     },
     {
+      ikona: 'zgloszenia',
       naglowek: 'Reklamacje i zgłoszenia',
-      tekst:
-        'Zgłoszenie dostaje numer, status i termin. Widać, co utknęło i u kogo, zamiast wątku mailowego na czterdzieści wiadomości.',
+      tekst: 'Numer, status i termin zamiast wątku mailowego. Widać, co utknęło i u kogo.',
     },
     {
+      ikona: 'planowanie',
       naglowek: 'Planowanie pracy',
-      tekst:
-        'Kto, kiedy, czym i na jakim zasobie. Grafik, który widzą wszyscy, zamiast tablicy w biurze i telefonów do koordynatora.',
+      tekst: 'Kto, kiedy i na jakim zasobie. Grafik widoczny dla wszystkich, nie tablica w biurze.',
     },
     {
+      ikona: 'import',
       naglowek: 'Import tego, co już masz',
-      tekst:
-        'Excel wjeżdża do systemu. Dane z innych narzędzi też, jeśli dało się je wyeksportować.',
+      tekst: 'Excel wjeżdża do systemu. Dane z innych narzędzi też, jeśli da się je wyeksportować.',
     },
     {
+      ikona: 'integracje',
       naglowek: 'Integracje i API',
-      tekst:
-        'System rozmawia z tym, czego już używacie, i powiadamia o zmianach. Jeśli ktoś u Was pisze własne narzędzia, dostaje dostęp do danych.',
+      tekst: 'System rozmawia z tym, czego już używacie, i powiadamia o zmianach.',
     },
   ],
 

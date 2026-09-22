@@ -22,24 +22,24 @@ export const EN: TrescSystemow = {
     'Most of the time in software projects goes into things a client never sees: logins, permissions, change history, exports. We have that part built, so the work starts at your process instead.',
   filaryPodejscia: [
     {
-      naglowek: 'The foundation is there on day one',
-      tekst:
-        'Logins, roles and permissions, separation of data between companies, a change history on every record, export and search. That is the starting point, not the result of three months of work.',
+      ikona: 'fundament',
+      naglowek: 'Foundation on day one',
+      tekst: 'Logins, roles, change history and export are the starting point, not a three-month build.',
     },
     {
+      ikona: 'pola',
       naglowek: 'You define the fields',
-      tekst:
-        'Your registry holds the fields you need, not the ones someone designed for a different industry. Adding another one does not mean rewriting the system.',
+      tekst: 'Your fields, not ones designed for another industry. Adding more means no rewrite.',
     },
     {
+      ikona: 'rosnie',
       naglowek: 'It grows with the company',
-      tekst:
-        'You start with one process. The next ones are added when they are actually needed, on the same foundation and without migrating your data to a different system.',
+      tekst: 'Further processes sit on the same foundation, with no migration to a different system.',
     },
     {
-      naglowek: 'It starts from what you already have',
-      tekst:
-        'Your existing spreadsheets are imported. Nobody retypes two thousand rows by hand just to start using the new tool.',
+      ikona: 'start',
+      naglowek: 'Starts from your data',
+      tekst: 'The spreadsheets you already keep are imported. Nobody retypes them by hand.',
     },
   ],
 
@@ -49,49 +49,49 @@ export const EN: TrescSystemow = {
     'It usually starts with one item from this list. The rest follows later, once the first one has started paying for itself.',
   katalog: [
     {
+      ikona: 'rejestr',
       naglowek: 'Registries and records',
-      tekst:
-        'One place instead of seven spreadsheets going round by email. You set the fields, and every change carries an author and a date.',
+      tekst: 'One place instead of seven spreadsheets. Every change carries an author and a date.',
     },
     {
+      ikona: 'obieg',
       naglowek: 'Approval flows',
-      tekst:
-        'A document does not move on until someone approves it. The system remembers who and when, so nobody has to dig through an inbox.',
+      tekst: 'Nothing moves on until someone approves it. The system remembers who and when.',
     },
     {
+      ikona: 'portal',
       naglowek: 'A portal for your clients',
-      tekst:
-        'Clients log into their own accounts, see only their own cases and fill the gaps themselves, uploading documents and entering data. You verify and approve.',
+      tekst: 'They see only their own cases and fill the gaps themselves. You verify and approve.',
     },
     {
+      ikona: 'kontakty',
       naglowek: 'Contacts and history',
-      tekst:
-        'Companies, people, tasks and deadlines in one place. Correspondence attached to the case rather than sitting in the inbox of whoever is on holiday.',
+      tekst: 'Companies, people, tasks and deadlines together, with correspondence on the case.',
     },
     {
+      ikona: 'magazyn',
       naglowek: 'Quotes, orders, stock',
-      tekst:
-        'From the quote to goods leaving the warehouse. Stock levels, receipts and stocktaking if you hold inventory.',
+      tekst: 'From the quote to goods leaving the warehouse, with stock levels and stocktaking.',
     },
     {
+      ikona: 'zgloszenia',
       naglowek: 'Complaints and tickets',
-      tekst:
-        'Each one gets a number, a status and a deadline. You can see what is stuck and with whom, instead of a forty-message email thread.',
+      tekst: 'A number, a status and a deadline instead of an email thread. You see what is stuck.',
     },
     {
+      ikona: 'planowanie',
       naglowek: 'Work planning',
-      tekst:
-        'Who, when, with what and on which resource. A schedule everyone can see, instead of a whiteboard and calls to the coordinator.',
+      tekst: 'Who, when and on which resource. A schedule everyone can see, not a whiteboard.',
     },
     {
-      naglowek: 'Importing what you already have',
-      tekst:
-        'Your spreadsheets go in. So does data from other tools, as long as it can be exported.',
+      ikona: 'import',
+      naglowek: 'Import what you have',
+      tekst: 'Your spreadsheets go in, and so does data from other tools that can be exported.',
     },
     {
+      ikona: 'integracje',
       naglowek: 'Integrations and API',
-      tekst:
-        'The system talks to what you already use and notifies you when things change. If someone on your side builds their own tools, they get access to the data.',
+      tekst: 'The system talks to what you already use and notifies you when things change.',
     },
   ],
 
