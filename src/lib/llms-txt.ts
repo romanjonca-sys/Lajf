@@ -52,6 +52,21 @@ const USLUGI: Odnosnik[] = [
   },
 ];
 
+const PO_ANGIELSKU: Odnosnik[] = [
+  {
+    nazwa: 'English version',
+    sciezka: '/en/',
+    opis:
+      'websites, business email in your own domain, hosting and maintenance for small companies, in English.',
+  },
+  {
+    nazwa: 'Custom software',
+    sciezka: '/en/systems/',
+    opis:
+      'web applications, client portals, registries and internal tools built to order, with data hosted in the European Union.',
+  },
+];
+
 const INFORMACJE: Odnosnik[] = [
   { nazwa: 'Polityka prywatności', sciezka: '/polityka-prywatnosci/', opis: 'zasady przetwarzania danych osobowych.' },
   { nazwa: 'Regulamin', sciezka: '/regulamin/', opis: 'warunki świadczenia usług.' },
@@ -82,6 +97,12 @@ export function zbudujLlmsTxt(dane: DaneLlmsTxt): string {
     '',
     linia(siteHref, { nazwa: 'Spis poradnika', sciezka: '/poradnik/', opis: 'wszystkie artykuły.' }),
     ...poradnik,
+    '',
+    '## English',
+    '',
+    'Lajf also works in English. Websites, business email, hosting and custom software for small companies in the European Union. Polish data protection services are offered in Polish only.',
+    '',
+    ...PO_ANGIELSKU.map((e) => linia(siteHref, e)),
     '',
     '## Informacje',
     '',
