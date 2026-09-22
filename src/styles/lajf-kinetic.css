@@ -37,18 +37,30 @@ a{color:inherit;text-decoration:none}
 
 /* nawigacja */
 nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(18px);background:rgba(7,5,16,.5);border-bottom:1px solid var(--line)}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:70px}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:28px;height:70px}
 .logo{font-family:'Space Grotesk Variable','Space Grotesk',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.035em;display:inline-flex;align-items:baseline}.logo b{color:var(--acc);display:inline-flex}/* Puls i kropka w jednym rysunku: odstep miedzy nimi jest czescia znaku. */.logo-puls{height:.5em;width:auto;margin-left:.14em;transform:translateY(.06em)}
 .nav-links{display:flex;gap:28px;font-size:14px;color:var(--mut)}.nav-links a{position:relative}
 .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;height:2px;width:0;background:var(--acc);transition:width .25s}
 .nav-links a:hover{color:var(--txt)}.nav-links a:hover::after{width:100%}
-@media(max-width:800px){.nav-links{display:none}}
+/* Etykiety menu zostają w jednej linii. Bez tego „Audyt cyfrowy" łamie się na dwa
+   wiersze i rozpycha pasek, gdy w rzędzie akcji przybywa element (przełącznik języka). */
+.nav-links a{white-space:nowrap}
+/* Pasek z pełnym menu potrzebuje ~1170 px (sześć pozycji PL, telefon, CTA,
+   przełącznik języka). Poniżej tego menu wędruje pod hamburger — wcześniej próg
+   wynosił 800 px, więc między 800 a 1170 px etykiety łamały się na dwa wiersze. */
+@media(max-width:1200px){.nav-links{display:none}}
 
 /* Pasek akcji w nagłówku: telefon, konsultacja, hamburger. */
-.nav-actions{display:flex;align-items:center;gap:14px}
+.nav-actions{display:flex;align-items:center;gap:10px}
 .nav-tel{display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:600;color:var(--txt);white-space:nowrap}
 .nav-tel svg{width:17px;height:17px;color:var(--acc)}
 .nav-tel:hover{color:var(--acc)}
+
+/* Przełącznik języka PL/EN. Dwa krótkie odnośniki, aktywny wyróżniony ramką. */
+.nav-lang{display:inline-flex;align-items:center;gap:2px;padding:3px;border:1px solid var(--stroke,rgba(255,255,255,.14));border-radius:10px}
+.nav-lang-link{padding:3px 6px;font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--mut);border-radius:7px;line-height:1}
+.nav-lang-link:hover{color:var(--txt)}
+.nav-lang-link.is-current{color:#fff;background:rgba(255,255,255,.12)}
 
 /* Hamburger — trzy kreski zmieniające się w krzyżyk. Widoczny tylko na wąskich ekranach. */
 .nav-toggle{display:none;position:relative;width:42px;height:42px;padding:0;border:1px solid var(--stroke,rgba(255,255,255,.14));border-radius:11px;background:transparent;cursor:pointer}
@@ -66,9 +78,12 @@ nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(18px);background:rgba(
 .nav-mobile-tel{font-weight:700;color:var(--acc) !important}
 .nav-mobile-cta{margin-top:12px;padding:13px 18px !important;text-align:center;font-weight:700;color:#fff !important;border:0 !important;border-radius:12px;background:var(--acc)}
 
-@media(max-width:800px){
+@media(max-width:1200px){
   .nav-toggle{display:block}
   .nav-mobile:not([hidden]){display:flex}
+}
+
+@media(max-width:800px){
   .nav-tel span{display:none}
   .nav-tel{width:42px;height:42px;justify-content:center;border:1px solid var(--stroke,rgba(255,255,255,.14));border-radius:11px}
   .nav-tel svg{width:19px;height:19px}

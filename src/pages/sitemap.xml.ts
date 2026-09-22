@@ -11,6 +11,7 @@ import { sciezkiPoradnika } from '../lib/artykuly';
  */
 const PAGES = [
   '', // homepage
+  'en', // angielska strona dla klientów i partnerów zagranicznych
   'audyt-placowki-medycznej',
   'audyt-firmy',
   'strony-www',

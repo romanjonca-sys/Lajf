@@ -1,0 +1,254 @@
+---
+/**
+ * Angielska strona lajf.eu.
+ *
+ * NIE jest tłumaczeniem serwisu polskiego i celowo nie powtarza jego oferty.
+ * Polskie produkty (Audyt Cyfrowy, dokumentacja RODO, IOD) są osadzone w polskim
+ * prawie i polskim rynku — zagraniczna firma ich nie kupi. Po angielsku sprzedajemy
+ * to, co działa bez granic: strony, pocztę firmową i oprogramowanie na zamówienie.
+ *
+ * Bez cennika. Polskie stawki przeliczone na euro wyglądają na rynku irlandzkim
+ * czy niemieckim jak sygnał „tani wykonawca", co z góry ustawia negocjacje niżej,
+ * niż powinny się zaczynać. Zakres i cena wychodzą z rozmowy.
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import { siteConfig } from '../../../site.config';
+
+const { company } = siteConfig;
+
+const title = 'Lajf — websites, business email and custom software';
+const description =
+  'We design websites, set up business email and build custom software for small and mid-sized companies. One partner from the first call to long-term maintenance. Based in Poland, working across Europe.';
+
+const uslugi = [
+  {
+    naglowek: 'Websites',
+    tekst:
+      'Design and build, from a one-page site to a multi-language company site. Fast, accessible, easy for your team to edit. Built on Astro and Cloudflare, or WordPress when that is what fits the client.',
+    punkty: ['Design and copy structure', 'Mobile and accessibility (WCAG)', 'Speed and Core Web Vitals', 'Hosting, SSL, backups'],
+  },
+  {
+    naglowek: 'Business email and domains',
+    tekst:
+      'Company mailboxes that actually arrive. Domain and DNS setup, SPF, DKIM and DMARC, signatures, and migrations from an old provider without losing a single message.',
+    punkty: ['Google Workspace or self-hosted', 'SPF, DKIM, DMARC', 'Migration from the old host', 'Shared signatures and aliases'],
+  },
+  {
+    naglowek: 'Custom software',
+    tekst:
+      'Internal tools that replace a spreadsheet nobody trusts any more. Client registries, booking, order workflows, reporting panels and integrations between systems you already use.',
+    punkty: ['Web apps and internal panels', 'API integrations', 'TypeScript, Supabase, Cloudflare', 'Documentation and handover'],
+  },
+  {
+    naglowek: 'Analytics and privacy',
+    tekst:
+      'What your site measures, where that data goes and whether it is allowed to go there. GA4 and consent setup, cookie banners, plus a check of what third-party scripts quietly collect.',
+    punkty: ['GA4 and conversion tracking', 'Consent Mode and cookie banner', 'GDPR review of the site layer', 'EU hosting by default'],
+  },
+];
+
+const kroki = [
+  {
+    numer: '01',
+    naglowek: 'Call',
+    tekst:
+      'Thirty minutes. You tell me what the business needs and what the thing has to do. If I am not the right person for it, I will say so on that call and point you elsewhere.',
+  },
+  {
+    numer: '02',
+    naglowek: 'Written scope and fixed price',
+    tekst:
+      'You get the scope in writing, a fixed price and a delivery date. Not an hourly estimate that grows. If you later want something outside that scope, we price it separately before I start it.',
+  },
+  {
+    numer: '03',
+    naglowek: 'Build',
+    tekst:
+      'You get a preview link from the first week and watch it take shape. Feedback goes in as we go, so there is no single dramatic reveal at the end that turns out to be wrong.',
+  },
+  {
+    numer: '04',
+    naglowek: 'Handover and care',
+    tekst:
+      'Accounts, code and documentation are yours. After that you can take it in-house or keep me on a monthly plan for hosting, updates, small changes and monitoring.',
+  },
+];
+
+const realizacje = [
+  { t: 'Clinical trial registry', c: 'Data collection app for a medical study', tag: 'app · medical', href: '/realizacje/rejestr-badania-klinicznego/', img: '/images/realizacje/rejestr-badania.jpg' },
+  { t: 'moje-rodo', c: 'GDPR compliance SaaS for healthcare', tag: 'SaaS · compliance', href: 'https://moje-rodo.pl', img: '/images/realizacje/moje-rodo.jpg' },
+  { t: 'Układ Komediowy', c: 'Site and tour calendar for a comedy group', tag: 'web · entertainment', href: 'https://ukladkomediowy.pl', img: '/images/realizacje/uklad.jpg' },
+  { t: 'Krzysztof Stanio', c: 'Studio of theatre practice', tag: 'web · culture', href: 'https://krzysztofstanio.pl', img: '/images/realizacje/stanio.jpg' },
+  { t: 'Innova Biological', c: 'B2B site for a chemical brand', tag: 'web · B2B', href: 'https://innova-biological.pages.dev', img: '/images/realizacje/innova.jpg' },
+  { t: 'Pan Kolektor', c: 'Solar collector service company', tag: 'web · services', href: 'https://pankolektor.pl', img: '/images/realizacje/pankolektor.jpg' },
+  { t: 'R&L Serwis', c: 'Cleaning company for homes and offices', tag: 'web · services', href: 'https://rlserwis.pl', img: '/images/realizacje/rlserwis.jpg' },
+  { t: 'Dźwięk Dobry', c: 'Songwriting studio', tag: 'web · music', href: 'https://dzwiekdobry.pl', img: '/images/realizacje/dzwiek.jpg' },
+];
+
+const numerVat = company.taxId ? `PL${company.taxId.replace(/\D/g, '')}` : null;
+
+/** Schema.org dla wersji angielskiej: te same usługi, opisane w języku strony. */
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Lajf',
+  description,
+  url: 'https://lajf.eu/en/',
+  areaServed: 'EU',
+  availableLanguage: ['en', 'pl'],
+  email: company.email,
+  telephone: company.phone,
+};
+---
+
+<LajfLayout title={title} description={description} locale="en" schema={schema}>
+  <header class="hero"><div class="wrap hero-in">
+    <span class="label stagger d1">Websites · business email · custom software</span>
+    <h1 class="stagger d2">One partner for everything<br />your company runs <span class="hl">online</span>.</h1>
+    <p class="lead stagger d4">
+      We design and build websites, set up business email that arrives, and write custom software for small
+      and mid-sized companies. Based in Poland, working with clients across Europe, in English.
+    </p>
+    <div class="hero-cta stagger d5">
+      <a href="#contact" class="btn btn-primary magnetic">Tell us what you need →</a>
+      <a href="#services" class="btn btn-ghost">See what we do</a>
+    </div>
+    <div class="chips stagger d5"><a class="chip" href="#services">Websites</a><a class="chip" href="#services">Business email</a><a class="chip" href="#services">Custom software</a><a class="chip" href="#work">Work</a></div>
+    <div class="proofbar stagger d5"><span><b>One</b> partner, not five</span><span><b>Fixed</b> scope and price</span><span><b>EU</b> hosting and EU company</span><span><b>English</b> by email and phone</span></div>
+  </div>
+  </header>
+
+  <section id="services"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">What we do</span>
+      <h2>Four things, done properly</h2>
+      <p>Most companies end up with a web agency, an IT guy, a hosting provider and a freelancer who built one internal tool and then vanished. We do all four, so nobody can blame the other supplier.</p>
+    </div>
+    <div class="steps">
+      {uslugi.map((usluga) => (
+        <div class="step reveal">
+          <h4>{usluga.naglowek}</h4>
+          <p>{usluga.tekst}</p>
+          <ul class="step-list">
+            {usluga.punkty.map((punkt) => <li>{punkt}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div></section>
+
+  <section id="process"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">How we work</span>
+      <h2>No surprises, in either direction</h2>
+      <p>Working with someone in another country only pays off if the process is boring and predictable. This is the whole of it.</p>
+    </div>
+    <div class="steps">
+      {kroki.map((krok) => (
+        <div class="step reveal">
+          <div class="n">{krok.numer}</div>
+          <h4>{krok.naglowek}</h4>
+          <p>{krok.tekst}</p>
+        </div>
+      ))}
+    </div>
+  </div></section>
+
+  <section id="work"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Work</span>
+      <h2>Things we actually built</h2>
+      <p>Live projects, not slides. Most of the sites are in Polish, so read them for the craft rather than the copy.</p>
+    </div>
+    <div class="work">
+      {realizacje.map((r) => (
+        <a class="frame reveal" href={r.href} {...(r.href.startsWith('/') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}>
+          <div class="fbar"><i></i><i></i><i></i><span class="furl">{r.href.startsWith('/') ? 'lajf.eu' : r.href.replace('https://', '')}</span></div>
+          <img class="fimg" src={r.img} alt={`Lajf project: ${r.t}`} loading="lazy" width="800" height="500" />
+          <div class="fmeta"><div><span class="fm-t">{r.t}</span><span class="fm-d">{r.c}</span></div><span class="ftag">{r.tag}</span></div>
+        </a>
+      ))}
+    </div>
+  </div></section>
+
+  <section id="about"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">About</span>
+      <h2>Who you would actually be working with</h2>
+      <p>You deal with me directly. There is no account manager passing your message to somebody you never meet.</p>
+    </div>
+    <ul class="feats">
+      <li class="reveal"><div class="ftxt"><b>One point of contact</b><span>The person who scopes the work is the person who builds it and answers the phone afterwards.</span></div></li>
+      <li class="reveal"><div class="ftxt"><b>Same working day as you</b><span>We are on Central European Time, one hour ahead of Ireland and the UK. A morning question gets a same-day answer.</span></div></li>
+      <li class="reveal"><div class="ftxt"><b>An EU company, EU invoicing</b><span>{company.legalName}, a Polish limited company. {numerVat ? `VAT ID ${numerVat}, ` : ''}so EU business clients are invoiced under reverse charge.</span></div></li>
+      <li class="reveal"><div class="ftxt"><b>Data stays in the EU</b><span>Hosting and email inside the European Union by default, which keeps GDPR questions simple for you and your clients.</span></div></li>
+    </ul>
+  </div></section>
+
+  <section id="contact"><div class="wrap">
+    <div class="formcard reveal">
+      <h2>Tell us what you need</h2>
+      <p class="sub">A short form, a straight answer within 24 hours on working days. No obligation.</p>
+      <form name="kontakt" data-engine-form>
+        <input type="hidden" name="lang" value="en" />
+        <div class="frow">
+          <div class="field"><label for="en-typ">What do you need</label><select id="en-typ" name="typ">
+            <option>Website for a company</option>
+            <option>One-page site</option>
+            <option>Online shop</option>
+            <option>Business email and domains</option>
+            <option>Custom software or internal tool</option>
+            <option>Analytics, tracking and GDPR</option>
+            <option>Maintenance of an existing site</option>
+            <option>Something else</option>
+          </select></div>
+          <div class="field"><label for="en-budzet">Rough budget</label><select id="en-budzet" name="budzet">
+            <option>Not sure yet</option>
+            <option>Under €2,000</option>
+            <option>€2,000 – €5,000</option>
+            <option>€5,000 – €10,000</option>
+            <option>€10,000 – €20,000</option>
+            <option>Over €20,000</option>
+          </select></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label for="en-termin">Timeline</label><select id="en-termin" name="termin">
+            <option>No rush</option>
+            <option>1 – 2 months</option>
+            <option>Urgent (within 4 weeks)</option>
+          </select></div>
+          <div class="field"><label for="en-email">Email</label><input id="en-email" type="email" name="email" placeholder="you@company.ie" required /></div>
+        </div>
+        <div class="field" style="margin-bottom:20px"><label for="en-opis">In two sentences: what is it about</label><input id="en-opis" name="opis" placeholder="e.g. new website plus company email for a 12-person firm" /></div>
+        <div class="hp" aria-hidden="true"><label for="en-gotcha">Do not fill this field</label><input id="en-gotcha" name="_gotcha" tabindex="-1" autocomplete="off" /></div>
+        <button type="submit" class="btn btn-primary magnetic" style="width:100%;justify-content:center">Send</button>
+        <p class="qnote">
+          We ask about type and budget so the first reply can be concrete instead of a guess.
+          Prefer to talk? Call <a href={`tel:${company.phone.replace(/\s/g, '')}`}>{company.phone}</a>
+          or write to <a href={`mailto:${company.email}`}>{company.email}</a>.
+        </p>
+      </form>
+    </div>
+  </div></section>
+</LajfLayout>
+
+<style>
+  /* Usługi i proces mają po cztery kafelki — dwa równe rzędy zamiast 4+0 albo 3+1. */
+  @media (min-width: 48rem) { #services .steps, #process .steps { grid-template-columns: repeat(2, 1fr); } }
+
+  /* Wypunktowanie wewnątrz kafelka usługi. Silnik nie ma dla niego klasy,
+     bo polskie sekcje opisują usługi zdaniem, a nie listą. */
+  .step-list { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+  .step-list li {
+    position: relative; padding-left: 18px; font-size: 14px; color: var(--mut);
+  }
+  .step-list li::before {
+    content: ''; position: absolute; left: 0; top: 8px;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--acc);
+  }
+
+  /* Realizacje: 8 kafelków w równych rzędach, tak samo jak na stronie polskiej. */
+  #work .work { grid-template-columns: 1fr; }
+  @media (min-width: 40rem) { #work .work { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 64rem) { #work .work { grid-template-columns: repeat(4, 1fr); } }
+</style>

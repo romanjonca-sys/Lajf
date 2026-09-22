@@ -11,24 +11,34 @@ import { siteConfig } from '../../site.config';
 import Whatsapp from '../components/whatsapp.astro';
 import AnalyticsGa4 from '../components/analytics-ga4.astro';
 import CookieConsent from '../components/cookie-consent.astro';
+import LajfFooter from '../components/lajf-footer.astro';
+import LajfNav from '../components/lajf-nav.astro';
+import { alternatywy } from '../lib/chrome-tresci';
+import { DEFAULT_LOCALE, OG_LOCALE, type Locale } from '../lib/i18n';
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title: string;
   description: string;
   accent?: string;
+  /** Język strony. Steruje nawigacją, stopką, hreflang i komunikatami formularza. */
+  locale?: Locale;
   /** Dodatkowy JSON-LD strony (np. Service z ofertą) — dokładany obok Organization. */
   schema?: Record<string, unknown>;
 }
 
-const { title, description, accent = '#5b8cff', schema } = Astro.props;
+const { title, description, accent = '#5b8cff', locale = DEFAULT_LOCALE, schema } = Astro.props;
 const { brandName, company } = siteConfig;
-const telHref = `tel:${company.phone.replace(/\s/g, '')}`;
-const year = new Date().getFullYear();
 
 const siteUrl = Astro.site ?? new URL('https://lajf.eu');
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
 const ogImage = new URL('/images/og-default.jpg', siteUrl).href;
+
+// hreflang tylko dla stron, które naprawdę mają odpowiednik w drugim języku.
+const hreflangi = alternatywy(Astro.url.pathname).map((alt) => ({
+  locale: alt.locale,
+  href: new URL(alt.href, siteUrl).href,
+}));
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -42,22 +52,34 @@ const jsonLd = {
   ...(company.taxId ? { vatID: `PL${company.taxId.replace(/\D/g, '')}`, taxID: company.taxId } : {}),
   ...(company.krs ? { identifier: `KRS ${company.krs}` } : {}),
   description,
-  slogan: 'Cyfrowa opieka nad firmą',
-  knowsAbout: [
-    'audyt cyfrowy',
-    'strony internetowe',
-    'analityka internetowa',
-    'bezpieczeństwo techniczne stron',
-    'ochrona danych na stronie internetowej',
-    'automatyzacja procesów',
-    'Google Workspace',
-    'oprogramowanie na zamówienie',
-  ],
+  slogan: locale === 'en' ? 'Websites, business email and custom software' : 'Cyfrowa opieka nad firmą',
+  knowsAbout:
+    locale === 'en'
+      ? [
+          'web design and development',
+          'business email and domains',
+          'custom business software',
+          'web analytics',
+          'website security',
+          'GDPR and cookie consent',
+          'Google Workspace',
+          'process automation',
+        ]
+      : [
+          'audyt cyfrowy',
+          'strony internetowe',
+          'analityka internetowa',
+          'bezpieczeństwo techniczne stron',
+          'ochrona danych na stronie internetowej',
+          'automatyzacja procesów',
+          'Google Workspace',
+          'oprogramowanie na zamówienie',
+        ],
 };
 ---
 
 <!doctype html>
-<html lang="pl" style={`--acc:${accent}`}>
+<html lang={locale} style={`--acc:${accent}`}>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -69,9 +91,19 @@ const jsonLd = {
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+{hreflangi.map((alt) => (
+  <link rel="alternate" hreflang={alt.locale} href={alt.href} />
+))}
+{hreflangi.length > 0 && (
+  <link
+    rel="alternate"
+    hreflang="x-default"
+    href={hreflangi.find((alt) => alt.locale === DEFAULT_LOCALE)?.href ?? hreflangi[0].href}
+  />
+)}
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content={brandName} />
-<meta property="og:locale" content="pl_PL" />
+<meta property="og:locale" content={OG_LOCALE[locale]} />
 <meta property="og:url" content={canonical} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
@@ -91,58 +123,11 @@ const jsonLd = {
 <div class="grain"></div><div class="vig"></div><div class="spot" id="spot"></div>
 <div class="prog" id="prog"></div>
 
-<nav><div class="wrap nav-in">
-  <a class="logo" href="/" aria-label={brandName}>{brandName}<b><svg class="logo-puls" viewBox="45 36 50 33" aria-hidden="true"><path d="M50 54 h5 l5 -14 l6.5 25 l5 -11 h4" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="86" cy="54" r="5.5" fill="currentColor"/></svg></b></a>
-  <div class="nav-links"><a href="/audyt-placowki-medycznej/">Audyt cyfrowy</a><a href="/strony-www/">Strony WWW</a><a href="/rodo-i-cyber/">Bezpieczeństwo i dane</a><a href="/oprogramowanie/">Oprogramowanie</a><a href="/#realizacje">Realizacje</a><a href="/#o-mnie">O mnie</a></div>
-  <div class="nav-actions">
-    <a class="nav-tel" href={telHref} aria-label={`Zadzwoń: ${company.phone}`}>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
-      <span>{company.phone}</span>
-    </a>
-    <a href="/#kontakt" class="btn btn-primary magnetic nav-cta" style="padding:11px 20px">Konsultacja</a>
-    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-mobile" aria-label="Otwórz menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</div>
-<div class="nav-mobile" id="nav-mobile" hidden>
-  <a class="nav-mobile-tel" href={telHref}>Zadzwoń: {company.phone}</a>
-  <a href="/audyt-placowki-medycznej/">Audyt cyfrowy placówki</a>
-  <a href="/strony-www/">Strony WWW</a>
-  <a href="/rodo-i-cyber/">Bezpieczeństwo i dane</a>
-  <a href="/oprogramowanie/">Oprogramowanie</a>
-  <a href="/muzyka/">Muzyka</a>
-  <a href="/#realizacje">Realizacje</a>
-  <a href="/#o-mnie">O mnie</a>
-  <a class="nav-mobile-cta" href="/#kontakt">Napisz do nas</a>
-</div></nav>
+<LajfNav locale={locale} />
 
 <slot />
 
-<footer><div class="wrap">
-  <div class="foot-top">
-    <div class="foot-brand">
-      <span class="logo">{brandName}<b><svg class="logo-puls" viewBox="45 36 50 33" aria-hidden="true"><path d="M50 54 h5 l5 -14 l6.5 25 l5 -11 h4" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="86" cy="54" r="5.5" fill="currentColor"/></svg></b></span>
-      <p>Cyfrowa opieka nad firmą. Audyt, wdrożenie i stała opieka — strona, analityka, bezpieczeństwo i automatyzacje, prowadzone przez jedną osobę odpowiedzialną za całość.</p>
-      <div class="foot-contact">
-        <a href={`mailto:${company.email}`}>{company.email}</a>
-        <a href={`tel:${company.phone.replace(/\s/g, '')}`}>{company.phone}</a>
-        <span>Jaworzno, PL</span>
-      </div>
-    </div>
-    <div class="foot-cols">
-      <div class="foot-col"><h4>Usługi</h4><a href="/audyt-placowki-medycznej/">Audyt Cyfrowy</a><a href="/strony-www/">Strony WWW</a><a href="/rodo-i-cyber/">Bezpieczeństwo i dane</a><a href="/oprogramowanie/">Oprogramowanie</a><a href="/muzyka/">Muzyka</a></div>
-      <div class="foot-col"><h4>Firma</h4><a href="/#realizacje">Realizacje</a><a href="/#o-mnie">O mnie</a><a href="/#kontakt">Kontakt</a></div>
-      <div class="foot-col"><h4>Informacje</h4><a href="/polityka-prywatnosci/">Polityka prywatności</a><a href="/regulamin/">Regulamin</a><span>RODO · WCAG · hosting EU</span></div>
-    </div>
-  </div>
-  <div class="foot-bottom">
-    <span>
-      © {year} {company.legalName}{company.krs ? ` · KRS ${company.krs}` : ''}{company.taxId ? ` · NIP ${company.taxId}` : ''}{company.regon ? ` · REGON ${company.regon}` : ''}
-    </span>
-    <span>Hosting w UE · zgodne z RODO</span>
-  </div>
-</div></footer>
+<LajfFooter locale={locale} />
 
 <script>
   // Inicjalizacja interakcji — odpalana też po każdym przejściu (View Transitions)
@@ -160,6 +145,27 @@ const jsonLd = {
   const zPrzyciaganiem = new WeakSet<Element>();
   const zPochyleniem = new WeakSet<Element>();
   const zObsluga = new WeakSet<Element>();
+
+  // Komunikaty formularza. Skrypt jest pakowany osobno i nie widzi zmiennych Astro,
+  // więc język bierzemy z atrybutu `lang` dokumentu, który layout już ustawia.
+  const KOMUNIKATY = {
+    pl: {
+      wysylanie: 'Wysyłam…',
+      ok: 'Dzięki! Odezwę się najszybciej, jak się da.',
+      blad: 'Błąd wysyłki.',
+      bladOgolny: 'Nie udało się wysłać.',
+    },
+    en: {
+      wysylanie: 'Sending…',
+      ok: 'Thanks. I will get back to you as soon as I can.',
+      blad: 'Could not send the message.',
+      bladOgolny: 'Could not send the message.',
+    },
+  };
+
+  function komunikaty(){
+    return document.documentElement.lang === 'en' ? KOMUNIKATY.en : KOMUNIKATY.pl;
+  }
 
   function lajfInit(){
     spot=document.getElementById('spot');
@@ -189,10 +195,10 @@ const jsonLd = {
     const panel=document.getElementById('nav-mobile');
     if(przelacznik&&panel&&!przelacznik.dataset.bound){
       przelacznik.dataset.bound='1';
-      const zamknij=function(){panel.hidden=true;przelacznik.setAttribute('aria-expanded','false');przelacznik.setAttribute('aria-label','Otwórz menu');przelacznik.classList.remove('open');};
+      const zamknij=function(){panel.hidden=true;przelacznik.setAttribute('aria-expanded','false');przelacznik.setAttribute('aria-label',przelacznik.dataset.labelOtworz||'Otwórz menu');przelacznik.classList.remove('open');};
       przelacznik.addEventListener('click',function(){
         if(przelacznik.getAttribute('aria-expanded')==='true'){zamknij();return;}
-        panel.hidden=false;przelacznik.setAttribute('aria-expanded','true');przelacznik.setAttribute('aria-label','Zamknij menu');przelacznik.classList.add('open');
+        panel.hidden=false;przelacznik.setAttribute('aria-expanded','true');przelacznik.setAttribute('aria-label',przelacznik.dataset.labelZamknij||'Zamknij menu');przelacznik.classList.add('open');
       });
       // Klik w link ma zamknąć panel — przy kotwicach (#kontakt) strona się nie przeładowuje.
       panel.addEventListener('click',function(e){if(e.target instanceof Element&&e.target.closest('a')) zamknij();});
@@ -203,14 +209,15 @@ const jsonLd = {
       form.addEventListener('submit',async function(event){
         event.preventDefault();
         const btn=form.querySelector<HTMLButtonElement>('button[type=submit]');const original=btn?btn.textContent:'';
-        if(btn){btn.setAttribute('disabled','true');btn.textContent='Wysyłam…';}
+        const t=komunikaty();
+        if(btn){btn.setAttribute('disabled','true');btn.textContent=t.wysylanie;}
         const payload: Record<string, unknown>=Object.fromEntries(new FormData(form).entries());payload.form=form.getAttribute('name')||'kontakt';
         try{
           const res=await fetch('/api/contact',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)});
           // Kształt odpowiedzi błędu z /api/contact: { error: { code, message } }.
           const data=await res.json().catch(function(){return {};}) as { error?: { message?: string } };
-          if(!res.ok) throw new Error(data.error?.message||'Błąd wysyłki.');
-          form.innerHTML='<p class="form-status form-status--ok">Dzięki! Odezwę się najszybciej, jak się da.</p>';
+          if(!res.ok) throw new Error(data.error?.message||t.blad);
+          form.innerHTML='<p class="form-status form-status--ok">'+t.ok+'</p>';
           // Lead liczymy dopiero po potwierdzeniu z serwera. Analityka nasłuchuje
           // tego zdarzenia — layout nie musi wiedzieć, czy stoi na niej GA4 czy GTM.
           document.dispatchEvent(new CustomEvent('lajf:lead',{detail:{metoda:form.getAttribute('data-lead-method')||'formularz'}}));
@@ -218,7 +225,7 @@ const jsonLd = {
           if(btn){btn.removeAttribute('disabled');btn.textContent=original;}
           let note=form.querySelector<HTMLElement>('.form-status--err');
           if(!note){note=document.createElement('p');note.className='form-status form-status--err';form.appendChild(note);}
-          note.textContent=err instanceof Error&&err.message?err.message:'Nie udało się wysłać.';
+          note.textContent=err instanceof Error&&err.message?err.message:t.bladOgolny;
         }
       });
     });
@@ -260,7 +267,7 @@ const jsonLd = {
   addEventListener('scroll',function(){if(prog){const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';}});
   document.addEventListener('astro:page-load', lajfInit);
 </script>
-<CookieConsent locale="pl" />
+<CookieConsent locale={locale} />
 <Whatsapp />
 </body>
 </html>

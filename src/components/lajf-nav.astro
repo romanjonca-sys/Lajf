@@ -1,0 +1,61 @@
+---
+/**
+ * Pasek nawigacji layoutu Kinetic Aurora: logo, menu, przełącznik języka,
+ * telefon, CTA i panel mobilny. Wydzielony z `lajf-layout.astro`, bo po dołożeniu
+ * drugiego języka layout przekraczał 300 linii i mieszał układ strony z nawigacją.
+ *
+ * Treść menu i etykiet pochodzi z `chrome-tresci.ts`, adres przełącznika liczy się
+ * z bieżącej ścieżki, więc komponent wystarczy wywołać z samym językiem.
+ */
+import { siteConfig } from '../../site.config';
+import { adresPrzelacznika, tekstyChrome } from '../lib/chrome-tresci';
+import { DEFAULT_LOCALE, LOCALES, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { brandName, company } = siteConfig;
+const chrome = tekstyChrome(locale);
+const telHref = `tel:${company.phone.replace(/\s/g, '')}`;
+const startHref = locale === DEFAULT_LOCALE ? '/' : `/${locale}/`;
+
+// Przełącznik pokazujemy zawsze — dla czytelnika „przejdź na angielski" ma sens
+// także tam, gdzie tłumaczenia danej podstrony nie ma.
+const przelacznik = LOCALES.map((kod) => ({
+  kod,
+  href: adresPrzelacznika(Astro.url.pathname, kod),
+  biezacy: kod === locale,
+}));
+---
+
+<nav><div class="wrap nav-in">
+  <a class="logo" href={startHref} aria-label={brandName}>{brandName}<b><svg class="logo-puls" viewBox="45 36 50 33" aria-hidden="true"><path d="M50 54 h5 l5 -14 l6.5 25 l5 -11 h4" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="86" cy="54" r="5.5" fill="currentColor"/></svg></b></a>
+  <div class="nav-links">{chrome.menu.map((poz) => <a href={poz.href}>{poz.label}</a>)}</div>
+  <div class="nav-actions">
+    <div class="nav-lang" role="group" aria-label={chrome.jezykAria}>
+      {przelacznik.map((wariant) => (
+        <a
+          href={wariant.href}
+          class:list={['nav-lang-link', { 'is-current': wariant.biezacy }]}
+          aria-current={wariant.biezacy ? 'true' : undefined}
+          hreflang={wariant.kod}
+        >{wariant.kod.toUpperCase()}</a>
+      ))}
+    </div>
+    <a class="nav-tel" href={telHref} aria-label={chrome.telefonAria(company.phone)}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+      <span>{company.phone}</span>
+    </a>
+    <a href={chrome.cta.href} class="btn btn-primary magnetic nav-cta" style="padding:11px 20px">{chrome.cta.label}</a>
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-mobile" aria-label={chrome.menuOtworz} data-label-otworz={chrome.menuOtworz} data-label-zamknij={chrome.menuZamknij}>
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</div>
+<div class="nav-mobile" id="nav-mobile" hidden>
+  <a class="nav-mobile-tel" href={telHref}>{chrome.telefonAria(company.phone)}</a>
+  {chrome.menuMobilne.map((poz) => <a href={poz.href}>{poz.label}</a>)}
+  <a class="nav-mobile-cta" href={chrome.ctaMobilne.href}>{chrome.ctaMobilne.label}</a>
+</div></nav>
