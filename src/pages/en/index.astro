@@ -12,6 +12,8 @@
  * niż powinny się zaczynać. Zakres i cena wychodzą z rozmowy.
  */
 import LajfLayout from '../../layouts/lajf-layout.astro';
+import IkonaSystemu from '../../components/ikona-systemu.astro';
+import { trescSystemow } from '../../lib/systemy-tresc';
 import { siteConfig } from '../../../site.config';
 
 const { company } = siteConfig;
@@ -19,6 +21,12 @@ const { company } = siteConfig;
 const title = 'Lajf — websites, business email and custom software';
 const description =
   'We design websites, set up business email and build custom software for small and mid-sized companies. One partner from the first call to long-term maintenance. Based in Poland, working across Europe.';
+
+/**
+ * Teaser for `/en/systems/`: the first three catalogue items, taken from the module
+ * rather than retyped, so the two pages cannot drift apart.
+ */
+const kafelkiSystemow = trescSystemow('en').katalog.slice(0, 3);
 
 const uslugi = [
   {
@@ -134,6 +142,25 @@ const schema = {
           </ul>
         </div>
       ))}
+    </div>
+  </div></section>
+
+  <section id="systems"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Business systems</span>
+      <h2>When a spreadsheet stops being enough</h2>
+      <p>The engine is already built, so we do not write one from scratch. We assemble a tool around your process, and the first version you can actually use takes weeks.</p>
+    </div>
+    <ul class="feats">
+      {kafelkiSystemow.map((pozycja) => (
+        <li class="reveal">
+          <span class="ficon"><IkonaSystemu nazwa={pozycja.ikona} /></span>
+          <div class="ftxt"><b>{pozycja.naglowek}</b><span>{pozycja.tekst}</span></div>
+        </li>
+      ))}
+    </ul>
+    <div class="center" style="margin-top:30px">
+      <a href="/en/systems/" class="btn btn-primary magnetic">See what else we assemble →</a>
     </div>
   </div></section>
 

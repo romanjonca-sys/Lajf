@@ -4,10 +4,19 @@
  * Chrome (tło/nawigacja/stopka/skrypty) z lajf-layout. Tu: hero kinetyczny + sekcje + rotacja.
  */
 import LajfLayout from '../layouts/lajf-layout.astro';
+import IkonaSystemu from '../components/ikona-systemu.astro';
+import { trescSystemow } from '../lib/systemy-tresc';
 
 const title = 'Lajf — cyfrowa opieka nad firmą | audyt, technologia, automatyzacje';
 const description =
   'Sprawdzamy, naprawiamy i rozwijamy cyfrowe funkcjonowanie firmy — od strony WWW i analityki po bezpieczeństwo i automatyzacje. Zaczynamy od Audytu Cyfrowego: 1490 zł netto.';
+
+/**
+ * Zajawka systemów: trzy pierwsze pozycje katalogu z `/oprogramowanie/`.
+ * Bierzemy je z modułu, a nie przepisujemy, żeby strona główna i podstrona
+ * nie zaczęły mówić dwóch różnych rzeczy o tym samym.
+ */
+const kafelkiSystemow = trescSystemow('pl').katalog.slice(0, 3);
 
 const realizacje = [
   { t: 'Rejestr badania', c: 'Aplikacja do badania klinicznego', tag: 'app · medycyna', href: '/realizacje/rejestr-badania-klinicznego/', img: '/images/realizacje/rejestr-badania.jpg' },
@@ -79,6 +88,25 @@ const opinie: { cytat: string; kto: string; rola: string }[] = [];
     <p class="center reveal" style="margin-top:26px;color:var(--mut);max-width:700px;margin-left:auto;margin-right:auto">
       To rozwiązania, które sami zbudowaliśmy — nie przykłady z prezentacji.
     </p>
+  </div></section>
+
+  <section id="systemy"><div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Systemy dla firm</span>
+      <h2>Gdy arkusz przestaje wystarczać</h2>
+      <p>Rdzeń systemu mamy zbudowany, więc nie piszemy go od zera. Składamy z niego narzędzie pod Twój proces, a pierwsza wersja, której da się używać, powstaje w tygodniach.</p>
+    </div>
+    <ul class="feats">
+      {kafelkiSystemow.map((pozycja) => (
+        <li class="reveal">
+          <span class="ficon"><IkonaSystemu nazwa={pozycja.ikona} /></span>
+          <div class="ftxt"><b>{pozycja.naglowek}</b><span>{pozycja.tekst}</span></div>
+        </li>
+      ))}
+    </ul>
+    <div class="center" style="margin-top:30px">
+      <a href="/oprogramowanie/" class="btn btn-primary magnetic">Zobacz, co jeszcze składamy →</a>
+    </div>
   </div></section>
 
   <section id="audyt"><div class="wrap">
