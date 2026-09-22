@@ -1,13 +1,15 @@
 ---
 /**
- * Ikony sekcji o systemach dla firm.
+ * Wspólna biblioteka ikon dla kart `.feats` na stronach lajf.eu.
  *
- * Powód istnienia: karty w silniku (`.feats`) są zaprojektowane pod ikonę plus
- * krótki tekst. Bez ikony zostaje goły prostokąt z akapitem i sekcja wygląda
- * na niedokończoną. Trzymanie kształtów w jednym pliku pilnuje, żeby wszystkie
- * miały ten sam styl kreski i ten sam viewBox.
+ * Powód istnienia: karty w silniku są zaprojektowane pod ikonę plus krótki tekst.
+ * Bez ikony zostaje goły prostokąt z akapitem i sekcja wygląda na niedokończoną.
+ * Trzymanie kształtów w jednym pliku pilnuje, żeby wszystkie miały ten sam styl
+ * kreski i ten sam viewBox, niezależnie od sekcji, w której się pojawią.
  *
- * Wszystkie: 24×24, tylko obrys, `currentColor`, bez wypełnień.
+ * Wszystkie: 24×24, tylko obrys, `currentColor`, bez wypełnień. Kolor bierze się
+ * z akcentu strony, więc ta sama ikona jest niebieska na stronie głównej
+ * i pomarańczowa na `/oprogramowanie/`.
  */
 
 interface Props {
@@ -81,5 +83,26 @@ const { nazwa } = Astro.props;
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <circle cx="6" cy="6" r="2.5" /><circle cx="18" cy="6" r="2.5" /><circle cx="12" cy="18" r="2.5" />
     <path d="M8.5 6h7" /><path d="M6 8.5v3a2 2 0 0 0 2 2h2.5" /><path d="M18 8.5v3a2 2 0 0 1-2 2h-2.5" />
+  </svg>
+)}
+{nazwa === 'dokumenty' && (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M9 3h6l4 4v10a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" /><path d="M15 3v4h4" />
+    <path d="M4 8v11a2 2 0 0 0 2 2h7" /><path d="M10 12h5M10 15h5" />
+  </svg>
+)}
+{nazwa === 'panel' && (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <rect x="3" y="4" width="18" height="16" rx="2" /><path d="M7 15v-3M12 15V9M17 15v-5" />
+  </svg>
+)}
+{nazwa === 'social' && (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M4 9v6h3l5 4V5L7 9H4z" /><path d="M17 8.5a5 5 0 0 1 0 7" /><path d="M19.5 6a8 8 0 0 1 0 12" />
+  </svg>
+)}
+{nazwa === 'tarcza' && (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 3l7 3v5c0 4.6-3.1 7.8-7 9-3.9-1.2-7-4.4-7-9V6l7-3z" /><path d="M9 12l2 2 4-4" />
   </svg>
 )}

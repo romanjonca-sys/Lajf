@@ -4,7 +4,7 @@
  * Chrome (tło/nawigacja/stopka/skrypty) z lajf-layout. Tu: hero kinetyczny + sekcje + rotacja.
  */
 import LajfLayout from '../layouts/lajf-layout.astro';
-import IkonaSystemu from '../components/ikona-systemu.astro';
+import Ikona from '../components/ikona.astro';
 import { trescSystemow } from '../lib/systemy-tresc';
 
 const title = 'Lajf — cyfrowa opieka nad firmą | audyt, technologia, automatyzacje';
@@ -17,6 +17,30 @@ const description =
  * nie zaczęły mówić dwóch różnych rzeczy o tym samym.
  */
 const kafelkiSystemow = trescSystemow('pl').katalog.slice(0, 3);
+
+/** Własne narzędzia Lajf pokazywane w sekcji „Automatyzacje". */
+const automatyzacje = [
+  {
+    ikona: 'dokumenty',
+    naglowek: 'System dokumentów w Google Workspace',
+    tekst: 'Dokumenty powstają i rozchodzą się same — na Google Workspace i Apps Script.',
+  },
+  {
+    ikona: 'panel',
+    naglowek: 'Panel Lajf',
+    tekst: 'Własne narzędzie do analizy danych i obsługi sprzedaży. Używamy go codziennie u siebie.',
+  },
+  {
+    ikona: 'social',
+    naglowek: 'Social OS',
+    tekst: 'Własny system do planowania i prowadzenia komunikacji marek.',
+  },
+  {
+    ikona: 'tarcza',
+    naglowek: 'Moje RODO',
+    tekst: 'System dla placówek medycznych, zbudowany od zera i rozwijany do dziś.',
+  },
+];
 
 const realizacje = [
   { t: 'Rejestr badania', c: 'Aplikacja do badania klinicznego', tag: 'app · medycyna', href: '/realizacje/rejestr-badania-klinicznego/', img: '/images/realizacje/rejestr-badania.jpg' },
@@ -80,10 +104,12 @@ const opinie: { cytat: string; kto: string; rola: string }[] = [];
   <section id="automatyzacje"><div class="wrap">
     <div class="sec-head reveal"><span class="label">Automatyzacje</span><h2>Powtarzalną robotę da się zdjąć z ludzi</h2><p>Nie mówimy o „AI w firmie". Mówimy o konkretnych czynnościach, które ktoś u Ciebie wykonuje ręcznie co tydzień.</p></div>
     <ul class="feats">
-      <li class="reveal"><div class="ftxt"><b>System dokumentów w Google Workspace</b><span>Dokumenty powstają i rozchodzą się same — na Google Workspace i Apps Script.</span></div></li>
-      <li class="reveal"><div class="ftxt"><b>Panel Lajf</b><span>Własne narzędzie do analizy danych i obsługi sprzedaży. Używamy go codziennie u siebie.</span></div></li>
-      <li class="reveal"><div class="ftxt"><b>Social OS</b><span>Własny system do planowania i prowadzenia komunikacji marek.</span></div></li>
-      <li class="reveal"><div class="ftxt"><b>Moje RODO</b><span>System dla placówek medycznych, zbudowany od zera i rozwijany do dziś.</span></div></li>
+      {automatyzacje.map((poz) => (
+        <li class="reveal">
+          <span class="ficon"><Ikona nazwa={poz.ikona} /></span>
+          <div class="ftxt"><b>{poz.naglowek}</b><span>{poz.tekst}</span></div>
+        </li>
+      ))}
     </ul>
     <p class="center reveal" style="margin-top:26px;color:var(--mut);max-width:700px;margin-left:auto;margin-right:auto">
       To rozwiązania, które sami zbudowaliśmy — nie przykłady z prezentacji.
@@ -99,7 +125,7 @@ const opinie: { cytat: string; kto: string; rola: string }[] = [];
     <ul class="feats">
       {kafelkiSystemow.map((pozycja) => (
         <li class="reveal">
-          <span class="ficon"><IkonaSystemu nazwa={pozycja.ikona} /></span>
+          <span class="ficon"><Ikona nazwa={pozycja.ikona} /></span>
           <div class="ftxt"><b>{pozycja.naglowek}</b><span>{pozycja.tekst}</span></div>
         </li>
       ))}

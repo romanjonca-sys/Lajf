@@ -7,7 +7,7 @@
  * tylko do jednej z nich. Tu poprawka idzie w jedno miejsce.
  */
 import { trescSystemow } from '../lib/systemy-tresc';
-import IkonaSystemu from './ikona-systemu.astro';
+import Ikona from './ikona.astro';
 import type { Locale } from '../lib/i18n';
 
 interface Props {
@@ -34,7 +34,7 @@ const t = trescSystemow(locale);
   <ul class="feats">
     {t.filaryPodejscia.map((filar) => (
       <li class="reveal">
-        <span class="ficon"><IkonaSystemu nazwa={filar.ikona} /></span>
+        <span class="ficon"><Ikona nazwa={filar.ikona} /></span>
         <div class="ftxt"><b>{filar.naglowek}</b><span>{filar.tekst}</span></div>
       </li>
     ))}
@@ -50,7 +50,7 @@ const t = trescSystemow(locale);
   <ul class="feats kat">
     {t.katalog.map((pozycja) => (
       <li class="reveal">
-        <span class="ficon"><IkonaSystemu nazwa={pozycja.ikona} /></span>
+        <span class="ficon"><Ikona nazwa={pozycja.ikona} /></span>
         <div class="ftxt"><b>{pozycja.naglowek}</b><span>{pozycja.tekst}</span></div>
       </li>
     ))}

@@ -12,7 +12,7 @@
  * niż powinny się zaczynać. Zakres i cena wychodzą z rozmowy.
  */
 import LajfLayout from '../../layouts/lajf-layout.astro';
-import IkonaSystemu from '../../components/ikona-systemu.astro';
+import Ikona from '../../components/ikona.astro';
 import { trescSystemow } from '../../lib/systemy-tresc';
 import { siteConfig } from '../../../site.config';
 
@@ -154,7 +154,7 @@ const schema = {
     <ul class="feats">
       {kafelkiSystemow.map((pozycja) => (
         <li class="reveal">
-          <span class="ficon"><IkonaSystemu nazwa={pozycja.ikona} /></span>
+          <span class="ficon"><Ikona nazwa={pozycja.ikona} /></span>
           <div class="ftxt"><b>{pozycja.naglowek}</b><span>{pozycja.tekst}</span></div>
         </li>
       ))}

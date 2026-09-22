@@ -21,7 +21,7 @@ import type { Locale } from './i18n';
 export interface PozycjaKatalogu {
   naglowek: string;
   tekst: string;
-  /** Klucz kształtu w `ikona-systemu.astro`. Karta bez ikony wygląda na niedokończoną. */
+  /** Klucz kształtu w `ikona.astro`. Karta bez ikony wygląda na niedokończoną. */
   ikona: string;
 }
 
