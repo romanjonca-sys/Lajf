@@ -44,6 +44,17 @@ describe('alternatywy', () => {
     ]);
   });
 
+  it('daje parę dla strony o systemach, która ma wersję angielską', () => {
+    assert.deepEqual(alternatywy('/oprogramowanie/'), [
+      { locale: 'pl', href: '/oprogramowanie/' },
+      { locale: 'en', href: '/en/systems/' },
+    ]);
+    assert.deepEqual(alternatywy('/en/systems/'), [
+      { locale: 'pl', href: '/oprogramowanie/' },
+      { locale: 'en', href: '/en/systems/' },
+    ]);
+  });
+
   it('nie wymyśla tłumaczenia dla stron istniejących tylko po polsku', () => {
     assert.deepEqual(alternatywy('/rodo-i-cyber/'), []);
     assert.deepEqual(alternatywy('/poradnik/piksel-meta-na-stronie-gabinetu/'), []);
@@ -56,8 +67,13 @@ describe('adresPrzelacznika', () => {
     assert.equal(adresPrzelacznika('/en/', 'pl'), '/');
   });
 
+  it('prowadzi do angielskiej wersji strony o systemach', () => {
+    assert.equal(adresPrzelacznika('/oprogramowanie/', 'en'), '/en/systems/');
+    assert.equal(adresPrzelacznika('/en/systems/', 'pl'), '/oprogramowanie/');
+  });
+
   it('spada na stronę główną drugiego języka zamiast dawać martwy odnośnik', () => {
-    assert.equal(adresPrzelacznika('/oprogramowanie/', 'en'), '/en/');
-    assert.equal(adresPrzelacznika('/oprogramowanie/', 'pl'), '/');
+    assert.equal(adresPrzelacznika('/rodo-i-cyber/', 'en'), '/en/');
+    assert.equal(adresPrzelacznika('/muzyka/', 'pl'), '/');
   });
 });

@@ -108,12 +108,14 @@ const CHROME: Record<Locale, TekstyChrome> = {
   en: {
     menu: [
       { label: 'What we do', href: '/en/#services' },
+      { label: 'Systems', href: '/en/systems/' },
       { label: 'How we work', href: '/en/#process' },
       { label: 'Work', href: '/en/#work' },
       { label: 'About', href: '/en/#about' },
     ],
     menuMobilne: [
       { label: 'What we do', href: '/en/#services' },
+      { label: 'Business systems', href: '/en/systems/' },
       { label: 'How we work', href: '/en/#process' },
       { label: 'Work', href: '/en/#work' },
       { label: 'About', href: '/en/#about' },
@@ -131,7 +133,7 @@ const CHROME: Record<Locale, TekstyChrome> = {
         linki: [
           { label: 'Websites', href: '/en/#services' },
           { label: 'Business email', href: '/en/#services' },
-          { label: 'Custom software', href: '/en/#services' },
+          { label: 'Business systems', href: '/en/systems/' },
           { label: 'Analytics and privacy', href: '/en/#services' },
         ],
       },
@@ -176,6 +178,7 @@ export function tekstyChrome(locale: Locale): TekstyChrome {
  */
 const PARY: Record<string, string> = {
   '/': '/en/',
+  '/oprogramowanie/': '/en/systems/',
 };
 
 /** Odwrotność PARY, budowana raz przy imporcie. */

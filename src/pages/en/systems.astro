@@ -1,0 +1,29 @@
+---
+/**
+ * Angielski odpowiednik `/oprogramowanie/`. Ten sam układ i ta sama treść,
+ * tylko po angielsku — patrz `src/lib/systemy-tresc.ts`.
+ *
+ * Osobna podstrona, a nie sekcja na `/en/`, bo dla zagranicznego klienta
+ * i dla partnera, który podsyła zlecenia, „internal tools" jest łatwiejsze
+ * do sprzedania niż strona WWW i ma wyższe stawki. To zasługuje na własny adres,
+ * który da się wysłać w wiadomości.
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import SystemyStrona from '../../components/systemy-strona.astro';
+import { trescSystemow } from '../../lib/systemy-tresc';
+
+const t = trescSystemow('en');
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Business systems and internal tools',
+  provider: { '@type': 'Organization', name: 'Lajf' },
+  areaServed: 'EU',
+  description: t.description,
+};
+---
+
+<LajfLayout title={t.title} description={t.description} accent="#ff7a59" locale="en" schema={schema}>
+  <SystemyStrona locale="en" />
+</LajfLayout>
