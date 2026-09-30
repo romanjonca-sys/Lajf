@@ -1,0 +1,93 @@
+---
+/**
+ * Realizacja: strona bluesowego gitarzysty Grzegorza Kapołki (https://kapolka-web.pages.dev).
+ * Adres docelowy: brak. Domena kapolka.pl nie jest przepięta (w repo, notatkach i konfiguracji brak takiej informacji),
+ * link zostaje na pages.dev. Zmienić po przepięciu domeny.
+ * Źródła faktów: działająca strona, repo mojezycie/wyzwania/lajf-klienci/kapolka/ (mockup/, treść do strony)
+ * i INFRASTRUKTURA.md (projekt Pages kapolka-web).
+ * Nie podajemy: stanu starej strony i domeny, nagród i tytułów z bio (klient ich nie zatwierdził w notatkach),
+ * kontaktu bookingowego (na stronie jest adres kontakt@kapolka.pl, niepotwierdzony), spraw formalnych.
+ * Brak zapisu zgody klienta na publikację i akceptacji strony, do potwierdzenia przez Romana.
+ * Zrzuty z kapolka-web.pages.dev.
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import '../../styles/artykul.css';
+
+const title = 'Strona bluesowego gitarzysty | Realizacja Lajf';
+const description =
+  'Strona gitarzysty grającego w kilku składach: autorskie trio na pierwszym planie, dyskografia z okładkami i odsłuchem na Spotify oraz sekcja bookingowa. Ciemna, sceniczna, z jednym zdjęciem w tle.';
+
+const ZRZUTY = '/images/realizacje/grzegorz-kapolka';
+---
+<LajfLayout title={title} description={description} accent="#e8cf85" ogImage="/images/og/realizacja-grzegorz-kapolka.jpg">
+  <header class="phero art-hero"><div class="wrap pin">
+    <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/#realizacje">Realizacje</a></div>
+    <span class="label">Strona muzyka</span>
+    <h1>Strona bluesowego gitarzysty <span class="hl">Grzegorza Kapołki</span></h1>
+    <p class="lead">Gitarzysta bluesowy i jazzowy gra w kilku składach naraz: w autorskim trio, w kwartecie i w zespole innego artysty. Trudno to opowiedzieć krótko, a organizator chce wiedzieć, kogo zaprasza. Zrobiliśmy stronę, która stawia na pierwszym miejscu trio do zamówienia, a pozostałe projekty pokazuje obok.</p>
+    <div class="art-live"><a href="https://kapolka-web.pages.dev" class="btn btn-primary" target="_blank" rel="noopener">Zobacz stronę kapolka-web.pages.dev →</a></div>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <article class="art-body">
+      <h2>Punkt wyjścia</h2>
+      <p>Muzyk ma długą karierę i kilka projektów, w tym własne trio, kwartet i granie w cudzym zespole. Każdy z nich ma osobny skład i płyty. Strona miała ustawić kolejność: najpierw trio, które jest do zamówienia na koncert, potem reszta.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/hero.jpg`} alt="Strona główna: gitarzysta w fioletowym świetle reflektorów, nazwisko Grzegorz Kapołka wielką antykwą i podpis Blues, Jazz, Fusion" width="1600" height="1000" loading="lazy" />
+        <figcaption>Pierwszy ekran: zdjęcie z koncertu i nazwisko wielką antykwą.</figcaption>
+      </figure>
+
+      <h2>Jedno zdjęcie na całą stronę</h2>
+      <ul>
+        <li>Zdjęcie ze sceny stoi w tle przez całą stronę, zmienia się tylko treść. Barwy pochodzą ze zdjęcia: fiolet reflektorów i złoto.</li>
+        <li>Pasek postępu przewijania i menu z czterema pozycjami: bio, projekty, płyty i booking.</li>
+        <li>Sekcje pojawiają się stopniowo przy przewijaniu.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/bio.jpg`} alt="Sekcja Fachowiec z gitarą: pionowe zdjęcie gitarzysty obok krótkiego biogramu z pogrubionymi nazwami zespołów" width="1600" height="1000" loading="lazy" />
+        <figcaption>Krótkie bio z pogrubionymi nazwami: uczelnia, zespoły, scena.</figcaption>
+      </figure>
+
+      <h2>Projekty w kolejności, w której się je zamawia</h2>
+      <ul>
+        <li>Autorskie trio jest pierwsze, jako projekt do bookingu: styl, skład, sceny i festiwale, na których grało, oraz link „Zamów koncert Trio”.</li>
+        <li>Kwartet z najnowszą płytą i zespół, w którym gitarzysta gra gościnnie, dostały krótszy opis.</li>
+        <li>Skład każdego projektu podany imiennie.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/projekty.jpg`} alt="Sekcja Projekty: karta Grzegorz Kapołka Trio ze stylem, opisem, składem i linkiem Zamów koncert Trio" width="1600" height="1000" loading="lazy" />
+        <figcaption>Trio jako projekt do zamówienia.</figcaption>
+      </figure>
+
+      <h2>Dyskografia z odsłuchem</h2>
+      <p>Pięć płyt z okładkami, rokiem i nazwą składu. Kliknięcie okładki otwiera płytę na Spotify, a pod spodem jest link do całej dyskografii. Okładki i linki do płyt sprawdziliśmy ze źródeł, żeby zestawienie nie zawierało pomyłek.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/dyskografia.jpg`} alt="Sekcja Dyskografia: pięć okładek płyt od 2023 do 2013 z tytułami i rokiem, pod nimi link do całej dyskografii na Spotify" width="1600" height="1000" loading="lazy" />
+        <figcaption>Dyskografia: okładki, lata i skład.</figcaption>
+      </figure>
+
+      <h2>Booking na końcu strony</h2>
+      <p>Ostatnia sekcja zaprasza do zamówienia koncertu (trio, kwartet lub recital solo, na festiwal, do klubu albo na wydarzenie firmowe) i prowadzi do pytania o termin. Obok są linki do YouTube i Facebooka.</p>
+
+      <figure class="zrzut zrzut--telefon">
+        <img src={`${ZRZUTY}/telefon.jpg`} alt="Strona główna na telefonie: zdjęcie gitarzysty na całą wysokość, podpis Blues Jazz Fusion i nazwisko" width="780" height="1688" loading="lazy" />
+        <figcaption>Na telefonie.</figcaption>
+      </figure>
+
+      <h2>Technologia</h2>
+      <p>Statyczna strona HTML i CSS na Cloudflare Pages, bez frameworka i bez bazy. Okładki płyt i odsłuchy pochodzą ze Spotify.</p>
+    </article>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Grasz w kilku składach i potrzebujesz strony?</h2>
+      <p>Napisz, w jakich projektach grasz i który z nich chcesz sprzedawać. Odpiszę, jak ułożyć stronę, żeby organizator od razu wiedział, kogo zamówić.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
+    </div>
+  </div></section>
+</LajfLayout>

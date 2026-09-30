@@ -1,0 +1,108 @@
+---
+/**
+ * Realizacja: strona studia pisania piosenek Dźwięk Dobry (dzwiekdobry.pl), LIVE od 20.06.2026.
+ * To własna marka Romana Jońcy, więc zgoda klienta nie jest potrzebna.
+ * Źródła faktów: repo dzwiekdobry-web (kod, pliki public/), żywa strona dzwiekdobry.pl (stan z 30.09.2026),
+ * notatka project_dzwiekdobry_strona.md.
+ * Celowo bez: cen, opinii, liczb z paska osiągnięć, ruchu, botów, kampanii reklamowych i ich wyników.
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import '../../styles/artykul.css';
+
+const title = 'Strona studia pisania piosenek | Realizacja Lajf';
+const description =
+  'Strona studia piosenki dla wokalistów: hero ze sceną, realizacje do odsłuchu, osobne podstrony dla każdej oferty, poradnik z 15 artykułami, formularze z automatyczną odpowiedzią i dane dla wyszukiwarek.';
+
+const ZRZUTY = '/images/realizacje/dzwiek-dobry';
+---
+<LajfLayout title={title} description={description} accent="#ff2f7e" ogImage="/images/og/realizacja-dzwiek-dobry.jpg">
+  <header class="phero art-hero"><div class="wrap pin">
+    <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/#realizacje">Realizacje</a></div>
+    <span class="label">Strona studia</span>
+    <h1>Strona studia <span class="hl">Dźwięk Dobry</span></h1>
+    <p class="lead">Dźwięk Dobry to studio Romana Jońcy, w którym powstają piosenki dla wokalistów: od tekstu po gotowe pliki do wydania. Poprzednia strona przedstawiała je jako post-produkcję podcastów. Zbudowaliśmy nową od zera, tak żeby od razu było widać, dla kogo jest studio, co można u niego zamówić i jak to brzmi.</p>
+    <div class="art-live"><a href="https://dzwiekdobry.pl" class="btn btn-primary" target="_blank" rel="noopener">Zobacz stronę dzwiekdobry.pl →</a></div>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <article class="art-body">
+      <h2>Punkt wyjścia</h2>
+      <p>Strona na czystym WordPressie, z ofertą montażu i masteringu podcastów. Formularz kontaktowy działał bez polityki prywatności, nie było pomiaru odwiedzin, a w systemie został sklep, którego nikt nie prowadził. Studio zajmuje się dziś czym innym: piosenkami dla wokalistów, więc strona przestała opisywać to, co robi.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/hero.jpg`} alt="Strona główna: zdjęcie koncertu w świetle scenicznych reflektorów, nagłówek Masz głos. Zróbmy z niego piosenkę, której nie wstydzisz się wydać" width="1600" height="1000" loading="lazy" />
+        <figcaption>Pierwszy ekran. Zdjęcie z prawdziwego koncertu zamiast fotografii stockowej.</figcaption>
+      </figure>
+
+      <h2>Strona, która najpierw mówi, dla kogo jest</h2>
+      <ul>
+        <li>Nagłówek zwraca się do wokalisty, a pod nim są trzy problemy, które zna każdy, kto chce nagrać własną piosenkę: tekst, studio i marzenie w szufladzie.</li>
+        <li>Proces w czterech krokach. Tekst i kierunek klient akceptuje, zanim zaczyna się produkcja.</li>
+        <li>Sekcja z pytaniami, które ludzie zadają sobie przed pierwszą rozmową, na przykład o piosenki robione przez AI.</li>
+        <li>Ciemna, kinowa szata graficzna w kolorach świateł scenicznych, bez elementów ze starej marki. Płynne przewijanie działa tylko na komputerze i wyłącza się na telefonie oraz przy ograniczeniu ruchu w systemie.</li>
+      </ul>
+
+      <h2>Dowód do odsłuchu</h2>
+      <p>Pod pierwszym ekranem są trzy utwory, które Roman napisał albo wyprodukował dla wschodzących wokalistów. Klipy wczytują się z domeny youtube-nocookie, więc strona nie wymaga zgody na cookies tylko po to, żeby odtworzyć film. Zakres pracy przy każdym utworze jest opisany na stronie oferty, bez ogólnika „współpracowałem przy”.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/posluchaj.jpg`} alt="Sekcja Posłuchaj, co już powstało: trzy klipy YouTube z tytułami i wykonawcami" width="1600" height="1000" loading="lazy" />
+        <figcaption>Trzy realizacje do odsłuchu bez wychodzenia ze strony.</figcaption>
+      </figure>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/jak-to-dziala.jpg`} alt="Sekcja Jak to działa: cztery numerowane kroki od rozmowy do wydania utworu" width="1600" height="1000" loading="lazy" />
+        <figcaption>Cztery kroki od rozmowy do wydania.</figcaption>
+      </figure>
+
+      <h2>Osobna strona na każdą potrzebę</h2>
+      <p>Wokalista, para szukająca piosenki na wesele i firma, która chce jingla, nie potrzebują tej samej rozmowy. Każda z tych grup ma własną podstronę z osobnym tytułem, opisem i przyciskiem.</p>
+      <ul>
+        <li>Pierwszy singiel dla wokalisty, z listą tego, dla kogo oferta jest, a dla kogo nie.</li>
+        <li>Piosenka na okazję: wesele, rocznica, urodziny, prezent.</li>
+        <li>Muzyka dla firm: jingiel, dźwiękowe logo, hymn marki, utwór na wydarzenie.</li>
+        <li>Impresariat: koncerty i warsztaty dla domów kultury, gmin i szkół.</li>
+        <li>Podręcznik „Rzemiosło piosenki” z darmowym fragmentem wysyłanym na maila.</li>
+      </ul>
+      <p>Przycisk przy ofercie przenosi do formularza informację, o którą klient pyta. Nie musi jej wpisywać drugi raz.</p>
+
+      <h2>Poradnik, który odpowiada na pytania z wyszukiwarki</h2>
+      <p>Piętnaście artykułów o tym, ile kosztuje tekst, piosenka i nagranie oraz jak zamówić utwór na wesele, osiemnastkę, rocznicę czy wydarzenie firmowe. Każdy ma widoczne pytania i odpowiedzi, okruszki nawigacji i dane strukturalne dla Google. Kolejny artykuł to jeden plik z tekstem. Sam trafia na listę, do mapy strony i do wyszukiwarki.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/poradnik.jpg`} alt="Strona Poradnik z nagłówkiem Ile kosztuje piosenka na zamówienie i kartami artykułów" width="1600" height="1000" loading="lazy" />
+        <figcaption>Poradnik: karty artykułów z krótkim opisem.</figcaption>
+      </figure>
+
+      <h2>Kontakt bez utraty zgłoszeń</h2>
+      <ul>
+        <li>Formularz wysyła wiadomość do Romana i automatyczną odpowiedź do osoby, która pisze, w szacie graficznej marki.</li>
+        <li>Przy każdym formularzu jest klauzula RODO. Strona ma politykę prywatności i regulaminy.</li>
+        <li>Obok formularza są przyciski do WhatsAppa i Instagrama, bo część klientów woli napisać tam.</li>
+        <li>Darmowy fragment podręcznika trafia na maila po zapisie z osobną zgodą marketingową.</li>
+      </ul>
+
+      <figure class="zrzut zrzut--telefon">
+        <img src={`${ZRZUTY}/telefon.jpg`} alt="Strona główna na telefonie: nagłówek, przycisk Umów rozmowę o swojej piosence i odnośnik do realizacji" width="780" height="1688" loading="lazy" />
+        <figcaption>Na telefonie.</figcaption>
+      </figure>
+
+      <h2>Widoczność w wyszukiwarkach i u asystentów AI</h2>
+      <p>Dane strukturalne osoby, usługi, artykułów i pytań z odpowiedziami, mapa strony, plik robots.txt oraz llms.txt z opisem studia i oferty dla asystentów AI. Odwiedziny mierzy analityka bez cookies, a Google Analytics włącza się dopiero po zgodzie.</p>
+
+      <h2>Domena i poczta</h2>
+      <p>Obsługa domeny przeniesiona do Cloudflare. Skrzynka w domenie została u dotychczasowego dostawcy, ze wszystkimi rekordami poczty bez zmian. Poprzednie adresy starej strony przekierowują na nową.</p>
+
+      <h2>Technologia</h2>
+      <p>Astro na Cloudflare Workers, treść w jednym pliku, wysyłka maili przez Resend. Testy automatyczne obejmują formularz kontaktowy i szablony maili.</p>
+    </article>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Sprzedajesz kilka usług dla różnych klientów?</h2>
+      <p>Napisz, co oferujesz i komu. Odpiszę, jak podzielić stronę, żeby każdy klient od razu trafiał na swoją ofertę.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
+    </div>
+  </div></section>
+</LajfLayout>

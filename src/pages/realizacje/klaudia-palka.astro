@@ -1,0 +1,102 @@
+---
+/**
+ * Realizacja: one-pager wokalistki Klaudii Pałki (klaudiapalka.pl), LIVE od 25.07.2026.
+ * Adres: klaudiapalka.pl działa (sprawdzone 30.09.2026, także www), więc jest adresem na stronie.
+ * Źródła faktów: repo klaudia-web (kod, DESIGN.md, offer/), żywa strona klaudiapalka.pl, notatka project_klaudia_strona.md.
+ * ZASTRZEŻENIE: w źródłach nie ma zapisu zgody Klaudii na publikację tej realizacji. Karta jest już na stronie głównej,
+ * ale przed publikacją podstrony potrzebne potwierdzenie Romana.
+ * Celowo bez: cen i warunków współpracy, opinii, oferty EPK, plakatów i piosenek poza tym, co jest na stronie.
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import '../../styles/artykul.css';
+
+const title = 'Strona wokalistki Klaudii Pałki | Realizacja Lajf';
+const description =
+  'One-pager wokalistki: własny odtwarzacz z próbkami głosu, formy występów, oferta koncertowa w PDF do pobrania, kontakt bezpośredni i poczta w domenie artystki.';
+
+const ZRZUTY = '/images/realizacje/klaudia-palka';
+---
+<LajfLayout title={title} description={description} accent="#d2a87f" ogImage="/images/og/realizacja-klaudia-palka.jpg">
+  <header class="phero art-hero"><div class="wrap pin">
+    <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/#realizacje">Realizacje</a></div>
+    <span class="label">Strona artystki</span>
+    <h1>Strona wokalistki <span class="hl">Klaudii Pałki</span></h1>
+    <p class="lead">Klaudia śpiewa od lat na weselach, bankietach i w kawiarniach, a teraz przygotowuje własny debiut. Potrzebowała jednej strony, na której można posłuchać jej głosu i od razu zaprosić ją na występ. Zrobiliśmy one-pager w ciepłej, kameralnej szacie, z własnym odtwarzaczem, ofertą koncertową do pobrania i pocztą w jej domenie.</p>
+    <div class="art-live"><a href="https://klaudiapalka.pl" class="btn btn-primary" target="_blank" rel="noopener">Zobacz stronę klaudiapalka.pl →</a></div>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <article class="art-body">
+      <h2>Punkt wyjścia</h2>
+      <p>Autorski singiel jeszcze nie wyszedł, więc strona nie mogła opierać się na dyskografii. Miała pokazać głos na kilku coverach, opowiedzieć, kim jest artystka, i przyjmować zaproszenia na wydarzenia. Zdecydowaliśmy, że będzie działać pod pełnym imieniem i nazwiskiem, bo pod nim ludzie będą jej szukać.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/hero.jpg`} alt="Strona główna: sepiowe zdjęcie wokalistki z mikrofonem po prawej, po lewej duży napis Klaudia i rozstrzelone PAŁKA" width="1600" height="1000" loading="lazy" />
+        <figcaption>Pierwszy ekran. Imię wielką antykwą, nazwisko rozstrzelone, zdjęcie na pół szerokości.</figcaption>
+      </figure>
+
+      <h2>Kameralna, ciepła oprawa</h2>
+      <ul>
+        <li>Kremowe tło, kolor miedzi i szałwii, antykwa w nagłówkach i odręczny dopisek „witaj w moim świecie”.</li>
+        <li>Delikatny ruch: powolne przybliżanie zdjęcia, wejście napisów po kolei i pojawianie się sekcji przy przewijaniu. Wyłączają się przy ograniczeniu ruchu w systemie.</li>
+        <li>Menu przezroczyste na pierwszym ekranie i zwykły pasek po przewinięciu.</li>
+        <li>Jedna strona z pięcioma sekcjami: muzyka, o mnie, formy występów, zaproszenie i kontakt.</li>
+      </ul>
+
+      <h2>Własny odtwarzacz z próbkami głosu</h2>
+      <p>Trzy covery grają z plików na serwerze strony, bez odtwarzacza zewnętrznego, który zapisywałby własne cookies. Dodanie kolejnego utworu to jedna linijka w pliku treści i plik audio. Przygotowaliśmy też miejsce na wydany singiel: okładkę, odtwarzacz i linki do platform. Wypełni się je w dniu premiery.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/muzyka.jpg`} alt="Sekcja Muzyka: lista trzech coverów z przyciskami odtwarzania, paskiem postępu i czasem trwania" width="1600" height="1000" loading="lazy" />
+        <figcaption>Lista utworów z własnym odtwarzaczem.</figcaption>
+      </figure>
+
+      <h2>Formy występów i prosty sposób zamówienia</h2>
+      <ul>
+        <li>Cztery formy: wesela i przyjęcia, bankiety i eventy firmowe, kawiarnie i wieczory autorskie oraz koncerty kameralne. Przy każdej krótki opis.</li>
+        <li>Trzy kroki: napisz z datą i miejscem, dobierzcie program, potwierdźcie termin.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/formy.jpg`} alt="Sekcja Formy występów: cztery karty, wesela i przyjęcia, bankiety i eventy firmowe, kawiarnie i wieczory autorskie, koncerty kameralne" width="1600" height="1000" loading="lazy" />
+        <figcaption>Formy występów, do których można zaprosić artystkę.</figcaption>
+      </figure>
+
+      <h2>Oferta koncertowa do pobrania</h2>
+      <p>Pod zaproszeniem jest przycisk z ofertą w PDF: zdjęcie, kilka słów o artystce, formy występów, repertuar i opis, jak wygląda współpraca. Dokument powstał w tej samej szacie co strona, a jego źródło leży w repozytorium projektu, więc można go poprawić i wygenerować ponownie.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/na-zywo.jpg`} alt="Sekcja Zaproś Klaudię: zdjęcie w tle, przyciski Zapytaj o występ i Pobierz ofertę PDF" width="1600" height="1000" loading="lazy" />
+        <figcaption>Zaproszenie z dwoma przyciskami: zapytanie i oferta do pobrania.</figcaption>
+      </figure>
+
+      <h2>Kontakt bez formularza</h2>
+      <p>Adres e-mail, telefon oraz Instagram, TikTok i YouTube w jednym miejscu. Strona ma politykę prywatności, regulamin i baner zgody na cookies analityczne.</p>
+
+      <figure class="zrzut zrzut--telefon">
+        <img src={`${ZRZUTY}/telefon.jpg`} alt="Strona główna na telefonie: napis Klaudia PAŁKA, hasło Śpiewam od lat i przycisk Posłuchaj" width="780" height="1688" loading="lazy" />
+        <figcaption>Na telefonie.</figcaption>
+      </figure>
+
+      <h2>Domena i poczta</h2>
+      <ul>
+        <li>Adres klaudiapalka.pl z certyfikatem, także w wersji z www. Domenę przeniesiono do Cloudflare.</li>
+        <li>Skrzynka w domenie artystki działa u dotychczasowego dostawcy. Rekordy poczty przepisaliśmy ręcznie i ustawiliśmy tak, żeby ruch pocztowy szedł prosto do serwera skrzynki.</li>
+      </ul>
+
+      <h2>Wyszukiwarki i udostępnianie</h2>
+      <p>Tytuł i opis strony, dane strukturalne artystki, mapa strony, obraz do udostępniania linku oraz ikona strony w kształcie monogramu K.</p>
+
+      <h2>Technologia</h2>
+      <p>Astro jako strona statyczna na Cloudflare Pages, własna skóra graficzna na wspólnym silniku Lajf, treść w jednym pliku.</p>
+    </article>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Śpiewasz lub grasz i chcesz, żeby strona przyjmowała zaproszenia?</h2>
+      <p>Napisz, gdzie występujesz i co dziś dzieje się z zapytaniami. Odpiszę, co pokazać na stronie, żeby organizator szybciej się zdecydował.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
+    </div>
+  </div></section>
+</LajfLayout>

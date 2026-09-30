@@ -1,0 +1,104 @@
+---
+/**
+ * Realizacja: strona i terminarz kabaretu Układ Komediowy (ukladkomediowy.pl), LIVE od 30.06.2026.
+ * Źródła faktów: notatka project_klient_uklad_komediowy.md, repo mojezycie/wyzwania/lajf-klienci/uklad-komediowy/
+ * (mockup/, migracja-dns-runbook.md) i działająca strona.
+ * Nie podajemy: cen i stawek, opinii (na stronie są przykładowe), wewnętrznych spraw zespołu, rozliczeń.
+ * Uwaga: autor agencji gra w składzie kabaretu, decyzja o ujawnieniu tego po stronie Romana. Brak zapisu zgody na publikację.
+ * Zrzuty z produkcji ukladkomediowy.pl (sekcja terminarza jest ukryta, bo nie ma nadchodzących koncertów).
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import '../../styles/artykul.css';
+
+const title = 'Strona i terminarz kabaretu | Realizacja Lajf';
+const description =
+  'Strona kabaretu dla organizatorów eventów: program, skład, formularz zapytania z potwierdzeniem dla nadawcy, rider do pobrania i terminarz z arkusza Google. Do tego domena, poczta i dane dla Google.';
+
+const ZRZUTY = '/images/realizacje/uklad-komediowy';
+---
+<LajfLayout title={title} description={description} accent="#f6c51b" ogImage="/images/og/realizacja-uklad-komediowy.jpg">
+  <header class="phero art-hero"><div class="wrap pin">
+    <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/#realizacje">Realizacje</a></div>
+    <span class="label">Strona kabaretu</span>
+    <h1>Strona i terminarz kabaretu <span class="hl">Układ Komediowy</span></h1>
+    <p class="lead">Kabaret gra program „Lecimy w kulki” na eventach firmowych i imprezach. Potrzebował strony, na której organizator w kilka minut zobaczy, co dostanie, i od razu zapyta o termin. Zrobiliśmy jednostronicową stronę z formularzem zapytania, riderem do pobrania i terminarzem, który kabaret uzupełnia sam.</p>
+    <div class="art-live"><a href="https://ukladkomediowy.pl" class="btn btn-primary" target="_blank" rel="noopener">Zobacz stronę ukladkomediowy.pl →</a></div>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <article class="art-body">
+      <h2>Punkt wyjścia</h2>
+      <p>Stara strona była szablonem muzycznym na WordPressie, ledwo przerobionym. Zostało na niej dużo treści demonstracyjnej, tytuł strony był pusty, filmy wisiały jako gołe linki, a jedyny formularz był ogólny. Organizator nie miał gdzie sprawdzić, jak długo trwa program ani co trzeba zapewnić na sali.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/hero.jpg`} alt="Strona główna kabaretu: hasło Inteligentna satyra i muzyka na żywo, zdjęcie czterech osób na scenie i żółty przycisk Zamów nas na event" width="1600" height="1000" loading="lazy" />
+        <figcaption>Pierwszy ekran: co to jest, dla kogo i jak zamówić.</figcaption>
+      </figure>
+
+      <h2>Marka z dwóch kolorów logo</h2>
+      <ul>
+        <li>Kabaret ma dwa warianty logo, żółty i różowy. Strona używa obu: żółć prowadzi, róż jest drugim akcentem.</li>
+        <li>Jasne tło, wielka typografia i żółte pociągnięcie pędzla pod hasłami zamiast szablonowych kafelków.</li>
+        <li>Zdjęcia z prawdziwych występów i portrety członków składu na czarnym tle.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/program.jpg`} alt="Sekcja programu Lecimy w kulki: lista czterech cech programu obok portretu dwojga aktorów" width="1600" height="1000" loading="lazy" />
+        <figcaption>Program opisany konkretnie: czas trwania, muzyka na żywo, dopasowanie do wydarzenia.</figcaption>
+      </figure>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/sklad.jpg`} alt="Sekcja Skład Układu: cztery numerowane karty z czarno-białymi portretami i krótkim podpisem przy każdej osobie" width="1600" height="1000" loading="lazy" />
+        <figcaption>Skład z krótkim, żartobliwym opisem zamiast klasycznego życiorysu.</figcaption>
+      </figure>
+
+      <h2>Zapytanie, na które organizator nie czeka</h2>
+      <ul>
+        <li>Sekcja „Dla organizatorów” z formularzem: data, miasto, typ imprezy i liczba gości. Kabaret dostaje komplet informacji potrzebnych do wyceny.</li>
+        <li>Zapytanie przychodzi na skrzynki kabaretu, a nadawca od razu dostaje potwierdzenie.</li>
+        <li>Rider techniczny w PDF w barwach marki do pobrania ze strony, żeby obsługa sali wiedziała, co przygotować.</li>
+        <li>Zgoda na wiadomości marketingowe jest osobnym, nieobowiązkowym polem. Pod formularzem jest klauzula informacyjna i polityka prywatności.</li>
+        <li>Sekcja pytań organizatorów: czas programu, wymagania na miejscu, dopasowanie do branży, obszar, faktura VAT.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/organizatorzy.jpg`} alt="Sekcja Dla organizatorów: lista korzyści, przycisk pobrania ridera i formularz zapytania o termin i wycenę" width="1600" height="1000" loading="lazy" />
+        <figcaption>Formularz zapytania i rider do pobrania.</figcaption>
+      </figure>
+
+      <h2>Terminarz, który kabaret uzupełnia sam</h2>
+      <ul>
+        <li>Koncerty pochodzą z arkusza Google. Członkowie kabaretu dopisują wiersz z datą, miastem, salą, godziną i linkiem do biletów.</li>
+        <li>Koncerty, które się odbyły, znikają ze strony same. Arkusz zostaje archiwum.</li>
+        <li>Kolumna „Ukryj” pozwala wpisać termin, który nie jest jeszcze potwierdzony.</li>
+        <li>Gdy nie ma nadchodzących koncertów, cała sekcja znika, więc na stronie nie ma pustego terminarza.</li>
+      </ul>
+
+      <h2>Domena i poczta</h2>
+      <ul>
+        <li>Przeniesienie obsługi domeny z lh.pl do Cloudflare. Rekordy pocztowe przeniesione jeden do jednego, dzięki czemu poczta kabaretu działa bez zmian.</li>
+        <li>Domena w serwisie wysyłkowym z weryfikacją nadawcy, więc maile z formularza są podpisane domeną kabaretu.</li>
+        <li>Szablony maili i podpis do wklejenia w skrzynce w barwach kabaretu.</li>
+      </ul>
+
+      <figure class="zrzut zrzut--telefon">
+        <img src={`${ZRZUTY}/telefon.jpg`} alt="Strona główna na telefonie: logo kabaretu, hasło, opis programu i przycisk Zamów nas na event" width="780" height="1688" loading="lazy" />
+        <figcaption>Na telefonie.</figcaption>
+      </figure>
+
+      <h2>Wyszukiwarki</h2>
+      <p>Dane strukturalne grupy artystycznej (nazwa, logo, kontakt, profile w mediach społecznościowych), mapa strony, plik robots, tag canonical i obraz do udostępniania linku. Właściwość domeny dodana do Google Search Console z wysłaną mapą strony. Osobny plik favicon, żeby wyszukiwarki nie wracały do starej ikony.</p>
+
+      <h2>Technologia</h2>
+      <p>Statyczna strona HTML na Cloudflare Pages, arkusz Google jako źródło terminów i funkcja serwerowa z wysyłką maili dla formularza.</p>
+    </article>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Występujesz i sprzedajesz występy firmom?</h2>
+      <p>Napisz, jak dziś wygląda Twoja strona i co dostaje organizator, który chce Cię zaprosić. Odpiszę, co poprawić najpierw, żeby łatwiej było Cię zamówić.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
+    </div>
+  </div></section>
+</LajfLayout>

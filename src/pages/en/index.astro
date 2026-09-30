@@ -83,17 +83,17 @@ const kroki = [
 ];
 
 const realizacje = [
-  { t: 'Clinical trial registry', c: 'Data collection app for a medical study', tag: 'app · medical', href: '/realizacje/rejestr-badania-klinicznego/', img: '/images/realizacje/rejestr-badania.jpg' },
-  { t: 'moje-rodo', c: 'GDPR compliance SaaS for healthcare', tag: 'SaaS · compliance', href: 'https://moje-rodo.pl', img: '/images/realizacje/moje-rodo.jpg' },
-  { t: 'PPWR for manufacturers', c: 'Packaging compliance documentation under EU 2025/40', tag: 'web · compliance', href: 'https://ppwrdlafirm.pl/en/', img: '/images/realizacje/ppwrdlafirm.jpg' },
-  { t: 'Układ Komediowy', c: 'Site and tour calendar for a comedy group', tag: 'web · entertainment', href: 'https://ukladkomediowy.pl', img: '/images/realizacje/uklad.jpg' },
-  { t: 'Iwona Węgrowska', c: 'Singer’s website, concerts and booking', tag: 'web · music', href: '/realizacje/strona-wokalistki-iwona-wegrowska/', img: '/images/realizacje/iwonawegrowska.jpg' },
-  { t: 'Krzysztof Stanio', c: 'Studio of theatre practice', tag: 'web · culture', href: 'https://krzysztofstanio.pl', img: '/images/realizacje/stanio.jpg' },
-  { t: 'Innova Biological', c: 'B2B site for a chemical brand', tag: 'web · B2B', href: 'https://innova-biological.pages.dev', img: '/images/realizacje/innova.jpg' },
-  { t: 'Pan Kolektor', c: 'Solar collector service company', tag: 'web · services', href: 'https://pankolektor.pl', img: '/images/realizacje/pankolektor.jpg' },
-  { t: 'R&L Serwis', c: 'Cleaning company for homes and offices', tag: 'web · services', href: 'https://rlserwis.pl', img: '/images/realizacje/rlserwis.jpg' },
-  { t: 'Zdalna Księgowa', c: 'Accounting firm for IT and e-commerce', tag: 'web · finance', href: 'https://zdalnaksiegowa.com.pl', img: '/images/realizacje/zdalnaksiegowa.jpg' },
-  { t: 'Dźwięk Dobry', c: 'Songwriting studio', tag: 'web · music', href: 'https://dzwiekdobry.pl', img: '/images/realizacje/dzwiek.jpg' },
+  { t: 'Clinical trial registry', c: 'Data collection app for a medical study', tag: 'app · medical', url: 'internal app', href: '/realizacje/rejestr-badania-klinicznego/', img: '/images/realizacje/rejestr-badania.jpg' },
+  { t: 'moje-rodo', c: 'GDPR compliance SaaS for healthcare', tag: 'SaaS · compliance', url: 'moje-rodo.pl', href: '/realizacje/moje-rodo/', img: '/images/realizacje/moje-rodo.jpg' },
+  { t: 'PPWR for manufacturers', c: 'Packaging compliance documentation under EU 2025/40', tag: 'web · compliance', url: 'ppwrdlafirm.pl', href: '/realizacje/ppwr-dla-firm/', img: '/images/realizacje/ppwrdlafirm.jpg' },
+  { t: 'Układ Komediowy', c: 'Site and tour calendar for a comedy group', tag: 'web · entertainment', url: 'ukladkomediowy.pl', href: '/realizacje/uklad-komediowy/', img: '/images/realizacje/uklad.jpg' },
+  { t: 'Iwona Węgrowska', c: 'Singer’s website, concerts and booking', tag: 'web · music', url: 'iwonawegrowska.pl', href: '/realizacje/strona-wokalistki-iwona-wegrowska/', img: '/images/realizacje/iwonawegrowska.jpg' },
+  { t: 'Krzysztof Stanio', c: 'Studio of theatre practice', tag: 'web · culture', url: 'krzysztofstanio.pl', href: '/realizacje/krzysztof-stanio/', img: '/images/realizacje/stanio.jpg' },
+  { t: 'Innova Biological', c: 'B2B site for a chemical brand', tag: 'web · B2B', url: 'innova-biological.pages.dev', href: 'https://innova-biological.pages.dev', img: '/images/realizacje/innova.jpg' },
+  { t: 'Pan Kolektor', c: 'Solar collector service company', tag: 'web · services', url: 'pankolektor.pl', href: '/realizacje/pan-kolektor/', img: '/images/realizacje/pankolektor.jpg' },
+  { t: 'R&L Serwis', c: 'Cleaning company for homes and offices', tag: 'web · services', url: 'rlserwis.pl', href: '/realizacje/rl-serwis/', img: '/images/realizacje/rlserwis.jpg' },
+  { t: 'Zdalna Księgowa', c: 'Accounting firm for IT and e-commerce', tag: 'web · finance', url: 'zdalnaksiegowa.com.pl', href: '/realizacje/zdalna-ksiegowa/', img: '/images/realizacje/zdalnaksiegowa.jpg' },
+  { t: 'Dźwięk Dobry', c: 'Songwriting studio', tag: 'web · music', url: 'dzwiekdobry.pl', href: '/realizacje/dzwiek-dobry/', img: '/images/realizacje/dzwiek.jpg' },
 ];
 
 const numerVat = company.taxId ? `PL${company.taxId.replace(/\D/g, '')}` : null;
@@ -193,7 +193,7 @@ const schema = {
     <div class="work">
       {realizacje.map((r) => (
         <a class="frame reveal" href={r.href} {...(r.href.startsWith('/') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}>
-          <div class="fbar"><i></i><i></i><i></i><span class="furl">{r.href.startsWith('/') ? 'lajf.eu' : r.href.replace('https://', '')}</span></div>
+          <div class="fbar"><i></i><i></i><i></i><span class="furl">{r.url}</span></div>
           <img class="fimg" src={r.img} alt={`Lajf project: ${r.t}`} loading="lazy" width="800" height="500" />
           <div class="fmeta"><div><span class="fm-t">{r.t}</span><span class="fm-d">{r.c}</span></div><span class="ftag">{r.tag}</span></div>
         </a>

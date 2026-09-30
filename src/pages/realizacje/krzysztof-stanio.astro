@@ -1,0 +1,102 @@
+---
+/**
+ * Realizacja: strona Pracowni Praktyk Teatralnych Krzysztofa Stanio (krzysztofstanio.pl), LIVE od 03.07.2026.
+ * Źródła faktów: notatka project_klient_stanio.md, repo mojezycie/wyzwania/lajf-klienci/krzysztof-stanio/
+ * (mockup-c-kinowy/, analiza strony) i działająca strona.
+ * Nie podajemy: cen, danych o grupach poza tym, co jest na stronie, opinii uczestników, sekcji o książce
+ * (nierozstrzygnięta kwestia praw wydawcy), telefonu i maila klienta, wewnętrznych ustaleń.
+ * Brak zapisu zgody na publikację, do potwierdzenia przez Romana.
+ * Zrzuty z produkcji krzysztofstanio.pl.
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import '../../styles/artykul.css';
+
+const title = 'Strona pracowni praktyk teatralnych | Realizacja Lajf';
+const description =
+  'Nowa strona aktora i pedagoga: metoda MIA, trzy grupy warsztatowe, koncerty, portfolio aktorskie w PDF i formularz konsultacji. Do tego przeniesienie domeny i poczty bez utraty skrzynek.';
+
+const ZRZUTY = '/images/realizacje/krzysztof-stanio';
+---
+<LajfLayout title={title} description={description} accent="#c4a35a" ogImage="/images/og/realizacja-krzysztof-stanio.jpg">
+  <header class="phero art-hero"><div class="wrap pin">
+    <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/#realizacje">Realizacje</a></div>
+    <span class="label">Strona pedagoga i artysty</span>
+    <h1>Strona pracowni <span class="hl">Krzysztofa Stanio</span></h1>
+    <p class="lead">Aktor, śpiewak i pedagog prowadzi Pracownię Praktyk Teatralnych w Krakowie i uczy własną metodą MIA. Stara strona pokazywała inny etap jego pracy i nie prowadziła nikogo do kontaktu. Zrobiliśmy nową, w której widać metodę, grupy warsztatowe i koncerty, a ścieżka kończy się umówieniem bezpłatnej konsultacji.</p>
+    <div class="art-live"><a href="https://krzysztofstanio.pl" class="btn btn-primary" target="_blank" rel="noopener">Zobacz stronę krzysztofstanio.pl →</a></div>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <article class="art-body">
+      <h2>Punkt wyjścia</h2>
+      <p>Strona na WordPressie z darmowym szablonem z 2017 roku. Ekran wczytywania wisiał i nie znikał, treść opisywała wcześniejszy etap pracy (recital, monodram), a nie warsztaty, którymi klient zajmuje się dziś. Nie było ścieżki od zainteresowania do rozmowy. Zrobiliśmy więc stronę od zera, a nie poprawki starej.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/hero.jpg`} alt="Strona główna: zbliżenie twarzy w półmroku, hasło W rdzeniu człowieka mieszka piękno i złote przyciski konsultacji" width="1600" height="1000" loading="lazy" />
+        <figcaption>Pierwszy ekran: złoto na czerni, wielka typografia i sygnet pracowni.</figcaption>
+      </figure>
+
+      <h2>Kinowa identyfikacja</h2>
+      <ul>
+        <li>Ciemna strona ze złotym akcentem i krojem szeryfowym. Wybrana z trzech makiet, które pokazaliśmy klientowi.</li>
+        <li>Logo w postaci imienia i nazwiska: „Krzysztof” białe, „Stanio” złote. Szeryf odróżnia markę od nawigacji.</li>
+        <li>Sygnet „PPT istnienie” w kółku, animowana linia ścieżki metody i numeracja rozdziałów.</li>
+        <li>Ruch dobrany tak, by nie zasłaniał treści: przesuwanie sekcji przy wejściu, ale bez znikania tekstu.</li>
+      </ul>
+
+      <h2>Metoda opisana czterema krokami</h2>
+      <p>Sekcja o metodzie MIA (Metoda Integracji Aktorskiej) prowadzi przez cztery pojęcia: obecność, ciało, głos i działanie. Dalej idą obszary pracy, kadry z zajęć i wyjaśnienie, jak zacząć.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/metoda.jpg`} alt="Sekcja Metoda MIA: nagłówek Technika nie jest początkiem, początkiem jest człowiek i cztery kolumny: obecność, ciało, głos, działanie" width="1600" height="1000" loading="lazy" />
+        <figcaption>Metoda MIA: cztery pojęcia w jednym rzędzie.</figcaption>
+      </figure>
+
+      <h2>Trzy grupy i jeden następny krok</h2>
+      <ul>
+        <li>Trzy zamknięte grupy: początkująca, średnio zaawansowana i zaawansowana, każda z opisem i wielkością składu.</li>
+        <li>Główne przyciski prowadzą do formularza „Umów bezpłatną konsultację”, a nie do zapisów na całe zajęcia.</li>
+        <li>Sekcja pytań przed zapisem.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/grupy.jpg`} alt="Sekcja Trzy kameralne, zamknięte grupy: karty grup początkującej, średnio zaawansowanej i zaawansowanej z opisem i wielkością składu" width="1600" height="1000" loading="lazy" />
+        <figcaption>Grupy warsztatowe opisane w jednym rzędzie.</figcaption>
+      </figure>
+
+      <h2>Koncerty obok warsztatów</h2>
+      <p>Klient jest też śpiewakiem, więc strona ma osobną sekcję koncertową. Obsługuje kilka programów naraz, z opisem, sceną, formą i listą utworów. Jest też miejsce na terminarz z komunikatem „wkrótce”, gdy nie ma zapowiedzianych koncertów.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/koncerty.jpg`} alt="Sekcja Koncerty: program flagowy Recital Pełnia z opisem, sceną, listą dwunastu utworów i zdjęciem artysty z mikrofonem" width="1600" height="1000" loading="lazy" />
+        <figcaption>Koncerty: program z opisem i repertuarem.</figcaption>
+      </figure>
+
+      <h2>Portfolio aktorskie do pobrania</h2>
+      <p>Do strony dołożyliśmy sześciostronicowe portfolio aktorskie w PDF w tej samej estetyce: okładka, biogram, dorobek, sesja zdjęciowa, kadry i kontakt. Link jest w stopce strony. Zdjęcia wydobyliśmy z oryginalnego portfolio klienta i przycięliśmy, więc nie trzeba było robić nowej sesji.</p>
+
+      <figure class="zrzut zrzut--telefon">
+        <img src={`${ZRZUTY}/telefon.jpg`} alt="Strona główna na telefonie: sygnet PPT istnienie, hasło W rdzeniu człowieka mieszka piękno i dwa przyciski" width="780" height="1688" loading="lazy" />
+        <figcaption>Na telefonie.</figcaption>
+      </figure>
+
+      <h2>Domena i poczta</h2>
+      <ul>
+        <li>Przeniesienie obsługi domeny do Cloudflare. Rekordy pocztowe odtworzone jeden do jednego, w tym klucz podpisu poczty, więc skrzynki działają jak wcześniej.</li>
+        <li>Adres z „www” przekierowuje na adres bez „www”, a strona ma certyfikat i mapę strony.</li>
+        <li>Formularz konsultacji wysyła zgłoszenia na skrzynkę klienta, którą prowadzi on sam.</li>
+      </ul>
+
+      <h2>Technologia</h2>
+      <p>Statyczna strona HTML i CSS na Cloudflare Pages, bez frameworka, z zewnętrznym serwisem do obsługi formularza. Dodatkowe podstrony można dopisać do mapy strony ręcznie.</p>
+    </article>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Prowadzisz warsztaty lub występujesz na scenie?</h2>
+      <p>Napisz, jak dziś wygląda Twoja strona i co ma z niej wynikać: zapisy, zapytania o występ czy rozmowy. Odpiszę, co zmienić najpierw.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
+    </div>
+  </div></section>
+</LajfLayout>

@@ -1,0 +1,91 @@
+---
+/**
+ * Realizacja: strona B2B marki chemicznej Innova Biological (Jaworzno), wersja podglądowa.
+ * Adres: innova-biological.pages.dev. Domena klienta (innovabiological.eu) NIE jest podpięta do nowej strony.
+ * Źródła faktów: repo innova-biological (kod, DESIGN.md), żywa strona podglądu (stan z 30.09.2026),
+ * notatka project_klient_innova.md, audyt starej strony z 22.06.2026.
+ * ZASTRZEŻENIA: (1) w źródłach nie ma zgody klienta na publikację realizacji ani decyzji o wdrożeniu,
+ * (2) na podglądzie stoją zaślepki [DAVID: ...] w opiniach, więc zrzutów opinii nie pokazujemy i nic o nich nie piszemy,
+ * (3) formularz kontaktowy nie ma jeszcze podpiętego serwera, więc go nie opisujemy,
+ * (4) nie opisujemy pozwoleń ani atestów produktów, bo klient ich jeszcze nie dostarczył do strony.
+ * Celowo bez: cen, warunków współpracy, oferty i budżetu.
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import '../../styles/artykul.css';
+
+const title = 'Strona B2B marki chemicznej | Realizacja Lajf';
+const description =
+  'Strona marki chemicznej dla klientów indywidualnych i firm: dwie ścieżki na pierwszym ekranie, karty produktów, wersje PL i EN, polityka prywatności i dane dla wyszukiwarek. Wersja podglądowa.';
+
+const ZRZUTY = '/images/realizacje/innova-biological';
+---
+<LajfLayout title={title} description={description} accent="#5cb533" ogImage="/images/og/realizacja-innova-biological.jpg">
+  <header class="phero art-hero"><div class="wrap pin">
+    <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/#realizacje">Realizacje</a></div>
+    <span class="label">Strona firmy</span>
+    <h1>Strona marki chemicznej <span class="hl">Innova Biological</span></h1>
+    <p class="lead">Firma z Jaworzna rozwija produkty chemiczne dla domu i zwierząt oraz formuły pod cudzą markę. Jej strona miała być wizytówką, którą klient i partner sprawdzają, zanim się odezwą. Zbudowaliśmy nową w dwóch wersjach językowych, z jasną, laboratoryjną szatą i podziałem na dwie ścieżki. Strona jest pokazana w wersji podglądowej, pod adresem roboczym.</p>
+    <div class="art-live"><a href="https://innova-biological.pages.dev" class="btn btn-primary" target="_blank" rel="noopener">Zobacz podgląd strony →</a></div>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <article class="art-body">
+      <h2>Punkt wyjścia</h2>
+      <p>Poprzednia strona stała na gotowym szablonie. Tytuł w wyszukiwarce był domyślny („Biological - Home”), nagłówki nie tworzyły hierarchii i nie było nagłówka głównego. Nie było polityki prywatności ani informacji o cookies, a wersje polska i angielska nie były ze sobą powiązane. Dwie różne grupy klientów, właściciele zwierząt i producenci szukający partnera, dostawały ten sam komunikat.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/hero.jpg`} alt="Strona główna: logo Biological, nagłówek Nowoczesna, odpowiedzialna chemia oparta na nauce i animowana siatka punktów w tle" width="1600" height="1000" loading="lazy" />
+        <figcaption>Pierwszy ekran. Siatka punktów nawiązuje do „connecting the dots” z logo.</figcaption>
+      </figure>
+
+      <h2>Dwie ścieżki na pierwszym ekranie</h2>
+      <p>Zaraz pod nagłówkiem są dwie karty: dla domu i właścicieli zwierząt oraz dla marek i firm. Odwiedzający wie w kilka sekund, czy trafił we właściwe miejsce, i przechodzi do produktów albo do współpracy B2B.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/drogi.jpg`} alt="Sekcja Dwie drogi, jeden standard: karty Dla domu i właścicieli zwierząt oraz Dla marek i firm" width="1600" height="1000" loading="lazy" />
+        <figcaption>Podział na klienta indywidualnego i firmowego.</figcaption>
+      </figure>
+
+      <h2>Produkty pokazane wprost</h2>
+      <p>Dwie linie produktów, każda z fotografią opakowań: linia dla dobrostanu zwierząt i linia ochronna. Strona jest wizytówką, nie sklepem. Ma pomóc zweryfikować firmę, a nie sprzedać koszyk.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/produkty.jpg`} alt="Sekcja Nasze produkty: dwie karty z fotografiami opakowań Well-Being Support i UltraCyp" width="1600" height="1000" loading="lazy" />
+        <figcaption>Karty produktów z fotografiami opakowań.</figcaption>
+      </figure>
+
+      <h2>Jasna szata w barwach logo</h2>
+      <ul>
+        <li>Niebieski i zielony z logo firmy, biel i szklane karty. Nagłówki w geometrycznym kroju, treść w neutralnym.</li>
+        <li>Ruch tylko tam, gdzie pomaga: pojawianie się sekcji przy przewijaniu i lekkie unoszenie kart. Wyłącza się przy ograniczeniu ruchu w systemie.</li>
+        <li>Animowaną siatkę w tle pierwszego ekranu wyłączyliśmy na telefonach. Nie niosła treści, a obciążała słabsze urządzenia. Zostaje sam gradient.</li>
+      </ul>
+
+      <figure class="zrzut zrzut--telefon">
+        <img src={`${ZRZUTY}/telefon.jpg`} alt="Strona główna na telefonie: nagłówek, przyciski Poznaj produkty i Współpraca B2B, bez animowanej siatki w tle" width="780" height="1688" loading="lazy" />
+        <figcaption>Na telefonie.</figcaption>
+      </figure>
+
+      <h2>Polski i angielski z powiązaniem językowym</h2>
+      <p>Cała strona istnieje w obu wersjach, z przełącznikiem w nagłówku. Wyszukiwarki dostają informację, która wersja jest dla kogo, więc nie traktują ich jak duplikatów.</p>
+
+      <h2>Podstawy, których brakowało</h2>
+      <ul>
+        <li>Własny tytuł i opis każdej podstrony, nagłówek główny, obraz do udostępniania linku.</li>
+        <li>Dane strukturalne firmy, mapa strony i plik robots.txt.</li>
+        <li>Polityka prywatności, regulamin i baner zgody na cookies analityczne. Do formularzy dodana informacja o administratorze danych.</li>
+      </ul>
+
+      <h2>Technologia</h2>
+      <p>Astro jako strona statyczna na Cloudflare Pages, własna skóra graficzna na wspólnym silniku Lajf, treść w jednym pliku po polsku i angielsku.</p>
+    </article>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Masz firmę, której strona ma budować zaufanie?</h2>
+      <p>Napisz, kto ją odwiedza i czego szuka. Odpiszę, co pokazać na pierwszym ekranie, żeby każdy trafił do swojej ścieżki.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
+    </div>
+  </div></section>
+</LajfLayout>

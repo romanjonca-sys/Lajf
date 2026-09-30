@@ -1,0 +1,127 @@
+---
+/**
+ * Realizacja: moje-rodo (moje-rodo.pl), własny produkt Lajf. Stan na 30.09.2026.
+ * Źródła faktów: żywa strona moje-rodo.pl (strona główna, /aplikacja-rodo, /cennik, /bezpieczenstwo, /obsluga-naruszenia),
+ * repo moje-rodo (package.json, app/, templates/), notatki: project_moje_rodo_co_sprzedajemy, project_moje_rodo_jeden_kwestionariusz,
+ * project_moje_rodo_obsluga_naruszenia, project_moje_rodo_marka_materialy.
+ * Zrzuty: publiczne strony produktu oraz publiczne ekrany konta demonstracyjnego z fikcyjną praktyką (moje-rodo.pl/dowody/).
+ * Nie podajemy: klientów i opinii, liczby zamówień, przychodów, incydentów, rzeczy jeszcze niewdrożonych (AI doradca, zatwierdzanie dokumentów).
+ * Ceny (999 zł, od 199 zł/mc, 849 zł) sprawdzone na żywej stronie 30.09.2026, przed publikacją zweryfikować ponownie.
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import '../../styles/artykul.css';
+
+const title = 'Aplikacja RODO dla praktyk medycznych | Realizacja Lajf';
+const description =
+  'Własny produkt Lajf: kwestionariusz i płatność bez konta, komplet dokumentów RODO w PDF, portal z rejestrem, terminarzem i wdrożeniem krok po kroku oraz osobna usługa na wypadek naruszenia.';
+
+const ZRZUTY = '/images/realizacje/moje-rodo';
+---
+<LajfLayout title={title} description={description} accent="#5b8cff" ogImage="/images/og/realizacja-moje-rodo.jpg">
+  <header class="phero art-hero"><div class="wrap pin">
+    <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/#realizacje">Realizacje</a></div>
+    <span class="label">Własny produkt Lajf</span>
+    <h1>Aplikacja RODO dla <span class="hl">praktyk medycznych</span></h1>
+    <p class="lead">Lekarz prowadzący gabinet ma obowiązki z RODO, ale nie ma na nie czasu ani działu prawnego. Zbudowaliśmy moje-rodo: odpowiada się na pytania o gabinet i dostaje komplet dokumentów. Do tego portal, który pilnuje rejestrów i terminów. Produkt jest nasz od strony marki, kodu i obsługi.</p>
+    <div class="art-live"><a href="https://moje-rodo.pl" class="btn btn-primary" target="_blank" rel="noopener">Zobacz stronę moje-rodo.pl →</a></div>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <article class="art-body">
+      <h2>Punkt wyjścia</h2>
+      <p>Gabinet lekarski przetwarza dane o zdrowiu, więc zwolnienie z rejestru czynności przetwarzania, które dotyczy małych firm, go nie obejmuje. Zwykle kończy się to ogólnym wzorem z internetu, który nie opisuje ani programu do dokumentacji, ani rejestracji, ani osób, które mają dostęp do danych. Nikt nie pamięta też o terminach: przeglądzie rejestru, szkoleniu personelu, ponownej ocenie ryzyka.</p>
+      <p>Założenie było proste. Lekarz nie ma znać RODO, ma odpowiedzieć na pytania o swoją pracę. Resztę robi produkt.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/hero.jpg`} alt="Strona główna moje-rodo.pl: nagłówek RODO w Twoim gabinecie? Robimy to za Ciebie i przycisk zamówienia kompletu" width="1600" height="1000" loading="lazy" />
+        <figcaption>Pierwszy ekran strony produktu.</figcaption>
+      </figure>
+
+      <h2>Od pytań do dokumentów bez zakładania konta</h2>
+      <ul>
+        <li>Darmowy mini-audyt: 8 pytań, wynik od razu, bez e-maila i bez konta. Wynik pokazuje, czego w gabinecie brakuje.</li>
+        <li>Jeden kwestionariusz zamiast trzech osobnych rzeczy: audytu, faktów w aplikacji i pytań mailem. Warunkowe pytania pokazują się tylko wtedy, gdy dotyczą gabinetu.</li>
+        <li>NIP wystarcza na start. Nazwę i adres praktyki pobieramy z rejestru CEIDG, a gdy go tam nie ma, z GUS.</li>
+        <li>Płatność online bez zakładania konta: BLIK, karta albo przelew przez ING Pay.</li>
+        <li>Wynik gotowości nie bywa zbyt optymistyczny. Brak szyfrowania komputera albo kopii zapasowej obniża go do poziomu, który nigdy nie jest zielony.</li>
+      </ul>
+
+      <h2>Komplet dokumentów z instrukcją</h2>
+      <p>Z odpowiedzi powstaje do 16 dokumentów w PDF: rejestr czynności, polityka bezpieczeństwa, klauzule dla pacjentów i pracowników, umowy powierzenia, procedura naruszeń i analiza ryzyka. Dokumenty opisują konkretny gabinet, a nie ogólny wzór. Przy każdym jest zdanie, co z nim zrobić: podpisać, wręczyć, wywiesić w poczekalni albo odłożyć do segregatora.</p>
+      <ul>
+        <li>Szablony są tekstowe i mają wersje z datą przeglądu. Treści nie pisze model językowy, więc dokument da się odtworzyć i wyjaśnić.</li>
+        <li>Każdy komplet przechodzi kontrolę człowieka, zanim trafi do klienta.</li>
+        <li>Dodatkowo jeden plik „Komplet do segregatora” ze spisem treści do wydruku.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/dokumenty.jpg`} alt="Zakładka Dokumenty w portalu: Twój pakiet RODO z ośmioma kartami dokumentów i podpowiedzią, co zrobić z każdym z nich" width="922" height="576" loading="lazy" />
+        <figcaption>Zakładka Dokumenty w koncie demonstracyjnym. Przy każdym dokumencie widać przeznaczenie i instrukcję.</figcaption>
+      </figure>
+
+      <h2>Portal, który pilnuje rejestrów i terminów</h2>
+      <ul>
+        <li>Rejestr czynności przetwarzania, w którym klient zaznacza, co go dotyczy. Podstawę prawną i okres przechowywania uzupełnia system. Rejestr pobiera się jako PDF na kontrolę.</li>
+        <li>Osobne rejestry upoważnień, powierzeń i naruszeń.</li>
+        <li>Wdrożenie krok po kroku: lista działań z odhaczaniem i dołączaniem dowodów.</li>
+        <li>Terminarz obowiązków z podstawą prawną i datą każdego z nich.</li>
+        <li>Szkolenia, ocena ryzyka i pakiet dowodowy: jeden klik daje archiwum ZIP z całą dokumentacją i sumami kontrolnymi.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/rejestr.jpg`} alt="Zakładka Rejestr RODO: sześć czynności przetwarzania z automatycznie uzupełnioną podstawą prawną i przycisk pobrania rejestru w PDF" width="1600" height="1000" loading="lazy" />
+        <figcaption>Rejestr czynności z automatycznie uzupełnioną podstawą prawną i okresem przechowywania.</figcaption>
+      </figure>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/terminarz.jpg`} alt="Zakładka Terminarz: cztery cykliczne obowiązki RODO z artykułem przepisu i datą" width="1600" height="662" loading="lazy" />
+        <figcaption>Terminarz obowiązków. Każda pozycja ma podstawę prawną i datę.</figcaption>
+      </figure>
+
+      <h2>Dziennik, którego nie da się poprawić</h2>
+      <p>Każde działanie na koncie zapisuje się w dzienniku zgodności. Wpisy są powiązane kryptograficznie z poprzednimi, więc nie da się ich po cichu zmienić ani usunąć. To daje datę i dowód, że dokumentacja była prowadzona.</p>
+
+      <h2>Osobna usługa na wypadek naruszenia</h2>
+      <p>Gdy praktyka dowie się o naruszeniu, ma 72 godziny na zgłoszenie do UODO. Dla tej sytuacji zrobiliśmy osobną stronę i zamówienie, bez konta i bez czekania na wdrożenie całego systemu. Formularz pyta o NIP, kontakt i moment, w którym praktyka dowiedziała się o zdarzeniu. Alert z terminem trafia do nas jeszcze przed płatnością.</p>
+      <ul>
+        <li>Osiem pism, między innymi karta zdarzenia z oceną ryzyka, wpis do rejestru, zawiadomienie pacjentów z tym, czego wymaga art. 34 ust. 2, zgłoszenie uzupełniające i końcowe do UODO oraz ściąga do rozmów z pacjentami.</li>
+        <li>Nie przyjmujemy danych pacjentów. Do pism wystarczą liczby.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/naruszenie.jpg`} alt="Strona Obsługa naruszenia: nagłówek Naruszenie danych w gabinecie, cena, termin kontaktu i lista przygotowywanych pism" width="1600" height="1000" loading="lazy" />
+        <figcaption>Strona usługi na wypadek naruszenia: co przygotowujemy, co zostaje po stronie praktyki i czego nie robimy.</figcaption>
+      </figure>
+
+      <h2>Cena, która nie zmusza do abonamentu</h2>
+      <p>Komplet kosztuje 999 zł jednorazowo. Dokumenty zostają u klienta na zawsze. Portal z rejestrami i terminarzem działa przez 30 dni w cenie, a potem klient wybiera: nic albo abonament od 199 zł miesięcznie. Najpierw porządek, potem utrzymanie, jeśli klient go chce.</p>
+
+      <h2>Bezpieczeństwo opisane konkretnie</h2>
+      <ul>
+        <li>Nigdzie nie pytamy o dane pacjentów. Nie ma pola, w którym byłyby potrzebne, a strona mówi o tym wprost.</li>
+        <li>Dane każdej praktyki są izolowane na poziomie bazy danych (Row Level Security), nie tylko w kodzie aplikacji.</li>
+        <li>Dokumenty pobiera się przez linki podpisane, ważne 15 minut.</li>
+        <li>Publiczne formularze mają limity zgłoszeń, a błędy aplikacji trafiają do monitoringu.</li>
+      </ul>
+
+      <h2>Marka i strona produktu</h2>
+      <p>Logo i znak, księga znaku na dziewięciu stronach, materiały drukowane i stopka mailowa. Do tego strona produktu z cennikiem, porównaniem opcji i poradnikiem z artykułami.</p>
+
+      <figure class="zrzut zrzut--telefon">
+        <img src={`${ZRZUTY}/telefon.jpg`} alt="Strona główna moje-rodo.pl na telefonie: nagłówek, przycisk Zamów komplet za 999 zł i link do darmowego sprawdzenia gotowości" width="780" height="1688" loading="lazy" />
+        <figcaption>Na telefonie.</figcaption>
+      </figure>
+
+      <h2>Technologia</h2>
+      <p>Next.js i React z TypeScriptem, baza Postgres z logowaniem i regułami dostępu w Supabase. Dokumenty generuje przeglądarka bezgłową w PDF, zadania w tle obsługuje Inngest, a błędy zbiera Sentry. Kod ma testy automatyczne.</p>
+    </article>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Chcesz własny produkt albo aplikację dla swojej branży?</h2>
+      <p>Napisz, jaki problem klient dziś rozwiązuje ręcznie. Odpiszę, czy da się to zamienić w produkt i od czego zacząć.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
+    </div>
+  </div></section>
+</LajfLayout>

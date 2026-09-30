@@ -35,3 +35,10 @@
 .art-list span{display:block;font-size:14px;color:var(--mut)}
 
 @media(max-width:520px){.art-body{font-size:16.5px}.art-box{padding:16px 18px}}
+
+/* Podstrony realizacji: zrzuty ekranu i przycisk do działającej strony klienta */
+.zrzut{margin:2.2rem 0}
+.zrzut img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:14px}
+.zrzut--telefon img{max-width:320px}
+.zrzut figcaption{margin-top:.6rem;font-size:.85rem;color:var(--mut)}
+.art-live{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:22px}

@@ -1,0 +1,102 @@
+---
+/**
+ * Realizacja: strona biura rachunkowego Zdalna Księgowa (zdalnaksiegowa.com.pl), wdrożona 09.2026.
+ *
+ * Zgoda klientki na publikację (umowa §14 ust. 2): potwierdzona przez Romana 30.09.2026. Klientka może ją cofnąć,
+ * wtedy zdjąć podstronę, wpis w sitemap.xml.ts i link karty.
+ *
+ * Źródła faktów: notatka project_lead_biuro_rachunkowe_paulina.md (fragmenty o stronie), plik
+ * 2026-09-15-kierunek-projektu-strony.md, repo lajf-template-jasny (package.json, sitemapa, src/lib),
+ * wygląd żywej strony z 30.09.2026.
+ * Nie podajemy: cennika i pakietów z kwotami (zrzuty bez kafelków z cenami, ukrytych przed zrzutem), treści umów i dokumentów RODO,
+ * nazwiska ani danych właścicielki (klientka nie chce ich ujawniać publicznie), liczników i deklaracji ze strony,
+ * informacji o stanie działalności biura.
+ * Pominięte funkcje, których stan nie jest potwierdzony: czat AI na stronie, moduł umów i oceny ryzyka (etap II).
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import '../../styles/artykul.css';
+
+const title = 'Strona biura rachunkowego dla IT i e-commerce | Realizacja Lajf';
+const description =
+  'Strona biura rachunkowego specjalizującego się w programistach, marketerach i sklepach internetowych. Nowa marka, trzy strony branżowe, kalkulator pakietu i poradnik z przypisami do przepisów.';
+
+const ZRZUTY = '/images/realizacje/zdalna-ksiegowa';
+---
+<LajfLayout title={title} description={description} accent="#4cc96b" ogImage="/images/og/realizacja-zdalna-ksiegowa.jpg">
+  <header class="phero art-hero"><div class="wrap pin">
+    <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/#realizacje">Realizacje</a></div>
+    <span class="label">Strona biura rachunkowego</span>
+    <h1>Strona biura rachunkowego <span class="hl">dla IT i e-commerce</span></h1>
+    <p class="lead">Biuro rozlicza jednoosobowe firmy programistów, marketerów i sklepów internetowych. Zrobiliśmy dla niego nazwę na stronie, znak, stronę z osobną ścieżką dla każdej z tych grup i poradnik, który odpowiada na pytania z ich codziennej księgowości.</p>
+    <div class="art-live"><a href="https://zdalnaksiegowa.com.pl" class="btn btn-primary" target="_blank" rel="noopener">Zobacz stronę zdalnaksiegowa.com.pl →</a></div>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <article class="art-body">
+      <h2>Punkt wyjścia</h2>
+      <p>Biuro obsługuje trzy rodzaje firm, a każda ma inne pułapki podatkowe. Programista rozlicza kontrakty w walucie obcej i pilnuje limitu zwolnienia z VAT. Marketer kupuje reklamy w Meta i Google, czyli import usług. Sklep internetowy sprzedaje konsumentom w innych krajach UE. Strona miała pokazać, że biuro zna te sprawy, a nie tylko obiecywać ogólny profesjonalizm.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/hero.jpg`} alt="Strona główna biura rachunkowego: nagłówek Ty rozwijasz firmę, my pilnujemy podatków i limitów, obok karta z rozliczeniem za sierpień na pomarańczowym tle" width="1600" height="1000" loading="lazy" />
+        <figcaption>Pierwszy ekran. Zamiast zdjęcia ze stocka jest karta z rozliczeniem miesiąca i paskiem limitu VAT.</figcaption>
+      </figure>
+
+      <h2>Znak i kolory</h2>
+      <ul>
+        <li>Znak: okulary z ptaszkiem zatwierdzenia. Zachowuje ptaszek z dawnego logo klientki, ale jest prosty na tyle, że działa jako ikona w przeglądarce.</li>
+        <li>Kolory wybrała klientka spośród czterech wariantów: zieleń nawiązująca do programu księgowego, z którego biuro korzysta, i ciepły pomarańczowy panel na kremowym tle.</li>
+        <li>Kontrast liczbowo sprawdzony. Tam, gdzie zieleń na pomarańczu byłaby nieczytelna, tekst zmienia kolor.</li>
+        <li>Font Poppins z logo na nagłówkach.</li>
+      </ul>
+
+      <h2>Trzy branże, trzy strony</h2>
+      <p>Sekcja „Dla kogo” prowadzi do osobnych stron: księgowa dla programisty, dla marketera i dla sklepu internetowego. Na każdej ten sam schemat, ale inne przykłady i inne pytania.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/dla-kogo.jpg`} alt="Sekcja Dla kogo: trzy karty, programiści i freelancerzy IT, marketerzy i agencje, sklepy internetowe, każda z linkiem do osobnej strony" width="1600" height="1000" loading="lazy" />
+        <figcaption>Trzy grupy klientów, trzy karty, trzy osobne strony.</figcaption>
+      </figure>
+
+      <h2>Zmiana biura w trakcie roku</h2>
+      <p>Wiele firm zostaje przy biurze, z którego nie jest zadowolona, bo zmiana wydaje się kłopotliwa. Strona wymienia, co zwykle zatrzymuje przed zmianą, i wyjaśnia, że rozliczenia można przenieść w środku roku. Do tego artykuł z checklistą, sprawdzony ze źródłami prawnymi: wypowiedzenie, odbiór dokumentów, pełnomocnictwa i uprawnienia w KSeF.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/zmiana-biura.jpg`} alt="Sekcja Zmiana biura: cztery obawy przed zmianą i dwa bloki odpowiedzi, Przejmujemy rozliczenia w trakcie roku oraz 12 miesięcy w roku, w których można zacząć współpracę" width="1600" height="1000" loading="lazy" />
+        <figcaption>Obawy przed zmianą biura po lewej, odpowiedź biura obok.</figcaption>
+      </figure>
+
+      <h2>Kalkulator pakietu</h2>
+      <p>Pięć pytań o formę opodatkowania, VAT, zakupy usług z UE, sprzedaż zagraniczną i liczbę dokumentów. Na końcu strona wskazuje pakiet, który pasuje, i prowadzi do zapytania o niego. Logika kalkulatora ma testy automatyczne.</p>
+
+      <h2>Poradnik z przypisami</h2>
+      <p>Cztery artykuły o tym, co zmienia się w podatkach jednoosobowych firm: zmiana biura w trakcie roku, KSeF, limit zwolnienia z VAT w 2026 roku i VAT od reklam w Meta i Google. Każdy z podanym stanem prawnym i źródłami, a fakty zostały sprawdzone przed publikacją.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/poradnik.jpg`} alt="Sekcja Poradnik: trzy karty artykułów o zmianie biura, KSeF i limicie zwolnienia z VAT, z czasem czytania" width="1600" height="1000" loading="lazy" />
+        <figcaption>Artykuły z czasem czytania i linkiem do wszystkich pozostałych.</figcaption>
+      </figure>
+
+      <h2>Cennik z tych samych danych co strona</h2>
+      <p>Cennik do pobrania w PDF generuje się z tych samych plików co pakiety na stronie, więc liczby nie rozjeżdżają się między stroną a dokumentem.</p>
+
+      <figure class="zrzut zrzut--telefon">
+        <img src={`${ZRZUTY}/telefon.jpg`} alt="Strona główna na telefonie: logo, nagłówek Ty rozwijasz firmę, my pilnujemy podatków i limitów, opis usług i dwa przyciski" width="780" height="1688" loading="lazy" />
+        <figcaption>Na telefonie.</figcaption>
+      </figure>
+
+      <h2>Formularz, zgoda na cookies i dane strukturalne</h2>
+      <p>Formularz kontaktowy z wyborem pakietu, baner zgody na cookies, dane strukturalne biura, mapa strony i strona błędu 404. Animacje liczb i paska limitu wyłączają się u osób, które w systemie ograniczyły ruch na ekranie.</p>
+
+      <h2>Technologia</h2>
+      <p>Astro na Cloudflare Workers, wspólny silnik i wymienna skóra kolorystyczna, testy automatyczne kalkulatora, pakietów i poradnika.</p>
+    </article>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Prowadzisz biuro rachunkowe albo usługi dla firm?</h2>
+      <p>Napisz, komu pomagasz i o co pytają Cię najczęściej. Odpiszę, jak pokazać to na stronie, żeby klient wiedział, że trafił do kogoś, kto zna jego branżę.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
+    </div>
+  </div></section>
+</LajfLayout>

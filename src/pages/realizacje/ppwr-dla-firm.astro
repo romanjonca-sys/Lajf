@@ -1,0 +1,119 @@
+---
+/**
+ * Realizacja: PPWR dla firm (ppwrdlafirm.pl) i aplikacja AppWR pod app.ppwrdlafirm.pl, własny produkt Lajf. Stan na 30.09.2026.
+ * Źródła faktów: żywa strona ppwrdlafirm.pl (całość, w tym cennik i FAQ), repo ppwrdlamarek-web (Astro, adapter Cloudflare),
+ * repo aplikacji ppwr-app.git (moduł ppwr: historia zmian, archiwum z sumą SHA-256, portal klienta, strona dostawcy),
+ * notatki: project_appwr_nisza_i_przewaga, project_appwr_platnik_wytworca, project_appwr_saas_samoobsluga_i_za_ciebie,
+ * project_rejestr_opakowan, reference_appwr_domena_app_ppwrdlafirm.
+ * Zrzuty WYŁĄCZNIE z publicznej strony ppwrdlafirm.pl (dane na niej są przykładowe i fikcyjne). Aplikacja jest za logowaniem
+ * i zawiera dane klientów, więc jej ekranów nie pokazujemy.
+ * Nie podajemy: klientów, liczby klientów, przychodów, umów, planów sprzedaży przez producentów opakowań, spraw wewnętrznych.
+ * Ceny (0 zł, od 399 zł/mc, 1 490 zł) sprawdzone na żywej stronie 30.09.2026, przed publikacją zweryfikować ponownie.
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import '../../styles/artykul.css';
+
+const title = 'Dokumentacja opakowaniowa PPWR | Realizacja Lajf';
+const description =
+  'Własny produkt Lajf: strona, która wyjaśnia PPWR na fikcyjnych przykładach, test gotowości i aplikacja do zbierania dokumentów od dostawców opakowań, z zamrożonymi deklaracjami i sumą kontrolną.';
+
+const ZRZUTY = '/images/realizacje/ppwr-dla-firm';
+---
+<LajfLayout title={title} description={description} accent="#3cc9bd" ogImage="/images/og/realizacja-ppwr-dla-firm.jpg">
+  <header class="phero art-hero"><div class="wrap pin">
+    <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/#realizacje">Realizacje</a></div>
+    <span class="label">Własny produkt Lajf</span>
+    <h1>Dokumentacja opakowaniowa <span class="hl">PPWR</span></h1>
+    <p class="lead">Od 12 sierpnia 2026 firma z własną marką musi mieć dokumentację techniczną i deklarację zgodności dla swoich opakowań, a urząd może o nie poprosić z dziesięciodniowym terminem. Zrobiliśmy stronę, która tłumaczy ten obowiązek na przykładach, oraz aplikację, w której dokumenty od dostawców zamieniają się w komplet do podpisu.</p>
+    <div class="art-live"><a href="https://ppwrdlafirm.pl" class="btn btn-primary" target="_blank" rel="noopener">Zobacz stronę ppwrdlafirm.pl →</a></div>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <article class="art-body">
+      <h2>Punkt wyjścia</h2>
+      <p>Rozporządzenie (UE) 2025/40, czyli PPWR, obciąża tego, czyja nazwa albo znak towarowy jest na opakowaniu. Nie ma znaczenia, czy firma sama je produkuje. Suplementy, kosmetyki, żywność czy chemia w kupionej butelce to wciąż opakowanie wprowadzone do obrotu przez markę.</p>
+      <p>Dostawcy przysyłają dokumenty, więc temat wygląda na zamknięty. Często jednak dokument nie wymienia tej części, którą firma kupiła, albo badanie dotyczy innego wyrobu. Do tego opakowanie składa się z kilku części od kilku dostawców, a deklarację wystawia się na całość.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/hero.jpg`} alt="Strona ppwrdlafirm.pl: nagłówek o deklaracjach zgodności PPWR dla firm z własną marką i przykładowy rejestr części opakowaniowych ze statusami" width="1600" height="1000" loading="lazy" />
+        <figcaption>Pierwszy ekran. Po prawej wyciąg z rejestru części z danymi przykładowymi.</figcaption>
+      </figure>
+
+      <h2>Strona, która pokazuje problem na przykładach</h2>
+      <ul>
+        <li>Fikcyjna deklaracja dostawcy z sześcioma oznaczonymi usterkami: brak listy produktów, skład, który nie sumuje się do stu procent, badanie na innym kolorze wyrobu, uszczelka poza zakresem.</li>
+        <li>Rysunek opakowania rozłożonego na części. Przy każdej widać dostawcę, rodzaj dokumentu i status: kompletna, do uzupełnienia albo brak.</li>
+        <li>Wyjaśnienie, że firma potrzebuje trzech dokumentów, a nie jednego: dokumentacji technicznej, deklaracji zgodności UE i materiału dowodowego od dostawców.</li>
+        <li>Odpowiedź na najczęstszy strach: deklaracji jest tyle, ile rodzajów opakowań, a nie produktów. Dziesięć smaków w tej samej butelce to jeden rodzaj.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/dokument-dostawcy.jpg`} alt="Fikcyjna deklaracja zgodności dostawcy z sześcioma ponumerowanymi usterkami i ich objaśnieniami obok" width="1600" height="1000" loading="lazy" />
+        <figcaption>Fikcyjna deklaracja dostawcy i sześć rzeczy, które w niej nie zgadzają się z wymogami.</figcaption>
+      </figure>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/anatomia.jpg`} alt="Rysunek liniowy opakowania rozłożonego na sześć części, obok lista części z dostawcą, dokumentem i statusem" width="1600" height="1000" loading="lazy" />
+        <figcaption>Jedno opakowanie, sześć części, kilku dostawców. Status każdej części osobno.</figcaption>
+      </figure>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/trzy-dokumenty.jpg`} alt="Trzy kolumny: dokumentacja techniczna z załącznika VII, deklaracja zgodności UE z artykułu 39 i dokumenty od dostawców z artykułu 16" width="1600" height="1000" loading="lazy" />
+        <figcaption>Trzy dokumenty z odwołaniem do artykułów rozporządzenia.</figcaption>
+      </figure>
+
+      <h2>Test gotowości, który niczego nie wysyła</h2>
+      <p>Sześć pytań o listę części, dokumenty dostawców, dokumentację techniczną, deklaracje, języki i to, czy komplet dałoby się pokazać w dziesięć dni. Odpowiedzi zostają w przeglądarce. Wynik pokazuje się po odpowiedzi na wszystkie pytania.</p>
+
+      <h2>Oferta opisana wprost</h2>
+      <ul>
+        <li>Bezpłatny przegląd dokumentacji na 30 minut. Mówimy na nim, czy firma jest wytwórcą i czego brakuje.</li>
+        <li>Abonament od 399 zł netto miesięcznie, do pięciu rodzajów opakowań, z audytem w cenie. Liczymy od rodzajów opakowań, nie od pozycji w cenniku.</li>
+        <li>Sam audyt za 1 490 zł netto, z raportem w 5 dni roboczych, który wlicza się w abonament zamówiony w ciągu 30 dni.</li>
+        <li>Wdrożenie bez abonamentu, z wyceną po audycie.</li>
+      </ul>
+      <p>Osobna sekcja mówi, czego nie robimy: badań laboratoryjnych, rejestracji w systemach EPR za granicą, zastępowania doradcy środowiskowego i podpisywania deklaracji za markę. Strona przyznaje też, że przy jednym rodzaju opakowania i kompletnych dokumentach abonament się nie opłaca.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/wspolpraca.jpg`} alt="Sekcja Współpraca: trzy opcje, abonament od 399 zł netto, sam audyt za 1 490 zł netto i wdrożenie bez abonamentu" width="1600" height="1000" loading="lazy" />
+        <figcaption>Trzy sposoby współpracy z cenami, które są na stronie.</figcaption>
+      </figure>
+
+      <h2>Aplikacja, w której klient sam domyka braki</h2>
+      <p>Aplikacja działa pod adresem app.ppwrdlafirm.pl. Jest za logowaniem i trzyma dane klientów, więc nie pokazujemy jej ekranów. Jest zbudowana tak, żeby klient mógł wprowadzić opakowania i zebrać dokumenty sam, a my sprawdzamy je pod względem formalnym. Nasza obsługa jest dodatkiem, a nie warunkiem działania.</p>
+      <ul>
+        <li>Część opakowania jest podstawową jednostką danych. Ta sama folia w dwudziestu opakowaniach ma jeden zapis, a każda część ma macierz wymogów PPWR z informacją, czego brakuje.</li>
+        <li>Klient zakłada opakowanie z częściami, importuje cały portfel jednym arkuszem i sam generuje deklaracje z potwierdzeniem.</li>
+        <li>Dostawca dostaje link bez konta, w którym wgrywa dokumenty i podaje dane. Dane firmy dociągamy po NIP.</li>
+        <li>Wiek dowodu jest widoczny, a przy starzejącym się dokumencie aplikacja przygotowuje pismo do dostawcy o odświeżenie.</li>
+        <li>Nic, co klient wgra, nie zmienia stanu zgodności. Zmienia go dopiero człowiek, który sprawdził dokument.</li>
+      </ul>
+
+      <h2>Dokument, który nie zostanie po cichu podmieniony</h2>
+      <p>Wystawiona deklaracja jest zamrażana jako PDF razem z sumą kontrolną SHA-256 i migawką danych. Przy każdym pobraniu suma jest liczona od nowa. Jeśli plik się nie zgadza, aplikacja odmawia wydania zamiast podać zmieniony egzemplarz. Klient może też sam sprawdzić, czy plik, który ma na dysku, jest jego dokumentem. Robi to w przeglądarce, bez wysyłania pliku do nas. Komplet można pobrać jako archiwum ZIP ze spisem sum kontrolnych.</p>
+      <p>Ma to sens z powodu dziesięciu dni z art. 15 ust. 10: okazuje się dokumentację, na podstawie której wprowadzono opakowanie do obrotu, a nie jej późniejszą wersję.</p>
+
+      <h2>Uczciwość zamiast wartości domyślnych</h2>
+      <p>Dokument mówi wprost, które dane pochodzą z dokumentów dostawców, a które z oświadczenia klienta. Liczy to z zamrożonej migawki. Wartość „domyślna” oznaczałaby, że nikt jej nie potwierdził. Dokument nie powołuje się też na normy zharmonizowane, dopóki nie zostały opublikowane. Nie oceniamy klasy recyklowalności, bo kryteriów jeszcze nie ma.</p>
+
+      <h2>Marka i wersje językowe</h2>
+      <p>Znak P na siatce technicznej, zieleń i dane w kroju monospace, jak w dokumentacji. Strona jest w wersji polskiej i angielskiej, ma regulamin, politykę prywatności i plik llms.txt dla asystentów AI.</p>
+
+      <figure class="zrzut zrzut--telefon">
+        <img src={`${ZRZUTY}/telefon.jpg`} alt="Strona ppwrdlafirm.pl na telefonie: nagłówek, przyciski Umów bezpłatny przegląd i Jak pracujemy oraz cztery liczby" width="780" height="1688" loading="lazy" />
+        <figcaption>Na telefonie.</figcaption>
+      </figure>
+
+      <h2>Technologia</h2>
+      <p>Strona jest statyczna, zbudowana w Astro i wdrażana na Cloudflare. Aplikacja opiera się na frameworku Open Mercato (Next.js, PostgreSQL) z własnym modułem PPWR, działa w kontenerach na własnym serwerze za Cloudflare i ma testy automatyczne logiki dokumentów.</p>
+    </article>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Masz obowiązek, którego nikt nie chce robić ręcznie?</h2>
+      <p>Opisz, jakie dokumenty i od kogo zbierasz dziś w arkuszach. Odpiszę, czy da się z tego zrobić proces albo narzędzie i od czego zacząć.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
+    </div>
+  </div></section>
+</LajfLayout>

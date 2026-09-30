@@ -1,6 +1,7 @@
 <!doctype html>
-<!-- Obraz do udostępniania podstrony /realizacje/strona-wokalistki-iwona-wegrowska/ (1200x630).
-     Render: node docs/og/render.mjs realizacja-iwona public/images/og/realizacja-iwona-wegrowska.jpg (serwer: python3 -m http.server 4412 z katalogu repo) -->
+<!-- Obraz do udostępniania podstrony realizacji (1200x630). Treść z parametrów adresu:
+     t1 (pierwsza linia tytułu), t2 (druga, w kolorze akcentu), tagi (rozdzielone |), url (adres w pasku okna),
+     img (zrzut 1600x1000 z public/), acc (kolor akcentu bez #). Render: docs/og/render.mjs, instrukcja w docs/realizacje.md -->
 <html lang="pl"><head><meta charset="utf-8">
 <style>
 @font-face { font-family: 'SG'; src: url('/node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-ext-wght-normal.woff2'); font-weight: 300 700; }
@@ -9,13 +10,13 @@
 @font-face { font-family: 'In'; src: url('/node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2'); font-weight: 100 900; unicode-range: U+0000-00FF; }
 * { margin: 0; box-sizing: border-box; }
 body { width: 1200px; height: 630px; overflow: hidden; background: #07060d; color: #f4f3f8; font-family: 'In', sans-serif; position: relative; }
-.glow { position: absolute; inset: 0; background: radial-gradient(600px 420px at 95% 20%, rgba(200,16,46,.35), transparent 70%), radial-gradient(500px 400px at 70% 110%, rgba(91,140,255,.22), transparent 70%); }
+.glow { position: absolute; inset: 0; background: radial-gradient(600px 420px at 95% 20%, color-mix(in srgb, var(--acc) 38%, transparent), transparent 70%), radial-gradient(500px 400px at 70% 110%, rgba(91,140,255,.22), transparent 70%); }
 .lewa { position: absolute; left: 70px; top: 64px; bottom: 60px; width: 470px; display: flex; flex-direction: column; }
 .logo { font-family: 'SG'; font-weight: 700; font-size: 34px; letter-spacing: -.01em; }
 .logo span { color: #5b8cff; font-size: 26px; }
-.label { margin-top: 64px; font-size: 16px; letter-spacing: .2em; text-transform: uppercase; color: #ff4d67; }
+.label { margin-top: 64px; font-size: 16px; letter-spacing: .2em; text-transform: uppercase; color: var(--acc); }
 h1 { margin-top: 16px; font-family: 'SG'; font-weight: 700; font-size: 58px; line-height: 1.02; letter-spacing: -.02em; }
-h1 em { font-style: normal; color: #ff4d67; }
+h1 em { font-style: normal; color: var(--acc); }
 .tagi { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px; }
 .tagi span { font-size: 17px; padding: 9px 16px; border: 1px solid rgba(244,243,248,.18); border-radius: 999px; color: #d9d7e3; }
 .stopka { margin-top: auto; display: flex; justify-content: space-between; font-size: 18px; }
@@ -29,11 +30,21 @@ h1 em { font-style: normal; color: #ff4d67; }
 <body>
 <div class="glow"></div>
 <div class="lewa">
-  <div class="logo">Lajf <span>∿</span></div>
+  <div class="logo">Lajf<svg viewBox="45 36 50 33" width="34" height="22" style="margin-left:4px"><path d="M50 54 h5 l5 -14 l6.5 25 l5 -11 h4" fill="none" stroke="#5b8cff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="86" cy="54" r="5.5" fill="#5b8cff"/></svg></div>
   <div class="label">Realizacja</div>
-  <h1>Strona wokalistki <em>Iwony Węgrowskiej</em></h1>
-  <div class="tagi"><span>Nowa marka</span><span>Koncerty z arkusza</span><span>Domena i poczta</span></div>
+  <h1 id="tytul"></h1>
+  <div class="tagi" id="tagi"></div>
   <div class="stopka"><b>lajf.eu</b></div>
 </div>
-<div class="okno"><div class="pasek"><i></i><i></i><i></i><span>iwonawegrowska.pl</span></div><img src="/public/images/realizacje/iwona-wegrowska/hero.jpg" alt=""></div>
+<div class="okno"><div class="pasek"><i></i><i></i><i></i><span id="url"></span></div><img id="img" alt=""></div>
+<script>
+  var q = new URLSearchParams(location.search);
+  document.documentElement.style.setProperty('--acc', '#' + (q.get('acc') || 'ff4d67'));
+  var h = document.getElementById('tytul');
+  h.textContent = q.get('t1') + ' ';
+  var em = document.createElement('em'); em.textContent = q.get('t2'); h.appendChild(em);
+  (q.get('tagi') || '').split('|').filter(Boolean).forEach(function (t) { var s = document.createElement('span'); s.textContent = t; document.getElementById('tagi').appendChild(s); });
+  document.getElementById('url').textContent = q.get('url');
+  document.getElementById('img').src = '/public' + q.get('img');
+</script>
 </body></html>

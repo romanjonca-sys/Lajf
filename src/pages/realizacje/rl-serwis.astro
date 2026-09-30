@@ -1,0 +1,93 @@
+---
+/**
+ * Realizacja: strona firmy sprzątającej R&L Serwis (rlserwis.pl), LIVE od 03.08.2026.
+ * Źródła faktów: notatka project_klient_rl_serwis.md, repo rlserwis-web (CLAUDE.md, brief.md, git log,
+ * src/pages/api/contact.ts, src/lib/uslugi.ts), sitemapa i wygląd żywej strony z 30.09.2026.
+ * Nie podajemy: cen, stawek, cen produktów, warunków umowy, danych rejestrowych i osobowych, opinii i ocen,
+ * liczby lat doświadczenia i innych deklaracji klienta, danych o obserwujących w social mediach.
+ * Zrzuty pominięte celowo: kalkulator i sklep (widać w nich ceny), galeria przed/po (część zdjęć to grafiki AI,
+ * a strona podpisuje je „prawdziwe efekty naszych realizacji").
+ * W notatkach nie ma zapisanej zgody na publikację. Karta klienta jest już na stronie głównej lajf.eu (decyzja Romana).
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import '../../styles/artykul.css';
+
+const title = 'Strona firmy sprzątającej | Realizacja Lajf';
+const description =
+  'Strona z kalkulatorem wyceny sprzątania domu i osobnym kalkulatorem dla gabinetów i biur, sześcioma podstronami usług, sklepem z chemią i formularzami, które odpisują klientowi.';
+
+const ZRZUTY = '/images/realizacje/rl-serwis';
+---
+<LajfLayout title={title} description={description} accent="#d0ad78" ogImage="/images/og/realizacja-rl-serwis.jpg">
+  <header class="phero art-hero"><div class="wrap pin">
+    <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/#realizacje">Realizacje</a></div>
+    <span class="label">Strona usługowa</span>
+    <h1>Strona firmy <span class="hl">sprzątającej</span></h1>
+    <p class="lead">Firma z Jaworzna sprząta domy, mieszkania, gabinety i biura, ale nie miała własnej strony. Zrobiliśmy stronę, na której klient sam sprawdza orientacyjny koszt, firmy dostają osobną ścieżkę wyceny, a każde zapytanie trafia do właścicielki z potwierdzeniem dla klienta.</p>
+    <div class="art-live"><a href="https://rlserwis.pl" class="btn btn-primary" target="_blank" rel="noopener">Zobacz stronę rlserwis.pl →</a></div>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <article class="art-body">
+      <h2>Punkt wyjścia</h2>
+      <p>Firma miała logo i konta w mediach społecznościowych, ale nie miała własnej strony. Osoba szukająca sprzątania w okolicy nie mogła sprawdzić, co firma robi, ani zapytać o wycenę bez telefonu. Domy i mieszkania to inny klient niż gabinety i biura, więc jedna wspólna oferta nie pasowała do żadnego z nich.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/hero.jpg`} alt="Strona główna R&L Serwis: jasne ciepłe tło, nagłówek Sprzątanie, po którym nie trzeba nic poprawiać, zdjęcie sprzątania salonu i dwa przyciski wyceny" width="1600" height="1000" loading="lazy" />
+        <figcaption>Pierwszy ekran z dwiema ścieżkami: wycena domu lub mieszkania i wycena gabinetu lub biura.</figcaption>
+      </figure>
+
+      <h2>Dwie ścieżki wyceny</h2>
+      <ul>
+        <li>Dom lub mieszkanie: klient wpisuje metraż, liczbę łazienek i rodzaj sprzątania, a orientacyjna cena liczy się od razu, bez wysyłania czegokolwiek.</li>
+        <li>Sprzątanie po remoncie nie ma automatycznej ceny. Kalkulator pokazuje wtedy, że wycena jest indywidualna, zamiast podawać liczbę, która mogłaby wprowadzić w błąd.</li>
+        <li>Gabinet lub biuro: metraż, typ placówki i częstotliwość. Wynik przychodzi na e-mail, więc firma dostaje zapytanie z adresem, zanim zadzwoni.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/biznes.jpg`} alt="Formularz wyceny sprzątania gabinetu lub biura: metraż, typ placówki, częstotliwość i adres e-mail, przycisk Oblicz i wyślij mi wycenę" width="1600" height="1000" loading="lazy" />
+        <figcaption>Kalkulator dla gabinetów i biur. Wycena wraca na e-mail klienta, a zapytanie trafia do firmy.</figcaption>
+      </figure>
+
+      <h2>Każda usługa ma własną podstronę</h2>
+      <p>Sześć podstron zamiast jednego długiego opisu: sprzątanie domów i mieszkań, po remoncie, biur, gabinetów lekarskich, mycie okien i pranie tapicerki. Każda ma własny tytuł, opis i adres, żeby wyszukiwarka mogła pokazać właściwą stronę na właściwe zapytanie.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/uslugi.jpg`} alt="Sekcja Czym się zajmujemy: siedem kart usług, od domów i mieszkań po sprzedaż chemii ECOSHINE" width="1600" height="1000" loading="lazy" />
+        <figcaption>Zakres usług na stronie głównej, każda karta z krótkim opisem.</figcaption>
+      </figure>
+
+      <h2>Sklep z chemią, którą firma sama stosuje</h2>
+      <p>Firma sprzedaje też środki czystości ECOSHINE, których używa u klientów. Zrobiliśmy do tego karty produktów i zamówienie przez formularz, bez konta i bez płatności online. Dowóz po Jaworznie albo wysyłka kurierem, płatność przy odbiorze.</p>
+
+      <h2>Zapytania trafiają do właścicielki</h2>
+      <ul>
+        <li>Każdy formularz, czyli kalkulatory, kontakt i zamówienie, wysyła wiadomość na skrzynkę firmy, a klient dostaje potwierdzenie.</li>
+        <li>Skrzynka w domenie firmy i wysyłka maili z tej domeny. Maile mają barwy strony i w stopce informację o administratorze danych.</li>
+        <li>Analityka Google włącza się dopiero po zgodzie w banerze cookies.</li>
+      </ul>
+
+      <h2>Logo i kolory</h2>
+      <p>Logo firmy zostało, dostało tylko wersje na stronę i do maili. Kolory strony wzięliśmy z niego: ciemna zieleń, złoto i ciepła biel. W tej samej palecie przygotowaliśmy grafiki i krótkie rolki do mediów społecznościowych.</p>
+
+      <figure class="zrzut zrzut--telefon">
+        <img src={`${ZRZUTY}/telefon.jpg`} alt="Strona główna na telefonie: logo, nagłówek, dwa przyciski wyceny i zdjęcie sprzątania" width="780" height="1688" loading="lazy" />
+        <figcaption>Na telefonie.</figcaption>
+      </figure>
+
+      <h2>Wyszukiwarki</h2>
+      <p>Dane strukturalne firmy sprzątającej z adresem, mapa strony i poprawny adres kanoniczny. Dane firmy w stopce są takie same jak w regulaminie i polityce prywatności.</p>
+
+      <h2>Technologia</h2>
+      <p>Astro na Cloudflare Workers, wysyłka maili przez Resend, treść i teksty usług w plikach projektu.</p>
+    </article>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Sprzątasz, remontujesz albo prowadzisz usługi lokalne?</h2>
+      <p>Napisz, jak dziś klienci Cię znajdują i o co pytają najczęściej. Odpiszę, co pokazać na stronie, żeby zapytań było więcej.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
+    </div>
+  </div></section>
+</LajfLayout>

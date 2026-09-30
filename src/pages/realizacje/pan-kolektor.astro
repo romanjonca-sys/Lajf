@@ -1,0 +1,100 @@
+---
+/**
+ * Realizacja: strona serwisu kolektorów słonecznych Pan Kolektor (pankolektor.pl), LIVE od 03.08.2026.
+ * Źródła faktów: notatka project_klient_ekopanel_siedemkotow.md, repo pankolektor-web (git log, site.config,
+ * functions/api/contact.ts, src/lib/uslugi.ts), sitemapa i wygląd żywej strony z 30.09.2026.
+ * Nie podajemy: cen i warunków umowy, danych rejestrowych i osobowych, statystyk widoczności w Google,
+ * liczb i deklaracji z samej strony klienta (lata, liczba instalacji, opinie).
+ * W notatkach nie ma zapisanej zgody na publikację. Karta klienta jest już na stronie głównej lajf.eu (decyzja Romana).
+ * Zrzut telefonu pominięty: na żywej stronie nagłówek na telefonie nie ma bocznego marginesu.
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import '../../styles/artykul.css';
+
+const title = 'Strona serwisu kolektorów słonecznych | Realizacja Lajf';
+const description =
+  'Nowa marka z logo, strona z sześcioma podstronami usługowymi zbudowanymi pod to, czego ludzie szukają w Google, formularz z potwierdzeniem na e-mail i poczta we własnej domenie.';
+
+const ZRZUTY = '/images/realizacje/pan-kolektor';
+---
+<LajfLayout title={title} description={description} accent="#d9b840" ogImage="/images/og/realizacja-pan-kolektor.jpg">
+  <header class="phero art-hero"><div class="wrap pin">
+    <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/#realizacje">Realizacje</a></div>
+    <span class="label">Strona usługowa</span>
+    <h1>Strona serwisu <span class="hl">kolektorów słonecznych</span></h1>
+    <p class="lead">Serwis instalacji solarnych z Małopolski i Śląska działał bez własnej marki i bez strony. Zrobiliśmy nazwę Pan Kolektor, logo z kotem, stronę, na której każda usługa ma osobny adres, oraz formularz i pocztę, które dostarczają zapytania prosto do firmy.</p>
+    <div class="art-live"><a href="https://pankolektor.pl" class="btn btn-primary" target="_blank" rel="noopener">Zobacz stronę pankolektor.pl →</a></div>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <article class="art-body">
+      <h2>Punkt wyjścia</h2>
+      <p>Firma naprawia i serwisuje kolektory słoneczne do ciepłej wody, także te założone przez kogoś innego. Chciała, żeby strona mówiła tylko o tym. Bez fotowoltaiki, która w wyszukiwarce zagłusza słowo „solary”. Brakowało domeny, poczty w domenie i logo, które da się użyć na stronie, w mailach i na ikonie w przeglądarce.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/hero.jpg`} alt="Strona główna Pan Kolektor: niebieskie tło, nagłówek Serwis i naprawa kolektorów słonecznych, zdjęcie instalatora na dachu i przyciski Zadzwoń oraz Umów przegląd" width="1600" height="1000" loading="lazy" />
+        <figcaption>Pierwszy ekran. Telefon jest w nagłówku i w pierwszym przycisku, bo klient z awarią chce zadzwonić.</figcaption>
+      </figure>
+
+      <h2>Marka i logo z kotem</h2>
+      <ul>
+        <li>Nazwa Pan Kolektor i podpis „Serwis i montaż”. Serwis stoi pierwszy, bo to on jest specjalnością firmy.</li>
+        <li>Logo: kot wyglądający zza kolektora i słońce. Rysunek wyszedł od klienta, my poprawiliśmy tak, żeby kolektor czytał się jako płaska tafla w ramie z równoległymi rurkami, jak na zdjęciach z prac.</li>
+        <li>Osobne wersje na jasne i ciemne tło oraz uproszczony znak, który zostaje czytelny na ikonie w przeglądarce i na awatarach.</li>
+        <li>Kolory: błękit nieba i złoto, te same na stronie i w mailach do klientów.</li>
+      </ul>
+
+      <h2>Każda usługa ma własną podstronę</h2>
+      <p>Zamiast jednej długiej strony jest sześć podstron: naprawa kolektorów, serwis i przegląd, wymiana glikolu, wymiana pompy i sterownika, modernizacja instalacji oraz montaż. Podział wziął się z zapytań, które ludzie wpisują w Google, a nie z opisu firmy. Awaria i przegląd to dla wyszukiwarki dwie różne potrzeby, więc dostały osobne strony, które się nawzajem linkują.</p>
+      <ul>
+        <li>Każda podstrona ma własny tytuł, opis, nagłówek i adres kanoniczny.</li>
+        <li>Opis objawów, przebieg prac, wyjaśnienie, od czego zależy koszt, i odpowiedzi na częste pytania.</li>
+        <li>Dane strukturalne usługi, ścieżki nawigacji i pytań, z których korzysta Google.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/uslugi.jpg`} alt="Sekcja Czym się zajmujemy: sześć kart usług, od naprawy kolektorów po montaż, z krótką listą zakresu prac i linkiem Zobacz szczegóły" width="1600" height="1000" loading="lazy" />
+        <figcaption>Sześć kart na stronie głównej prowadzi do sześciu podstron usługowych.</figcaption>
+      </figure>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/serwis.jpg`} alt="Sekcja Serwis kolektorów słonecznych: cztery objawy usterki w kartach i zdjęcie kolektorów na dachu bloku" width="1600" height="1000" loading="lazy" />
+        <figcaption>Klient rozpoznaje swój problem po objawie: nie grzeje, wyciek, glikol, pompa.</figcaption>
+      </figure>
+
+      <h2>Od telefonu do naprawy w czterech krokach</h2>
+      <p>Strona tłumaczy, jak wygląda kontakt: telefon lub formularz, diagnoza, naprawa i przeglądy co sezon. Do tego pytania i odpowiedzi, na przykład o instalacje założone przez inną firmę.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/proces.jpg`} alt="Sekcja Od telefonu do spokojnej głowy: cztery kroki od telefonu lub formularza, przez diagnozę i naprawę, do stałej opieki, a pod nimi początek galerii realizacji" width="1600" height="1000" loading="lazy" />
+        <figcaption>Cztery kroki współpracy i początek galerii prac.</figcaption>
+      </figure>
+
+      <h2>Formularz, który odpisuje</h2>
+      <ul>
+        <li>Zapytanie z formularza trafia na skrzynkę firmy, a klient dostaje potwierdzenie w barwach marki.</li>
+        <li>Skrzynka we własnej domenie i wysyłka maili z tej domeny, z ustawionym uwierzytelnianiem nadawcy.</li>
+        <li>W stopce maili informacja o administratorze danych i odnośniki do polityki prywatności i regulaminu.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/faq.jpg`} alt="Sekcja Częste pytania z rozwiniętą odpowiedzią o naprawie kolektorów założonych przez inną firmę" width="1600" height="1000" loading="lazy" />
+        <figcaption>Pytania klientów z odpowiedziami, także w danych strukturalnych.</figcaption>
+      </figure>
+
+      <h2>Wyszukiwarki i zgoda na analitykę</h2>
+      <p>Dane strukturalne firmy lokalnej z obszarem działania, mapa strony, osobna strona błędu 404 zamiast strony głównej pod nieistniejącym adresem. Analityka Google ładuje się dopiero po zgodzie w banerze cookies.</p>
+
+      <h2>Technologia</h2>
+      <p>Astro jako strona statyczna na Cloudflare Pages, formularz jako funkcja Pages, wysyłka maili przez Resend. Treść usług trzymana w jednym pliku, więc nowa podstrona to nowy wpis.</p>
+    </article>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Naprawiasz, montujesz albo serwisujesz?</h2>
+      <p>Napisz, czym się zajmujesz i jak dziś szukają Cię klienci. Odpiszę, jakie podstrony i jakie zapytania mają największy sens u Ciebie.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
+    </div>
+  </div></section>
+</LajfLayout>
