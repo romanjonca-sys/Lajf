@@ -25,14 +25,16 @@ interface Props {
   locale?: Locale;
   /** Dodatkowy JSON-LD strony (np. Service z ofertą) — dokładany obok Organization. */
   schema?: Record<string, unknown>;
+  /** Obraz do udostępniania (1200x630) tej strony zamiast ogólnego og-default.jpg. */
+  ogImage?: string;
 }
 
-const { title, description, accent = '#5b8cff', locale = DEFAULT_LOCALE, schema } = Astro.props;
+const { title, description, accent = '#5b8cff', locale = DEFAULT_LOCALE, schema, ogImage: ogImagePath = '/images/og-default.jpg' } = Astro.props;
 const { brandName, company } = siteConfig;
 
 const siteUrl = Astro.site ?? new URL('https://lajf.eu');
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
-const ogImage = new URL('/images/og-default.jpg', siteUrl).href;
+const ogImage = new URL(ogImagePath, siteUrl).href;
 
 // hreflang tylko dla stron, które naprawdę mają odpowiednik w drugim języku.
 const hreflangi = alternatywy(Astro.url.pathname).map((alt) => ({

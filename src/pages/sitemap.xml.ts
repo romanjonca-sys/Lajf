@@ -23,6 +23,7 @@ const PAGES = [
   'rodo-i-cyber',
   'oprogramowanie',
   'realizacje/rejestr-badania-klinicznego',
+  'realizacje/strona-wokalistki-iwona-wegrowska',
   'muzyka',
   'polityka-prywatnosci',
   'regulamin',

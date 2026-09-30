@@ -1,0 +1,139 @@
+---
+/**
+ * Realizacja: strona wokalistki Iwony Węgrowskiej (iwonawegrowska.pl), LIVE od 30.09.2026.
+ * Zgoda na publikację: 30.09.2026, przez Romana.
+ * Zrzuty z produkcji iwonawegrowska.pl (strona publiczna, bez danych osobowych poza kontaktem managera).
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import '../../styles/artykul.css';
+
+const title = 'Strona wokalistki Iwony Węgrowskiej | Realizacja Lajf';
+const description =
+  'Nowa identyfikacja, strona z koncertami z arkusza Google, dyskografia z okładkami, własny odtwarzacz singla i materiały dla organizatora. Do tego domena i poczta, która przestała trafiać do spamu.';
+
+const ZRZUTY = '/images/realizacje/iwona-wegrowska';
+---
+<LajfLayout title={title} description={description} accent="#e0324b" ogImage="/images/og/realizacja-iwona-wegrowska.jpg">
+  <header class="phero art-hero"><div class="wrap pin">
+    <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/#realizacje">Realizacje</a></div>
+    <span class="label">Strona artystki</span>
+    <h1>Strona wokalistki <span class="hl">Iwony Węgrowskiej</span></h1>
+    <p class="lead">Laureatka Eska Music Award z ponad dwudziestoma latami na scenie wraca z nowym singlem. Stara strona była szablonem bez logo, a materiały dla organizatorów wyglądały za każdym razem inaczej. Zrobiliśmy nową markę, stronę, która sprzedaje koncerty, i uporządkowaliśmy wszystko, co jest za nią: domenę, pocztę i dokumenty.</p>
+    <p class="lead"><a href="https://iwonawegrowska.pl" rel="noopener">iwonawegrowska.pl →</a></p>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <article class="art-body">
+      <h2>Punkt wyjścia</h2>
+      <p>Strona na WordPressie z domyślnym motywem, bez logo i bez aktualnych koncertów. Oferta dla organizatora miała osiem stron opisu, ale nie mówiła, ile trwa koncert, w jakim składzie gra artystka ani co musi zapewnić organizator. Rider solo nie miał żadnego kontaktu. Maile z adresu w domenie trafiały do spamu, więc manager przeszedł na Gmaila.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/hero.jpg`} alt="Strona główna: czarno-białe zdjęcie artystki na moście i odręczny podpis Iwona w kolorze czerwonej szminki" width="1600" height="1000" loading="lazy" />
+        <figcaption>Pierwszy ekran. Jedno zdjęcie stoi w tle przez całą stronę, zmienia się tylko treść.</figcaption>
+      </figure>
+
+      <h2>Nowa identyfikacja</h2>
+      <ul>
+        <li>Logo „Szminka”: odręczny podpis Iwona w kolorze czerwonej szminki i nazwisko antykwą z szerokim światłem.</li>
+        <li>Czerń, czerwień szminki i kość słoniowa. Te same kolory i kroje na stronie, w ofercie, w riderach i w stopce managera.</li>
+        <li>Obraz do udostępniania linku w mediach społecznościowych z nowym logo.</li>
+      </ul>
+
+      <h2>Strona, która sprzedaje koncerty</h2>
+      <ul>
+        <li>Sekcja „Sceny”: plener, gala, koncert kameralny i kolędy w duecie. Przy każdej formie opis wydarzeń, do których pasuje, i przycisk zapytania o termin.</li>
+        <li>Bio od managera, galeria z dwóch sesji zdjęciowych i sekcja nowego singla.</li>
+        <li>Rezerwacja w trzech krokach i kontakt bezpośrednio do managera.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/sceny.jpg`} alt="Sekcja Sceny: pionowa lista form koncertu Plener, Gala ze zdjęciem artystki obok" width="1600" height="1000" loading="lazy" />
+        <figcaption>Sceny: aktywna forma koncertu wypełniona, pozostałe konturem, do każdej osobne zdjęcie.</figcaption>
+      </figure>
+
+      <h2>Singiel bez banera cookies</h2>
+      <p>Odtwarzacz Spotify zapisuje własne pliki cookie, więc wymagałby banera zgody na całej stronie. Singiel „Miasto” gra z własnego odtwarzacza na serwerze strony. Obok linki do Spotify, do profilu artystki i do YouTube.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/miasto.jpg`} alt="Sekcja nowego singla Miasto z dużym tytułem, dopiskiem nowy singiel i przyciskiem odtwarzania" width="1600" height="1000" loading="lazy" />
+        <figcaption>Nowy singiel i własny odtwarzacz, bez zgody na cookies.</figcaption>
+      </figure>
+
+      <h2>Dyskografia z okładkami</h2>
+      <p>Dwa albumy solowe i dwadzieścia osiem singli od 2003 roku, każdy z okładką, rokiem i nazwiskami gości. Zestawienie sprawdzone ze źródłami, bo stara oferta pomijała część utworów.</p>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/dyskografia.jpg`} alt="Dyskografia: siatka okładek singli z tytułami i latami, obok liczby: 2 albumy, 28 singli, pierwsza płyta 2003" width="1600" height="1000" loading="lazy" />
+        <figcaption>Dyskografia: okładki, lata wydania i współpracownicy.</figcaption>
+      </figure>
+
+      <h2>Koncerty, które manager dopisuje sam</h2>
+      <ul>
+        <li>Terminy pochodzą z arkusza Google. Manager dopisuje wiersz, a strona pokazuje koncert bez udziału programisty.</li>
+        <li>Koncerty, które się odbyły, przechodzą same do sekcji „Ostatnio na scenie”.</li>
+        <li>Kolumna „Ukryj” na terminy, które czekają na potwierdzenie.</li>
+        <li>Każdy koncert trafia też do danych strukturalnych, z których korzysta Google.</li>
+      </ul>
+
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/koncerty.jpg`} alt="Lista koncertów z datą, miastem i salą, pod nią link Ostatnio na scenie" width="1600" height="1000" loading="lazy" />
+        <figcaption>Koncerty wczytywane z arkusza przy każdym wejściu na stronę.</figcaption>
+      </figure>
+
+      <h2>Materiały dla organizatora</h2>
+      <ul>
+        <li>Oferta koncertowa na cztery strony zamiast ośmiu: trzy formy koncertu, przy każdej skład, czas trwania, rodzaj wydarzeń i wymagania techniczne.</li>
+        <li>Rider solo i rider duetu w tej samej formie: nagłośnienie z listą wejść, plan sceny, próba, garderoba, nocleg i kontakt do managera. W riderze duetu także kontakt w sprawach technicznych.</li>
+        <li>Wszystkie trzy dokumenty do pobrania ze strony, zawsze w aktualnej wersji.</li>
+      </ul>
+
+      <h2>Domena i poczta</h2>
+      <ul>
+        <li>Przeniesienie obsługi domeny z home.pl do Cloudflare. Przed przełączeniem wyłączony DNSSEC, żeby domena nie zniknęła z sieci.</li>
+        <li>Rekordy pocztowe przeniesione ręcznie, bez przypadkowych wpisów z automatycznego importu.</li>
+        <li>Brakujący DMARC i poprawiony SPF. Nowa skrzynka koncerty@ dostała w teście dostarczalności 10 na 10 punktów.</li>
+        <li>Przekierowanie do skrzynki, z której manager korzysta na co dzień, i stopka mailowa w barwach marki.</li>
+      </ul>
+
+      <figure class="zrzut zrzut--telefon">
+        <img src={`${ZRZUTY}/telefon.jpg`} alt="Strona główna na telefonie: podpis Iwona, przycisk odtwarzania singla i przyciski Zarezerwuj koncert oraz Zobacz formaty" width="780" height="1688" loading="lazy" />
+        <figcaption>Na telefonie.</figcaption>
+      </figure>
+
+      <h2>Wyszukiwarki i asystenci AI</h2>
+      <p>Dane strukturalne artystki, albumów i koncertów, mapa strony oraz plik llms.txt z bio, dyskografią i kontaktem, z którego korzystają asystenci AI. Strona nie zapisuje cookies i nie używa narzędzi śledzących, więc nie potrzebuje banera zgody.</p>
+
+      <h2>Technologia</h2>
+      <p>Astro jako strona statyczna na Cloudflare Pages, arkusz Google jako źródło koncertów, testy automatyczne logiki koncertów i danych strukturalnych.</p>
+    </article>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Grasz koncerty i potrzebujesz strony?</h2>
+      <p>Napisz, jak dziś wyglądają Twoja strona i materiały dla organizatorów. Odpiszę, co poprawić najpierw, żeby łatwiej było Cię zarezerwować.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
+    </div>
+  </div></section>
+</LajfLayout>
+
+<style>
+  .zrzut {
+    margin: 2.2rem 0;
+  }
+  .zrzut img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+  .zrzut--telefon img {
+    max-width: 320px;
+  }
+  .zrzut figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--mut);
+  }
+</style>
