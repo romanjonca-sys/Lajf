@@ -5,6 +5,9 @@ import { describe, it } from 'node:test';
 import {
   ARTYKULY,
   ArtykulNieIstniejeError,
+  KATEGORIE,
+  artykulyWedlugKategorii,
+  pozostaleArtykuly,
   getArtykul,
   schemaArtykulu,
   sciezkaArtykulu,
@@ -111,5 +114,35 @@ describe('schemaArtykulu', () => {
     const article = (schemaArtykulu(zaktualizowany, SITE)['@graph'] as Array<Record<string, unknown>>)[0];
 
     assert.equal(article.dateModified, '2026-10-01');
+  });
+});
+
+describe('kategorie', () => {
+  it('przypisuje każdy artykuł do istniejącej kategorii', () => {
+    for (const a of ARTYKULY) assert.ok(a.kategoria in KATEGORIE, `${a.slug}: ${a.kategoria}`);
+  });
+
+  it('grupuje w spisie każdy artykuł dokładnie raz, bez pustych grup', () => {
+    const grupy = artykulyWedlugKategorii();
+    const slugi = grupy.flatMap((g) => g.artykuly.map((a) => a.slug));
+
+    assert.equal(slugi.length, ARTYKULY.length);
+    assert.equal(new Set(slugi).size, ARTYKULY.length);
+    for (const g of grupy) assert.ok(g.artykuly.length > 0, g.id);
+  });
+
+  it('w „Czytaj dalej” stawia najpierw artykuły z tej samej kategorii i pomija bieżący', () => {
+    const artykul = ARTYKULY[0];
+    const dalej = pozostaleArtykuly(artykul.slug);
+    const pierwszaInna = dalej.findIndex((a) => a.kategoria !== artykul.kategoria);
+    const ostatniaTaSama = dalej.map((a) => a.kategoria).lastIndexOf(artykul.kategoria);
+
+    assert.ok(!dalej.some((a) => a.slug === artykul.slug));
+    assert.equal(dalej.length, ARTYKULY.length - 1);
+    if (pierwszaInna !== -1) assert.ok(ostatniaTaSama < pierwszaInna);
+  });
+
+  it('rzuca ArtykulNieIstniejeError przy „Czytaj dalej” dla nieznanego adresu', () => {
+    assert.throws(() => pozostaleArtykuly('nie-ma-takiego'), ArtykulNieIstniejeError);
   });
 });

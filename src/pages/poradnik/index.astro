@@ -1,17 +1,18 @@
 ---
 import LajfLayout from '../../layouts/lajf-layout.astro';
-import { ARTYKULY, sciezkaArtykulu } from '../../lib/artykuly';
+import { ARTYKULY, artykulyWedlugKategorii, sciezkaArtykulu } from '../../lib/artykuly';
 import '../../styles/artykul.css';
 
-const title = 'Poradnik dla gabinetów, strona i pomiar zgodne z RODO | Lajf';
+const title = 'Poradnik: IT, poczta i strona w małej firmie | Lajf';
 const description =
-  'Artykuły dla gabinetów i przychodni o tym, co strona wysyła do Google i Meta, jak liczyć zapytania pacjentów i gdzie zostają kopie ich danych.';
+  'Praktyczne poradniki dla małych firm i gabinetów: domena i poczta, strona, pomiar i dane. Sprawdzone u źródła, tak żeby dało się to zrobić samemu.';
+const grupy = artykulyWedlugKategorii();
 const siteUrl = Astro.site ?? new URL('https://lajf.eu');
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
-  name: 'Poradnik dla gabinetów',
+  name: 'Poradnik Lajf',
   description,
   url: new URL('/poradnik/', siteUrl).href,
   inLanguage: 'pl-PL',
@@ -25,24 +26,29 @@ const schema = {
 ---
 <LajfLayout title={title} description={description} accent="#2bd4a8" schema={schema}>
   <header class="phero art-hero"><div class="wrap pin">
-    <span class="label">Poradnik dla gabinetów</span>
-    <h1>Strona gabinetu <span class="hl">od kuchni</span></h1>
-    <p class="lead">Piszemy o tym, co widzimy w audytach stron medycznych. Co wychodzi ze strony do Google i Meta, jak liczyć zapytania pacjentów i gdzie zostają kopie ich danych.</p>
+    <span class="label">Poradnik</span>
+    <h1>Ogarnij to <span class="hl">samodzielnie</span></h1>
+    <p class="lead">Piszemy o tym, co naprawdę robimy u klientów: domena i poczta, strona, pomiar, dane. Krok po kroku, ze źródłami, tak żeby dało się to zrobić samemu. A jeśli nie masz na to czasu, zrobimy to za Ciebie.</p>
   </div></header>
 
   <section class="art-section"><div class="wrap">
-    <ul class="art-list">
-      {ARTYKULY.map((a) => (
-        <li><a href={sciezkaArtykulu(a.slug)}><b>{a.h1} {a.h1hl}</b><span>{a.description}</span></a></li>
-      ))}
-    </ul>
+    {grupy.map((g) => (
+      <div class="art-grupa">
+        <h2 class="art-grupa__tytul">{g.kategoria.nazwa}</h2>
+        <ul class="art-list">
+          {g.artykuly.map((a) => (
+            <li><a href={sciezkaArtykulu(a.slug)}><b>{a.h1} {a.h1hl}</b><span>{a.description}</span></a></li>
+          ))}
+        </ul>
+      </div>
+    ))}
   </div></section>
 
   <section><div class="wrap">
     <div class="ctaband reveal">
-      <h2>Wolisz, żeby ktoś sprawdził to za Ciebie?</h2>
-      <p>Audyt Cyfrowy placówki pokazuje, co Twoja strona naprawdę wysyła, z dowodami, które da się sprawdzić samemu w przeglądarce.</p>
-      <a href="/audyt-placowki-medycznej/" class="btn btn-primary magnetic">Zobacz audyt placówki →</a>
+      <h2>Wolisz, żeby ktoś zrobił to za Ciebie?</h2>
+      <p>Domena, poczta, strona, dostępy i dane w jednych rękach. Napisz, co dziś działa u Ciebie źle, a odpiszę z konkretem.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Napisz do nas →</a>
     </div>
   </div></section>
 </LajfLayout>

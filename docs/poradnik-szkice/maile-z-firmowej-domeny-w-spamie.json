@@ -1,0 +1,27 @@
+{
+  "slug": "maile-z-firmowej-domeny-w-spamie",
+  "title": "Maile z firmowej domeny w spamie: SPF, DKIM, DMARC | Lajf",
+  "description": "Dlaczego maile z firmowej domeny trafiają do spamu, mimo że z Gmaila dochodzą. Co to SPF, DKIM i DMARC oraz jak sprawdzić i poprawić rekordy DNS.",
+  "h1": "Maile z firmowej domeny w spamie.",
+  "h1hl": "SPF, DKIM i DMARC krok po kroku",
+  "lead": "Klient nie dostał Twojej oferty, bo wylądowała w spamie. Zwykle winne są brakujące albo źle ustawione rekordy SPF, DKIM i DMARC. Pokazujemy, jak je sprawdzić i poprawić samodzielnie.",
+  "published": "2026-10-01",
+  "faq": [
+    {
+      "q": "Czy mała firma musi mieć DMARC?",
+      "a": "Formalnie nie. Google i Yahoo wymagają DMARC od nadawców masowych, czyli od około 5000 wiadomości dziennie. Każdy nadawca powinien mieć SPF lub DKIM. DMARC z polityką none jest jednak łatwy do dodania i pomaga w dostarczalności."
+    },
+    {
+      "q": "Czym różni się ~all od -all w SPF?",
+      "a": "Znak ~all oznacza softfail: maile z nieznanych serwerów są podejrzane, ale odbiorca nie powinien ich odrzucać wyłącznie z tego powodu. Znak -all oznacza fail, czyli jednoznaczny zakaz. Zaczynaj od ~all."
+    },
+    {
+      "q": "Ile rekordów SPF może mieć domena?",
+      "a": "Tylko jeden. Drugi rekord unieważnia oba. Dodatkowe usługi dopisuj do istniejącego rekordu przez include. Rekord może też wywołać najwyżej 10 zapytań DNS."
+    },
+    {
+      "q": "Mam SPF, DKIM i DMARC, a mail nadal trafia do spamu. Dlaczego?",
+      "a": "Na wynik wpływa też reputacja adresu IP serwera oraz treść wiadomości. W naszym teście mail z pustą treścią i samym załącznikiem dostał 7,8 na 10 zamiast 10, mimo poprawnej konfiguracji."
+    }
+  ]
+}

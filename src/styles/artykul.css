@@ -42,3 +42,5 @@
 .zrzut--telefon img{max-width:320px}
 .zrzut figcaption{margin-top:.6rem;font-size:.85rem;color:var(--mut)}
 .art-live{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:22px}
+.art-grupa + .art-grupa{margin-top:40px}
+.art-grupa__tytul{max-width:760px;margin:0 auto 14px;font-size:clamp(20px,2.6vw,26px);letter-spacing:-.02em;color:var(--txt)}

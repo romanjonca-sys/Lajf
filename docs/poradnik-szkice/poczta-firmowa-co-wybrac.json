@@ -1,0 +1,27 @@
+{
+  "slug": "poczta-firmowa-co-wybrac",
+  "title": "Poczta firmowa: Gmail, hosting czy Workspace? | Lajf",
+  "description": "Darmowy Gmail, skrzynka u hostingu, Google Workspace czy Microsoft 365. Porównanie kosztów, RODO i dostarczalności oraz prosta reguła wyboru na start.",
+  "h1": "Poczta firmowa: co wybrać",
+  "h1hl": "na start",
+  "lead": "Darmowy Gmail, skrzynka u hostingu, Google Workspace czy Microsoft 365. Uczciwe porównanie i prosta reguła wyboru dla małej firmy.",
+  "published": "2026-10-01",
+  "faq": [
+    {
+      "q": "Czy adres w domenie zawsze trafia do skrzynki odbiorcy?",
+      "a": "Nie. Trzeba ustawić rekordy SPF, DKIM i DMARC. Bez nich maile z adresu w domenie często wpadają do spamu, niezależnie od dostawcy poczty."
+    },
+    {
+      "q": "Czy Gmail nadal pobiera pocztę z innych kont przez POP?",
+      "a": "Według pomocy Google opcja Sprawdź pocztę z innych kont znika z Gmaila w przeglądarce na komputerze. Zostaje przekierowanie poczty i wysyłka przez Wyślij pocztę jako."
+    },
+    {
+      "q": "Czy darmowy Gmail nadaje się do korespondencji z klientami?",
+      "a": "Do prywatnych spraw tak. Do firmy słabo, bo konto nie ma umowy powierzenia danych, a po odejściu pracownika firma nie ma nad nim kontroli."
+    },
+    {
+      "q": "Czy Google Workspace i Microsoft 365 mają umowę powierzenia danych?",
+      "a": "Tak. Google oferuje Cloud Data Processing Addendum, a Microsoft Data Protection Addendum. Warto je zaakceptować lub sprawdzić w umowie i wpisać dostawcę do rejestru czynności."
+    }
+  ]
+}

@@ -54,7 +54,9 @@ const CHROME: Record<Locale, TekstyChrome> = {
       { label: 'Bezpieczeństwo i dane', href: '/rodo-i-cyber/' },
       { label: 'Oprogramowanie', href: '/oprogramowanie/' },
       { label: 'Realizacje', href: '/#realizacje' },
-      { label: 'O mnie', href: '/#o-mnie' },
+      // „O mnie” jest w menu mobilnym, stopce i na stronie głównej. Siódma pozycja nie mieści się przy 1280 px,
+      // a „Poradnik” jest o 1 px za długi, stąd krótsze „Porady”.
+      { label: 'Porady', href: '/poradnik/' },
     ],
     menuMobilne: [
       { label: 'Audyt cyfrowy placówki', href: '/audyt-placowki-medycznej/' },
@@ -63,6 +65,7 @@ const CHROME: Record<Locale, TekstyChrome> = {
       { label: 'Oprogramowanie', href: '/oprogramowanie/' },
       { label: 'Muzyka', href: '/muzyka/' },
       { label: 'Realizacje', href: '/#realizacje' },
+      { label: 'Poradnik', href: '/poradnik/' },
       { label: 'O mnie', href: '/#o-mnie' },
     ],
     cta: { label: 'Konsultacja', href: '/#kontakt' },
@@ -87,6 +90,7 @@ const CHROME: Record<Locale, TekstyChrome> = {
         naglowek: 'Firma',
         linki: [
           { label: 'Realizacje', href: '/#realizacje' },
+          { label: 'Poradnik', href: '/poradnik/' },
           { label: 'O mnie', href: '/#o-mnie' },
           { label: 'Kontakt', href: '/#kontakt' },
         ],

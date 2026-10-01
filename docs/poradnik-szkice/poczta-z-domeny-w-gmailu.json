@@ -1,0 +1,27 @@
+{
+  "slug": "poczta-z-domeny-w-gmailu",
+  "title": "Poczta z firmowej domeny w Gmailu: instrukcja | Lajf",
+  "description": "Jak czytać pocztę kontakt@firma.pl w Gmailu i wysyłać jako adres firmowy. Przekierowanie, SMTP, błąd certyfikatu i zmiana Google od stycznia 2027.",
+  "h1": "Poczta z firmowej domeny w Gmailu.",
+  "h1hl": "Przekierowanie i wysyłanie jako adres firmowy",
+  "lead": "Skrzynka kontakt@firma.pl u hostingu, a Ty wolisz pracować w Gmailu. Da się to ustawić w kilka minut, ale jest jeden błąd certyfikatu i jedna zmiana Google na 2027 rok, o których warto wiedzieć wcześniej.",
+  "published": "2026-10-01",
+  "faq": [
+    {
+      "q": "Dlaczego Gmail pokazuje błąd „certificate doesn't match the host”?",
+      "a": "Serwer współdzielonego hostingu ma certyfikat wystawiony na nazwę dostawcy, a nie na Twoją domenę. W ustawieniach SMTP w Gmailu podaj nazwę serwera dostawcy z panelu hostingu zamiast mail.twojadomena.pl."
+    },
+    {
+      "q": "Czy mogę pobierać pocztę do Gmaila przez POP?",
+      "a": "Google wycofuje pobieranie przez POP (Sprawdź pocztę z innych kont) i Gmailify. Nowych połączeń nie da się już dodać. Dlatego lepiej ustawić przekierowanie w panelu hostingu."
+    },
+    {
+      "q": "Czy wysyłanie jako adres firmowy przestanie działać w 2027 roku?",
+      "a": "Google zapowiada, że od stycznia 2027 roku Gmail nie będzie obsługiwać funkcji Wyślij jako dla adresów w usługach innych firm. Nie podaje wprost, czy dotyczy to domen na zwykłym hostingu, więc warto mieć plan awaryjny, na przykład program pocztowy."
+    },
+    {
+      "q": "Czy przekierowanie psuje SPF?",
+      "a": "Może, bo adres IP serwera przekazującego nie pasuje do rekordu SPF nadawcy. Podpis DKIM nadawcy przeżywa przekazanie, jeśli wiadomość nie została zmieniona. Do zaliczenia DMARC wystarcza jedno z dwóch."
+    }
+  ]
+}

@@ -5,7 +5,7 @@
  * nie rozjadą się z treścią strony.
  */
 import LajfLayout from '../layouts/lajf-layout.astro';
-import { ARTYKULY, AUTOR, getArtykul, schemaArtykulu, sciezkaArtykulu } from '../lib/artykuly';
+import { AUTOR, KATEGORIE, getArtykul, pozostaleArtykuly, schemaArtykulu, sciezkaArtykulu } from '../lib/artykuly';
 import '../styles/artykul.css';
 
 interface Props {
@@ -16,7 +16,8 @@ const { slug } = Astro.props;
 const artykul = getArtykul(slug);
 const siteUrl = Astro.site ?? new URL('https://lajf.eu');
 const schema = schemaArtykulu(artykul, siteUrl.href);
-const pozostale = ARTYKULY.filter((a) => a.slug !== slug);
+const kategoria = KATEGORIE[artykul.kategoria];
+const pozostale = pozostaleArtykuly(slug);
 const dataPublikacji = new Date(`${artykul.published}T12:00:00Z`).toLocaleDateString('pl-PL', {
   day: 'numeric',
   month: 'long',
@@ -27,7 +28,7 @@ const dataPublikacji = new Date(`${artykul.published}T12:00:00Z`).toLocaleDateSt
 <LajfLayout title={artykul.title} description={artykul.description} accent="#2bd4a8" schema={schema}>
   <header class="phero art-hero"><div class="wrap pin">
     <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/poradnik/">Poradnik</a></div>
-    <span class="label">Poradnik dla gabinetów</span>
+    <span class="label">{kategoria.etykieta}</span>
     <h1>{artykul.h1} <span class="hl">{artykul.h1hl}</span></h1>
     <p class="lead">{artykul.lead}</p>
     <p class="art-meta">{AUTOR.name} · <time datetime={artykul.published}>{dataPublikacji}</time></p>
@@ -48,9 +49,9 @@ const dataPublikacji = new Date(`${artykul.published}T12:00:00Z`).toLocaleDateSt
 
   <section><div class="wrap">
     <div class="ctaband reveal">
-      <h2>Sprawdzimy to na Twojej stronie</h2>
-      <p>W Audycie Cyfrowym placówki pokazujemy konkretne żądania wysłane z Twojej strony do Google i Meta, a nie ogólne ostrzeżenia.</p>
-      <a href="/audyt-placowki-medycznej/" class="btn btn-primary magnetic">Zobacz audyt placówki →</a>
+      <h2>{kategoria.cta.h2}</h2>
+      <p>{kategoria.cta.p}</p>
+      <a href={kategoria.cta.href} class="btn btn-primary magnetic">{kategoria.cta.label}</a>
     </div>
   </div></section>
 

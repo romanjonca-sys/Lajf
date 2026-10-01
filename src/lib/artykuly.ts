@@ -9,8 +9,50 @@ export interface ArtykulFaq {
   a: string;
 }
 
+/** Wezwanie do działania na końcu artykułu: dopasowane do tematu, nie jedno dla wszystkich. */
+export interface KategoriaCta {
+  h2: string;
+  p: string;
+  label: string;
+  href: string;
+}
+
+export interface Kategoria {
+  /** Nagłówek grupy w spisie poradnika. */
+  nazwa: string;
+  /** Etykieta nad tytułem artykułu. */
+  etykieta: string;
+  cta: KategoriaCta;
+}
+
+export const KATEGORIE = {
+  'domena-i-poczta': {
+    nazwa: 'Domena i poczta',
+    etykieta: 'Poradnik · domena i poczta',
+    cta: {
+      h2: 'Wolisz, żeby ktoś zrobił to za Ciebie?',
+      p: 'Przenosimy domeny bez przerwy w poczcie i ustawiamy SPF, DKIM i DMARC, a potem sprawdzamy wynik testem dostarczalności. Napisz, jaka to domena i gdzie jest dziś.',
+      label: 'Napisz do nas →',
+      href: '/#kontakt',
+    },
+  },
+  gabinety: {
+    nazwa: 'Gabinety: strona i pomiar',
+    etykieta: 'Poradnik dla gabinetów',
+    cta: {
+      h2: 'Sprawdzimy to na Twojej stronie',
+      p: 'W Audycie Cyfrowym placówki pokazujemy konkretne żądania wysłane z Twojej strony do Google i Meta, a nie ogólne ostrzeżenia.',
+      label: 'Zobacz audyt placówki →',
+      href: '/audyt-placowki-medycznej/',
+    },
+  },
+} as const satisfies Record<string, Kategoria>;
+
+export type KategoriaId = keyof typeof KATEGORIE;
+
 export interface Artykul {
   slug: string;
+  kategoria: KategoriaId;
   /** Znacznik <title>, razem z „| Lajf”. */
   title: string;
   description: string;
@@ -40,7 +82,124 @@ export class ArtykulNieIstniejeError extends Error {
 
 export const ARTYKULY: Artykul[] = [
   {
+    slug: 'poczta-firmowa-co-wybrac',
+    kategoria: 'domena-i-poczta',
+    title: 'Poczta firmowa: Gmail, hosting czy Workspace? | Lajf',
+    description:
+      'Darmowy Gmail, skrzynka u hostingu, Google Workspace czy Microsoft 365. Porównanie kosztów, RODO i dostarczalności oraz prosta reguła wyboru na start.',
+    h1: 'Poczta firmowa: co wybrać',
+    h1hl: 'na start',
+    lead: 'Darmowy Gmail, skrzynka u hostingu, Google Workspace czy Microsoft 365. Uczciwe porównanie i prosta reguła wyboru dla małej firmy.',
+    published: '2026-10-01',
+    faq: [
+      {
+        q: 'Czy adres w domenie zawsze trafia do skrzynki odbiorcy?',
+        a: 'Nie. Trzeba ustawić rekordy SPF, DKIM i DMARC. Bez nich maile z adresu w domenie często wpadają do spamu, niezależnie od dostawcy poczty.',
+      },
+      {
+        q: 'Czy Gmail nadal pobiera pocztę z innych kont przez POP?',
+        a: 'Według pomocy Google opcja Sprawdź pocztę z innych kont znika z Gmaila w przeglądarce na komputerze. Zostaje przekierowanie poczty. Wysyłka przez Wyślij pocztę jako działa do końca 2026 roku, od stycznia 2027 Google wycofuje ją dla adresów innych dostawców.',
+      },
+      {
+        q: 'Czy darmowy Gmail nadaje się do korespondencji z klientami?',
+        a: 'Do prywatnych spraw tak. Do firmy słabo, bo konto nie ma umowy powierzenia danych, a po odejściu pracownika firma nie ma nad nim kontroli.',
+      },
+      {
+        q: 'Czy Google Workspace i Microsoft 365 mają umowę powierzenia danych?',
+        a: 'Tak. Google oferuje Cloud Data Processing Addendum, a Microsoft Data Protection Addendum. Warto je zaakceptować lub sprawdzić w umowie i wpisać dostawcę do rejestru czynności.',
+      },
+    ],
+  },
+  {
+    slug: 'maile-z-firmowej-domeny-w-spamie',
+    kategoria: 'domena-i-poczta',
+    title: 'Maile z firmowej domeny w spamie: SPF, DKIM, DMARC | Lajf',
+    description:
+      'Dlaczego maile z firmowej domeny trafiają do spamu, mimo że z Gmaila dochodzą. Co to SPF, DKIM i DMARC oraz jak sprawdzić i poprawić rekordy DNS.',
+    h1: 'Maile z firmowej domeny w spamie.',
+    h1hl: 'SPF, DKIM i DMARC krok po kroku',
+    lead: 'Klient nie dostał Twojej oferty, bo wylądowała w spamie. Zwykle winne są brakujące albo źle ustawione rekordy SPF, DKIM i DMARC. Pokazujemy, jak je sprawdzić i poprawić samodzielnie.',
+    published: '2026-10-01',
+    faq: [
+      {
+        q: 'Czy mała firma musi mieć DMARC?',
+        a: 'Formalnie nie. Google i Yahoo wymagają DMARC od nadawców masowych, czyli od około 5000 wiadomości dziennie. Każdy nadawca powinien mieć SPF lub DKIM. DMARC z polityką none jest jednak łatwy do dodania i pomaga w dostarczalności.',
+      },
+      {
+        q: 'Czym różni się ~all od -all w SPF?',
+        a: 'Znak ~all oznacza softfail: maile z nieznanych serwerów są podejrzane, ale odbiorca nie powinien ich odrzucać wyłącznie z tego powodu. Znak -all oznacza fail, czyli jednoznaczny zakaz. Zaczynaj od ~all.',
+      },
+      {
+        q: 'Ile rekordów SPF może mieć domena?',
+        a: 'Tylko jeden. Drugi rekord unieważnia oba. Dodatkowe usługi dopisuj do istniejącego rekordu przez include. Rekord może też wywołać najwyżej 10 zapytań DNS.',
+      },
+      {
+        q: 'Mam SPF, DKIM i DMARC, a mail nadal trafia do spamu. Dlaczego?',
+        a: 'Na wynik wpływa też reputacja adresu IP serwera oraz treść wiadomości. W naszym teście mail z pustą treścią i samym załącznikiem dostał 7,8 na 10 zamiast 10, mimo poprawnej konfiguracji.',
+      },
+    ],
+  },
+  {
+    slug: 'przeniesienie-domeny-bez-utraty-poczty',
+    kategoria: 'domena-i-poczta',
+    title: 'Przeniesienie domeny (DNS) bez utraty poczty i strony | Lajf',
+    description:
+      'Jak zmienić serwery DNS domeny i nie stracić poczty: DNSSEC i rekord DS, osobna nazwa mail, pułapki certyfikatu oraz lista kontrolna przepięcia.',
+    h1: 'Przenosisz domenę do innego dostawcy.',
+    h1hl: 'Jak nie stracić poczty ani strony',
+    lead: 'Zmiana serwerów DNS trwa kilka minut w panelu. Potem okazuje się, że nie działa poczta, bo DNSSEC został włączony albo rekord MX wskazuje na domenę główną. Oto kolejność, która tego unika.',
+    published: '2026-10-01',
+    faq: [
+      {
+        q: 'Czy zmiana serwerów DNS to to samo co transfer domeny?',
+        a: 'Nie. Transfer zmienia rejestratora i wymaga kodu autoryzacyjnego (dla .pl to AuthInfo). Zmiana serwerów DNS zmienia tylko to, kto przechowuje rekordy domeny. Rejestrator zostaje ten sam i kodu nie potrzeba.',
+      },
+      {
+        q: 'Dlaczego przed zmianą serwerów DNS trzeba wyłączyć DNSSEC?',
+        a: 'W rejestrze zapisany jest rekord DS, czyli skrót klucza dotychczasowego dostawcy. Nowy dostawca ma inny klucz, więc resolvery walidujące odrzucą odpowiedzi i domena przestanie się otwierać. Najpierw usuń DS, potem zmień serwery.',
+      },
+      {
+        q: 'Jak długo czekać po wyłączeniu DNSSEC?',
+        a: 'Do wygaśnięcia czasu życia (TTL) rekordu DS. W opisanym przypadku w rejestrze .pl było to 86400 sekund, czyli 24 godziny. Wynik polecenia dig +short DS domena.pl @1.1.1.1 ma być pusty.',
+      },
+      {
+        q: 'Dlaczego poczta powinna mieć osobną nazwę, na przykład mail?',
+        a: 'Domena główna ma wskazywać na nowy hosting strony. Jeśli MX i ustawienia programów pocztowych używają samej domeny, poczta przestanie działać. Nazwa mail z rekordem A na serwer poczty i bez proxy rozdziela obie usługi.',
+      },
+    ],
+  },
+  {
+    slug: 'poczta-z-domeny-w-gmailu',
+    kategoria: 'domena-i-poczta',
+    title: 'Poczta z firmowej domeny w Gmailu: instrukcja | Lajf',
+    description:
+      'Jak czytać pocztę kontakt@firma.pl w Gmailu i wysyłać jako adres firmowy. Przekierowanie, SMTP, błąd certyfikatu i zmiana Google od stycznia 2027.',
+    h1: 'Poczta z firmowej domeny w Gmailu.',
+    h1hl: 'Przekierowanie i wysyłanie jako adres firmowy',
+    lead: 'Skrzynka kontakt@firma.pl u hostingu, a Ty wolisz pracować w Gmailu. Da się to ustawić w kilka minut, ale jest jeden błąd certyfikatu i jedna zmiana Google na 2027 rok, o których warto wiedzieć wcześniej.',
+    published: '2026-10-01',
+    faq: [
+      {
+        q: 'Dlaczego Gmail pokazuje błąd „certificate doesn\'t match the host”?',
+        a: 'Serwer współdzielonego hostingu ma certyfikat wystawiony na nazwę dostawcy, a nie na Twoją domenę. W ustawieniach SMTP w Gmailu podaj nazwę serwera dostawcy z panelu hostingu zamiast mail.twojadomena.pl.',
+      },
+      {
+        q: 'Czy mogę pobierać pocztę do Gmaila przez POP?',
+        a: 'Google wycofuje pobieranie przez POP (Sprawdź pocztę z innych kont) i Gmailify. Nowych połączeń nie da się już dodać. Dlatego lepiej ustawić przekierowanie w panelu hostingu.',
+      },
+      {
+        q: 'Czy wysyłanie jako adres firmowy przestanie działać w 2027 roku?',
+        a: 'Google zapowiada, że od stycznia 2027 roku Gmail nie będzie obsługiwać funkcji Wyślij jako dla adresów w usługach innych firm. Nie podaje wprost, czy dotyczy to domen na zwykłym hostingu, więc warto mieć plan awaryjny, na przykład program pocztowy.',
+      },
+      {
+        q: 'Czy przekierowanie psuje SPF?',
+        a: 'Może, bo adres IP serwera przekazującego nie pasuje do rekordu SPF nadawcy. Podpis DKIM nadawcy przeżywa przekazanie, jeśli wiadomość nie została zmieniona. Do zaliczenia DMARC wystarcza jedno z dwóch.',
+      },
+    ],
+  },
+  {
     slug: 'piksel-meta-na-stronie-gabinetu',
+    kategoria: 'gabinety',
     title: 'Co piksel Meta wysyła ze strony gabinetu do Facebooka | Lajf',
     description:
       'Piksel Meta potrafi wysłać z podstron gabinetu nazwy zabiegów i skróty danych pacjentów. Za co ukarano apteki w Szwecji i jak sprawdzić własną stronę.',
@@ -65,6 +224,7 @@ export const ARTYKULY: Artykul[] = [
   },
   {
     slug: 'remarketing-gabinetu-google-meta',
+    kategoria: 'gabinety',
     title: 'Remarketing gabinetu, co blokują Google i Meta | Lajf',
     description:
       'Google i Meta ograniczają reklamy spersonalizowane w branży zdrowia. Co nie działa w kampaniach gabinetu, co działa nadal i jak liczyć zapytania pacjentów.',
@@ -93,6 +253,7 @@ export const ARTYKULY: Artykul[] = [
   },
   {
     slug: 'ga4-pokazuje-mniej-wizyt-niz-search-console',
+    kategoria: 'gabinety',
     title: 'Dlaczego GA4 pokazuje mniej wizyt niż Search Console | Lajf',
     description:
       'GA4 widzi nawet połowę mniej ruchu niż Search Console. Kiedy to błąd wdrożenia, a kiedy normalny skutek banera zgód na stronie gabinetu.',
@@ -117,6 +278,7 @@ export const ARTYKULY: Artykul[] = [
   },
   {
     slug: 'formularz-kontaktowy-gabinetu-dane-pacjenta',
+    kategoria: 'gabinety',
     title: 'Dokąd trafiają dane z formularza na stronie gabinetu | Lajf',
     description:
       'Wiadomość z formularza gabinetu zostawia kopie w bazie strony, w skrzynce pocztowej i u dostawców zewnętrznych. Gdzie ich szukać i jak ograniczyć ryzyko.',
@@ -145,6 +307,20 @@ export function getArtykul(slug: string): Artykul {
   const artykul = ARTYKULY.find((a) => a.slug === slug);
   if (!artykul) throw new ArtykulNieIstniejeError(slug);
   return artykul;
+}
+
+/** Artykuły pogrupowane w kolejności kategorii z KATEGORIE, bez pustych grup. */
+export function artykulyWedlugKategorii(): Array<{ id: KategoriaId; kategoria: Kategoria; artykuly: Artykul[] }> {
+  return (Object.keys(KATEGORIE) as KategoriaId[])
+    .map((id) => ({ id, kategoria: KATEGORIE[id], artykuly: ARTYKULY.filter((a) => a.kategoria === id) }))
+    .filter((grupa) => grupa.artykuly.length > 0);
+}
+
+/** „Czytaj dalej”: najpierw artykuły z tej samej kategorii, potem pozostałe. */
+export function pozostaleArtykuly(slug: string): Artykul[] {
+  const artykul = getArtykul(slug);
+  const inne = ARTYKULY.filter((a) => a.slug !== slug);
+  return [...inne.filter((a) => a.kategoria === artykul.kategoria), ...inne.filter((a) => a.kategoria !== artykul.kategoria)];
 }
 
 /** Adres artykułu z ukośnikiem na końcu, bo taki jest kanoniczny na Cloudflare Pages. */

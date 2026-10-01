@@ -1,0 +1,81 @@
+---
+import ArtykulPoradnika from '../../components/artykul-poradnika.astro';
+---
+<ArtykulPoradnika slug="poczta-z-domeny-w-gmailu">
+  <p>Masz skrzynkę <code>kontakt@firma.pl</code> u hostingu, ale wolisz pracować w Gmailu. Na komputerze i w telefonie, w jednym oknie, z wyszukiwarką, która działa. Da się to ustawić w dwóch krokach. Hosting przekazuje wiadomości na Twój adres Gmail, a Gmail wysyła odpowiedzi jako adres firmowy.</p>
+  <p>Poniżej jest instrukcja z polskim nazewnictwem opcji. Opisuję też błąd certyfikatu, który zatrzymuje wiele osób przy wysyłaniu. Jest też ważna zmiana Google zapowiedziana na styczeń 2027. Zacznę od niej, bo wpływa na to, jak długo warto na tym rozwiązaniu polegać.</p>
+
+  <h2>Co Google zmienia w 2026 i 2027 roku</h2>
+  <p>Google wycofuje Gmailify i pobieranie poczty z innych kont przez POP (opcja „Sprawdź pocztę z innych kont”). Nowych połączeń już nie da się dodać, a istniejące mają zostać wyłączone w 2026 roku. Dokładnej daty wyłączenia Google nie podaje w źródłach, które udało mi się sprawdzić. Dlatego ten poradnik opiera odbiór poczty na przekierowaniu po stronie hostingu, a nie na pobieraniu przez Gmaila.</p>
+  <p>Druga zmiana dotyczy wysyłania. Pomoc Google informuje, że od stycznia 2027 roku Gmail nie będzie obsługiwać funkcji „Wyślij jako” dla adresów w usługach innych firm, na przykład @yahoo.com czy @outlook.com. Nie dotyczy to aliasów Google Workspace ani innych adresów Gmail. Google nie pisze wprost, czy adres z domeny na zwykłym hostingu jest objęty zmianą. Część opracowań zakłada, że tak. Traktuj więc ustawienie z drugiej części jako rozwiązanie, które może przestać działać w Gmailu od stycznia 2027. Plan awaryjny opisuję na końcu.</p>
+
+  <h2>Krok 1. Przekierowanie w panelu hostingu</h2>
+  <p>Przykład dotyczy home.pl. W innych firmach nazwy są podobne.</p>
+  <ol>
+    <li>Zaloguj się do panelu hostingu i wybierz Poczta, a potem swoją skrzynkę.</li>
+    <li>Otwórz sekcję Przekierowania i dodaj przekierowanie na swój adres Gmail.</li>
+    <li>Włącz opcję „Pozostaw kopię wiadomości”. Wtedy każda wiadomość zostaje także na serwerze. Masz kopię, gdyby coś poszło nie tak po stronie Gmaila.</li>
+    <li>Wyślij testową wiadomość na adres firmowy z innego konta. Powinna pojawić się w Gmailu w ciągu minuty lub dwóch.</li>
+  </ol>
+  <p>Przekierowanie w drugą stronę nie jest potrzebne. Wysyłanie załatwia następny krok.</p>
+
+  <h2>Krok 2. Ustaw serwer, przez który Gmail wyśle pocztę</h2>
+  <p>Przed dodaniem adresu w Gmailu ustal właściwą nazwę serwera SMTP. Od tego zależy, czy konfiguracja się uda. Opisuję to w ramce niżej, więc najpierw przeczytaj ją, a potem wróć tutaj.</p>
+
+  <div class="art-box">
+    <p><strong>Pułapka: certyfikat nie pasuje do nazwy serwera</strong></p>
+    <p>Naturalnie wpisujesz serwer <code>mail.firma.pl</code>. Gmail odpowiada wtedy błędem „TLS Negotiation failed, the certificate doesn't match the host, code: 550”. Powód jest prosty. Serwer współdzielonego hostingu ma certyfikat wystawiony na nazwę dostawcy, na przykład <code>*.hosting-home.pl</code>, a nie na Twoją domenę. Gmail sprawdza od 2020 roku, czy nazwa serwera zgadza się z certyfikatem. Przy niezgodności przerywa połączenie.</p>
+    <p>Rozwiązanie: wpisz w Gmailu nazwę serwera dostawcy, na którą certyfikat jest wystawiony, na przykład <code>serwerXXXXXXX.hosting-home.pl</code>. Login i hasło zostają Twoje.</p>
+  </div>
+
+  <h3>Jak sprawdzić właściwą nazwę serwera</h3>
+  <ol>
+    <li><strong>W panelu hostingu.</strong> Poszukaj danych do konfiguracji programu pocztowego. Podają nazwę serwera poczty wychodzącej, port i typ szyfrowania.</li>
+    <li><strong>Poleceniem <code>openssl</code>.</strong> W terminalu wpisz <code>openssl s_client -connect mail.firma.pl:465</code>. W wyniku znajdź pole <code>subject</code> (CN) i, jeśli jest, <code>subjectAltName</code>. Nazwa serwera wpisana w Gmailu musi być jedną z nich albo pasować do wzorca z gwiazdką.</li>
+    <li><strong>Poleceniem <code>curl</code>.</strong> Komenda <code>curl -v smtps://mail.firma.pl:465</code> wypisze certyfikat serwera. Szukaj linii <code>subject</code> i <code>subjectAltName</code>. Przy niezgodności curl zgłosi błąd weryfikacji.</li>
+  </ol>
+  <p>Jeśli w certyfikacie widzisz <code>*.hosting-home.pl</code>, zadziała każda nazwa z tej domeny, która wskazuje na Twój serwer. Bezpieczniej użyć tej, którą podaje panel.</p>
+
+  <h2>Krok 3. Dodaj adres firmowy w Gmailu</h2>
+  <ol>
+    <li>Otwórz Gmaila na komputerze. Kliknij koło zębate (Ustawienia), potem „Zobacz wszystkie ustawienia”.</li>
+    <li>Wejdź na kartę „Konta i importowanie”. W sekcji „Wyślij pocztę jako” kliknij „Dodaj inny adres e-mail”.</li>
+    <li>Wpisz imię i nazwisko albo nazwę firmy oraz adres <code>kontakt@firma.pl</code>. Zostaw zaznaczone „Traktuj jako alias”, po czym kliknij Dalej.</li>
+    <li>Podaj serwer SMTP z kroku 2, port <code>465</code> i połączenie SSL. Jako nazwę użytkownika wpisz pełny adres, jako hasło hasło skrzynki. Kliknij „Dodaj konto”.</li>
+    <li>Gmail wyśle kod potwierdzający na adres firmowy. Dzięki przekierowaniu z kroku 1 trafi on do Twojej skrzynki Gmail. Wpisz kod w okienku.</li>
+  </ol>
+  <p>Od tej chwili przy pisaniu wiadomości pojawia się lista „Od”, z której wybierasz adres firmowy. Działa to w przeglądarce. W aplikacji na telefonie wybór nadawcy też jest dostępny, jeśli adres został dodany w przeglądarce.</p>
+
+  <h2>Test po konfiguracji</h2>
+  <p>Zanim uznasz sprawę za zamkniętą, sprawdź trzy rzeczy. Wyślij wiadomość z adresu firmowego na inne konto i zobacz, czy w polu „Od” jest adres firmowy. Odpowiedz z tego konta i sprawdź, czy odpowiedź wróciła do Gmaila. Otwórz nagłówki wysłanej wiadomości (Gmail: trzy kropki, „Pokaż oryginał”) i sprawdź, czy przy SPF, DKIM i DMARC widnieje PASS.</p>
+  <p>W telefonie działa to tak samo. Aplikacja Gmail odbiera przekierowane wiadomości na Twoim koncie Google, więc nie trzeba dodawać drugiego konta. Przy pisaniu nowej wiadomości dotknij adresu w polu „Od” i wybierz adres firmowy.</p>
+
+  <h2>Krok 4. Ustaw adres firmowy jako domyślny</h2>
+  <p>Chcesz, żeby klienci i kontakty stopniowo przechodzili ze starego Gmaila na adres firmowy. Na karcie „Konta i importowanie” kliknij „Ustaw jako domyślny” przy adresie firmowym. Niżej zaznacz „Zawsze odpowiadaj z adresu domyślnego”. Wtedy nawet odpowiedź na wiadomość wysłaną na stary adres wyjdzie z firmowego. Po kilku miesiącach większość osób będzie pisać już bezpośrednio na <code>kontakt@firma.pl</code>.</p>
+
+  <h2>Stopka z logo</h2>
+  <p>Stopka w Gmailu przyjmuje obrazek tylko z adresu URL. Obrazek wklejony z pliku, czyli zapisany w treści jako base64, nie wyświetli się poprawnie. Wgraj logo na swoją stronę, na przykład pod <code>https://firma.pl/logo-stopka.png</code>. Potem wstaw je w Ustawieniach w sekcji Podpis przez ikonę obrazka i opcję adresu URL. Zachowaj małe wymiary. Około 200 pikseli szerokości w zupełności wystarcza.</p>
+
+  <h2>Dostarczalność: SPF, DKIM i DMARC</h2>
+  <p>Przy wysyłce przez SMTP hostingu wiadomość opuszcza serwer Twojego dostawcy. Dlatego działają wpisy SPF, DKIM i DMARC Twojej domeny, tak samo jak przy poczcie z programu pocztowego. Jeśli wiadomości od Ciebie trafiają do spamu, zacznij od tego artykułu: <a href="/poradnik/maile-z-firmowej-domeny-w-spamie/">maile z firmowej domeny w spamie</a>.</p>
+  <p>Przekierowanie przychodzących wiadomości ma swoją słabość. Gdy serwer hostingu przekazuje wiadomość dalej do Gmaila, adres IP nadawcy przestaje pasować do jego rekordu SPF. Sprawdzenie SPF po stronie odbiorcy może się więc nie udać. Ratuje to podpis DKIM nadawcy, który przeżywa przekazanie, jeśli treść i podpisane nagłówki nie zostały zmienione. Do zaliczenia DMARC wystarcza jedno z dwóch. Dla Ciebie jako odbiorcy oznacza to rzadki przypadek wiadomości od nadawców bez DKIM, które Gmail oceni surowiej. Sprawdź wtedy folder Spam.</p>
+
+  <h2>Plan awaryjny na styczeń 2027</h2>
+  <ul>
+    <li><strong>Program pocztowy.</strong> Thunderbird, Outlook albo Apple Mail wysyłają przez SMTP z dowolnego adresu, który masz. Ta droga nie zależy od decyzji Google.</li>
+    <li><strong>Poczta w panelu hostingu.</strong> Webmail dostawcy działa zawsze, jako awaryjna droga do wysyłania.</li>
+    <li><strong>Google Workspace.</strong> Płatne konto dla domeny firmowej daje pełny Gmail na adresie firmowym. Aliasy Workspace nie są objęte zmianą.</li>
+  </ul>
+  <p>Odbiór poczty przez przekierowanie zostaje bez zmian. Zmiana dotyczy wysyłania z Gmaila.</p>
+
+  <h2>Źródła</h2>
+  <ul class="art-src">
+    <li><a href="https://support.google.com/mail/answer/22370?hl=pl" rel="noopener">Pomoc Gmaila, wysyłanie e-maili z innego adresu lub aliasu (w tym zapowiedź zmiany od stycznia 2027)</a></li>
+    <li><a href="https://support.google.com/mail/answer/175365?hl=pl" rel="noopener">Pomoc Gmaila, przekazywanie e-maili do Gmaila i zmiany w Gmailify oraz POP</a></li>
+    <li><a href="https://9to5google.com/2026/01/23/gmail-gmailify-pop-shutting-down/" rel="noopener">9to5Google, wycofanie Gmailify i POP w Gmailu</a></li>
+    <li><a href="https://www.androidauthority.com/gmail-killing-third-party-send-as-feature-3694659/" rel="noopener">Android Authority, koniec „Send as” dla kont innych firm</a></li>
+    <li><a href="https://support.plesk.com/hc/en-us/articles/12387691494167-Unable-to-send-email-via-Gmail-TLS-Negotiation-failed-the-certificate-doesn-t-match-the-host" rel="noopener">Plesk, błąd „TLS Negotiation failed” w Gmailu</a></li>
+    <li><a href="https://www.valimail.com/blog/forwarded-emails-break-spf/" rel="noopener">Valimail, dlaczego przekierowanie psuje SPF i jak pomaga DKIM</a></li>
+    <li><a href="https://postmarkapp.com/blog/forwarding-emails-dmarc-failure" rel="noopener">Postmark, przekierowanie wiadomości a DMARC</a></li>
+  </ul>
+</ArtykulPoradnika>

@@ -1,0 +1,96 @@
+---
+import ArtykulPoradnika from '../../components/artykul-poradnika.astro';
+---
+<ArtykulPoradnika slug="maile-z-firmowej-domeny-w-spamie">
+  <p>Wysyłasz ofertę z adresu na własnej domenie. Klient pisze, że nic nie dostał. Sprawdza folder ze spamem i znajduje ją tam. Ten sam mail wysłany z prywatnego Gmaila dochodzi bez problemu, więc trudno zgadnąć, gdzie leży błąd.</p>
+  <p>Taką sytuację mieliśmy 30 września 2026. Manager pewnej wokalistki pisał z prywatnego Gmaila, bo maile z adresu w jej domenie trafiały do spamu. Poniżej wyjaśniam, jak skrzynka odbiorcy sprawdza nadawcę, co znaczą skróty SPF, DKIM i DMARC oraz jak samodzielnie obejrzeć rekordy swojej domeny i je poprawić.</p>
+
+  <h2>Jak skrzynka odbiorcy sprawdza, czy mail jest prawdziwy</h2>
+  <p>Adres nadawcy w mailu można wpisać dowolnie, tak jak adres zwrotny na kopercie. Dlatego skrzynki odbiorców zadają trzy pytania. Odpowiedzi szukają w rekordach DNS, czyli w publicznej książce adresowej Twojej domeny, którą edytujesz w panelu u rejestratora albo hostingodawcy.</p>
+  <ul>
+    <li><strong>SPF.</strong> To lista serwerów, które mogą wysyłać maile w imieniu Twojej domeny. Odbiorca sprawdza, czy serwer, z którego przyszedł mail, jest na liście.</li>
+    <li><strong>DKIM.</strong> To podpis cyfrowy dopisany do każdego maila. Serwer podpisuje wiadomość kluczem prywatnym, a odbiorca weryfikuje podpis kluczem publicznym opublikowanym w DNS. Dzięki temu widzi, że treść nie została zmieniona po drodze.</li>
+    <li><strong>DMARC.</strong> To instrukcja od właściciela domeny. Mówi, co zrobić z mailem, który nie przeszedł SPF ani DKIM w zgodzie z adresem nadawcy. Pozwala też dostawać raporty o takich mailach.</li>
+  </ul>
+
+  <h2>Co jest obowiązkowe, a co tylko pomaga</h2>
+  <p>Od lutego 2024 Google i Yahoo mają wspólne wymagania wobec nadawców. Trzeba je rozdzielić na dwie grupy, bo w internecie często się je miesza.</p>
+  <ul>
+    <li><strong>Każdy nadawca</strong> ma mieć skonfigurowany SPF <em>lub</em> DKIM, poprawne rekordy DNS serwera pocztowego (odwrotny rekord IP, tzw. PTR), szyfrowane połączenie TLS i utrzymywać odsetek skarg na spam poniżej 0,3 procent.</li>
+    <li><strong>Nadawcy masowi</strong> (Google liczy tak od 5000 wiadomości dziennie do skrzynek Gmail) muszą mieć SPF <em>i</em> DKIM oraz DMARC. Muszą też dać w newsletterach jednoklikowe wypisanie się z listy. Sam DMARC może mieć politykę <code>none</code>.</li>
+  </ul>
+  <p>Firma, która wysyła kilkadziesiąt maili dziennie, formalnie nie jest nadawcą masowym. DMARC nie jest więc dla niej obowiązkowy. Pomaga jednak z dwóch powodów. Odbiorcy chętniej ufają domenie, która ma pełną trójkę. Do tego DMARC pokazuje, kto jeszcze wysyła maile w Twoim imieniu.</p>
+  <p>Podobne zasady dla masowych nadawców ma od 5 maja 2025 Microsoft. Według opisów tych zasad dotyczą one domen wysyłających 5000 i więcej maili dziennie do adresów outlook.com, hotmail.com i live.com. Niespełniające wymagań wiadomości są odrzucane z błędem 550 5.7.515. Sprawdź, jak wygląda to w Twojej firmie, jeśli wysyłasz newslettery.</p>
+
+  <h2>Co znaleźliśmy w domenie wokalistki</h2>
+  <p>Domena stała na hostingu home.pl, a poczta działała na tym samym serwerze co strona. Odczytane rekordy wyglądały tak:</p>
+  <ul>
+    <li>SPF: <code>v=spf1 a mx ~all</code>. Ten zapis obejmował tylko serwer strony.</li>
+    <li>DKIM: włączony.</li>
+    <li>DMARC: brak.</li>
+  </ul>
+  <p>Był też ukryty problem. W strefie DNS istniał rekord wildcard <code>*</code>, czyli wpis odpowiadający za każdą nazwę, której nie ma osobno. Zapytanie o <code>_dmarc</code> zwracało przez to rekord SPF, a nie odpowiedź „brak rekordu". Odbiorca dostawał więc coś, co nie jest poprawnym DMARC.</p>
+  <p>Poprawka miała dwa kroki. SPF zmieniliśmy na <code>v=spf1 mx include:_spf.home.pl include:_spf1.hosting.home.pl ~all</code>. Dodaliśmy też rekord DMARC <code>v=DMARC1; p=none; adkim=r; aspf=r</code>. Test w mail-tester.com dał 10/10 z zaliczonymi SPF, DKIM i DMARC.</p>
+
+  <h2>Jak wygląda poprawny SPF</h2>
+  <p>Rekord SPF to wpis typu TXT w nazwie głównej domeny. Zaczyna się od <code>v=spf1</code>, potem idą dozwolone źródła, a na końcu reguła dla całej reszty. Najważniejsze elementy:</p>
+  <ul>
+    <li><code>mx</code> dopuszcza serwery poczty wskazane w rekordach MX domeny.</li>
+    <li><code>a</code> dopuszcza serwer, na który wskazuje sama domena, czyli zwykle serwer strony.</li>
+    <li><code>include:nazwa</code> dopuszcza wszystko, co dopuścił dostawca w swoim rekordzie SPF. Tak dodaje się hosting, newsletter albo system do faktur, który wysyła maile w Twoim imieniu.</li>
+    <li><code>~all</code> oznacza „reszta jest podejrzana" (softfail). Odbiorca nie powinien odrzucać maila wyłącznie z tego powodu.</li>
+    <li><code>-all</code> oznacza „reszta jest zabroniona" (fail). Jest surowsze i ma sens dopiero wtedy, gdy masz pewność, że lista jest kompletna.</li>
+  </ul>
+  <p>Są dwie pułapki. Domena może mieć tylko jeden rekord SPF. Jeśli dodasz drugi, obie wersje przestają działać i trzeba je scalić w jeden. Poza tym SPF pozwala na najwyżej 10 zapytań DNS. Liczą się mechanizmy <code>include</code>, <code>a</code>, <code>mx</code>, <code>ptr</code>, <code>exists</code> i <code>redirect</code>. Po przekroczeniu limitu wynik to błąd (permerror), czyli SPF nie przechodzi. Ma to znaczenie, gdy do jednego rekordu dopisujesz kolejne usługi.</p>
+
+  <h2>DKIM i DMARC w praktyce</h2>
+  <p>DKIM zwykle włącza się w panelu poczty. Serwer generuje klucz, a Ty wklejasz w DNS rekord TXT pod nazwą <code>selektor._domainkey.twojadomena.pl</code>. Klucz publiczny leży w polu <code>p=</code>. Selektor to krótka etykieta, którą wybiera dostawca, więc jej nie zgadujesz. Odczytasz ją z nagłówka <code>DKIM-Signature</code> w otrzymanym mailu, w polu <code>s=</code>.</p>
+  <p>DMARC to rekord TXT pod nazwą <code>_dmarc.twojadomena.pl</code>. Najważniejsze pola:</p>
+  <ul>
+    <li><code>p=</code> to polityka. <code>none</code> znaczy „nic nie rób, tylko zbieraj dane". <code>quarantine</code> to prośba o wrzucanie takich maili do spamu. <code>reject</code> to prośba o odrzucanie.</li>
+    <li><code>rua=mailto:adres@twojadomena.pl</code> to adres, na który odbiorcy wysyłają zbiorcze raporty. Zobaczysz w nich, kto i ile maili wysłał w imieniu Twojej domeny.</li>
+    <li><code>adkim</code> i <code>aspf</code> określają, jak dokładnie domena z podpisu i z SPF ma pasować do adresu nadawcy. Wartość <code>r</code> (relaxed) wystarcza, wartość <code>s</code> (strict) jest surowsza.</li>
+  </ul>
+  <p>Zaczynaj od <code>p=none</code>. Zaostrzaj politykę dopiero po kilku tygodniach raportów, gdy wiesz, że wszystkie Twoje źródła poczty przechodzą test. Za wcześnie ustawione <code>reject</code> może zablokować Twoje własne maile.</p>
+
+  <h2>Jak sprawdzić swoją domenę w pięć minut</h2>
+  <ol>
+    <li>Wejdź na mail-tester.com. Serwis poda jednorazowy adres.</li>
+    <li>Wyślij na ten adres zwykłego maila z firmowej skrzynki, z prawdziwym tematem i treścią.</li>
+    <li>Kliknij wynik. Dostaniesz ocenę w skali do 10 oraz osobne wyniki SPF, DKIM i DMARC.</li>
+    <li>Jeśli któryś punkt nie przechodzi, otwórz panel DNS domeny i zajrzyj do rekordów TXT. Szukaj wpisu zaczynającego się od <code>v=spf1</code>.</li>
+    <li>Popraw SPF zgodnie z opisem wyżej. Pamiętaj o jednym rekordzie i o usługach, które wysyłają w Twoim imieniu.</li>
+    <li>Dodaj rekord DMARC. Jeśli w strefie jest wildcard <code>*</code>, sprawdź po zmianie, co zwraca zapytanie o <code>_dmarc</code>.</li>
+    <li>Poczekaj na odświeżenie DNS. Bywa to od kilku minut do kilku godzin. Potem powtórz test.</li>
+  </ol>
+
+  <h2>Reputacja serwera i pusty mail</h2>
+  <p>Uwierzytelnienie to nie wszystko. Na hostingu współdzielonym serwer poczty ma adres IP wspólny z innymi klientami dostawcy. Jeśli ktoś z sąsiadów rozsyła spam, cierpi na tym reputacja całego adresu. Na to nie masz wpływu, ale możesz zapytać hostingodawcę o osobny serwer wysyłkowy albo wysyłać ważne maile przez wyspecjalizowaną usługę.</p>
+  <p>Drugi wniosek dotyczy samej wiadomości. Z tej samej domeny wysłaliśmy drugi test, tym razem z samym tematem i pustą treścią. Wynik spadł do 7,8 z 10. Filtr SpamAssassin odjął 2,3 pkt za regułę EMPTY_MESSAGE. Konfiguracja była ta sama, zmieniła się tylko treść.</p>
+
+  <div class="art-box">
+    <p><strong>Zawsze pisz kilka zdań w treści maila</strong></p>
+    <p>Nie wysyłaj samego załącznika. Wpisz powitanie, jedno zdanie o tym, co jest w pliku i podpis. Test z pustą treścią kosztował nas 2,3 pkt, choć SPF, DKIM i DMARC przechodziły bez zarzutu.</p>
+  </div>
+
+  <h2>Co zapamiętać</h2>
+  <ul>
+    <li>Sprawdź trzy rekordy: SPF, DKIM i DMARC. Każdy z nich ma osobny wynik w teście.</li>
+    <li>Miej jeden rekord SPF z każdym serwisem, który wysyła w Twoim imieniu.</li>
+    <li>Zaczynaj DMARC od <code>p=none</code> z adresem <code>rua</code>.</li>
+    <li>Po zmianie DNS wyślij nowy test i przeczytaj wynik punkt po punkcie.</li>
+    <li>Sama poprawna konfiguracja nie chroni przed spamem, jeśli treść maila wygląda podejrzanie.</li>
+  </ul>
+  <p>Opis pracy nad domeną wokalistki znajdziesz w realizacji <a href="/realizacje/strona-wokalistki-iwona-wegrowska/">strona wokalistki Iwony Węgrowskiej</a>. Jeśli wolisz, żeby ktoś zrobił to za Ciebie, napisz do nas.</p>
+
+  <h2>Źródła</h2>
+  <ul class="art-src">
+    <li><a href="https://support.google.com/a/answer/81126" rel="noopener">Google, wymagania wobec nadawców Gmaila</a></li>
+    <li><a href="https://senders.yahooinc.com/best-practices/" rel="noopener">Yahoo, wymagania i dobre praktyki dla nadawców</a></li>
+    <li><a href="https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/strengthening-email-ecosystem-outlook%E2%80%99s-new-requirements-for-high%E2%80%90volume-senders/4399730" rel="noopener">Microsoft, wymagania Outlooka dla nadawców masowych</a></li>
+    <li><a href="https://www.rfc-editor.org/rfc/rfc7208.html" rel="noopener">RFC 7208, Sender Policy Framework (SPF)</a></li>
+    <li><a href="https://www.rfc-editor.org/rfc/rfc6376.html" rel="noopener">RFC 6376, DomainKeys Identified Mail (DKIM)</a></li>
+    <li><a href="https://www.rfc-editor.org/rfc/rfc7489.html" rel="noopener">RFC 7489, DMARC</a></li>
+    <li><a href="https://www.mail-tester.com/" rel="noopener">mail-tester.com, test wiadomości</a></li>
+  </ul>
+</ArtykulPoradnika>

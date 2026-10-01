@@ -1,0 +1,117 @@
+---
+import ArtykulPoradnika from '../../components/artykul-poradnika.astro';
+---
+<ArtykulPoradnika slug="przeniesienie-domeny-bez-utraty-poczty">
+  <p>Nowa strona jest gotowa, ale domena nadal stoi u dotychczasowego dostawcy. Trzeba przepiąć serwery DNS. Zmiana zajmuje kilka minut w panelu. Kłopot pojawia się później: przestaje działać strona, znikają maile albo Gmail przestaje wysyłać w imieniu firmy.</p>
+  <p>Poniżej opisuję, czym różni się rejestrator, DNS, hosting strony i poczta, w jakiej kolejności zmieniać ustawienia i na co uważać. Opieram się na przepięciu domeny .pl z home.pl na Cloudflare z 30 września 2026. Strona trafiła na Cloudflare Pages, a poczta została na serwerze dotychczasowego dostawcy. Czasy z tego przypadku podaję jako obserwację, nie jako regułę.</p>
+
+  <h2>Cztery rzeczy, które wyglądają jak jedna</h2>
+  <p>Domena to nazwa. Za jej działanie odpowiadają cztery osobne usługi. Często kupujesz je u jednej firmy, więc trudno je odróżnić.</p>
+  <div class="art-table">
+    <table>
+      <thead><tr><th>Element</th><th>Co robi</th><th>Gdzie to zmienisz</th></tr></thead>
+      <tbody>
+        <tr><td>Rejestrator</td><td>Utrzymuje rejestrację domeny na Twoje nazwisko lub firmę. Wskazuje w rejestrze, jakie serwery DNS obsługują domenę.</td><td>Panel domen u dostawcy</td></tr>
+        <tr><td>DNS</td><td>Książka adresowa domeny. Mówi, gdzie jest strona i gdzie jest poczta.</td><td>Tam, gdzie wskazują serwery DNS (NS)</td></tr>
+        <tr><td>Hosting strony</td><td>Serwer, z którego wyświetla się strona.</td><td>Rekordy <code>A</code> lub <code>CNAME</code> w DNS</td></tr>
+        <tr><td>Poczta</td><td>Serwer, który odbiera i wysyła maile.</td><td>Rekordy <code>MX</code>, <code>SPF</code>, <code>DKIM</code> w DNS</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Przenosisz tylko DNS. Rejestrator zostaje ten sam, poczta zostaje na starym serwerze. Zmienia się wyłącznie to, kto przechowuje „książkę adresową”. Dlatego cała sztuka polega na tym, żeby w nowej książce każdy wpis był poprawny, zanim ktokolwiek zacznie z niej korzystać.</p>
+
+  <h2>Zmiana serwerów DNS to nie transfer domeny</h2>
+  <p>Te dwie operacje często się myli. Transfer domeny zmienia rejestratora, czyli firmę, która obsługuje rejestrację. Wymaga kodu autoryzacyjnego. Dla domen .pl nazywa się on AuthInfo, a NASK opisuje procedurę w trzech krokach: pobranie kodu od obecnego rejestratora, zainicjowanie transferu u nowego i potwierdzenie linkiem z wiadomości. Właściciel domeny się nie zmienia, zmienia się podmiot ją obsługujący.</p>
+  <p>Zmiana serwerów DNS nie wymaga kodu. Wpisujesz w panelu nowe adresy NS, a rejestrator przekazuje je do rejestru. Domena zostaje u dotychczasowego rejestratora. Ten artykuł dotyczy tylko tej drugiej operacji.</p>
+
+  <h2>Najpierw DNSSEC</h2>
+  <p>DNSSEC to podpisy cyfrowe w DNS. Dostawca DNS podpisuje rekordy strefy, a resolver, czyli serwer, który pyta o adres w imieniu użytkownika, sprawdza podpis. Żeby to działało, rejestr domeny przechowuje rekord <code>DS</code>. To skrót klucza, którym podpisana jest strefa. Według RFC 4034 rekord DS służy do uwierzytelnienia klucza publicznego strefy w łańcuchu zaufania.</p>
+  <p>Jeśli zmienisz serwery DNS, a rekord DS w rejestrze zostanie, nowy dostawca nie ma klucza pasującego do skrótu. Resolvery walidujące odrzucą odpowiedź. Dokumentacja Cloudflare mówi wprost: zmiana serwerów bez wyłączenia DNSSEC może sprawić, że domena stanie się niedostępna. Objawy: strona i poczta znikają u części użytkowników, u innych działają. Zależy to od tego, czy ich resolver waliduje DNSSEC.</p>
+  <p>W przepinanej domenie DNSSEC był włączony w home.pl. Kolejność była taka:</p>
+  <ol>
+    <li>Wyłączyć DNSSEC w panelu dotychczasowego dostawcy. To usuwa rekord DS z rejestru.</li>
+    <li>Sprawdzić, czy rekord zniknął: <code>dig +short DS domena.pl @1.1.1.1</code>. Wynik ma być pusty.</li>
+    <li>Dopiero potem zmienić serwery DNS.</li>
+  </ol>
+  <p>Czas rekordu DS w rejestrze .pl (TTL) wynosił tam 86400 sekund, czyli 24 godziny. Resolvery mogą trzymać starą wersję do doby. Ostrożna wersja: po usunięciu DS poczekać do 24 godzin. Cloudflare w dokumentacji migracji radzi czekać na wygaśnięcie TTL rekordu DS, a przy wyłączaniu podpisów u siebie zaleca czekać co najmniej 1,5 TTL. W tym przypadku właściciel świadomie zaryzykował wcześniejszą zmianę, bo nikt nie korzystał ze strony. Przy działającej firmie tego nie rób.</p>
+
+  <div class="art-box">
+    <p><strong>Pułapka numer jeden: DS zostaje w rejestrze.</strong></p>
+    <p>Wyłączenie DNSSEC w panelu nie znaczy jeszcze, że rekord DS zniknął z rejestru i z pamięci resolverów. Sprawdź to poleceniem <code>dig +short DS domena.pl @1.1.1.1</code>. Jeśli coś zwraca, nie zmieniaj serwerów DNS. Po przeniesieniu włączysz DNSSEC od nowa już u nowego dostawcy.</p>
+  </div>
+
+  <h2>Import rekordów przenosi też błędy</h2>
+  <p>Cloudflare potrafi zeskanować stare DNS i sam dodać rekordy. Wygodne, ale wynik trzeba przejrzeć. W tym przypadku import:</p>
+  <ul>
+    <li>przeniósł rekord wildcard <code>*</code>, który kierował każdą nieistniejącą nazwę na stary serwer,</li>
+    <li>zostawił rekord <code>A</code> domeny głównej na starym serwerze, choć strona miała wskazywać na Pages,</li>
+    <li>skierował rekordy <code>MX</code> oraz <code>SRV</code> na domenę główną.</li>
+  </ul>
+  <p>Ostatni punkt jest podstępny. Dopóki domena główna wskazuje na stary serwer, poczta działa. W chwili gdy wskażesz ją na nowy hosting strony, poczta przestaje docierać, bo MX prowadzi na serwer, który poczty nie obsługuje.</p>
+
+  <h2>Poczta na osobnej nazwie</h2>
+  <p>Poprawny układ oddziela pocztę od strony:</p>
+  <ul>
+    <li>rekord <code>A</code> o nazwie <code>mail</code> wskazuje na adres IP serwera poczty,</li>
+    <li>rekord <code>MX</code> domeny wskazuje na <code>mail.domena.pl</code>,</li>
+    <li>rekordy <code>SRV</code> (autokonfiguracja klientów pocztowych) wskazują na <code>mail.domena.pl</code>,</li>
+    <li>rekordy <code>SPF</code>, <code>DKIM</code> i <code>DMARC</code> zostają przepisane bez zmian.</li>
+  </ul>
+  <p>Rekordy pocztowe ustaw bez proxy (szara chmurka w Cloudflare). Dokumentacja Cloudflare mówi, że rekordów <code>MX</code> i <code>SRV</code> nie da się proxować, a ruch SMTP na porcie 25 domyślnie nie przechodzi przez proxy. Pomarańczowa chmurka na nazwie <code>mail</code> oznaczałaby, że IMAP i SMTP nie dotrą do serwera.</p>
+  <p>Nie polegaj na automatycznym skanie. Zrobiono więc plik strefy w formacie BIND, sprawdzono go ręcznie i zaimportowano. Plik strefy to zwykły tekst z listą rekordów. Można go przejrzeć w całości, zanim cokolwiek zmieni się w internecie.</p>
+
+  <h2>Ile to trwa</h2>
+  <p>Kilka obserwacji z tego przypadku:</p>
+  <ul>
+    <li>rejestr .pl pokazał nowe serwery NS po około 10 minutach od zmiany w panelu,</li>
+    <li>Cloudflare aktywował strefę od razu,</li>
+    <li>domena na Pages odpowiadała po około 3 minutach.</li>
+  </ul>
+  <p>To jedna próba, a nie gwarancja. Cloudflare w dokumentacji zapowiada do 24 godzin na aktywację po zmianie serwerów. Planuj przepięcie tak, jakby miało trwać dobę. Jeśli skończy się w kwadrans, tym lepiej.</p>
+
+  <h2>Dwie pułapki z poczty</h2>
+  <p><strong>Klienci pocztowi ustawieni na <code>domena.pl</code>.</strong> Wiele programów ma jako serwer poczty samą domenę, a nie <code>mail.domena.pl</code>. Działa, dopóki domena główna wskazuje na serwer poczty. Gdy wskażesz ją na nowy hosting strony, IMAP i SMTP przestają się łączyć. Przed przepięciem zmień serwer w telefonach i programach na <code>mail.domena.pl</code>. Sprawdź też skrzynki, które ktoś skonfigurował lata temu.</p>
+  <p><strong>Certyfikat współdzielonego hostingu.</strong> Serwer poczty współdzielonego hostingu ma certyfikat na nazwę dostawcy, na przykład <code>*.hosting-home.pl</code>, a nie na Twoją domenę. Gmail w funkcji „Wyślij jako” odrzuca wtedy <code>mail.twojadomena.pl</code> z błędem „certificate doesn't match the host”. Trzeba wpisać nazwę serwera podaną przez dostawcę poczty. Dokumentacja Google wymaga, żeby serwer zewnętrznego dostawcy miał poprawny certyfikat, więc to zachowanie jest zamierzone.</p>
+
+  <h2>Jak sprawdzić, że wszystko działa</h2>
+  <p>Nie wystarczy otworzyć stronę w przeglądarce. Przeglądarka i Twój router mogą jeszcze trzymać starą odpowiedź. Pytaj konkretnych resolverów, które nie mają Twojej historii, na przykład <code>1.1.1.1</code> i <code>8.8.8.8</code>.</p>
+  <ul>
+    <li><code>dig NS domena.pl @1.1.1.1 +short</code> pokazuje, czy resolver widzi nowe serwery nazw.</li>
+    <li><code>dig MX domena.pl @8.8.8.8 +short</code> powinno zwrócić <code>mail.domena.pl</code>.</li>
+    <li><code>dig A mail.domena.pl +short</code> powinno zwrócić adres IP serwera poczty, a nie adres Cloudflare.</li>
+  </ul>
+  <p>Jeśli adres nazwy <code>mail</code> wygląda na adres Cloudflare, rekord ma włączone proxy. Zmień go na „tylko DNS”. Potem wyślij mail z zewnętrznej skrzynki na firmowy adres i odwrotnie. Dopiero odpowiedź w obu kierunkach zamyka temat.</p>
+
+  <h2>Lista kontrolna przepięcia</h2>
+  <ol>
+    <li>Zrób kopię obecnych rekordów DNS: zrzut ekranu albo plik strefy z panelu dotychczasowego dostawcy.</li>
+    <li>Zapisz, jakie serwery poczty i strony są w użyciu. Ustal, czy poczta ma zostać na starym serwerze.</li>
+    <li>Dodaj domenę w nowym DNS i przejrzyj każdy zaimportowany rekord. Usuń wildcard, jeśli nie jest potrzebny.</li>
+    <li>Utwórz nazwę <code>mail</code> z adresem IP serwera poczty, bez proxy. Skieruj <code>MX</code> i <code>SRV</code> na tę nazwę.</li>
+    <li>Sprawdź, czy skopiowałeś <code>SPF</code>, <code>DKIM</code>, <code>DMARC</code> i rekordy weryfikacyjne usług zewnętrznych.</li>
+    <li>Zmień w programach pocztowych serwer z <code>domena.pl</code> na <code>mail.domena.pl</code>.</li>
+    <li>Wyłącz DNSSEC u dotychczasowego dostawcy.</li>
+    <li>Sprawdź <code>dig +short DS domena.pl @1.1.1.1</code>. Poczekaj, aż wynik będzie pusty, a przy działającej firmie do 24 godzin.</li>
+    <li>Wpisz nowe serwery NS w panelu rejestratora.</li>
+    <li>Sprawdź <code>dig NS domena.pl +short</code>, potem <code>dig MX domena.pl +short</code>. Wyślij testowy mail w obie strony.</li>
+    <li>Dopiero teraz wskaż domenę główną na nową stronę.</li>
+    <li>Włącz DNSSEC u nowego dostawcy i wpisz podany rekord DS u rejestratora.</li>
+  </ol>
+
+  <h2>Czego nie robić po przepięciu</h2>
+  <p>Nie wypowiadaj starego hostingu, dopóki działa na nim poczta. Dla wielu firm hosting to pakiet ze stroną i pocztą razem. Po przeniesieniu strony pakiet wygląda na zbędny, ale rezygnacja z niego kasuje skrzynki. Najpierw przenieś pocztę (albo zdecyduj, że zostaje), potem kończ umowę.</p>
+  <p>Strona, przy której robiliśmy takie przepięcie, to <a href="https://lajf.eu/realizacje/strona-wokalistki-iwona-wegrowska/">strona wokalistki</a> na Cloudflare Pages.</p>
+
+  <h2>Źródła</h2>
+  <ul class="art-src">
+    <li><a href="https://developers.cloudflare.com/dns/dnssec/" rel="noopener">Cloudflare, DNSSEC: przegląd i zmiana serwerów przy aktywnym DS</a></li>
+    <li><a href="https://developers.cloudflare.com/dns/dnssec/troubleshooting/" rel="noopener">Cloudflare, DNSSEC: rozwiązywanie problemów i wygaśnięcie TTL rekordu DS</a></li>
+    <li><a href="https://developers.cloudflare.com/dns/zone-setups/full-setup/setup/" rel="noopener">Cloudflare, pełna konfiguracja DNS i zmiana serwerów nazw</a></li>
+    <li><a href="https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/" rel="noopener">Cloudflare, rekordy DNS, TTL i proxy</a></li>
+    <li><a href="https://developers.cloudflare.com/dns/manage-dns-records/how-to/email-records/" rel="noopener">Cloudflare, rekordy poczty e-mail</a></li>
+    <li><a href="https://datatracker.ietf.org/doc/html/rfc4034" rel="noopener">RFC 4034, rekordy DNSSEC (DS, DNSKEY)</a></li>
+    <li><a href="https://www.dns.pl/transfer_domeny_pl" rel="noopener">NASK, transfer obsługi domeny .pl i kod AuthInfo</a></li>
+    <li><a href="https://www.dns.pl/en/dnssec" rel="noopener">NASK, DNSSEC w domenie .pl</a></li>
+    <li><a href="https://support.google.com/mail/answer/22370" rel="noopener">Google, wysyłanie poczty z innego adresu w Gmailu</a></li>
+  </ul>
+</ArtykulPoradnika>

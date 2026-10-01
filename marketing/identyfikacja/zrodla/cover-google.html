@@ -1,0 +1,39 @@
+<!doctype html>
+<!-- Zdjęcie w tle (cover) wizytówki Google Lajf, 16:9. Hasło z parametru ?h=c (wybrane przez Romana 01.10.2026) albo a|b. Render: puppeteer 2048x1152. -->
+<html><head><meta charset="utf-8"><style>
+@font-face{font-family:'Space Grotesk';src:url('space-grotesk-latin-wght-normal.woff2') format('woff2');font-weight:300 700}
+@font-face{font-family:'Space Grotesk';src:url('/node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-ext-wght-normal.woff2') format('woff2');font-weight:300 700;unicode-range:U+0100-024F}
+@font-face{font-family:'Inter';src:url('inter-latin-wght-normal.woff2') format('woff2');font-weight:100 900}
+@font-face{font-family:'Inter';src:url('/node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2') format('woff2');font-weight:100 900;unicode-range:U+0100-024F}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:2048px;height:1152px;overflow:hidden;background:#070510;font-family:'Inter',sans-serif;color:#f4f1fb}
+.p1,.p2{position:absolute;border-radius:50%;filter:blur(120px)}
+.p1{width:1100px;height:900px;right:-250px;top:-300px;background:rgba(91,140,255,.35)}
+.p2{width:900px;height:700px;left:-300px;bottom:-350px;background:rgba(43,212,168,.18)}
+.tresc{position:absolute;inset:0;padding:150px 170px;display:flex;flex-direction:column;justify-content:center}
+.logo{display:flex;align-items:baseline;font-family:'Space Grotesk';font-weight:700;font-size:120px;letter-spacing:-.035em;line-height:1}
+.logo svg{height:60px;margin-left:14px;transform:translateY(27px)}
+h1{font-family:'Space Grotesk';font-weight:700;font-size:112px;line-height:1.05;letter-spacing:-.03em;margin-top:90px;max-width:1650px}
+h1 span{color:#5b8cff}
+.pod{margin-top:46px;font-size:40px;color:#c9c4dd;max-width:1500px;line-height:1.4}
+.stopka{position:absolute;left:170px;right:170px;bottom:110px;display:flex;justify-content:space-between;font-size:34px;color:#a8a2bd}
+.stopka b{color:#f4f1fb;font-weight:600}
+</style></head><body>
+<div class="p1"></div><div class="p2"></div>
+<div class="tresc">
+  <div class="logo">Lajf<svg viewBox="45 36 50 33"><path d="M50 54 h5 l5 -14 l6.5 25 l5 -11 h4" fill="none" stroke="#5b8cff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="86" cy="54" r="5.5" fill="#5b8cff"/></svg></div>
+  <h1 id="h"></h1>
+  <p class="pod" id="pod"></p>
+</div>
+<div class="stopka"><b>lajf.eu</b><span>Strony · RODO · Bezpieczeństwo · Automatyzacje</span></div>
+<script>
+const H = {
+  c: ['Twoja firma nie potrzebuje więcej narzędzi. <span>Potrzebuje kogoś, kto za nie odpowiada.</span>', 'Strona, dane i bezpieczeństwo Twojej firmy pod jedną opieką.'],
+  a: ['Technologia, która po prostu działa. <span>A gdy przestaje, ktoś odbiera telefon.</span>', 'Strona, dane i bezpieczeństwo Twojej firmy w jednych rękach.'],
+  b: ['Cyfrowa opieka nad <span>Twoją firmą.</span>', 'Strona, dane i bezpieczeństwo Twojej firmy pod jedną opieką.'],
+};
+const k = new URLSearchParams(location.search).get('h') || 'c';
+document.getElementById('h').innerHTML = H[k][0];
+document.getElementById('pod').textContent = H[k][1];
+</script>
+</body></html>

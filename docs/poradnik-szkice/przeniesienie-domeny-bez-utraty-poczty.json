@@ -1,0 +1,27 @@
+{
+  "slug": "przeniesienie-domeny-bez-utraty-poczty",
+  "title": "Przeniesienie domeny (DNS) bez utraty poczty i strony | Lajf",
+  "description": "Jak zmienić serwery DNS domeny i nie stracić poczty: DNSSEC i rekord DS, osobna nazwa mail, pułapki certyfikatu oraz lista kontrolna przepięcia.",
+  "h1": "Przenosisz domenę do innego dostawcy.",
+  "h1hl": "Jak nie stracić poczty ani strony",
+  "lead": "Zmiana serwerów DNS trwa kilka minut w panelu. Potem okazuje się, że nie działa poczta, bo DNSSEC został włączony albo rekord MX wskazuje na domenę główną. Oto kolejność, która tego unika.",
+  "published": "2026-10-01",
+  "faq": [
+    {
+      "q": "Czy zmiana serwerów DNS to to samo co transfer domeny?",
+      "a": "Nie. Transfer zmienia rejestratora i wymaga kodu autoryzacyjnego (dla .pl to AuthInfo). Zmiana serwerów DNS zmienia tylko to, kto przechowuje rekordy domeny. Rejestrator zostaje ten sam i kodu nie potrzeba."
+    },
+    {
+      "q": "Dlaczego przed zmianą serwerów DNS trzeba wyłączyć DNSSEC?",
+      "a": "W rejestrze zapisany jest rekord DS, czyli skrót klucza dotychczasowego dostawcy. Nowy dostawca ma inny klucz, więc resolvery walidujące odrzucą odpowiedzi i domena przestanie się otwierać. Najpierw usuń DS, potem zmień serwery."
+    },
+    {
+      "q": "Jak długo czekać po wyłączeniu DNSSEC?",
+      "a": "Do wygaśnięcia czasu życia (TTL) rekordu DS. W opisanym przypadku w rejestrze .pl było to 86400 sekund, czyli 24 godziny. Wynik polecenia dig +short DS domena.pl @1.1.1.1 ma być pusty."
+    },
+    {
+      "q": "Dlaczego poczta powinna mieć osobną nazwę, na przykład mail?",
+      "a": "Domena główna ma wskazywać na nowy hosting strony. Jeśli MX i ustawienia programów pocztowych używają samej domeny, poczta przestanie działać. Nazwa mail z rekordem A na serwer poczty i bez proxy rozdziela obie usługi."
+    }
+  ]
+}

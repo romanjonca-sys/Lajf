@@ -1,0 +1,100 @@
+---
+import ArtykulPoradnika from '../../components/artykul-poradnika.astro';
+---
+<ArtykulPoradnika slug="poczta-firmowa-co-wybrac">
+  <p>Zakładasz firmę albo od lat piszesz do klientów z darmowego Gmaila. Adres w rodzaju imie.nazwisko@gmail.com działa, ale budzi pytanie, czy to na pewno firma. Adres w Twojej domenie wygląda poważniej. Tylko skąd go wziąć: z pakietu u hostingu, z Google Workspace czy z Microsoft 365?</p>
+  <p>Porównuję cztery rozwiązania według kryteriów, które naprawdę mają znaczenie: wizerunek, dostarczalność, kontrola nad kontami, kopie, RODO, koszt i wygoda na telefonie. Na końcu jest prosta reguła wyboru. Lajf nie sprzedaje żadnego z tych rozwiązań, więc nie mam interesu w żadnym z nich.</p>
+
+  <h2>Cztery rozwiązania w skrócie</h2>
+  <ul>
+    <li><strong>Darmowy Gmail.</strong> Konto prywatne Google, adres @gmail.com. Zero kosztów, zero kontroli firmy nad kontem.</li>
+    <li><strong>Skrzynka u hostingu.</strong> Adres w Twojej domenie, zwykle w cenie hostingu lub domeny. Jakość zależy od dostawcy.</li>
+    <li><strong>Google Workspace.</strong> Płatny Gmail firmowy z adresem w Twojej domenie, panelem administratora i umową dla firm.</li>
+    <li><strong>Microsoft 365.</strong> Płatna poczta Outlook z adresem w Twojej domenie, panelem administratora i pakietem Office.</li>
+  </ul>
+
+  <h2>Wizerunek: domena robi różnicę</h2>
+  <p>Adres @gmail.com nie mówi klientowi nic o firmie. Adres w domenie mówi, że firma ma stronę i że ktoś nad nią panuje. Dla usług, w których klient powierza Ci pieniądze albo dane, ma to realne znaczenie. Wszystkie trzy opcje z własną domeną załatwiają wizerunek tak samo. Nie ma tu różnicy między hostingiem a Workspace.</p>
+
+  <h2>Dostarczalność: adres w domenie sam nie gwarantuje inboxa</h2>
+  <p>Ten punkt najczęściej się pomija. Pracowaliśmy z managerem artystki, który pisał z darmowego Gmaila, bo maile z adresu w domenie trafiały do spamu. Skrzynka była u popularnego polskiego hostingu. Winny nie był hosting. Zabrakło rekordu DMARC, a rekord SPF był zbyt wąski. Po poprawce test dostarczalności pokazał 10/10.</p>
+  <p>Wniosek jest prosty. Każda skrzynka w domenie wymaga trzech rekordów DNS: SPF, DKIM i DMARC. Google i Microsoft prowadzą przez to kreatorem w panelu. U hostingu często trzeba to ustawić samemu, a konfiguracja bywa nietypowa. Tania skrzynka może działać dobrze, ale ma też ograniczenia:</p>
+  <ul>
+    <li>wspólny adres IP z innymi klientami hostingu, więc cudze wysyłki mogą obniżyć reputację nadawcy,</li>
+    <li>słabszy filtr spamu na wejściu,</li>
+    <li>mniej wygodna aplikacja i poczta w przeglądarce.</li>
+  </ul>
+  <p>Google Workspace i Microsoft 365 mają własną infrastrukturę o dobrej reputacji. Rekordy DNS nadal trzeba jednak dodać, także tam.</p>
+
+  <h2>Kontrola nad kontami i odejście pracownika</h2>
+  <p>Przy darmowym Gmailu konto należy do człowieka, a nie do firmy. Kiedy współpracownik odchodzi, zabiera ze sobą skrzynkę razem z historią korespondencji z klientami. Nie możesz zresetować mu hasła ani przejąć maili.</p>
+  <p>W Workspace i Microsoft 365 konta należą do firmy. Administrator może zawiesić konto, zresetować hasło, przekierować pocztę do następcy i przenieść dane. Może też wymusić weryfikację dwuetapową dla wszystkich. Skrzynka u hostingu też daje Ci kontrolę, bo hasła zmieniasz w panelu hostingu. Nie ma tam jednak zaawansowanych zasad bezpieczeństwa ani przenoszenia danych.</p>
+
+  <h2>Kopie i archiwum</h2>
+  <p>Darmowy Gmail trzyma pocztę w chmurze Google, ale kopią zajmujesz się sam. Skrzynka u hostingu zwykle ma kopie wykonywane przez dostawcę, o zakresie i czasie przechowywania decyduje regulamin. Warto to sprawdzić przed założeniem konta. W Workspace i Microsoft 365 administrator ma narzędzia do eksportu i archiwizacji. Zaawansowane archiwum, na przykład na potrzeby postępowania, jest w droższych planach.</p>
+  <p>Jedno zalecenie działa przy każdym wariancie: raz na jakiś czas sprawdź, czy da się odtworzyć skasowaną wiadomość. Wielu właścicieli firm odkrywa, że kopii nie ma, dopiero gdy jest im potrzebna. Ustal też, kto poza Tobą zna hasło administratora. Zapisz to w bezpiecznym miejscu.</p>
+
+  <h2>RODO: umowa powierzenia i miejsce danych</h2>
+  <p>Jeśli w mailach są dane osobowe klientów, a zwykle są, korzystasz z usługi dostawcy poczty jako procesora danych. Potrzebujesz więc umowy powierzenia przetwarzania.</p>
+  <ul>
+    <li><strong>Darmowy Gmail.</strong> To konto konsumenckie, bez umowy dla firm. Do korespondencji firmowej z danymi klientów jest to słabe rozwiązanie.</li>
+    <li><strong>Google Workspace.</strong> Google oferuje Cloud Data Processing Addendum, czyli aneks o przetwarzaniu danych. Jeśli Twoja umowa go nie zawiera, administrator akceptuje go w konsoli.</li>
+    <li><strong>Microsoft 365.</strong> Warunki przetwarzania zawiera Data Protection Addendum, będący częścią umowy z Microsoftem.</li>
+    <li><strong>Hosting.</strong> Zapisy o powierzeniu powinny być w regulaminie lub osobnej umowie. Sprawdź je i sprawdź, gdzie stoją serwery.</li>
+  </ul>
+  <p>Pamiętaj, że sama umowa nie kończy tematu. Zapisz dostawcę poczty w rejestrze czynności przetwarzania i sprawdź, czy dane opuszczają Europejski Obszar Gospodarczy. Obaj więksi dostawcy oferują wybór regionu danych w niektórych planach, ale wymaga to konfiguracji.</p>
+
+  <h2>Koszt na osobę</h2>
+  <p>Ceny poniżej sprawdziłem na oficjalnych stronach dostawców we wrześniu 2026 roku. Zmieniają się często, więc przed zakupem zajrzyj na stronę.</p>
+  <ul>
+    <li><strong>Darmowy Gmail:</strong> 0 zł.</li>
+    <li><strong>Skrzynka u hostingu:</strong> zwykle wliczona w pakiet, bez osobnej opłaty za użytkownika. Ceny różnią się między dostawcami, więc ich nie podaję.</li>
+    <li><strong>Google Workspace:</strong> plan Starter kosztuje według strony Google 31,50 zł miesięcznie za użytkownika bez podatku, przy płatności miesięcznej. Google pokazuje też cenę promocyjną 25,20 zł dla nowych klientów. Plan roczny jest tańszy o około 16 procent.</li>
+    <li><strong>Microsoft 365:</strong> plan Business Basic według strony Microsoftu kosztuje od około 6 euro miesięcznie za użytkownika bez VAT przy zobowiązaniu rocznym. Płatność miesięczna jest droższa. Microsoft podaje cenę w euro.</li>
+  </ul>
+  <p>Przy zespole pięcioosobowym różnica między hostingiem a Workspace to około 160 zł netto miesięcznie. To realny koszt, ale porównaj go z ceną jednego zgubionego zlecenia.</p>
+
+  <h2>Telefon i wygoda</h2>
+  <p>Aplikacje Gmail i Outlook są dopracowane i dobrze działają na telefonie. Workspace i Microsoft 365 działają w nich bez konfiguracji. Skrzynka u hostingu działa przez IMAP w dowolnej aplikacji, ale wygoda jest niższa: wolniejsze powiadomienia i słabsza wyszukiwarka.</p>
+
+  <h2>Zmiana w Gmailu: koniec pobierania poczty przez POP</h2>
+  <p>Popularne rozwiązanie dla tanich skrzynek to Gmail jako wygodna nakładka na pocztę z hostingu. Trzeba tu uważać. Według pomocy Google opcja „Sprawdź pocztę z innych kont” (pobieranie przez POP) przestaje być dostępna w Gmailu w przeglądarce na komputerze. Gmailify, czyli filtr spamu Google dla obcych skrzynek, po pierwszym kwartale 2026 roku nie obsługuje już nowych użytkowników, a istniejący mogą z niego korzystać do stycznia 2027. W aplikacjach mobilnych nadal można dodawać obce konta przez IMAP.</p>
+  <p>Zostają dwa sposoby. Pierwszy to przekierowanie poczty ze skrzynki hostingowej na adres Gmail. Drugi to wysyłanie z Gmaila w imieniu Twojej domeny przez „Wyślij pocztę jako”. Tak rozwiązaliśmy przypadek managera artystki: skrzynka w domenie u hostingu, przekierowanie do Gmaila i wysyłka z Gmaila. Wymaga to poprawnych rekordów SPF, DKIM i DMARC dla domeny. Gmail wysyła wtedy przez serwer hostingu, więc to jego adres musi być w SPF. Ten układ ma jednak termin ważności. Według pomocy Google od stycznia 2027 Gmail przestanie obsługiwać „Wyślij pocztę jako” dla adresów u innych dostawców. Google podaje przykłady Yahoo i Outlooka, ale należy założyć, że dotyczy to też adresów w domenie na hostingu. Szczegóły i plan awaryjny opisuję w artykule o <a href="/poradnik/poczta-z-domeny-w-gmailu/">poczcie z domeny w Gmailu</a>.</p>
+
+  <h2>Porównanie</h2>
+  <div class="art-table">
+    <table>
+      <thead>
+        <tr><th>Kryterium</th><th>Darmowy Gmail</th><th>Skrzynka u hostingu</th><th>Google Workspace</th><th>Microsoft 365</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Wizerunek</td><td>Słaby</td><td>Dobry</td><td>Dobry</td><td>Dobry</td></tr>
+        <tr><td>Dostarczalność</td><td>Wysoka</td><td>Zależy od dostawcy i rekordów</td><td>Wysoka po ustawieniu rekordów</td><td>Wysoka po ustawieniu rekordów</td></tr>
+        <tr><td>Kontrola nad kontami</td><td>Brak</td><td>Podstawowa</td><td>Pełna</td><td>Pełna</td></tr>
+        <tr><td>Kopie i archiwum</td><td>Na Twojej głowie</td><td>Wg regulaminu hostingu</td><td>Narzędzia administratora</td><td>Narzędzia administratora</td></tr>
+        <tr><td>Umowa powierzenia</td><td>Brak</td><td>Sprawdź u dostawcy</td><td>Aneks Google</td><td>Aneks Microsoftu</td></tr>
+        <tr><td>Koszt na osobę</td><td>0 zł</td><td>W pakiecie</td><td>Od 31,50 zł netto</td><td>Od około 6 euro netto</td></tr>
+        <tr><td>Telefon</td><td>Bardzo dobrze</td><td>Przeciętnie</td><td>Bardzo dobrze</td><td>Bardzo dobrze</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="art-box">
+    <p><strong>Prosta reguła wyboru</strong></p>
+    <ul>
+      <li><strong>Jedna osoba, mało maili, brak danych wrażliwych.</strong> Skrzynka w domenie u hostingu. Ustaw SPF, DKIM i DMARC oraz sprawdź test dostarczalności. Pracuj w aplikacji pocztowej na telefonie i komputerze albo do końca 2026 roku w Gmailu przez przekierowanie i „Wyślij pocztę jako”. Od 2027 roku ten drugi sposób może przestać działać.</li>
+      <li><strong>Zespół od dwóch osób.</strong> Google Workspace albo Microsoft 365. Wybierz ten, w którym Twoi ludzie już pracują: Workspace, jeśli żyjesz w Dokumentach i Dysku Google, Microsoft 365, jeśli w Wordzie i Excelu.</li>
+      <li><strong>Dane wrażliwe, na przykład zdrowotne.</strong> Workspace lub Microsoft 365 z podpisaną umową powierzenia, weryfikacją dwuetapową i ustawionym regionem danych. Darmowy Gmail odpada.</li>
+      <li><strong>Darmowy Gmail</strong> zostaw tylko na prywatne sprawy albo tymczasowo na starcie, bez danych klientów.</li>
+    </ul>
+  </div>
+
+  <h2>Źródła</h2>
+  <ul class="art-src">
+    <li><a href="https://workspace.google.com/intl/pl/pricing.html" rel="noopener">Google Workspace, cennik dla Polski (sprawdzone we wrześniu 2026)</a></li>
+    <li><a href="https://www.microsoft.com/pl-pl/microsoft-365/business/microsoft-365-business-basic" rel="noopener">Microsoft 365 Business Basic, strona produktu (cena według dostawcy, wrzesień 2026)</a></li>
+    <li><a href="https://support.google.com/mail/answer/16604719" rel="noopener">Pomoc Gmail, zmiany w Gmailify i POP</a></li>
+    <li><a href="https://cloud.google.com/terms/data-processing-addendum" rel="noopener">Google, Cloud Data Processing Addendum</a></li>
+    <li><a href="https://www.microsoft.com/licensing/docs/view/Microsoft-Products-and-Services-Data-Protection-Addendum-DPA" rel="noopener">Microsoft, Products and Services Data Protection Addendum</a></li>
+  </ul>
+</ArtykulPoradnika>

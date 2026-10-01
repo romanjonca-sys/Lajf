@@ -1,0 +1,26 @@
+<!doctype html>
+<!-- Zdjęcie w tle wizytówki Google Lajf, wersja do Map: nazwa + czym się zajmujemy, wyśrodkowane (Google przycina boki).
+     Roman 01.10.2026: w Mapach zapamiętuje się nazwę i usługi, nie zdanie. Render 2048x1152. -->
+<html><head><meta charset="utf-8"><style>
+@font-face{font-family:'Space Grotesk';src:url('space-grotesk-latin-wght-normal.woff2') format('woff2');font-weight:300 700}
+@font-face{font-family:'Space Grotesk';src:url('/node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-ext-wght-normal.woff2') format('woff2');font-weight:300 700;unicode-range:U+0100-024F}
+@font-face{font-family:'Inter';src:url('inter-latin-wght-normal.woff2') format('woff2');font-weight:100 900}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:2048px;height:1152px;overflow:hidden;background:#070510;color:#f4f1fb;font-family:'Inter',sans-serif}
+.p1,.p2{position:absolute;border-radius:50%;filter:blur(130px)}
+.p1{width:1100px;height:900px;right:-200px;top:-320px;background:rgba(91,140,255,.32)}
+.p2{width:900px;height:700px;left:-250px;bottom:-380px;background:rgba(43,212,168,.16)}
+.tresc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.logo{display:flex;align-items:baseline;font-family:'Space Grotesk';font-weight:700;font-size:220px;letter-spacing:-.035em;line-height:1}
+.logo svg{height:108px;margin-left:26px;transform:translateY(49px)}
+.uslugi{margin-top:60px;font-family:'Space Grotesk';font-weight:600;font-size:78px;line-height:1.18;letter-spacing:-.01em}
+.uslugi div::before{content:'';display:inline-block;width:18px;height:18px;border-radius:50%;background:#5b8cff;margin-right:26px;vertical-align:middle}
+.www{margin-top:48px;font-size:46px;color:#a8a2bd;letter-spacing:.04em}
+</style></head><body>
+<div class="p1"></div><div class="p2"></div>
+<div class="tresc">
+  <div class="logo">Lajf<svg viewBox="45 36 50 33"><path d="M50 54 h5 l5 -14 l6.5 25 l5 -11 h4" fill="none" stroke="#5b8cff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="86" cy="54" r="5.5" fill="#5b8cff"/></svg></div>
+  <div class="uslugi"><div>Strony internetowe</div><div>Branding</div><div>Automatyzacje</div></div>
+  <div class="www">lajf.eu</div>
+</div>
+</body></html>
