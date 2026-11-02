@@ -1,0 +1,159 @@
+---
+/**
+ * Oferta dla biur rachunkowych: strona biura, dokumentacja AML i RODO oraz panel AML i umów w domenie biura.
+ * Cena jak w pierwszym wdrożeniu (umowa z 09.2026): 999 zł netto/mc przez 12 mc, potem 99 albo 348 zł netto/mc.
+ * Osobna strona, bo segment-landing ma wpisany abonament 399 zł dla stron WWW.
+ */
+import LajfLayout from '../layouts/lajf-layout.astro';
+
+const title = 'Biuro rachunkowe online: AML, umowy i strona | Lajf';
+const description =
+  'Dla biur obsługujących JDG: procedura AML i ocena ryzyka, karty klientów i umowy w panelu pod adresem biura oraz strona. 999 zł netto/mc, bez opłaty na start.';
+
+const BOLE = [
+  { b: 'Kontrola AML pyta o dowody, nie o deklaracje', s: 'Procedura z art. 50, ocena ryzyka biura, karta każdego klienta, szkolenia. Kontrolę może przeprowadzić GIIF albo naczelnik urzędu celno-skarbowego.' },
+  { b: 'Karty klientów w Excelu i segregatorze', s: 'Trudno odpowiedzieć na proste pytanie: którym klientom w tym miesiącu mija termin przeglądu oceny ryzyka?' },
+  { b: 'Umowa z klientem krąży mailem', s: 'Skan, podpis, odesłanie, potem szukanie, która wersja jest ostatnia. A umowa powinna iść dopiero po ocenie ryzyka klienta.' },
+  { b: 'Strona, która nie przyprowadza klientów', s: 'Klient szuka biura w Google, porównuje i chce od razu zobaczyć zakres i cenę. Wizytówka sprzed lat tego nie robi.' },
+];
+
+const ZAKRES = [
+  { b: 'Dokumentacja AML biura', s: 'Procedura wewnętrzna według art. 50 ustawy, ocena ryzyka biura (art. 27), wzór karty klienta, rejestry. Przygotowana pod to, jak pracujesz, a nie z jednego wzoru dla wszystkich.' },
+  { b: 'Dokumentacja RODO biura', s: 'Rejestry, upoważnienia, wzór umowy powierzenia dla Twoich klientów. Dokumenty zostają Twoją własnością.' },
+  { b: 'Panel AML i umów w Twojej domenie', s: 'Kartoteka klientów z danymi pobieranymi po NIP, karta AML z oceną ryzyka i historią wersji, umowa wysyłana klientowi dopiero po pozytywnej decyzji, akceptacja pod linkiem z kodem jednorazowym. Logowanie dwuetapowe, baza i dokumenty w UE, codzienne kopie.' },
+  { b: 'Strona biura w Twojej marce', s: 'Projekt i treść, zakres usług i cennik, formularz kontaktowy, firmowa poczta i wizytówka Google. Obsługa przez cały rok: do godziny miesięcznie na wsparcie i zmiany treści, awarie poza limitem.' },
+];
+
+const FAQ = [
+  {
+    q: 'Czy przepisy AML dotyczą mojego biura?',
+    a: 'Najpewniej tak. Ustawa o przeciwdziałaniu praniu pieniędzy wymienia jako instytucje obowiązane podmioty usługowo prowadzące księgi rachunkowe (art. 2 ust. 1 pkt 17) oraz przedsiębiorców, których podstawową działalnością jest sporządzanie deklaracji, prowadzenie ksiąg podatkowych lub udzielanie porad, opinii albo wyjaśnień z zakresu prawa podatkowego lub celnego, jeśli nie są inną instytucją obowiązaną (art. 2 ust. 1 pkt 15a). Wielkość biura nie ma znaczenia.',
+  },
+  {
+    q: 'Dlaczego tylko dla biur obsługujących JDG?',
+    a: 'Panel prowadzi karty AML dla jednoosobowych działalności. Przy spółkach dochodzą beneficjenci rzeczywiści, Centralny Rejestr Beneficjentów Rzeczywistych i KRS. Ten zakres przygotujemy jako osobny etap, gdy biuro go potrzebuje. Wolimy powiedzieć to od razu niż obiecać coś, czego dziś panel nie robi.',
+  },
+  {
+    q: 'Czy panel zdejmuje ze mnie obowiązki AML?',
+    a: 'Nie. Obowiązki instytucji obowiązanej zostają przy biurze, bo to biuro ocenia klienta i podejmuje decyzję. Po stronie biura zostają też sprawdzanie klientów w bazach sankcyjnych, monitorowanie transakcji i zawiadomienia do Generalnego Inspektora. Panel wymaga pozytywnej decyzji AML przed wysłaniem umowy, przypomina o przeglądach kart i przechowuje dowody akceptacji. Dokumentacja daje gotowe zasady postępowania.',
+  },
+  {
+    q: 'Gdzie są dane moich klientów?',
+    a: 'Każde biuro ma osobną instancję panelu z własną bazą danych. Baza panelu, dokumenty i kopie zapasowe są przechowywane w Unii Europejskiej. Maile z linkami do umów wysyła dostawca poczty Resend, który przetwarza je w USA. Jest wpisany do umowy powierzenia. Dostęp do panelu wymaga hasła i kodu z aplikacji. Po zakończeniu współpracy dostajesz eksport wszystkich umów, kart i wykazów.',
+  },
+  {
+    q: 'Ile to kosztuje i co dzieje się po roku?',
+    a: '999 zł netto miesięcznie przez 12 miesięcy, bez opłaty na start. Raty pokrywają wykonanie strony, dokumentacji i panelu oraz bieżącą obsługę. Łącznie 11 988 zł netto za pierwszy rok. Wcześniejsze rozwiązanie umowy z przyczyn po stronie biura nie zwalnia z pozostałych rat. Po roku wybierasz: sama strona za 99 zł netto miesięcznie, strona z panelem za 348 zł netto miesięcznie albo zakończenie współpracy z eksportem danych.',
+  },
+  {
+    q: 'Mam już klientów w arkuszu. Trzeba wpisywać ich od nowa?',
+    a: 'Nie. Panel importuje klientów z pliku CSV, także zapisanego w Excelu, pokazuje błędy przed zapisem i pomija duplikaty.',
+  },
+];
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? new URL('https://lajf.eu')).href;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Service',
+      name: 'Biuro rachunkowe online: dokumentacja AML i RODO, panel AML i umów, strona biura',
+      serviceType: 'Dokumentacja AML i oprogramowanie dla biur rachunkowych',
+      description,
+      provider: { '@type': 'Organization', name: 'Lajf', url: 'https://lajf.eu/' },
+      areaServed: 'PL',
+      audience: { '@type': 'BusinessAudience', name: 'Biura rachunkowe obsługujące jednoosobowe działalności gospodarcze' },
+      offers: {
+        '@type': 'Offer',
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price: 999,
+          priceCurrency: 'PLN',
+          unitCode: 'MON',
+          valueAddedTaxIncluded: false,
+        },
+        availability: 'https://schema.org/InStock',
+        url: canonical,
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: FAQ.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
+    },
+  ],
+};
+
+const ICONS = [
+  'M12 3l7 4v5c0 4.5-3 8.5-7 9-4-.5-7-4.5-7-9V7z',
+  'M4 4h16v16H4zM4 9h16M9 9v11',
+  'M4 20l4-1L19 8l-3-3L5 16zM14.5 6.5l3 3',
+  'M3 17l5-6 4 4 6-8 3 4M3 21h18',
+];
+---
+<LajfLayout title={title} description={description} accent="#5b8cff" schema={schema}>
+  <header class="phero"><div class="wrap pin">
+    <span class="label">Dla biur rachunkowych</span>
+    <h1>Biuro rachunkowe online, <span class="hl">z AML i umowami w jednym panelu</span></h1>
+    <p class="lead">Przygotowujemy dokumentację AML i RODO Twojego biura, stawiamy panel, w którym prowadzisz karty klientów i wysyłasz umowy. Do tego stronę z ofertą, cennikiem i formularzem kontaktowym. Wszystko pod Twoją marką i w Twojej domenie.</p>
+    <div class="center"><a href="/#kontakt" class="btn btn-primary magnetic">Umów rozmowę →</a></div>
+  </div></header>
+
+  <section><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Znasz to?</span><h2>Gdzie biura tracą czas i spokój</h2><p>Obowiązki AML dotyczą biura niezależnie od jego wielkości. Problem zwykle nie leży w braku chęci, tylko w papierach rozrzuconych po segregatorach i skrzynkach.</p></div>
+    <ul class="feats">
+      {BOLE.map((p, i) => (
+        <li class="reveal"><span class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d={ICONS[i % ICONS.length]} /></svg></span><div class="ftxt"><b>{p.b}</b><span>{p.s}</span></div></li>
+      ))}
+    </ul>
+  </div></section>
+
+  <section id="oferta"><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Oferta</span><h2>Wszystko w jednym abonamencie <span class="hl">999 zł netto/mc</span></h2><p>Bez opłaty na start. Przez 12 miesięcy raty pokrywają wykonanie i obsługę. Dla biur obsługujących jednoosobowe działalności gospodarcze.</p></div>
+    <div class="abon">
+      <div class="reveal">
+        <h3 style="font-size:20px;font-weight:700">Co robimy za biuro</h3>
+        <p style="color:var(--mut);margin-top:10px">Cztery części, które działają razem: dokumenty opisują, jak postępować, a panel wymaga decyzji AML przed umową i przypomina o przeglądach kart.</p>
+        <ul class="feats" style="margin-top:22px">
+          {ZAKRES.map((w) => (
+            <li class="reveal" style="grid-column:1/-1"><div class="ftxt"><b>{w.b}</b><span>{w.s}</span></div></li>
+          ))}
+        </ul>
+      </div>
+      <div class="tier featured reveal"><div class="tag">Bez opłaty na start</div><h3>Biuro online</h3><div class="price">999 zł <small>netto / mc</small></div><div class="ab">12 miesięcy · potem 99 lub 348 zł netto / mc</div><ul>
+        <li>Procedura AML, ocena ryzyka biura i karta klienta</li>
+        <li>Dokumentacja RODO i wzór umowy powierzenia dla klientów</li>
+        <li>Panel AML i umów pod adresem Twojego biura</li>
+        <li>Import klientów z CSV, także wyeksportowanego z Excela</li>
+        <li>Strona biura z cennikiem i formularzem</li>
+        <li>Firmowa poczta i wizytówka Google</li>
+        <li>Obsługa przez rok: do godziny miesięcznie na wsparcie i zmiany</li>
+      </ul><a href="/#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a></div>
+    </div>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Poradnik</span><h2>Najpierw chcesz sprawdzić przepisy?</h2><p>Rozpisaliśmy, co musi zawierać procedura AML biura rachunkowego według art. 50 ustawy, z numerem przepisu przy każdym punkcie. <a href="/poradnik/procedura-aml-biuro-rachunkowe/" style="color:var(--acc)">Przeczytaj artykuł →</a></p></div>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="sec-head reveal"><span class="label">Pytania</span><h2>Najczęstsze pytania</h2></div>
+    <div class="lfaq reveal">
+      {FAQ.map((item) => (
+        <details><summary>{item.q}</summary><p>{item.a}</p></details>
+      ))}
+    </div>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Porozmawiajmy o Twoim biurze</h2>
+      <p>Napisz, ilu klientów obsługujesz i jak dziś prowadzisz karty AML i umowy. Odpiszę z konkretem w 24 godziny, bez zobowiązań.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Napisz do nas →</a>
+    </div>
+  </div></section>
+</LajfLayout>

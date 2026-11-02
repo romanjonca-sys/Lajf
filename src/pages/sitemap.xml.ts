@@ -20,6 +20,7 @@ const PAGES = [
   'strona-www-dla-firmy-sprzatajacej',
   'strona-www-dla-mechanika',
   'strona-www-dla-elektryka',
+  'biura-rachunkowe',
   'rodo-i-cyber',
   'oprogramowanie',
   'realizacje/rejestr-badania-klinicznego',

@@ -41,6 +41,11 @@ const USLUGI: Odnosnik[] = [
     opis: 'strona dla praktyki lekarskiej i gabinetu zgodna z RODO, w tym samym abonamencie.',
   },
   {
+    nazwa: 'Biuro rachunkowe online',
+    sciezka: '/biura-rachunkowe/',
+    opis: 'dla biur obsługujących JDG: dokumentacja AML i RODO, panel AML i umów w domenie biura oraz strona. 999 zł netto miesięcznie przez 12 miesięcy.',
+  },
+  {
     nazwa: 'Bezpieczeństwo i dane',
     sciezka: '/rodo-i-cyber/',
     opis: 'strony dla gabinetów i przychodni projektowane pod ochronę danych pacjentów.',
@@ -93,7 +98,7 @@ export function zbudujLlmsTxt(dane: DaneLlmsTxt): string {
     '',
     ...USLUGI.map((u) => linia(siteHref, u)),
     '',
-    '## Poradnik dla gabinetów',
+    '## Poradnik dla firm i gabinetów',
     '',
     linia(siteHref, { nazwa: 'Spis poradnika', sciezka: '/poradnik/', opis: 'wszystkie artykuły.' }),
     ...poradnik,

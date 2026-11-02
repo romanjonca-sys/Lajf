@@ -46,6 +46,16 @@ export const KATEGORIE = {
       href: '/audyt-placowki-medycznej/',
     },
   },
+  'biura-rachunkowe': {
+    nazwa: 'Biura rachunkowe: AML i dokumenty',
+    etykieta: 'Poradnik dla biur rachunkowych',
+    cta: {
+      h2: 'Procedura, karta klienta i umowy w jednym miejscu',
+      p: 'Przygotowujemy dokumentację AML i RODO biura, a karty klientów i umowy prowadzisz w panelu pod adresem Twojego biura.',
+      label: 'Zobacz ofertę dla biur →',
+      href: '/biura-rachunkowe/',
+    },
+  },
 } as const satisfies Record<string, Kategoria>;
 
 export type KategoriaId = keyof typeof KATEGORIE;
@@ -298,6 +308,35 @@ export const ARTYKULY: Artykul[] = [
       {
         q: 'Czy przy formularzu musi być klauzula informacyjna?',
         a: 'Tak. Osoba wysyłająca formularz musi dostać informacje z art. 13 RODO, czyli kto jest administratorem, w jakim celu przetwarza dane i jak długo je przechowuje. Wystarczy krótka informacja przy przycisku z odnośnikiem do polityki prywatności.',
+      },
+    ],
+  },
+  {
+    slug: 'procedura-aml-biuro-rachunkowe',
+    kategoria: 'biura-rachunkowe',
+    title: 'Procedura AML w biurze rachunkowym: co musi zawierać | Lajf',
+    description:
+      'Co musi zawierać procedura AML biura rachunkowego według art. 50 ustawy AML. Ocena ryzyka, szkolenia, kontrola i kary, z odwołaniem do przepisów.',
+    h1: 'Procedura AML w biurze rachunkowym.',
+    h1hl: 'Co musi zawierać',
+    lead: 'Jedenaście elementów z art. 50 ustawy, dokumenty, bez których procedura nie wystarczy. Do tego to, o co zapyta kontrola. Każdy punkt z numerem przepisu.',
+    published: '2026-11-02',
+    faq: [
+      {
+        q: 'Czy jednoosobowe biuro rachunkowe musi mieć procedurę AML?',
+        a: 'Tak. Art. 50 dotyczy każdej instytucji obowiązanej, także jednoosobowej. W takim biurze zadania kadry kierowniczej i osoby odpowiedzialnej za AML wykonuje właściciel (art. 9 ustawy).',
+      },
+      {
+        q: 'Jak często trzeba aktualizować procedurę AML?',
+        a: 'Procedura podlega bieżącej weryfikacji i aktualizacji w razie potrzeby (art. 50 ust. 1). Ocenę ryzyka biura aktualizuje się w razie potrzeby, nie rzadziej niż co 2 lata (art. 27 ust. 3).',
+      },
+      {
+        q: 'Czy wystarczy wzór procedury AML z internetu?',
+        a: 'Sam wzór nie. Art. 50 ust. 2 wymaga, żeby procedura uwzględniała charakter, rodzaj i rozmiar działalności biura. Wzór trzeba dopasować do tego, jakich klientów obsługujesz i jak z nimi pracujesz.',
+      },
+      {
+        q: 'Kto może skontrolować biuro rachunkowe z AML?',
+        a: 'Generalny Inspektor Informacji Finansowej (art. 130 ust. 1) oraz naczelnik urzędu celno-skarbowego wobec instytucji, które kontroluje (art. 130 ust. 2 pkt 1 lit. e).',
       },
     ],
   },
