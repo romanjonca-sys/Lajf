@@ -275,7 +275,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 30px;color:var(--mut);fon
 .foot-col a,.foot-col span{display:block;color:var(--mut);font-size:14px;margin-bottom:9px;transition:color .2s}
 .foot-col a:hover{color:var(--txt)}
 .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--mut)}
-@media(prefers-reduced-motion:reduce){*{animation:none!important}html{transition:--acc .9s ease}}
+/* Przy ograniczonych animacjach treść, która normalnie wjeżdża animacją, musi być widoczna od razu (inaczej nagłówek zostaje pusty). */
+@media(prefers-reduced-motion:reduce){*{animation:none!important}html{transition:--acc .9s ease}.stagger,.reveal{opacity:1!important;transform:none!important}}
 
 /* zmienne pod komponent cookie silnika — przefarbowane na ciemny motyw */
 :root{--color-bg:rgba(20,16,30,.97);--color-border:var(--line);--color-text:var(--txt);--color-text-soft:var(--mut);--color-on-brand:#070510;--radius:16px;--radius-sm:11px;--leading-body:1.6;--gradient-brand:var(--acc);--shadow-lg:0 24px 70px -24px rgba(0,0,0,.7);--shadow-brand:0 14px 40px -16px color-mix(in srgb,var(--acc) 80%,transparent)}

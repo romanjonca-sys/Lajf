@@ -118,6 +118,8 @@ const jsonLd = {
 {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 <ClientRouter />
   <AnalyticsGa4 />
+  <!-- Bez JavaScriptu (zablokowany albo wyłączony) treść odsłaniana skryptem musi być widoczna. -->
+  <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
 <div class="bg"></div>
