@@ -320,7 +320,7 @@ export const ARTYKULY: Artykul[] = [
     h1: 'Procedura AML w biurze rachunkowym.',
     h1hl: 'Co musi zawierać',
     lead: 'Jedenaście elementów z art. 50 ustawy, dokumenty, bez których procedura nie wystarczy. Do tego to, o co zapyta kontrola. Każdy punkt z numerem przepisu.',
-    published: '2026-11-02',
+    published: '2026-11-03',
     faq: [
       {
         q: 'Czy jednoosobowe biuro rachunkowe musi mieć procedurę AML?',

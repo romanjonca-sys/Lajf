@@ -21,6 +21,7 @@ const ZAKRES = [
   { b: 'Dokumentacja AML biura', s: 'Procedura wewnętrzna według art. 50 ustawy, ocena ryzyka biura (art. 27), wzór karty klienta, rejestry. Przygotowana pod to, jak pracujesz, a nie z jednego wzoru dla wszystkich.' },
   { b: 'Dokumentacja RODO biura', s: 'Rejestry, upoważnienia, wzór umowy powierzenia dla Twoich klientów. Dokumenty zostają Twoją własnością.' },
   { b: 'Panel AML i umów w Twojej domenie', s: 'Kartoteka klientów z danymi pobieranymi po NIP, karta AML z oceną ryzyka i historią wersji, umowa wysyłana klientowi dopiero po pozytywnej decyzji, akceptacja pod linkiem z kodem jednorazowym. Logowanie dwuetapowe, baza i dokumenty w UE, codzienne kopie.' },
+  { b: 'Umowy z klientami podpisywane w systemie', s: 'Umowę wysyłasz klientowi linkiem z panelu. Klient czyta ją i akceptuje online kodem jednorazowym z maila, a obie strony dostają egzemplarz w PDF. Dziennik zapisuje, kiedy umowę wysłano, otwarto i zaakceptowano. Po akceptacji panel pobiera znacznik czasu RFC 3161 (obecnie niekwalifikowany). Potwierdza on, że skrót zaakceptowanej treści istniał w oznaczonym czasie, więc zgodność treści można sprawdzić niezależnie od nas. Gdy dostawca znacznika jest chwilowo niedostępny, akceptacja pozostaje ważna bez niego. W przygotowaniu: kwalifikowany znacznik czasu i kwalifikowany podpis elektroniczny.' },
   { b: 'Strona biura w Twojej marce', s: 'Projekt i treść, zakres usług i cennik, formularz kontaktowy, firmowa poczta i wizytówka Google. Obsługa przez cały rok: do godziny miesięcznie na wsparcie i zmiany treści, awarie poza limitem.' },
 ];
 
@@ -36,6 +37,10 @@ const FAQ = [
   {
     q: 'Czy panel zdejmuje ze mnie obowiązki AML?',
     a: 'Nie. Obowiązki instytucji obowiązanej zostają przy biurze, bo to biuro ocenia klienta i podejmuje decyzję. Po stronie biura zostają też sprawdzanie klientów w bazach sankcyjnych, monitorowanie transakcji i zawiadomienia do Generalnego Inspektora. Panel wymaga pozytywnej decyzji AML przed wysłaniem umowy, przypomina o przeglądach kart i przechowuje dowody akceptacji. Dokumentacja daje gotowe zasady postępowania.',
+  },
+  {
+    q: 'Czy umowa zaakceptowana online jest ważna?',
+    a: 'Tak. Akceptacja online to forma dokumentowa: oświadczenie w postaci dokumentu, które pozwala ustalić, kto je złożył (art. 77² Kodeksu cywilnego). Przepisy nie wymagają szczególnej formy dla samej umowy o usługi księgowe. Wyjątek dotyczy klientów prowadzących księgi rachunkowe: ustawa o rachunkowości mówi, że przyjęcie przez biuro odpowiedzialności za powierzone obowiązki powinno być stwierdzone w formie pisemnej (art. 4 ust. 5), choć bez rygoru nieważności. Formie pisemnej odpowiada podpis kwalifikowany (art. 78¹ § 2 Kodeksu cywilnego), który jest w przygotowaniu. Do tego czasu takie oświadczenie podpisuje się poza panelem.',
   },
   {
     q: 'Gdzie są dane moich klientów?',
@@ -128,6 +133,7 @@ const ICONS = [
         <li>Procedura AML, ocena ryzyka biura i karta klienta</li>
         <li>Dokumentacja RODO i wzór umowy powierzenia dla klientów</li>
         <li>Panel AML i umów pod adresem Twojego biura</li>
+        <li>Umowy akceptowane online, z dziennikiem zdarzeń i znacznikiem czasu</li>
         <li>Import klientów z CSV, także wyeksportowanego z Excela</li>
         <li>Strona biura z cennikiem i formularzem</li>
         <li>Firmowa poczta i wizytówka Google</li>
