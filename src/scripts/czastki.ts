@@ -7,11 +7,11 @@
 
 const KOLORY = ['#5B8CFF', '#A8A2BD', '#2A2540', '#FF7A59', '#2FB3A3', '#5B8CFF'];
 const ATRAMENT = [15, 12, 26];
-const LITERA_MS = 60; // odstęp między startem kolejnych liter
-const NASYP_MS = 420; // jak długo sypie się jedna litera
-const SPADEK_MS = 420; // czas spadku kulki z wylotu strumienia
+const LITERA_MS = 38; // odstęp między startem kolejnych liter
+const NASYP_MS = 300; // jak długo sypie się jedna litera
+const SPADEK_MS = 320; // czas spadku kulki z wylotu strumienia
 const WYSOKOSC_STRUMIENIA = 1.4; // wylot strumienia nad literą, w wysokościach litery
-const GASNIECIE_MS = 450;
+const GASNIECIE_MS = 300;
 const MAKS_KULEK = 4200;
 
 interface Kulka { x0: number; y0: number; x: number; y: number; r: number; kolor: number[]; start: number }
