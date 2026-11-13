@@ -43,7 +43,7 @@ const zl = litery('zł');
   </div>
 </div>
   <div class="scena" id="scena" data-sceny={JSON.stringify(SCENY)} aria-label="Strony klientów Lajf na ekranach laptopów" role="img">
-    {SCENY.map((sc, i) => <img class:list={['scena-foto', { on: i === 0 }]} src={sc.foto} alt="" width="2400" height="1600" style={`object-position:${sc.kadr[0] * 100}% ${sc.kadr[1] * 100}%`} loading={i === 0 ? 'eager' : 'lazy'} />)}
+    {SCENY.map((sc, i) => <img class:list={['scena-foto', { on: i === 0 }]} src={sc.foto} alt="" width="2400" height="1600" style={`object-position:${sc.kadr[0] * 100}% ${sc.kadr[1] * 100}%`} loading="eager" />)}
     <div class="ekran" id="ekran"><img id="ekran-img" src={pierwsza.strony[0].obraz} alt="" /></div>
     <div class="scena-podpis mono"><b></b><span id="scena-adres">{pierwsza.strony[0].nazwa} · {pierwsza.strony[0].adres}</span></div>
   </div>

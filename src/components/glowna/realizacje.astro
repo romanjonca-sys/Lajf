@@ -11,7 +11,7 @@ const zewnetrzny = (href: string): boolean => href.startsWith('http');
   </div>
   <div class="story" id="story">
     <div class="story-media" aria-hidden="true">
-      {HISTORIE.map((h, i) => <img class:list={['story-img', { on: i === 0 }]} src={h.obraz} alt="" width="1920" height="1280" loading={i === 0 ? 'lazy' : 'lazy'} style={`object-position:${h.kadr}`} />)}
+      {HISTORIE.map((h, i) => <img class:list={['story-img', { on: i === 0 }]} src={h.obraz} alt="" width="1920" height="1280" loading="lazy" style={`object-position:${h.kadr}`} />)}
     </div>
     <div class="story-txt">
       <div class="story-tabs" role="tablist" aria-label="Realizacje">

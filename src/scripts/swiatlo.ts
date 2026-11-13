@@ -112,7 +112,8 @@ function wlacz(kontener: HTMLElement, sila: number): void {
 /** Strona główna: pełna siła za przeglądarką; podstrony: delikatniej za nagłówkiem. */
 export function swiatlo(): void {
   const glowna = document.querySelector<HTMLElement>('.hero');
-  if (glowna) wlacz(glowna, 1);
+  // gdy pod nagłówkiem stoi zdjęcie (#scena), shader i tak byłby zasłonięty
+  if (glowna && !document.getElementById('scena')) wlacz(glowna, 1);
   const podstrona = document.querySelector<HTMLElement>('.phero');
   if (podstrona) wlacz(podstrona, 0.75);
 }

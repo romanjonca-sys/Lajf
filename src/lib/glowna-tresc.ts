@@ -51,9 +51,9 @@ export const REALIZACJE: Realizacja[] = [
 export interface Historia {
   nazwa: string;
   etykieta: string;
-  /** Ostry zrzut strony klienta (komputer), w /public. */
+  /** Zdjęcie z Unsplash (licencja Unsplash) z wklejoną stroną klienta na laptopie, w /public. */
   obraz: string;
-  /** object-position zrzutu. */
+  /** Gdzie na zdjęciu stoi laptop, żeby na telefonie kadr go nie uciął (object-position). */
   kadr: string;
   tytul: string;
   opis: string;
@@ -63,9 +63,8 @@ export interface Historia {
 
 /** Sekcja realizacji w stylu „historie”: zdjęcie przy laptopie + zakładki 01–03 + rozwijane pytania. */
 export const HISTORIE: Historia[] = [
-  { nazwa: 'Zdalna Księgowa', etykieta: 'Biuro rachunkowe', obraz: '/images/glowna/hero/zdalnaksiegowa-pc.webp', kadr: '50% 0%', tytul: 'Biuro, które klient rozumie w 5 sekund', opis: 'Pakiety i ceny od razu na pierwszym ekranie. Strona mówi o księgowości językiem właściciela firmy, a nie przepisów.', href: '/realizacje/zdalna-ksiegowa/', pytania: [['Czy moja branża też się nada?', 'Tak. Robimy strony dla firm usługowych: od biur rachunkowych po serwisy i gabinety. Treści piszemy po rozmowie z Tobą.'], ['Ile trwa zrobienie strony?', 'Zwykle 2–4 tygodnie od rozmowy do strony gotowej do Twojej akceptacji.']] },
-  { nazwa: 'Pan Kolektor', etykieta: 'Serwis kolektorów', obraz: '/images/glowna/hero/pankolektor-pc.webp', kadr: '50% 0%', tytul: 'Telefon zawsze pod ręką', opis: 'Numer w nagłówku i na pierwszym ekranie, certyfikaty i realizacje z dachów. Klient z awarią dzwoni od razu, zamiast szukać dalej.', href: '/realizacje/pan-kolektor/', pytania: [['A jeśli nie mam dobrych zdjęć?', 'Wystarczą zdjęcia z telefonu z Twoich realizacji. Wybieramy najlepsze i dbamy, żeby wyglądały porządnie.'], ['Kto pisze treści?', 'My. Po 15-minutowej rozmowie piszemy teksty o Twoich usługach, a Ty tylko je akceptujesz.']] },
-  { nazwa: 'R&L Serwis', etykieta: 'Firma sprzątająca', obraz: '/images/glowna/hero/rlserwis-pc.webp', kadr: '50% 0%', tytul: 'Dwie ścieżki zamiast jednego formularza', opis: 'Osobna wycena dla domu i dla biura, opinie klientów na pierwszym ekranie. Każdy od razu trafia tam, gdzie powinien.', href: '/realizacje/rl-serwis/', pytania: [['Czy zapytania przyjdą na telefon?', 'Tak. Każde zgłoszenie z formularza od razu trafia na Twój telefon i maila.'], ['A jak będę chciał coś zmienić?', 'Piszesz maila. Do godziny zmian w miesiącu jest w cenie.']] },
+  { nazwa: 'Pan Kolektor', etykieta: 'Serwis kolektorów', obraz: '/images/glowna/historie/pankolektor.webp', kadr: '82% 50%', tytul: 'Telefon zawsze pod ręką', opis: 'Numer w nagłówku i na pierwszym ekranie, certyfikaty i realizacje z dachów. Klient z awarią dzwoni od razu, zamiast szukać dalej.', href: '/realizacje/pan-kolektor/', pytania: [['A jeśli nie mam dobrych zdjęć?', 'Wystarczą zdjęcia z telefonu z Twoich realizacji. Wybieramy najlepsze i dbamy, żeby wyglądały porządnie.'], ['Kto pisze treści?', 'My. Po 15-minutowej rozmowie piszemy teksty o Twoich usługach, a Ty tylko je akceptujesz.']] },
+  { nazwa: 'R&L Serwis', etykieta: 'Firma sprzątająca', obraz: '/images/glowna/historie/rlserwis.webp', kadr: '30% 50%', tytul: 'Dwie ścieżki zamiast jednego formularza', opis: 'Osobna wycena dla domu i dla biura, opinie klientów na pierwszym ekranie. Każdy od razu trafia tam, gdzie powinien.', href: '/realizacje/rl-serwis/', pytania: [['Czy zapytania przyjdą na telefon?', 'Tak. Każde zgłoszenie z formularza od razu trafia na Twój telefon i maila.'], ['A jak będę chciał coś zmienić?', 'Piszesz maila. Do godziny zmian w miesiącu jest w cenie.']] },
 ];
 
 /** Trzy duże kadry na górze sekcji: firmy usługowe na tym samym planie co klient. */
@@ -127,21 +126,16 @@ export interface Scena {
 const ROZMIAR_ZDJECIA: [number, number] = [2400, 1600];
 export { ROZMIAR_ZDJECIA };
 
-/** Pierwszy ekran: zdjęcia ludzi przy laptopach, na ekranie przewijają się nasze strony. */
+/** Pierwszy ekran: jedno zdjęcie w tle nagłówka, na ekranie laptopa przewijają się nasze strony. */
 export const SCENY: Scena[] = [
   { foto: '/images/glowna/sceny/biuro-cieple.webp', rogi: [[1264, 264], [2262, 540], [2160, 1272], [1224, 924]], kadr: [0.78, 0.5], strony: [
     { nazwa: 'Zdalna Księgowa', adres: 'zdalnaksiegowa.com.pl', obraz: '/images/glowna/hero/zdalnaksiegowa-pc.webp' },
-    { nazwa: 'Iwona Węgrowska', adres: 'iwonawegrowska.pl', obraz: '/images/glowna/hero/iwona-pc.webp' },
-    { nazwa: 'Klaudia Pałka', adres: 'klaudiapalka.pl', obraz: '/images/glowna/realizacje/klaudia.webp' },
-  ] },
-  { foto: '/images/glowna/sceny/biurko-jasne.webp', rogi: [[1900, 370], [2444, 420], [2100, 1150], [1610, 810]], kadr: [0.86, 0.5], strony: [
     { nazwa: 'Pan Kolektor', adres: 'pankolektor.pl', obraz: '/images/glowna/hero/pankolektor-pc.webp' },
-    { nazwa: 'Dźwięk Dobry', adres: 'dzwiekdobry.pl', obraz: '/images/glowna/realizacje/dzwiek.webp' },
-    { nazwa: 'Innova Biological', adres: 'innova-biological', obraz: '/images/glowna/realizacje/innova.webp' },
-  ] },
-  { foto: '/images/glowna/sceny/stol-spotkan.webp', rogi: [[280, 500], [824, 210], [994, 676], [570, 1000]], kadr: [0.22, 0.5], strony: [
+    { nazwa: 'Iwona Węgrowska', adres: 'iwonawegrowska.pl', obraz: '/images/glowna/hero/iwona-pc.webp' },
     { nazwa: 'R&L Serwis', adres: 'rlserwis.pl', obraz: '/images/glowna/hero/rlserwis-pc.webp' },
+    { nazwa: 'Dźwięk Dobry', adres: 'dzwiekdobry.pl', obraz: '/images/glowna/realizacje/dzwiek.webp' },
     { nazwa: 'moje-rodo', adres: 'moje-rodo.pl', obraz: '/images/glowna/realizacje/moje-rodo.webp' },
+    { nazwa: 'Klaudia Pałka', adres: 'klaudiapalka.pl', obraz: '/images/glowna/realizacje/klaudia.webp' },
     { nazwa: 'Krzysztof Stanio', adres: 'krzysztofstanio.pl', obraz: '/images/glowna/realizacje/stanio.webp' },
   ] },
 ];

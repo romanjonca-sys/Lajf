@@ -95,23 +95,21 @@ export function scena(): void {
   const petla = async (): Promise<void> => {
     for (let s = 1; ; s++) {
       const sc = sceny[biezaca];
-      for (let i = 1; i < sc.strony.length; i++) {
+      for (let i = 1; i <= sc.strony.length; i++) {
         await wait(STRONA_MS);
         while (!widoczna) await wait(500); // poza ekranem nic nie przełączamy
-        await pokazStrone(sc.strony[i]);
+        if (i < sc.strony.length || sceny.length === 1) { await pokazStrone(sc.strony[i % sc.strony.length]); continue; }
+        // zmiana zdjęcia: ekran gaśnie, zdjęcia się przenikają, ekran wraca na nowym laptopie
+        ekran.classList.remove('on');
+        await wait(PRZEJSCIE_MS);
+        biezaca = s % sceny.length;
+        zdjecia.forEach((z, k) => z.classList.toggle('on', k === biezaca));
+        ustawEkran();
+        obraz.src = sceny[biezaca].strony[0].obraz;
+        podpis.textContent = `${sceny[biezaca].strony[0].nazwa} · ${sceny[biezaca].strony[0].adres}`;
+        await wait(700);
+        ekran.classList.add('on');
       }
-      await wait(STRONA_MS);
-      while (!widoczna) await wait(500);
-      // zmiana zdjęcia: ekran gaśnie, zdjęcia się przenikają, ekran wraca na nowym laptopie
-      ekran.classList.remove('on');
-      await wait(PRZEJSCIE_MS);
-      biezaca = s % sceny.length;
-      zdjecia.forEach((z, k) => z.classList.toggle('on', k === biezaca));
-      ustawEkran();
-      obraz.src = sceny[biezaca].strony[0].obraz;
-      podpis.textContent = `${sceny[biezaca].strony[0].nazwa} · ${sceny[biezaca].strony[0].adres}`;
-      await wait(700);
-      ekran.classList.add('on');
     }
   };
   void petla();
