@@ -99,6 +99,7 @@ function historie(): void {
   const panele = Array.from(sekcja.querySelectorAll<HTMLElement>('.story-panel'));
   const zdjecia = Array.from(sekcja.querySelectorAll<HTMLElement>('.story-img'));
   sekcja.style.setProperty('--czas', `${CZAS_HISTORII_MS}ms`);
+  const strony = czytajJson<string[]>(sekcja, 'data-strony') ?? [];
   let biezaca = 0;
   let licznik = 0;
   const pokaz = (i: number): void => {
@@ -106,6 +107,7 @@ function historie(): void {
     zakladki.forEach((z, k) => z.setAttribute('aria-selected', String(k === i)));
     panele.forEach((p, k) => { p.hidden = k !== i; });
     zdjecia.forEach((z, k) => z.classList.toggle('on', k === i));
+    sekcja.classList.toggle('tekst-prawo', strony[i] === 'prawo');
   };
   const auto = (): void => {
     clearInterval(licznik);

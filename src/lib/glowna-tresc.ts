@@ -55,6 +55,8 @@ export interface Historia {
   obraz: string;
   /** Gdzie na zdjęciu stoi laptop, żeby na telefonie kadr go nie uciął (object-position). */
   kadr: string;
+  /** Po której stronie zdjęcia stoi tekst: tam, gdzie nie ma laptopa. */
+  tekst: 'lewo' | 'prawo';
   tytul: string;
   opis: string;
   href: string;
@@ -63,8 +65,8 @@ export interface Historia {
 
 /** Sekcja realizacji w stylu „historie”: zdjęcie przy laptopie + zakładki 01–03 + rozwijane pytania. */
 export const HISTORIE: Historia[] = [
-  { nazwa: 'Pan Kolektor', etykieta: 'Serwis kolektorów', obraz: '/images/glowna/historie/pankolektor.webp', kadr: '82% 50%', tytul: 'Telefon zawsze pod ręką', opis: 'Numer w nagłówku i na pierwszym ekranie, certyfikaty i realizacje z dachów. Klient z awarią dzwoni od razu, zamiast szukać dalej.', href: '/realizacje/pan-kolektor/', pytania: [['A jeśli nie mam dobrych zdjęć?', 'Wystarczą zdjęcia z telefonu z Twoich realizacji. Wybieramy najlepsze i dbamy, żeby wyglądały porządnie.'], ['Kto pisze treści?', 'My. Po 15-minutowej rozmowie piszemy teksty o Twoich usługach, a Ty tylko je akceptujesz.']] },
-  { nazwa: 'R&L Serwis', etykieta: 'Firma sprzątająca', obraz: '/images/glowna/historie/rlserwis.webp', kadr: '30% 50%', tytul: 'Dwie ścieżki zamiast jednego formularza', opis: 'Osobna wycena dla domu i dla biura, opinie klientów na pierwszym ekranie. Każdy od razu trafia tam, gdzie powinien.', href: '/realizacje/rl-serwis/', pytania: [['Czy zapytania przyjdą na telefon?', 'Tak. Każde zgłoszenie z formularza od razu trafia na Twój telefon i maila.'], ['A jak będę chciał coś zmienić?', 'Piszesz maila. Do godziny zmian w miesiącu jest w cenie.']] },
+  { nazwa: 'Pan Kolektor', etykieta: 'Serwis kolektorów', obraz: '/images/glowna/historie/pankolektor.webp', kadr: '82% 50%', tekst: 'lewo', tytul: 'Telefon zawsze pod ręką', opis: 'Numer w nagłówku i na pierwszym ekranie, certyfikaty i realizacje z dachów. Klient z awarią dzwoni od razu, zamiast szukać dalej.', href: '/realizacje/pan-kolektor/', pytania: [['A jeśli nie mam dobrych zdjęć?', 'Wystarczą zdjęcia z telefonu z Twoich realizacji. Wybieramy najlepsze i dbamy, żeby wyglądały porządnie.'], ['Kto pisze treści?', 'My. Po 15-minutowej rozmowie piszemy teksty o Twoich usługach, a Ty tylko je akceptujesz.']] },
+  { nazwa: 'R&L Serwis', etykieta: 'Firma sprzątająca', obraz: '/images/glowna/historie/rlserwis.webp', kadr: '30% 50%', tekst: 'prawo', tytul: 'Dwie ścieżki zamiast jednego formularza', opis: 'Osobna wycena dla domu i dla biura, opinie klientów na pierwszym ekranie. Każdy od razu trafia tam, gdzie powinien.', href: '/realizacje/rl-serwis/', pytania: [['Czy zapytania przyjdą na telefon?', 'Tak. Każde zgłoszenie z formularza od razu trafia na Twój telefon i maila.'], ['A jak będę chciał coś zmienić?', 'Piszesz maila. Do godziny zmian w miesiącu jest w cenie.']] },
 ];
 
 /** Trzy duże kadry na górze sekcji: firmy usługowe na tym samym planie co klient. */
@@ -128,11 +130,12 @@ export { ROZMIAR_ZDJECIA };
 
 /** Pierwszy ekran: jedno zdjęcie w tle nagłówka, na ekranie laptopa przewijają się nasze strony. */
 export const SCENY: Scena[] = [
-  { foto: '/images/glowna/sceny/biuro-cieple.webp', rogi: [[1264, 264], [2262, 540], [2160, 1272], [1224, 924]], kadr: [0.78, 0.5], strony: [
+  { foto: '/images/glowna/sceny/biuro-cieple.webp', rogi: [[1270, 272], [2257, 545], [2155, 1275], [1225, 940]], kadr: [0.78, 0.5], strony: [
     { nazwa: 'Zdalna Księgowa', adres: 'zdalnaksiegowa.com.pl', obraz: '/images/glowna/hero/zdalnaksiegowa-pc.webp' },
     { nazwa: 'Pan Kolektor', adres: 'pankolektor.pl', obraz: '/images/glowna/hero/pankolektor-pc.webp' },
     { nazwa: 'Iwona Węgrowska', adres: 'iwonawegrowska.pl', obraz: '/images/glowna/hero/iwona-pc.webp' },
     { nazwa: 'R&L Serwis', adres: 'rlserwis.pl', obraz: '/images/glowna/hero/rlserwis-pc.webp' },
+    { nazwa: 'Układ Komediowy', adres: 'ukladkomediowy.pl', obraz: '/images/glowna/hero/uklad-pc.webp' },
     { nazwa: 'Dźwięk Dobry', adres: 'dzwiekdobry.pl', obraz: '/images/glowna/realizacje/dzwiek.webp' },
     { nazwa: 'moje-rodo', adres: 'moje-rodo.pl', obraz: '/images/glowna/realizacje/moje-rodo.webp' },
     { nazwa: 'Klaudia Pałka', adres: 'klaudiapalka.pl', obraz: '/images/glowna/realizacje/klaudia.webp' },

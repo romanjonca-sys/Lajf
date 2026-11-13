@@ -9,7 +9,7 @@ const zewnetrzny = (href: string): boolean => href.startsWith('http');
     <h2 class="disp">Strony, które zrobiliśmy i prowadzimy</h2>
     <p>Małe firmy usługowe: serwis solarów, firma sprzątająca, biuro rachunkowe. Każda na tym samym planie co Ty.</p>
   </div>
-  <div class="story" id="story">
+  <div class="story" id="story" data-strony={JSON.stringify(HISTORIE.map((h) => h.tekst))}>
     <div class="story-media" aria-hidden="true">
       {HISTORIE.map((h, i) => <img class:list={['story-img', { on: i === 0 }]} src={h.obraz} alt="" width="1920" height="1280" loading="lazy" style={`object-position:${h.kadr}`} />)}
     </div>

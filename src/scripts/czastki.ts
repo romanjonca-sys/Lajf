@@ -6,8 +6,12 @@
  * Bez canvas albo przy ograniczonych animacjach tekst jest widoczny od razu (hero.astro).
  */
 
-const KOLORY = ['#5B8CFF', '#A8A2BD', '#2A2540', '#FF7A59', '#2FB3A3', '#5B8CFF'];
-const ATRAMENT = [15, 12, 26];
+const KOLORY = ['#5B8CFF', '#A8A2BD', '#FFFFFF', '#FF7A59', '#2FB3A3', '#5B8CFF'];
+/** Kolor, do którego kulki gasną: kolor tekstu nagłówka (na ciemnym pierwszym ekranie biały). */
+function kolorTekstu(el: HTMLElement): number[] {
+  const m = getComputedStyle(el).color.match(/\d+(\.\d+)?/g);
+  return m ? m.slice(0, 3).map(Number) : [15, 12, 26];
+}
 const WIERSZ_MS = 340; // odstęp między startem kolejnych wierszy kaskady
 const FALA_MS = 340; // fala od lewej do prawej w obrębie wiersza
 const NASYP_MS = 150; // jak długo sypie się jedna litera (od dołu do góry)
@@ -168,6 +172,7 @@ export async function czastki(): Promise<void> {
     });
   });
   const koniecLotu = Math.max(...kulki.map((k) => k.start)) + SPADEK_MS;
+  const ATRAMENT = kolorTekstu(h1);
   const t0 = performance.now();
 
   const klatka = (teraz: number): void => {

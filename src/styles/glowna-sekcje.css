@@ -160,7 +160,13 @@
 .story-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.06); transition: opacity .9s ease, transform 7s linear; }
 .story-img.on { opacity: 1; transform: scale(1); }
 .story::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,5,16,.86) 0%, rgba(7,5,16,.62) 34%, rgba(7,5,16,.1) 62%, transparent 75%); pointer-events: none; }
-.story-txt { position: relative; z-index: 1; max-width: 520px; padding: 40px 40px 44px; }
+.story-txt { position: relative; z-index: 1; max-width: 520px; padding: 40px 40px 44px; transition: margin .6s cubic-bezier(.2,.8,.2,1); }
+.story::after { transition: background .6s ease; }
+/* historia z laptopem po lewej: tekst i przyciemnienie po prawej */
+@media (min-width: 761px) {
+  .story.tekst-prawo .story-txt { margin-left: auto; }
+  .story.tekst-prawo::after { background: linear-gradient(270deg, rgba(7,5,16,.86) 0%, rgba(7,5,16,.62) 34%, rgba(7,5,16,.1) 62%, transparent 75%); }
+}
 .story-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 26px; }
 .story-tab { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid rgba(255,255,255,.28); background: rgba(7,5,16,.35); color: var(--white); font: 500 14px/1 var(--body); cursor: pointer; backdrop-filter: blur(6px); }
 .story-tab .nm { display: none; }
