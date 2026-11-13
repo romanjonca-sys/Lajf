@@ -1,15 +1,17 @@
 /**
- * Nagłówek strony głównej jest „usypywany” z kolorowych kulek, litera po literze:
- * strumień kulek spada z góry nad kolejną literę i wypełnia ją od dołu do góry (jak piasek),
+ * Nagłówek strony głównej jest „usypywany” z kolorowych kulek kaskadą: strumień z góry
+ * wypełnia pierwszy wiersz litera po literze, a każdy kolejny wiersz wypełnia się tym,
+ * co przelewa się w dół z wiersza powyżej (kulki ściekają z dolnej krawędzi liter nad nimi),
  * potem kulki gasną do koloru atramentu i podmieniają się na prawdziwy tekst (dostępny i ostry).
  * Bez canvas albo przy ograniczonych animacjach tekst jest widoczny od razu (hero.astro).
  */
 
 const KOLORY = ['#5B8CFF', '#A8A2BD', '#2A2540', '#FF7A59', '#2FB3A3', '#5B8CFF'];
 const ATRAMENT = [15, 12, 26];
-const LITERA_MS = 38; // odstęp między startem kolejnych liter
-const NASYP_MS = 300; // jak długo sypie się jedna litera
-const SPADEK_MS = 320; // czas spadku kulki z wylotu strumienia
+const WIERSZ_MS = 340; // odstęp między startem kolejnych wierszy kaskady
+const FALA_MS = 340; // fala od lewej do prawej w obrębie wiersza
+const NASYP_MS = 150; // jak długo sypie się jedna litera (od dołu do góry)
+const SPADEK_MS = 300; // czas spadku kulki
 const WYSOKOSC_STRUMIENIA = 1.4; // wylot strumienia nad literą, w wysokościach litery
 const GASNIECIE_MS = 300;
 const MAKS_KULEK = 4200;
@@ -17,6 +19,12 @@ const MAKS_KULEK = 4200;
 interface Kulka { x0: number; y0: number; x: number; y: number; r: number; kolor: number[]; start: number }
 interface Punkt { x: number; y: number; litera: number }
 interface Litera { srodek: number; gora: number; wysokosc: number }
+
+/** Wiersze nagłówka: litery o tej samej górnej krawędzi (z tolerancją kilku pikseli). */
+function wiersze(litery: Litera[]): number[] {
+  const gory = [...new Set(litery.map((l) => Math.round(l.gora / 8)))].sort((a, b) => a - b);
+  return litery.map((l) => gory.indexOf(Math.round(l.gora / 8)));
+}
 
 function hex(k: string): number[] {
   return [1, 3, 5].map((i) => parseInt(k.slice(i, i + 2), 16));
@@ -106,22 +114,29 @@ export async function czastki(): Promise<void> {
   const wLiterze = new Map<number, Punkt[]>();
   wybrane.forEach((p) => { const lista = wLiterze.get(p.litera) ?? []; lista.push(p); wLiterze.set(p.litera, lista); });
   const kulki: Kulka[] = [];
+  const wierszLitery = wiersze(litery);
+  const dolWiersza = new Map<number, number>();
+  litery.forEach((l, i) => dolWiersza.set(wierszLitery[i], Math.max(dolWiersza.get(wierszLitery[i]) ?? 0, l.gora + l.wysokosc * 0.82)));
+  const szer = rh.width || 1;
   wLiterze.forEach((lista, i) => {
     const l = litery[i];
+    const w = wierszLitery[i];
     lista.sort((a, b) => b.y - a.y + (Math.random() - 0.5) * 6);
     lista.forEach((p, j) => {
+      // pierwszy wiersz: strumień z góry nad literą; kolejne: kulki ściekają z wiersza powyżej
+      const zGory = w === 0;
       kulki.push({
-        x0: l.srodek + dx + (Math.random() - 0.5) * 4,
-        y0: Math.max(-20, l.gora + dy - l.wysokosc * WYSOKOSC_STRUMIENIA),
+        x0: (zGory ? l.srodek : p.x) + dx + (Math.random() - 0.5) * (zGory ? 4 : 10),
+        y0: zGory ? Math.max(-20, l.gora + dy - l.wysokosc * WYSOKOSC_STRUMIENIA) : (dolWiersza.get(w - 1) ?? l.gora) + dy,
         x: p.x + dx,
         y: p.y + dy,
         r: promien * (0.75 + Math.random() * 0.5),
         kolor: hex(KOLORY[Math.floor(Math.random() * KOLORY.length)]),
-        start: i * LITERA_MS + (j / lista.length) * NASYP_MS,
+        start: w * WIERSZ_MS + (l.srodek / szer) * FALA_MS + (j / lista.length) * NASYP_MS,
       });
     });
   });
-  const koniecLotu = (litery.length - 1) * LITERA_MS + NASYP_MS + SPADEK_MS;
+  const koniecLotu = Math.max(...kulki.map((k) => k.start)) + SPADEK_MS;
   const t0 = performance.now();
 
   const klatka = (teraz: number): void => {
