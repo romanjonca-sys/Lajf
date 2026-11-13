@@ -48,33 +48,33 @@ export interface TekstyChrome {
 
 const CHROME: Record<Locale, TekstyChrome> = {
   pl: {
+    // Od 13.11.2026 menu jak na nowej stronie głównej: jedna oferta (abonament WWW), reszta usług w menu mobilnym i stopce.
     menu: [
-      { label: 'Audyt cyfrowy', href: '/audyt-placowki-medycznej/' },
-      { label: 'Strony WWW', href: '/strony-www/' },
-      { label: 'Bezpieczeństwo i dane', href: '/rodo-i-cyber/' },
-      { label: 'Oprogramowanie', href: '/oprogramowanie/' },
       { label: 'Realizacje', href: '/#realizacje' },
-      // „O mnie” jest w menu mobilnym, stopce i na stronie głównej. Siódma pozycja nie mieści się przy 1280 px,
-      // a „Poradnik” jest o 1 px za długi, stąd krótsze „Porady”.
+      { label: 'Cena', href: '/#cena' },
+      { label: 'Jak to działa', href: '/#jak-to-dziala' },
       { label: 'Porady', href: '/poradnik/' },
+      { label: 'Pytania', href: '/#pytania' },
     ],
     menuMobilne: [
-      { label: 'Audyt cyfrowy placówki', href: '/audyt-placowki-medycznej/' },
-      { label: 'Strony WWW', href: '/strony-www/' },
-      { label: 'Bezpieczeństwo i dane', href: '/rodo-i-cyber/' },
-      { label: 'Oprogramowanie', href: '/oprogramowanie/' },
-      { label: 'Muzyka', href: '/muzyka/' },
       { label: 'Realizacje', href: '/#realizacje' },
-      { label: 'Poradnik', href: '/poradnik/' },
+      { label: 'Cena', href: '/#cena' },
+      { label: 'Jak to działa', href: '/#jak-to-dziala' },
+      { label: 'Porady', href: '/poradnik/' },
+      { label: 'Strony WWW: wszystkie pakiety', href: '/strony-www/' },
+      { label: 'Audyt cyfrowy', href: '/audyt-firmy/' },
+      { label: 'Oprogramowanie', href: '/oprogramowanie/' },
+      { label: 'Bezpieczeństwo i dane', href: '/rodo-i-cyber/' },
+      { label: 'Muzyka', href: '/muzyka/' },
       { label: 'O mnie', href: '/#o-mnie' },
     ],
-    cta: { label: 'Konsultacja', href: '/#kontakt' },
-    ctaMobilne: { label: 'Napisz do nas', href: '/#kontakt' },
+    cta: { label: 'Umów rozmowę', href: '/#kontakt' },
+    ctaMobilne: { label: 'Umów rozmowę', href: '/#kontakt' },
     telefonAria: (numer) => `Zadzwoń: ${numer}`,
     menuOtworz: 'Otwórz menu',
     menuZamknij: 'Zamknij menu',
     stopkaOpis:
-      'Cyfrowa opieka nad firmą. Audyt, wdrożenie i stała opieka: strona, analityka, bezpieczeństwo i automatyzacje, prowadzone przez jedną osobę odpowiedzialną za całość.',
+      'Strony WWW w abonamencie i stała opieka: wdrożenia, aktualizacje, bezpieczeństwo i RODO. 0 zł na start, po roku strona jest Twoja.',
     stopkaKolumny: [
       {
         naglowek: 'Usługi',

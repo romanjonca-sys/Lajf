@@ -6,7 +6,10 @@
  */
 import '@fontsource-variable/inter';
 import '@fontsource-variable/space-grotesk';
+import '@fontsource-variable/archivo/standard.css';
 import '../styles/lajf-kinetic.css';
+// Jasny wygląd (od 13.11.2026) nadpisuje Kinetic Aurora: jedna identyfikacja z nową stroną główną.
+import '../styles/lajf-jasny.css';
 import { siteConfig } from '../../site.config';
 import Whatsapp from '../components/whatsapp.astro';
 import AnalyticsGa4 from '../components/analytics-ga4.astro';
@@ -29,7 +32,8 @@ interface Props {
   ogImage?: string;
 }
 
-const { title, description, accent = '#5b8cff', locale = DEFAULT_LOCALE, schema, ogImage: ogImagePath = '/images/og-default.jpg' } = Astro.props;
+// `accent` zostaje w Props dla zgodności podstron, ale od 13.11.2026 cały serwis ma jeden akcent (lajf-jasny.css).
+const { title, description, locale = DEFAULT_LOCALE, schema, ogImage: ogImagePath = '/images/og-default.jpg' } = Astro.props;
 const { brandName, company } = siteConfig;
 
 const siteUrl = Astro.site ?? new URL('https://lajf.eu');
@@ -81,7 +85,7 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang={locale} style={`--acc:${accent}`}>
+<html lang={locale}>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -89,7 +93,7 @@ const jsonLd = {
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<meta name="theme-color" content="#070510" />
+<meta name="theme-color" content="#EEEDF3" />
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
