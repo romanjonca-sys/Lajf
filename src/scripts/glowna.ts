@@ -1,4 +1,5 @@
 import { czastki } from './czastki';
+import { scena } from './scena';
 import { swiatlo } from './swiatlo';
 
 /**
@@ -8,62 +9,15 @@ import { swiatlo } from './swiatlo';
  */
 
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const ZNAK_MS = 28;
 const KARTKA_MS = 3800;
 const KOMUNIKAT_BLEDU = 'Nie udało się wysłać. Zadzwoń albo napisz: kontakt@lajf.eu.';
 
-const wait = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
 
 function czytajJson<T>(el: HTMLElement | null, atrybut: string): T | null {
   const surowe = el?.getAttribute(atrybut);
   return surowe ? (JSON.parse(surowe) as T) : null;
 }
 
-async function wpisz(el: HTMLElement, tekst: string): Promise<void> {
-  el.textContent = '';
-  for (const znak of tekst) {
-    el.textContent += znak;
-    await wait(ZNAK_MS);
-  }
-}
-
-interface SlajdHero { nazwa: string; adres: string; komputer: string; telefon: string; budowa: string[]; zapytanie: string }
-
-function ustawSlajd(slajd: SlajdHero): void {
-  const pc = document.getElementById('live-pc');
-  const tel = document.getElementById('live-tel');
-  if (pc instanceof HTMLImageElement) pc.src = slajd.komputer;
-  if (tel instanceof HTMLImageElement) tel.src = slajd.telefon;
-  const adres = document.getElementById('live-adres');
-  const zapytanie = document.getElementById('live-zapytanie');
-  if (adres) adres.textContent = slajd.adres;
-  if (zapytanie) zapytanie.textContent = slajd.zapytanie;
-}
-
-/** Hero: strony klientów po kolei „budują się”, a na końcu na telefon przychodzi zapytanie. */
-async function budowaStron(): Promise<void> {
-  const live = document.getElementById('live');
-  const linia = document.getElementById('status-text');
-  const slajdy = czytajJson<SlajdHero[]>(live, 'data-slajdy');
-  if (!live || !linia || !slajdy || slajdy.length === 0) return;
-  // Zrzuty kolejnych stron wczytujemy z góry, żeby przełączenie nie mrugało pustym kadrem.
-  slajdy.forEach((s) => { new Image().src = s.komputer; new Image().src = s.telefon; });
-  for (let i = 0; ; i = (i + 1) % slajdy.length) {
-    const slajd = slajdy[i];
-    await wait(2200);
-    live.classList.remove('done', 'ping');
-    await wait(500);
-    ustawSlajd(slajd);
-    for (const krok of slajd.budowa) { await wpisz(linia, krok); await wait(800); }
-    await wpisz(linia, 'Gotowe do Twojej akceptacji ✓');
-    live.classList.add('done');
-    await wait(1400);
-    await wpisz(linia, `${slajd.nazwa} · zapytania lecą na telefon`);
-    live.classList.add('ping');
-    await wait(4800);
-    live.classList.remove('ping');
-  }
-}
 
 function obserwuj(el: Element, opcje: IntersectionObserverInit, naZmiane: (widoczny: boolean) => void): IntersectionObserver {
   const obs = new IntersectionObserver(([wpis]) => naZmiane(wpis.isIntersecting), opcje);
@@ -126,7 +80,6 @@ function oddychajacyNaglowek(): void {
 function animacje(): void {
   void czastki();
   oddychajacyNaglowek();
-  void budowaStron();
   kartkaPodDlonmi();
   const kroki = document.getElementById('jak-to-dziala');
   if (kroki) obserwuj(kroki, { rootMargin: '-35% 0px -35% 0px' }, (w) => kroki.classList.toggle('lit', w));
@@ -211,6 +164,7 @@ function formularz(): void {
 }
 
 swiatlo();
+scena();
 historie();
 galeria();
 formularz();

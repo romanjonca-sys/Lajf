@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs';
 import { describe, it } from 'node:test';
 
 import {
-  HERO_SLAJDY,
+  SCENY,
   HISTORIE,
   KATEGORIE_REALIZACJI,
   NieznanaKategoriaError,
@@ -64,17 +64,18 @@ describe('treść strony głównej', () => {
   });
 });
 
-describe('HERO_SLAJDY', () => {
-  it('każdy slajd ma zrzuty, które istnieją w /public, i co najmniej 2 kroki budowy', () => {
-    for (const slajd of HERO_SLAJDY) {
-      for (const plik of [slajd.komputer, slajd.telefon]) {
-        assert.ok(existsSync(new URL(`../../public${plik}`, import.meta.url)), `brak pliku ${plik}`);
-      }
-      assert.ok(slajd.budowa.length >= 2, slajd.nazwa);
+describe('SCENY', () => {
+  it('każda scena ma zdjęcie, 4 narożniki ekranu w obrębie zdjęcia i strony z istniejącymi zrzutami', () => {
+    for (const sc of SCENY) {
+      assert.ok(existsSync(new URL(`../../public${sc.foto}`, import.meta.url)), `brak ${sc.foto}`);
+      assert.equal(sc.rogi.length, 4);
+      assert.ok(sc.rogi.every(([x, y]) => x >= 0 && x <= 2600 && y >= 0 && y <= 1600));
+      assert.ok(sc.strony.length >= 1);
+      for (const st of sc.strony) assert.ok(existsSync(new URL(`../../public${st.obraz}`, import.meta.url)), `brak ${st.obraz}`);
     }
   });
 
-  it('brak zrzutu wykrywa się jako błąd', () => {
+  it('brak zrzutu strony wykrywa się jako błąd', () => {
     assert.equal(existsSync(new URL('../../public/images/glowna/hero/nie-ma.webp', import.meta.url)), false);
   });
 });

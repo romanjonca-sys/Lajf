@@ -1,7 +1,7 @@
 ---
-import { HERO_SLAJDY } from '../../lib/glowna-tresc';
+import { SCENY } from '../../lib/glowna-tresc';
 
-const [pierwszy] = HERO_SLAJDY;
+const [pierwsza] = SCENY;
 
 // Stałe wiersze: w trakcie animacji litery są szersze i bez tego słowa przeskakiwałyby między liniami.
 const WIERSZE = [['Strona', 'Twojej'], ['firmy.', 'Zrobiona'], ['i', 'prowadzona'], ['za', 'Ciebie.']];
@@ -41,21 +41,13 @@ const zl = litery('zł');
     <p>Piszemy treści, projektujemy stronę, podpinamy domenę i pocztę i pilnujemy, żeby wszystko działało. Nic nie płacisz, dopóki nie zaakceptujesz gotowej strony. Po 12 ratach jest Twoja.</p>
     <span class="note">Odpowiadamy w ciągu dnia roboczego<br /><b>Masz już stronę? Przeniesiemy domenę i pocztę.</b></span>
   </div>
-  <div class="devices live done" id="live" data-slajdy={JSON.stringify(HERO_SLAJDY)}>
-    <figure class="shot browser">
-      <div class="bar mono" id="live-adres">{pierwszy.adres}</div>
-      <div class="stage">
-        <img id="live-pc" src={pierwszy.komputer} alt="Strony klientów Lajf: widok na komputerze" width="2400" height="1500" fetchpriority="high" />
-        <div class="skel" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-      </div>
-      <figcaption class="status mono"><b></b><span id="status-text">{pierwszy.nazwa} · strona działa</span></figcaption>
-    </figure>
-    <div class="phone" aria-hidden="true">
-      <img id="live-tel" src={pierwszy.telefon} alt="" width="780" height="1688" />
-      <div class="toast"><strong>Nowe zapytanie · teraz</strong><span id="live-zapytanie">{pierwszy.zapytanie}</span></div>
-    </div>
+</div>
+  <div class="scena" id="scena" data-sceny={JSON.stringify(SCENY)} aria-label="Strony klientów Lajf na ekranach laptopów" role="img">
+    {SCENY.map((sc, i) => <img class:list={['scena-foto', { on: i === 0 }]} src={sc.foto} alt="" width="2400" height="1600" style={`object-position:${sc.kadr[0] * 100}% ${sc.kadr[1] * 100}%`} loading={i === 0 ? 'eager' : 'lazy'} />)}
+    <div class="ekran" id="ekran"><img id="ekran-img" src={pierwsza.strony[0].obraz} alt="" /></div>
+    <div class="scena-podpis mono"><b></b><span id="scena-adres">{pierwsza.strony[0].nazwa} · {pierwsza.strony[0].adres}</span></div>
   </div>
-</div></section>
+</section>
 <div class="facts"><div class="wrap"><ul>
   {FAKTY.map(([b, s]) => <li><b class="disp">{b}</b><span>{s}</span></li>)}
 </ul></div></div>

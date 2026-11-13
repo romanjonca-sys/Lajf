@@ -51,9 +51,9 @@ export const REALIZACJE: Realizacja[] = [
 export interface Historia {
   nazwa: string;
   etykieta: string;
-  /** Zdjęcie z Unsplash (licencja Unsplash) z wklejonym zrzutem strony klienta, w /public. */
+  /** Ostry zrzut strony klienta (komputer), w /public. */
   obraz: string;
-  /** Gdzie na zdjęciu stoi laptop, żeby na telefonie kadr go nie uciął (object-position). */
+  /** object-position zrzutu. */
   kadr: string;
   tytul: string;
   opis: string;
@@ -63,9 +63,9 @@ export interface Historia {
 
 /** Sekcja realizacji w stylu „historie”: zdjęcie przy laptopie + zakładki 01–03 + rozwijane pytania. */
 export const HISTORIE: Historia[] = [
-  { nazwa: 'Zdalna Księgowa', etykieta: 'Biuro rachunkowe', obraz: '/images/glowna/historie/zdalnaksiegowa.webp', kadr: '78% 50%', tytul: 'Biuro, które klient rozumie w 5 sekund', opis: 'Pakiety i ceny od razu na pierwszym ekranie. Strona mówi o księgowości językiem właściciela firmy, a nie przepisów.', href: '/realizacje/zdalna-ksiegowa/', pytania: [['Czy moja branża też się nada?', 'Tak. Robimy strony dla firm usługowych: od biur rachunkowych po serwisy i gabinety. Treści piszemy po rozmowie z Tobą.'], ['Ile trwa zrobienie strony?', 'Zwykle 2–4 tygodnie od rozmowy do strony gotowej do Twojej akceptacji.']] },
-  { nazwa: 'Pan Kolektor', etykieta: 'Serwis kolektorów', obraz: '/images/glowna/historie/pankolektor.webp', kadr: '82% 50%', tytul: 'Telefon zawsze pod ręką', opis: 'Numer w nagłówku i na pierwszym ekranie, certyfikaty i realizacje z dachów. Klient z awarią dzwoni od razu, zamiast szukać dalej.', href: '/realizacje/pan-kolektor/', pytania: [['A jeśli nie mam dobrych zdjęć?', 'Wystarczą zdjęcia z telefonu z Twoich realizacji. Wybieramy najlepsze i dbamy, żeby wyglądały porządnie.'], ['Kto pisze treści?', 'My. Po 15-minutowej rozmowie piszemy teksty o Twoich usługach, a Ty tylko je akceptujesz.']] },
-  { nazwa: 'R&L Serwis', etykieta: 'Firma sprzątająca', obraz: '/images/glowna/historie/rlserwis.webp', kadr: '30% 50%', tytul: 'Dwie ścieżki zamiast jednego formularza', opis: 'Osobna wycena dla domu i dla biura, opinie klientów na pierwszym ekranie. Każdy od razu trafia tam, gdzie powinien.', href: '/realizacje/rl-serwis/', pytania: [['Czy zapytania przyjdą na telefon?', 'Tak. Każde zgłoszenie z formularza od razu trafia na Twój telefon i maila.'], ['A jak będę chciał coś zmienić?', 'Piszesz maila. Do godziny zmian w miesiącu jest w cenie.']] },
+  { nazwa: 'Zdalna Księgowa', etykieta: 'Biuro rachunkowe', obraz: '/images/glowna/hero/zdalnaksiegowa-pc.webp', kadr: '50% 0%', tytul: 'Biuro, które klient rozumie w 5 sekund', opis: 'Pakiety i ceny od razu na pierwszym ekranie. Strona mówi o księgowości językiem właściciela firmy, a nie przepisów.', href: '/realizacje/zdalna-ksiegowa/', pytania: [['Czy moja branża też się nada?', 'Tak. Robimy strony dla firm usługowych: od biur rachunkowych po serwisy i gabinety. Treści piszemy po rozmowie z Tobą.'], ['Ile trwa zrobienie strony?', 'Zwykle 2–4 tygodnie od rozmowy do strony gotowej do Twojej akceptacji.']] },
+  { nazwa: 'Pan Kolektor', etykieta: 'Serwis kolektorów', obraz: '/images/glowna/hero/pankolektor-pc.webp', kadr: '50% 0%', tytul: 'Telefon zawsze pod ręką', opis: 'Numer w nagłówku i na pierwszym ekranie, certyfikaty i realizacje z dachów. Klient z awarią dzwoni od razu, zamiast szukać dalej.', href: '/realizacje/pan-kolektor/', pytania: [['A jeśli nie mam dobrych zdjęć?', 'Wystarczą zdjęcia z telefonu z Twoich realizacji. Wybieramy najlepsze i dbamy, żeby wyglądały porządnie.'], ['Kto pisze treści?', 'My. Po 15-minutowej rozmowie piszemy teksty o Twoich usługach, a Ty tylko je akceptujesz.']] },
+  { nazwa: 'R&L Serwis', etykieta: 'Firma sprzątająca', obraz: '/images/glowna/hero/rlserwis-pc.webp', kadr: '50% 0%', tytul: 'Dwie ścieżki zamiast jednego formularza', opis: 'Osobna wycena dla domu i dla biura, opinie klientów na pierwszym ekranie. Każdy od razu trafia tam, gdzie powinien.', href: '/realizacje/rl-serwis/', pytania: [['Czy zapytania przyjdą na telefon?', 'Tak. Każde zgłoszenie z formularza od razu trafia na Twój telefon i maila.'], ['A jak będę chciał coś zmienić?', 'Piszesz maila. Do godziny zmian w miesiącu jest w cenie.']] },
 ];
 
 /** Trzy duże kadry na górze sekcji: firmy usługowe na tym samym planie co klient. */
@@ -112,24 +112,38 @@ export const PYTANIA: Array<{ q: string; a: string }> = [
   { q: 'Kim jesteście?', a: 'Lajf sp. z o.o., spółka z KRS z Jaworzna. Robimy strony i aplikacje dla firm usługowych, gabinetów i artystów. Faktura VAT.' },
 ];
 
-export interface SlajdHero {
-  nazwa: string;
-  adres: string;
-  /** Zrzut strony na komputerze (2400×1500) i na telefonie (780×1688), w /public. */
-  komputer: string;
-  telefon: string;
-  /** Kolejne kroki budowy strony, wpisywane w linii statusu pod przeglądarką. */
-  budowa: string[];
-  /** Przykładowe zapytanie, które pojawia się na telefonie po starcie strony. */
-  zapytanie: string;
+export interface StronaNaEkranie { nazwa: string; adres: string; obraz: string }
+
+export interface Scena {
+  /** Zdjęcie z Unsplash (licencja Unsplash), 2400×1600, w /public. */
+  foto: string;
+  /** Narożniki ekranu laptopa w pikselach zdjęcia: lewy górny, prawy górny, prawy dolny, lewy dolny. */
+  rogi: Array<[number, number]>;
+  /** object-position zdjęcia: na wąskim ekranie kadr ma trzymać laptopa w środku. */
+  kadr: [number, number];
+  strony: StronaNaEkranie[];
 }
 
-/** Pierwszy ekran: strony klientów przełączają się po kolei, każda „buduje się” i dostaje zapytanie. */
-export const HERO_SLAJDY: SlajdHero[] = [
-  { nazwa: 'Pan Kolektor', adres: 'pankolektor.pl', komputer: '/images/glowna/hero/pankolektor-pc.webp', telefon: '/images/glowna/hero/pankolektor-tel.webp', budowa: ['Piszemy treści o serwisie kolektorów…', 'Projektujemy najpierw pod telefon…', 'Podpinamy pankolektor.pl i pocztę…'], zapytanie: 'Klient prosi o telefon w sprawie wymiany kolektora' },
-  { nazwa: 'R&L Serwis', adres: 'rlserwis.pl', komputer: '/images/glowna/hero/rlserwis-pc.webp', telefon: '/images/glowna/hero/rlserwis-tel.webp', budowa: ['Piszemy treści o sprzątaniu domów i biur…', 'Dodajemy galerię realizacji…', 'Podpinamy rlserwis.pl i pocztę…'], zapytanie: 'Wycena sprzątania biura po remoncie' },
-  { nazwa: 'Zdalna Księgowa', adres: 'zdalnaksiegowa.com.pl', komputer: '/images/glowna/hero/zdalnaksiegowa-pc.webp', telefon: '/images/glowna/hero/zdalnaksiegowa-tel.webp', budowa: ['Piszemy o księgowości dla IT…', 'Układamy pakiety i cennik…', 'Podpinamy domenę i pocztę…'], zapytanie: 'Firma chce przejść do biura od stycznia' },
-  { nazwa: 'Iwona Węgrowska', adres: 'iwonawegrowska.pl', komputer: '/images/glowna/hero/iwona-pc.webp', telefon: '/images/glowna/hero/iwona-tel.webp', budowa: ['Układamy koncerty i booking…', 'Wgrywamy singiel do odtwarzacza…', 'Podpinamy iwonawegrowska.pl…'], zapytanie: 'Zapytanie o koncert na firmowej gali' },
+const ROZMIAR_ZDJECIA: [number, number] = [2400, 1600];
+export { ROZMIAR_ZDJECIA };
+
+/** Pierwszy ekran: zdjęcia ludzi przy laptopach, na ekranie przewijają się nasze strony. */
+export const SCENY: Scena[] = [
+  { foto: '/images/glowna/sceny/biuro-cieple.webp', rogi: [[1264, 264], [2262, 540], [2160, 1272], [1224, 924]], kadr: [0.78, 0.5], strony: [
+    { nazwa: 'Zdalna Księgowa', adres: 'zdalnaksiegowa.com.pl', obraz: '/images/glowna/hero/zdalnaksiegowa-pc.webp' },
+    { nazwa: 'Iwona Węgrowska', adres: 'iwonawegrowska.pl', obraz: '/images/glowna/hero/iwona-pc.webp' },
+    { nazwa: 'Klaudia Pałka', adres: 'klaudiapalka.pl', obraz: '/images/glowna/realizacje/klaudia.webp' },
+  ] },
+  { foto: '/images/glowna/sceny/biurko-jasne.webp', rogi: [[1900, 370], [2444, 420], [2100, 1150], [1610, 810]], kadr: [0.86, 0.5], strony: [
+    { nazwa: 'Pan Kolektor', adres: 'pankolektor.pl', obraz: '/images/glowna/hero/pankolektor-pc.webp' },
+    { nazwa: 'Dźwięk Dobry', adres: 'dzwiekdobry.pl', obraz: '/images/glowna/realizacje/dzwiek.webp' },
+    { nazwa: 'Innova Biological', adres: 'innova-biological', obraz: '/images/glowna/realizacje/innova.webp' },
+  ] },
+  { foto: '/images/glowna/sceny/stol-spotkan.webp', rogi: [[280, 500], [824, 210], [994, 676], [570, 1000]], kadr: [0.22, 0.5], strony: [
+    { nazwa: 'R&L Serwis', adres: 'rlserwis.pl', obraz: '/images/glowna/hero/rlserwis-pc.webp' },
+    { nazwa: 'moje-rodo', adres: 'moje-rodo.pl', obraz: '/images/glowna/realizacje/moje-rodo.webp' },
+    { nazwa: 'Krzysztof Stanio', adres: 'krzysztofstanio.pl', obraz: '/images/glowna/realizacje/stanio.webp' },
+  ] },
 ];
 
 /** Kartka pod dłońmi w sekcji „o mnie”: co dzieje się ze stroną klienta w zwykłym miesiącu. */
