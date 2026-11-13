@@ -142,7 +142,7 @@ function formularz(): void {
       const res = await fetch('/api/contact', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
       const data = (await res.json().catch(() => ({}))) as { error?: { message?: string } };
       if (!res.ok) throw new Error(data.error?.message ?? KOMUNIKAT_BLEDU);
-      form.innerHTML = '<p class="form-ok" role="status" tabindex="-1">Dziękujemy. Zadzwonimy w ciągu dnia roboczego, a potwierdzenie jest już w Twojej skrzynce.</p>';
+      form.innerHTML = '<p class="form-ok" role="status" tabindex="-1">Dziękujemy. Zadzwonimy w ciągu dnia roboczego.</p>';
       form.querySelector<HTMLElement>('.form-ok')?.focus();
       // Analityka (analytics-ga4.astro) liczy lead dopiero po potwierdzeniu z serwera.
       document.dispatchEvent(new CustomEvent('lajf:lead', { detail: { metoda: 'formularz' } }));
