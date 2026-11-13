@@ -30,26 +30,29 @@ export const KATEGORIE_REALIZACJI: Record<KategoriaRealizacji, string> = {
 };
 
 export const REALIZACJE: Realizacja[] = [
-  { kategoria: 'uslugi', nazwa: 'Pan Kolektor', obraz: '/images/realizacje/pankolektor.jpg', href: '/realizacje/pan-kolektor/', opis: 'Serwis kolektorów słonecznych' },
-  { kategoria: 'uslugi', nazwa: 'R&L Serwis', obraz: '/images/realizacje/rlserwis.jpg', href: '/realizacje/rl-serwis/', opis: 'Sprzątanie domów, biur i gabinetów' },
-  { kategoria: 'uslugi', nazwa: 'Zdalna Księgowa', obraz: '/images/realizacje/zdalnaksiegowa.jpg', href: '/realizacje/zdalna-ksiegowa/', opis: 'Biuro rachunkowe dla IT i e-commerce' },
-  { kategoria: 'uslugi', nazwa: 'M-DENTAL', obraz: '/images/glowna/mdental.jpg', href: null, opis: 'Przychodnia stomatologiczna, Warszawa' },
-  { kategoria: 'firmy', nazwa: 'BEC Podcast', obraz: '/images/glowna/bec.jpg', href: null, opis: 'Podcast firmowy, klub i panel redakcyjny' },
-  { kategoria: 'firmy', nazwa: 'Innova Biological', obraz: '/images/realizacje/innova.jpg', href: 'https://innova-biological.pages.dev', opis: 'Strona B2B marki chemicznej' },
-  { kategoria: 'firmy', nazwa: 'PPWR dla firm', obraz: '/images/realizacje/ppwrdlafirm.jpg', href: '/realizacje/ppwr-dla-firm/', opis: 'Dokumentacja opakowaniowa dla producentów' },
-  { kategoria: 'firmy', nazwa: 'moje-rodo', obraz: '/images/realizacje/moje-rodo.jpg', href: '/realizacje/moje-rodo/', opis: 'System zgodności RODO dla medycyny' },
+  { kategoria: 'uslugi', nazwa: 'Pan Kolektor', obraz: '/images/glowna/realizacje/pankolektor.webp', href: '/realizacje/pan-kolektor/', opis: 'Serwis kolektorów słonecznych' },
+  { kategoria: 'uslugi', nazwa: 'R&L Serwis', obraz: '/images/glowna/realizacje/rlserwis.webp', href: '/realizacje/rl-serwis/', opis: 'Sprzątanie domów, biur i gabinetów' },
+  { kategoria: 'uslugi', nazwa: 'Zdalna Księgowa', obraz: '/images/glowna/realizacje/zdalnaksiegowa.webp', href: '/realizacje/zdalna-ksiegowa/', opis: 'Biuro rachunkowe dla IT i e-commerce' },
+  { kategoria: 'uslugi', nazwa: 'M-DENTAL', obraz: '/images/glowna/realizacje/mdental.webp', href: null, opis: 'Przychodnia stomatologiczna, Warszawa' },
+  { kategoria: 'firmy', nazwa: 'BEC Podcast', obraz: '/images/glowna/realizacje/bec.webp', href: null, opis: 'Podcast firmowy, klub i panel redakcyjny' },
+  { kategoria: 'firmy', nazwa: 'Innova Biological', obraz: '/images/glowna/realizacje/innova.webp', href: 'https://innova-biological.pages.dev', opis: 'Strona B2B marki chemicznej' },
+  { kategoria: 'firmy', nazwa: 'PPWR dla firm', obraz: '/images/glowna/realizacje/ppwrdlafirm.webp', href: '/realizacje/ppwr-dla-firm/', opis: 'Dokumentacja opakowaniowa dla producentów' },
+  { kategoria: 'firmy', nazwa: 'moje-rodo', obraz: '/images/glowna/realizacje/moje-rodo.webp', href: '/realizacje/moje-rodo/', opis: 'System zgodności RODO dla medycyny' },
   { kategoria: 'firmy', nazwa: 'Rejestr badania', obraz: '/images/realizacje/rejestr-badania.jpg', href: '/realizacje/rejestr-badania-klinicznego/', opis: 'Aplikacja do badania klinicznego' },
-  { kategoria: 'kultura', nazwa: 'Siggy Davis', obraz: '/images/glowna/siggi.jpg', href: null, opis: 'Wokalistka jazz i soul, Berlin' },
-  { kategoria: 'kultura', nazwa: 'Iwona Węgrowska', obraz: '/images/realizacje/iwonawegrowska.jpg', href: '/realizacje/strona-wokalistki-iwona-wegrowska/', opis: 'Wokalistka: koncerty i booking' },
-  { kategoria: 'kultura', nazwa: 'Klaudia Pałka', obraz: '/images/realizacje/klaudia.jpg', href: '/realizacje/klaudia-palka/', opis: 'One-pager wokalistki' },
-  { kategoria: 'kultura', nazwa: 'Układ Komediowy', obraz: '/images/realizacje/uklad.jpg', href: '/realizacje/uklad-komediowy/', opis: 'Kabaret: strona i terminarz' },
-  { kategoria: 'kultura', nazwa: 'Krzysztof Stanio', obraz: '/images/realizacje/stanio.jpg', href: '/realizacje/krzysztof-stanio/', opis: 'Pracownia praktyk teatralnych' },
-  { kategoria: 'kultura', nazwa: 'Grzegorz Kapołka', obraz: '/images/realizacje/kapolka.jpg', href: 'https://kapolka-web.pages.dev', opis: 'Bluesowy gitarzysta' },
-  { kategoria: 'kultura', nazwa: 'Dźwięk Dobry', obraz: '/images/realizacje/dzwiek.jpg', href: '/realizacje/dzwiek-dobry/', opis: 'Studio pisania piosenek' },
+  { kategoria: 'kultura', nazwa: 'Siggy Davis', obraz: '/images/glowna/realizacje/siggi.webp', href: null, opis: 'Wokalistka jazz i soul, Berlin' },
+  { kategoria: 'kultura', nazwa: 'Iwona Węgrowska', obraz: '/images/glowna/realizacje/iwonawegrowska.webp', href: '/realizacje/strona-wokalistki-iwona-wegrowska/', opis: 'Wokalistka: koncerty i booking' },
+  { kategoria: 'kultura', nazwa: 'Klaudia Pałka', obraz: '/images/glowna/realizacje/klaudia.webp', href: '/realizacje/klaudia-palka/', opis: 'One-pager wokalistki' },
+  { kategoria: 'kultura', nazwa: 'Układ Komediowy', obraz: '/images/glowna/realizacje/uklad.webp', href: '/realizacje/uklad-komediowy/', opis: 'Kabaret: strona i terminarz' },
+  { kategoria: 'kultura', nazwa: 'Krzysztof Stanio', obraz: '/images/glowna/realizacje/stanio.webp', href: '/realizacje/krzysztof-stanio/', opis: 'Pracownia praktyk teatralnych' },
+  { kategoria: 'kultura', nazwa: 'Grzegorz Kapołka', obraz: '/images/glowna/realizacje/kapolka.webp', href: 'https://kapolka-web.pages.dev', opis: 'Bluesowy gitarzysta' },
+  { kategoria: 'kultura', nazwa: 'Dźwięk Dobry', obraz: '/images/glowna/realizacje/dzwiek.webp', href: '/realizacje/dzwiek-dobry/', opis: 'Studio pisania piosenek' },
 ];
 
 /** Trzy duże kadry na górze sekcji: firmy usługowe na tym samym planie co klient. */
 export const WYROZNIONE = ['Pan Kolektor', 'R&L Serwis', 'Zdalna Księgowa'];
+
+/** Galeria pod przyciskiem „Zobacz wszystkie”: bez trzech wyróżnionych, żeby się nie powtarzały. */
+export const POZOSTALE = REALIZACJE.filter((r) => !WYROZNIONE.includes(r.nazwa));
 
 export function realizacjeKategorii(kategoria: string): Realizacja[] {
   if (!(kategoria in KATEGORIE_REALIZACJI)) throw new NieznanaKategoriaError(kategoria);

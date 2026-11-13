@@ -95,22 +95,19 @@ function galeria(): void {
   const zakladki = document.getElementById('gal-tabs');
   const siatka = document.getElementById('gal');
   const wiecej = document.getElementById('gal-more');
-  if (!zakladki || !siatka || !wiecej) return;
-  const pokazPrzycisk = (): void => {
-    const widoczne = Array.from(siatka.children).filter((k) => !(k as HTMLElement).hidden).length;
-    wiecej.hidden = !siatka.classList.contains('short') || widoczne <= 6;
-    wiecej.textContent = `Pokaż wszystkie (${widoczne})`;
-  };
+  const panel = document.getElementById('more-work');
+  if (!zakladki || !siatka || !wiecej || !panel) return;
+  wiecej.addEventListener('click', () => {
+    const otwarty = panel.classList.toggle('open');
+    wiecej.setAttribute('aria-expanded', String(otwarty));
+  });
   zakladki.addEventListener('click', (e) => {
     const przycisk = (e.target as Element).closest('button');
     if (!przycisk) return;
     const k = przycisk.dataset.k ?? 'all';
     zakladki.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b === przycisk)));
     Array.from(siatka.children).forEach((karta) => { (karta as HTMLElement).hidden = k !== 'all' && (karta as HTMLElement).dataset.k !== k; });
-    pokazPrzycisk();
   });
-  wiecej.addEventListener('click', () => { siatka.classList.remove('short'); wiecej.hidden = true; });
-  pokazPrzycisk();
 }
 
 function formularz(): void {

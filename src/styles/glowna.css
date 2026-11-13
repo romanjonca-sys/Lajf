@@ -161,13 +161,19 @@ a { color: inherit; }
 .gal b { display: block; margin-top: 10px; font-size: 16px; }
 .gal small { display: block; color: var(--muted); font-size: 14px; line-height: 1.4; }
 .gal .soon { position: absolute; left: 8px; top: 8px; background: var(--signal); color: var(--ink); padding: 4px 8px; font-style: normal; font-size: 12px; }
-.gal.short > :nth-child(n+9 of :not([hidden])) { display: none; }
-.more-btn { margin-top: 26px; }
+.more-btn { margin-top: 40px; }
+.more-btn .mono { transition: transform .3s ease; }
+.more-btn[aria-expanded="true"] .mono { transform: rotate(180deg); }
+/* galeria zwinięta do kliknięcia: płynne rozwinięcie przez grid-template-rows 0fr → 1fr */
+.more-work { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .7s cubic-bezier(.2,.7,.1,1); }
+.more-work > .more-in { overflow: hidden; min-height: 0; }
+.more-work.open { grid-template-rows: 1fr; }
+.more-work .gal-head { margin-top: 40px; }
 @media (max-width: 1000px) { .gal { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 760px) { .gal { grid-template-columns: 1fr 1fr; gap: 22px 12px; } .gal b { font-size: 15px; } .gal small { font-size: 13px; } .gal.short > :nth-child(n+7 of :not([hidden])) { display: none; } }
+@media (max-width: 760px) { .gal { grid-template-columns: 1fr 1fr; gap: 22px 12px; } .gal b { font-size: 15px; } .gal small { font-size: 13px; } }
 
 @media (prefers-reduced-motion: reduce) {
   .hero h1 .w > span, .logo svg path, .logo svg circle, .live .skel i, .live .status b { animation: none; }
-  .btn, .work .shot, .live .skel, .toast, .gal img { transition: none; }
+  .btn, .work .shot, .live .skel, .toast, .gal img, .more-work { transition: none; }
   html { scroll-behavior: auto; }
 }

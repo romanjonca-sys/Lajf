@@ -1,8 +1,8 @@
 ---
-import { KATEGORIE_REALIZACJI, REALIZACJE, WYROZNIONE } from '../../lib/glowna-tresc';
+import { KATEGORIE_REALIZACJI, POZOSTALE, REALIZACJE, WYROZNIONE } from '../../lib/glowna-tresc';
 
 const wyroznione = WYROZNIONE.map((n) => REALIZACJE.find((r) => r.nazwa === n)).filter((r) => r !== undefined);
-const zakladki = [['all', 'Wszystkie', REALIZACJE.length], ...Object.entries(KATEGORIE_REALIZACJI).map(([k, l]) => [k, l, REALIZACJE.filter((r) => r.kategoria === k).length])];
+const zakladki = [['all', 'Wszystkie', POZOSTALE.length], ...Object.entries(KATEGORIE_REALIZACJI).map(([k, l]) => [k, l, POZOSTALE.filter((r) => r.kategoria === k).length])];
 const zewnetrzny = (href: string): boolean => href.startsWith('http');
 ---
 <section id="realizacje" class="sec"><div class="wrap">
@@ -13,24 +13,28 @@ const zewnetrzny = (href: string): boolean => href.startsWith('http');
   <div class="work">
     {wyroznione.map((r) => r.href && (
       <article><a href={r.href}>
-        <div class="shot"><div class="bar mono">{r.nazwa}</div><img src={r.obraz} alt={`Strona ${r.nazwa}`} width="800" height="512" loading="lazy" /></div>
+        <div class="shot"><div class="bar mono">{r.nazwa}</div><img src={r.obraz} alt={`Strona ${r.nazwa}`} width="1200" height="768" loading="lazy" /></div>
         <h3>{r.nazwa}</h3><span class="meta">{r.opis}</span>
       </a></article>
     ))}
   </div>
-  <div class="gal-head">
-    <h3 class="disp">Wszystkie realizacje <small>{REALIZACJE.length}</small></h3>
-    <div class="tabs" role="group" aria-label="Filtruj realizacje" id="gal-tabs">
-      {zakladki.map(([k, l, n]) => <button type="button" data-k={k} aria-pressed={k === 'all' ? 'true' : 'false'}>{l}<span>{n}</span></button>)}
+  <button type="button" class="btn btn-ghost more-btn" id="gal-more" aria-expanded="false" aria-controls="more-work">Zobacz wszystkie realizacje ({REALIZACJE.length}) <span class="mono">↓</span></button>
+  <div class="more-work" id="more-work">
+    <div class="more-in">
+      <div class="gal-head">
+        <h3 class="disp">Więcej realizacji <small>{POZOSTALE.length}</small></h3>
+        <div class="tabs" role="group" aria-label="Filtruj realizacje" id="gal-tabs">
+          {zakladki.map(([k, l, n]) => <button type="button" data-k={k} aria-pressed={k === 'all' ? 'true' : 'false'}>{l}<span>{n}</span></button>)}
+        </div>
+      </div>
+      <div class="gal" id="gal">
+        {POZOSTALE.map((r) => {
+          const inner = <><div class="th"><img src={r.obraz} alt={r.nazwa} width="1200" height="768" loading="lazy" />{!r.href && <em class="soon mono">Wkrótce</em>}</div><b>{r.nazwa}</b><small>{r.opis}</small></>;
+          return r.href
+            ? <a data-k={r.kategoria} href={r.href} {...(zewnetrzny(r.href) ? { target: '_blank', rel: 'noopener' } : {})}>{inner}</a>
+            : <div data-k={r.kategoria}>{inner}</div>;
+        })}
+      </div>
     </div>
   </div>
-  <div class="gal short" id="gal">
-    {REALIZACJE.map((r) => {
-      const inner = <><div class="th"><img src={r.obraz} alt={r.nazwa} width="800" height="512" loading="lazy" />{!r.href && <em class="soon mono">Wkrótce</em>}</div><b>{r.nazwa}</b><small>{r.opis}</small></>;
-      return r.href
-        ? <a data-k={r.kategoria} href={r.href} {...(zewnetrzny(r.href) ? { target: '_blank', rel: 'noopener' } : {})}>{inner}</a>
-        : <div data-k={r.kategoria}>{inner}</div>;
-    })}
-  </div>
-  <button type="button" class="btn btn-ghost more-btn" id="gal-more">Pokaż wszystkie ({REALIZACJE.length})</button>
 </div></section>

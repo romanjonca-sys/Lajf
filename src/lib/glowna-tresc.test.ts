@@ -4,6 +4,7 @@ import { describe, it } from 'node:test';
 import {
   KATEGORIE_REALIZACJI,
   NieznanaKategoriaError,
+  POZOSTALE,
   PYTANIA,
   REALIZACJE,
   WYROZNIONE,
@@ -41,6 +42,11 @@ describe('treść strony głównej', () => {
       assert.ok(r, `brak realizacji ${nazwa}`);
       assert.ok(r.href, `${nazwa} musi mieć link`);
     }
+  });
+
+  it('galeria pod przyciskiem nie powtarza wyróżnionych realizacji', () => {
+    assert.ok(POZOSTALE.every((r) => !WYROZNIONE.includes(r.nazwa)));
+    assert.equal(POZOSTALE.length + WYROZNIONE.length, REALIZACJE.length);
   });
 
   it('linki wewnętrzne realizacji prowadzą do /realizacje/', () => {
