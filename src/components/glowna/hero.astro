@@ -13,7 +13,7 @@ const FAKTY = [
   ['Twoja', 'po roku: pliki, domena i treści.'],
 ];
 const LITERA_MS = 28;
-const NAGLOWEK = `${SLOWA.join(' ')} 399 zł/mc`;
+const NAGLOWEK = `${SLOWA.join(' ')} 399 zł netto miesięcznie`;
 // Numer kolejny litery w całym nagłówku: fala „zaciskania” liter idzie od lewej do prawej.
 let n = 0;
 const litery = (slowo: string): Array<{ z: string; i: number }> => [...slowo].map((z) => ({ z, i: n++ }));
@@ -24,21 +24,22 @@ const zl = litery('zł');
 <section class="hero"><div class="wrap">
   <h1 class="disp kinetic" id="kinetic" aria-label={NAGLOWEK}>
     {wierszeLiter.map((wiersz) => <span class="line" aria-hidden="true">{wiersz.map((l) => <><span class="w">{l.map(({ z, i }) => <span class="l" style={`--d:${i * LITERA_MS}ms`}>{z}</span>)}</span>{' '}</>)}</span>)}
-    <span class="w w-price" aria-hidden="true"><span class="hl" style={`--d:${n * LITERA_MS}ms`}>{cena.map(({ z, i }) => <span class="l" style={`--d:${i * LITERA_MS}ms`}>{z}</span>)} {zl.map(({ z, i }) => <span class="l" style={`--d:${i * LITERA_MS}ms`}>{z}</span>)}<sup>/mc</sup></span></span>
+    <span class="w w-price" aria-hidden="true"><span class="hl" style={`--d:${n * LITERA_MS}ms`}>{cena.map(({ z, i }) => <span class="l" style={`--d:${i * LITERA_MS}ms`}>{z}</span>)} {zl.map(({ z, i }) => <span class="l" style={`--d:${i * LITERA_MS}ms`}>{z}</span>)}<sup>/mc<br />netto</sup></span></span>
   </h1>
   <script is:inline>
     // Przed pierwszym malowaniem: tekst czeka na kulki (scripts/czastki.ts). Bez ruchu albo canvas zostaje widoczny.
     // Kulki tylko przy pierwszym wejściu w tej wizycie: kto wraca z podstrony, widzi tekst od razu.
+    // Bezpiecznik: jeśli moduł animacji się nie wczyta, nagłówek wraca po 4 s.
     var bylo = false;
     try { bylo = sessionStorage.getItem('lajf-kulki') === '1'; } catch (e) { bylo = false; }
-    if (!bylo && !matchMedia('(prefers-reduced-motion: reduce)').matches && document.createElement('canvas').getContext) document.getElementById('kinetic').classList.add('czeka');
+    if (!bylo && !matchMedia('(prefers-reduced-motion: reduce)').matches && document.createElement('canvas').getContext) { var h = document.getElementById('kinetic'); h.classList.add('czeka'); setTimeout(function () { if (!document.querySelector('.czastki')) h.classList.remove('czeka'); }, 4000); }
   </script>
   <div class="hero-sub">
     <div class="ctas">
       <a class="btn btn-signal" href="#kontakt">Poproś o telefon <span class="mono">→</span></a>
       <a class="btn btn-ghost" href="#cena">Zobacz, co w cenie</a>
     </div>
-    <p class="lead"><strong>Piszemy treści, projektujemy stronę, podpinamy domenę i pocztę. Potem o&nbsp;wszystko dbamy.</strong> <span><b>0 zł na start.</b> Płacisz dopiero za gotową, zaakceptowaną stronę, a&nbsp;po 12 ratach jest Twoja.</span></p>
+    <p class="lead"><strong>Piszemy treści, projektujemy stronę, podpinamy domenę i pocztę. Potem dbamy, żeby działała.</strong> <span><b>0 zł na start.</b> Płacisz dopiero za gotową, zaakceptowaną stronę, a&nbsp;po 12 ratach jest Twoja.</span></p>
     <span class="note">Odpowiadamy w ciągu dnia roboczego<br /><b>Masz już stronę? Przeniesiemy domenę i pocztę.</b></span>
   </div>
 </div>

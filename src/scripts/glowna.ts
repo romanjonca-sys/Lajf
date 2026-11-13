@@ -116,7 +116,14 @@ function galeria(): void {
     if (obraz.getAttribute('src') !== w.dataset.obraz) obraz.src = w.dataset.obraz ?? '';
     podglad.classList.add('on');
     cancelAnimationFrame(ramka);
-    ramka = requestAnimationFrame(() => { podglad.style.left = `${e.clientX + 200}px`; podglad.style.top = `${e.clientY}px`; });
+    ramka = requestAnimationFrame(() => {
+      const w2 = podglad.offsetWidth / 2;
+      const h2 = podglad.offsetHeight / 2;
+      const x = Math.min(window.innerWidth - w2 - 12, e.clientX + 200);
+      const y = Math.min(window.innerHeight - h2 - 12, Math.max(h2 + 12, e.clientY));
+      podglad.style.left = `${x}px`;
+      podglad.style.top = `${y}px`;
+    });
   });
   spis.addEventListener('pointerleave', () => podglad.classList.remove('on'));
 }
@@ -135,13 +142,14 @@ function formularz(): void {
       const res = await fetch('/api/contact', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
       const data = (await res.json().catch(() => ({}))) as { error?: { message?: string } };
       if (!res.ok) throw new Error(data.error?.message ?? KOMUNIKAT_BLEDU);
-      form.innerHTML = '<p class="form-ok">Dziękujemy. Zadzwonimy w ciągu dnia roboczego, a potwierdzenie jest już w Twojej skrzynce.</p>';
+      form.innerHTML = '<p class="form-ok" role="status" tabindex="-1">Dziękujemy. Zadzwonimy w ciągu dnia roboczego, a potwierdzenie jest już w Twojej skrzynce.</p>';
+      form.querySelector<HTMLElement>('.form-ok')?.focus();
       // Analityka (analytics-ga4.astro) liczy lead dopiero po potwierdzeniu z serwera.
       document.dispatchEvent(new CustomEvent('lajf:lead', { detail: { metoda: 'formularz' } }));
     } catch (err) {
       przycisk?.removeAttribute('disabled');
       let nota = form.querySelector('.form-err');
-      if (!nota) { nota = document.createElement('p'); nota.className = 'form-err'; form.appendChild(nota); }
+      if (!nota) { nota = document.createElement('p'); nota.className = 'form-err'; nota.setAttribute('role', 'alert'); form.appendChild(nota); }
       nota.textContent = err instanceof Error && err.message ? err.message : KOMUNIKAT_BLEDU;
     }
   });

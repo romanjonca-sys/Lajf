@@ -74,9 +74,9 @@ export const W_CENIE = [
 export const POROWNANIE: Array<[string, string, string, string]> = [
   ['Kto pisze treści', 'Ty', 'Zależy od umowy', 'My'],
   ['Koszt na start', '0 zł', '5–15 tys. zł', '0 zł'],
-  ['Zmiany po starcie', 'Robisz sam', 'Płatne za każdą', '1 h/mc w cenie'],
+  ['Zmiany po starcie', 'Robisz sam', 'Zwykle płatne osobno', '1 h/mc w cenie'],
   ['Domena, poczta, Google', 'Konfigurujesz sam', 'Zwykle poza ofertą', 'W cenie'],
-  ['Czyja jest strona', 'Platformy', 'Twoja', 'Twoja po 12 mc'],
+  ['Czyja jest strona', 'Zostaje na platformie', 'Twoja', 'Twoja po 12 mc'],
 ];
 
 export const PYTANIA: Array<{ q: string; a: string }> = [
@@ -85,7 +85,7 @@ export const PYTANIA: Array<{ q: string; a: string }> = [
   { q: 'Czy jestem uwiązany na rok?', a: '12 miesięcy pokrywa koszt wykonania strony, więc umowa trwa 12 miesięcy. Nic nie płacisz, dopóki nie zaakceptujesz gotowej strony. Rezygnujesz wcześniej? Spłacasz pozostałe raty i strona od razu jest Twoja.' },
   { q: 'A jak będę chciał coś zmienić?', a: 'Piszesz maila. Do godziny zmian w miesiącu jest w cenie: ceny, zdjęcia, godziny otwarcia, nowa usługa. Większe prace, np. nowa sekcja, wyceniamy z góry.' },
   { q: 'Co po 12 miesiącach?', a: 'Wybierasz: utrzymanie 99 zł/mc (serwer, kopie, aktualizacje), utrzymanie ze zmianami treści 199 zł/mc albo zabierasz pliki i domenę. Przy przeniesieniu pomagamy bezpłatnie.' },
-  { q: 'Mam już stronę i domenę.', a: 'Przenosimy domenę i pocztę za Ciebie, tak żeby działały bez przerwy.' },
+  { q: 'Mam już stronę i domenę.', a: 'Przenosimy domenę i pocztę za Ciebie. Zmianę planujemy tak, żeby poczta działała w trakcie przenosin, a stara strona do chwili startu nowej.' },
   { q: 'Kim jesteście?', a: 'Lajf sp. z o.o., spółka z KRS z Jaworzna. Robimy strony i aplikacje dla firm usługowych, gabinetów i artystów. Faktura VAT.' },
 ];
 
@@ -124,5 +124,5 @@ export const KARTKI: Array<[string, string, string]> = [
   ['✎', 'Zmiana na stronie · zrobione', 'Nowe godziny otwarcia od poniedziałku'],
   ['✉', 'Nowe zapytanie z formularza', 'Klient prosi o telefon w sprawie wyceny'],
   ['↺', 'Kopia zapasowa · 03:00', 'Wszystko działa, nic nie musisz robić'],
-  ['▲', 'Aktualizacja bezpieczeństwa', 'Wgrana w nocy, bez przerwy w działaniu'],
+  ['▲', 'Aktualizacja bezpieczeństwa', 'Wgrana w nocy, strona działa dalej'],
 ];

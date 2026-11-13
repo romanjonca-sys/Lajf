@@ -86,11 +86,13 @@ export function scena(): void {
   ekran.classList.add('on');
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  sceny.forEach((sc) => sc.strony.forEach((st) => { new Image().src = st.obraz; }));
   let widoczna = true;
   new IntersectionObserver(([w]) => { widoczna = w.isIntersecting; }).observe(kontener);
 
   const pokazStrone = async (st: Strona): Promise<void> => {
+    const nowy = new Image();
+    nowy.src = st.obraz;
+    await nowy.decode().catch((err: unknown) => console.warn('[scena] zrzut:', err));
     ekran.classList.add('zmiana');
     await wait(PRZEJSCIE_MS);
     obraz.src = st.obraz;

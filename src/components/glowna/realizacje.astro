@@ -13,7 +13,7 @@ const zewnetrzny = (href: string): boolean => href.startsWith('http');
 <section id="realizacje" class="sec"><div class="wrap">
   <div class="head">
     <h2 class="disp">Strony, które zrobiliśmy i prowadzimy</h2>
-    <p>Firmy usługowe, gabinety, artyści. Każda strona działa i można ją sprawdzić.</p>
+    <p>Firmy usługowe, gabinety, artyści. Strony oznaczone „Działa” możesz otworzyć i sprawdzić sam.</p>
   </div>
   <div class="tabs" role="group" aria-label="Filtruj realizacje" id="gal-tabs">
     {zakladki.map(([k, l, n]) => <button type="button" data-k={k} aria-pressed={k === 'all' ? 'true' : 'false'}>{l}<span>{n}</span></button>)}
