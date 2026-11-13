@@ -36,6 +36,7 @@ export const REALIZACJE: Realizacja[] = [
   { kategoria: 'uslugi', nazwa: 'M-DENTAL', obraz: '/images/glowna/realizacje/mdental.webp', href: null, opis: 'Przychodnia stomatologiczna, Warszawa' },
   { kategoria: 'firmy', nazwa: 'BEC Podcast', obraz: '/images/glowna/realizacje/bec.webp', href: null, opis: 'Podcast firmowy, klub i panel redakcyjny' },
   { kategoria: 'firmy', nazwa: 'Innova Biological', obraz: '/images/glowna/realizacje/innova.webp', href: 'https://innova-biological.pages.dev', opis: 'Strona B2B marki chemicznej' },
+  { kategoria: 'firmy', nazwa: 'aPPWR', obraz: '/images/glowna/realizacje/appwr.webp', href: '/realizacje/ppwr-dla-firm/', opis: 'Aplikacja: dokumentacja zgodności opakowań (SaaS)' },
   { kategoria: 'firmy', nazwa: 'PPWR dla firm', obraz: '/images/glowna/realizacje/ppwrdlafirm.webp', href: '/realizacje/ppwr-dla-firm/', opis: 'Dokumentacja opakowaniowa dla producentów' },
   { kategoria: 'firmy', nazwa: 'moje-rodo', obraz: '/images/glowna/realizacje/moje-rodo.webp', href: '/realizacje/moje-rodo/', opis: 'System zgodności RODO dla medycyny' },
   { kategoria: 'firmy', nazwa: 'Rejestr badania', obraz: '/images/realizacje/rejestr-badania.jpg', href: '/realizacje/rejestr-badania-klinicznego/', opis: 'Aplikacja do badania klinicznego' },
