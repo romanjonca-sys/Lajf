@@ -141,7 +141,7 @@ export const EN: TrescSystemow = {
       tytul: 'A system for industry',
       opis: 'Packaging records, document generation and a portal where the client closes the gaps themselves.',
       tag: 'system · client portal',
-      href: '/en/#contact',
+      href: '/en/#kontakt',
     },
   ],
 
@@ -149,5 +149,5 @@ export const EN: TrescSystemow = {
   tekstCta:
     'Describe the one process that hurts most. I will tell you whether it makes sense to move it into a system, and if it does not, I will say so.',
   przyciskCta: 'Let us talk →',
-  hrefKontakt: '/en/#contact',
+  hrefKontakt: '/en/#kontakt',
 };

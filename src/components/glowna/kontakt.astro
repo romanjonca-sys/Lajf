@@ -1,29 +1,34 @@
 ---
 import { siteConfig } from '../../../site.config';
+import { teksty, type Jezyk } from '../../lib/glowna-teksty';
 
+interface Props { jezyk?: Jezyk }
+const { jezyk = 'pl' } = Astro.props;
+const t = teksty(jezyk);
 const { phone, email, whatsapp } = siteConfig.company;
 const cyfry = (numer: string): string => numer.replace(/\D/g, '');
 const KANALY = [
-  { etykieta: 'Zadzwoń', wartosc: phone, href: `tel:+${cyfry(phone)}` },
-  { etykieta: 'Napisz', wartosc: email, href: `mailto:${email}` },
-  ...(whatsapp ? [{ etykieta: 'WhatsApp', wartosc: 'Napisz na WhatsAppie', href: `https://wa.me/${cyfry(whatsapp)}` }] : []),
+  { etykieta: t.kanaly.zadzwon, wartosc: phone, href: `tel:+${cyfry(phone)}` },
+  { etykieta: t.kanaly.napisz, wartosc: email, href: `mailto:${email}` },
+  ...(whatsapp ? [{ etykieta: 'WhatsApp', wartosc: t.kanaly.whatsapp, href: `https://wa.me/${cyfry(whatsapp)}` }] : []),
 ];
 ---
 <section id="kontakt" class="sec contact"><div class="wrap grid">
   <div>
-    <h2 class="disp">Porozmawiajmy o Twojej stronie</h2>
-    <p class="lead">Zostaw numer. Roman zadzwoni w ciągu dnia roboczego. W 15 minut ustalicie, czy ten plan pasuje do Twojej firmy.</p>
+    <h2 class="disp">{t.kontaktH}</h2>
+    <p class="lead">{t.kontaktP}</p>
     <ul class="direct">
       {KANALY.map((k) => <li><a href={k.href}><span class="mono">{k.etykieta}</span><b>{k.wartosc}</b><i aria-hidden="true">→</i></a></li>)}
     </ul>
   </div>
   <form id="lead" name="abonament" novalidate>
-    <label for="f-tel">Telefon<input id="f-tel" name="telefon" type="tel" autocomplete="tel" required /></label>
-    <label for="f-email">E-mail <em>opcjonalnie, wyślemy potwierdzenie</em><input id="f-email" name="email" type="email" autocomplete="email" /></label>
-    <label for="f-name">Imię <em>opcjonalnie</em><input id="f-name" name="name" autocomplete="name" /></label>
-    <label for="f-www">Obecna strona <em>opcjonalnie</em><input id="f-www" name="www" inputmode="url" /></label>
-    <div class="hp" aria-hidden="true"><label for="f-hp">Nie wypełniaj<input id="f-hp" name="_gotcha" tabindex="-1" autocomplete="off" /></label></div>
-    <button class="btn btn-solid" type="submit" style="justify-content:center">Poproś o telefon <span class="mono">→</span></button>
-    <p class="fine">Dane wykorzystamy tylko do odpowiedzi. Więcej w <a href="/polityka-prywatnosci/">polityce prywatności</a>.</p>
+    <input type="hidden" name="lang" value={jezyk} />
+    <label for="f-tel">{t.formTelefon}<input id="f-tel" name="telefon" type="tel" autocomplete="tel" required /></label>
+    <label for="f-email">{t.formEmail} <em>{t.formEmailEm}</em><input id="f-email" name="email" type="email" autocomplete="email" /></label>
+    <label for="f-name">{t.formImie} <em>{t.opcjonalnie}</em><input id="f-name" name="name" autocomplete="name" /></label>
+    <label for="f-www">{t.formWww} <em>{t.opcjonalnie}</em><input id="f-www" name="www" inputmode="url" /></label>
+    <div class="hp" aria-hidden="true"><label for="f-hp">{t.pulapka}<input id="f-hp" name="_gotcha" tabindex="-1" autocomplete="off" /></label></div>
+    <button class="btn btn-solid" type="submit" style="justify-content:center">{t.ctaTelefon} <span class="mono">→</span></button>
+    <p class="fine">{t.formFine} <a href="/polityka-prywatnosci/">{t.politykaLink}</a>.</p>
   </form>
 </div></section>

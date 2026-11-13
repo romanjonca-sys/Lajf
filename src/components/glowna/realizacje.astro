@@ -4,18 +4,23 @@
  * Komputer: podgląd strony podąża za kursorem nad wierszem. Telefon: miniatura w wierszu.
  * Pierwsze WIDOCZNE wiersze widać od razu, reszta po kliknięciu „Pokaż wszystkie”.
  */
-import { KATEGORIE_REALIZACJI, REALIZACJE } from '../../lib/glowna-tresc';
+import { teksty, type Jezyk } from '../../lib/glowna-teksty';
+
+interface Props { jezyk?: Jezyk }
+const { jezyk = 'pl' } = Astro.props;
+const t = teksty(jezyk);
+const REALIZACJE = t.realizacje;
 
 const WIDOCZNE = 6;
-const zakladki = [['all', 'Wszystkie', REALIZACJE.length], ...Object.entries(KATEGORIE_REALIZACJI).map(([k, l]) => [k, l, REALIZACJE.filter((r) => r.kategoria === k).length])];
+const zakladki = [['all', t.wszystkie, REALIZACJE.length], ...Object.entries(t.kategorie).map(([k, l]) => [k, l, REALIZACJE.filter((r) => r.kategoria === k).length])];
 const zewnetrzny = (href: string): boolean => href.startsWith('http');
 ---
 <section id="realizacje" class="sec"><div class="wrap">
   <div class="head">
-    <h2 class="disp">Strony, które zrobiliśmy i prowadzimy</h2>
-    <p>Firmy usługowe, gabinety, artyści. Strony oznaczone „Działa” możesz otworzyć i sprawdzić sam.</p>
+    <h2 class="disp">{t.realizacjeH}</h2>
+    <p>{t.realizacjeP}</p>
   </div>
-  <div class="tabs" role="group" aria-label="Filtruj realizacje" id="gal-tabs">
+  <div class="tabs" role="group" aria-label={t.filtrAria} id="gal-tabs">
     {zakladki.map(([k, l, n]) => <button type="button" data-k={k} aria-pressed={k === 'all' ? 'true' : 'false'}>{l}<span>{n}</span></button>)}
   </div>
   <ol class="spis krotki" id="spis">
@@ -25,7 +30,7 @@ const zewnetrzny = (href: string): boolean => href.startsWith('http');
         <img class="mini" src={r.obraz} alt="" width="1200" height="768" loading="lazy" />
         <span class="nazwa">{r.nazwa}</span>
         <span class="opis">{r.opis}</span>
-        <span class="stan mono">{r.href ? 'Działa' : 'Wkrótce'}</span>
+        <span class="stan mono">{r.href ? t.dziala : t.wkrotce}</span>
         <span class="strz mono" aria-hidden="true">{r.href ? '↗' : ''}</span>
       </>;
       return <li data-k={r.kategoria} data-obraz={r.obraz} class:list={{ dalej: i >= WIDOCZNE }}>
@@ -33,6 +38,6 @@ const zewnetrzny = (href: string): boolean => href.startsWith('http');
       </li>;
     })}
   </ol>
-  <button type="button" class="btn btn-ghost more-btn" id="gal-more" aria-expanded="false" aria-controls="spis">Pokaż wszystkie ({REALIZACJE.length}) <span class="mono">↓</span></button>
+  <button type="button" class="btn btn-ghost more-btn" id="gal-more" aria-expanded="false" aria-controls="spis">{t.pokazWszystkie} ({REALIZACJE.length}) <span class="mono">↓</span></button>
   <div class="podglad" id="podglad" aria-hidden="true"><img alt="" /></div>
 </div></section>

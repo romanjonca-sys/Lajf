@@ -1,30 +1,25 @@
 ---
 import { SCENY } from '../../lib/glowna-tresc';
+import { teksty, type Jezyk } from '../../lib/glowna-teksty';
 
+interface Props { jezyk?: Jezyk }
+const { jezyk = 'pl' } = Astro.props;
+const t = teksty(jezyk);
 const [pierwsza] = SCENY;
-
-// Stałe wiersze: w trakcie animacji litery są szersze i bez tego słowa przeskakiwałyby między liniami.
-const WIERSZE = [['Strona', 'Twojej'], ['firmy.', 'Zrobiona'], ['i', 'prowadzona'], ['za', 'Ciebie.']];
-const SLOWA = WIERSZE.flat();
-const FAKTY = [
-  ['0 zł', 'na start. Bez opłaty wdrożeniowej.'],
-  ['2–4 tyg.', 'od rozmowy do strony gotowej do akceptacji.'],
-  ['12 ×', 'rat miesięcznych, dopiero po akceptacji.'],
-  ['Twoja', 'po roku: pliki, domena i treści.'],
-];
 const LITERA_MS = 28;
-const NAGLOWEK = `${SLOWA.join(' ')} 399 zł netto miesięcznie`;
-// Numer kolejny litery w całym nagłówku: fala „zaciskania” liter idzie od lewej do prawej.
+// Numer kolejny litery w całym nagłówku: fala liter idzie od lewej do prawej.
 let n = 0;
 const litery = (slowo: string): Array<{ z: string; i: number }> => [...slowo].map((z) => ({ z, i: n++ }));
-const wierszeLiter = WIERSZE.map((w) => w.map(litery));
-const cena = litery('399');
-const zl = litery('zł');
+// Stałe wiersze: w trakcie animacji litery są szersze i bez tego słowa przeskakiwałyby między liniami.
+const wierszeLiter = t.wiersze.map((w) => w.map(litery));
+const [cenaTekst, walutaTekst] = t.cenaZnaki;
+const cena = litery(cenaTekst);
+const waluta = litery(walutaTekst);
 ---
 <section class="hero"><div class="wrap">
-  <h1 class="disp kinetic" id="kinetic" aria-label={NAGLOWEK}>
+  <h1 class="disp kinetic" id="kinetic" aria-label={t.naglowekAria}>
     {wierszeLiter.map((wiersz) => <span class="line" aria-hidden="true">{wiersz.map((l) => <><span class="w">{l.map(({ z, i }) => <span class="l" style={`--d:${i * LITERA_MS}ms`}>{z}</span>)}</span>{' '}</>)}</span>)}
-    <span class="w w-price" aria-hidden="true"><span class="hl" style={`--d:${n * LITERA_MS}ms`}>{cena.map(({ z, i }) => <span class="l" style={`--d:${i * LITERA_MS}ms`}>{z}</span>)} {zl.map(({ z, i }) => <span class="l" style={`--d:${i * LITERA_MS}ms`}>{z}</span>)}<sup>/mc<br />netto</sup></span></span>
+    <span class="w w-price" aria-hidden="true"><span class="hl" style={`--d:${n * LITERA_MS}ms`}>{cena.map(({ z, i }) => <span class="l" style={`--d:${i * LITERA_MS}ms`}>{z}</span>)}{waluta.length > 0 && ' '}{waluta.map(({ z, i }) => <span class="l" style={`--d:${i * LITERA_MS}ms`}>{z}</span>)}<sup>{t.cenaSup[0]}<br />{t.cenaSup[1]}</sup></span></span>
   </h1>
   <script is:inline>
     // Przed pierwszym malowaniem: tekst czeka na kulki (scripts/czastki.ts). Bez ruchu albo canvas zostaje widoczny.
@@ -36,19 +31,19 @@ const zl = litery('zł');
   </script>
   <div class="hero-sub">
     <div class="ctas">
-      <a class="btn btn-signal" href="#kontakt">Poproś o telefon <span class="mono">→</span></a>
-      <a class="btn btn-ghost" href="#cena">Zobacz, co w cenie</a>
+      <a class="btn btn-signal" href="#kontakt">{t.ctaTelefon} <span class="mono">→</span></a>
+      <a class="btn btn-ghost" href="#cena">{t.ctaCena}</a>
     </div>
-    <p class="lead"><strong>Piszemy treści, projektujemy stronę, podpinamy domenę i pocztę. Potem dbamy, żeby działała.</strong> <span><b>0 zł na start.</b> Płacisz dopiero za gotową, zaakceptowaną stronę, a&nbsp;po 12 ratach jest Twoja.</span></p>
-    <span class="note">Odpowiadamy w ciągu dnia roboczego<br /><b>Masz już stronę? Przeniesiemy domenę i pocztę.</b></span>
+    <p class="lead"><strong>{t.leadMocny}</strong> <span><b>{t.leadCena}</b> {t.leadReszta}</span></p>
+    <span class="note">{t.notka}<br /><b>{t.notkaMocna}</b></span>
   </div>
 </div>
-  <div class="scena" id="scena" data-sceny={JSON.stringify(SCENY)} aria-label="Strony klientów Lajf na ekranach laptopów" role="img">
+  <div class="scena" id="scena" data-sceny={JSON.stringify(SCENY)} aria-label={t.scenaAria} role="img">
     {SCENY.map((sc, i) => <img class:list={['scena-foto', { on: i === 0 }]} src={sc.foto} alt="" width="2400" height="1600" style={`object-position:${sc.kadr[0] * 100}% ${sc.kadr[1] * 100}%`} loading="eager" />)}
     <div class="ekran" id="ekran"><img id="ekran-img" src={pierwsza.strony[0].obraz} alt="" /></div>
     <div class="scena-podpis mono"><b></b><span id="scena-adres">{pierwsza.strony[0].nazwa} · {pierwsza.strony[0].adres}</span></div>
   </div>
 </section>
 <div class="facts"><div class="wrap"><ul>
-  {FAKTY.map(([b, s]) => <li><b class="disp">{b}</b><span>{s}</span></li>)}
+  {t.fakty.map(([b, s]) => <li><b class="disp">{b}</b><span>{s}</span></li>)}
 </ul></div></div>

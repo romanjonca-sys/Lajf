@@ -10,7 +10,9 @@ import { swiatlo } from './swiatlo';
 
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const KARTKA_MS = 3800;
-const KOMUNIKAT_BLEDU = 'Nie udało się wysłać. Zadzwoń albo napisz: kontakt@lajf.eu.';
+const EN = document.documentElement.lang === 'en';
+const KOMUNIKAT_BLEDU = EN ? 'Could not send. Call us or email kontakt@lajf.eu.' : 'Nie udało się wysłać. Zadzwoń albo napisz: kontakt@lajf.eu.';
+const DZIEKUJEMY = EN ? 'Thank you. We will call you within one business day.' : 'Dziękujemy. Zadzwonimy w ciągu dnia roboczego.';
 
 
 function czytajJson<T>(el: HTMLElement | null, atrybut: string): T | null {
@@ -142,7 +144,9 @@ function formularz(): void {
       const res = await fetch('/api/contact', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
       const data = (await res.json().catch(() => ({}))) as { error?: { message?: string } };
       if (!res.ok) throw new Error(data.error?.message ?? KOMUNIKAT_BLEDU);
-      form.innerHTML = '<p class="form-ok" role="status" tabindex="-1">Dziękujemy. Zadzwonimy w ciągu dnia roboczego.</p>';
+      form.innerHTML = '<p class="form-ok" role="status" tabindex="-1"></p>';
+      const ok = form.querySelector<HTMLElement>('.form-ok');
+      if (ok) ok.textContent = DZIEKUJEMY;
       form.querySelector<HTMLElement>('.form-ok')?.focus();
       // Analityka (analytics-ga4.astro) liczy lead dopiero po potwierdzeniu z serwera.
       document.dispatchEvent(new CustomEvent('lajf:lead', { detail: { metoda: 'formularz' } }));

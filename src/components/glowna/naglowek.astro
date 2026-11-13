@@ -1,18 +1,20 @@
 ---
+import { teksty, type Jezyk } from '../../lib/glowna-teksty';
 import Logo from './logo.astro';
+
+interface Props { jezyk?: Jezyk }
+const { jezyk = 'pl' } = Astro.props;
+const t = teksty(jezyk);
+const inny = jezyk === 'pl' ? { href: '/en/', kod: 'en', etykieta: 'EN' } : { href: '/', kod: 'pl', etykieta: 'PL' };
 ---
 <div class="band"><div class="wrap">
-  <p>Strony w abonamencie · 0 zł na start · płacisz po akceptacji</p>
-  <a href="/en/" hreflang="en" lang="en">EN</a>
+  <p>{t.band}</p>
+  <a href={inny.href} hreflang={inny.kod} lang={inny.kod}>{inny.etykieta}</a>
 </div></div>
 <header class="top"><div class="wrap">
   <Logo />
-  <nav aria-label="Menu główne"><ul>
-    <li><a href="#realizacje">Realizacje</a></li>
-    <li><a href="#cena">Cena</a></li>
-    <li><a href="#jak-to-dziala">Jak to działa</a></li>
-    <li><a href="/poradnik/">Porady</a></li>
-    <li><a href="#pytania">Pytania</a></li>
+  <nav aria-label={t.menuAria}><ul>
+    {t.menu.map(([href, label]) => <li><a href={href}>{label}</a></li>)}
   </ul></nav>
-  <a class="btn btn-solid" href="#kontakt">Umów rozmowę</a>
+  <a class="btn btn-solid" href="#kontakt">{t.ctaRozmowa}</a>
 </div></header>

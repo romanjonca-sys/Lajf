@@ -1,17 +1,20 @@
 ---
-import { POROWNANIE } from '../../lib/glowna-tresc';
+import { teksty, type Jezyk } from '../../lib/glowna-teksty';
 
-const KOLUMNY = ['Kreator (Wix itp.)', 'Agencja', 'Lajf'];
+interface Props { jezyk?: Jezyk }
+const { jezyk = 'pl' } = Astro.props;
+const t = teksty(jezyk);
+const [k0, k1, k2] = t.kolumny;
 ---
 <section class="sec" style="padding-top:0"><div class="wrap">
   <div class="head">
-    <h2 class="disp">Dlaczego nie kreator albo agencja?</h2>
-    <p>Jedno i drugie działa. Tylko zostawia na Twojej głowie inne rzeczy.</p>
+    <h2 class="disp">{t.porH}</h2>
+    <p>{t.porP}</p>
   </div>
   <div class="compare"><table>
-    <thead><tr><th></th><th>{KOLUMNY[0]}</th><th>{KOLUMNY[1]}</th><th class="us">{KOLUMNY[2]}</th></tr></thead>
+    <thead><tr><th></th><th>{k0}</th><th>{k1}</th><th class="us">{k2}</th></tr></thead>
     <tbody>
-      {POROWNANIE.map(([c, a, b, l]) => <tr><th scope="row">{c}</th><td data-l={KOLUMNY[0]}>{a}</td><td data-l={KOLUMNY[1]}>{b}</td><td class="us" data-l={KOLUMNY[2]}>{l}</td></tr>)}
+      {t.porownanie.map(([c, a, b, l]) => <tr><th scope="row">{c}</th><td data-l={k0}>{a}</td><td data-l={k1}>{b}</td><td class="us" data-l={k2}>{l}</td></tr>)}
     </tbody>
   </table></div>
 </div></section>
