@@ -1,0 +1,88 @@
+---
+/**
+ * Realizacja: aplikacja aPPWR (app.ppwrdlafirm.pl), własny produkt Lajf. Stan na 13.11.2026.
+ * Osobno od realizacji STRONY ppwrdlafirm.pl (/realizacje/ppwr-dla-firm/).
+ * Źródła faktów: publiczna strona ppwrdlafirm.pl/film/ (3 filmy, demo bez logowania), cennik ppwrdlafirm.pl/cennik/
+ * (sprawdzony 13.11.2026), repo aplikacji ppwr-app.git (moduł ppwr).
+ * Zrzuty WYŁĄCZNIE z publicznych filmów, na danych przykładowej firmy. Danych klientów nie pokazujemy.
+ * Ceny przed każdą zmianą tej strony sprawdzić ponownie na ppwrdlafirm.pl/cennik/.
+ */
+import LajfLayout from '../../layouts/lajf-layout.astro';
+import '../../styles/artykul.css';
+
+const title = 'Aplikacja aPPWR: deklaracje zgodności opakowań | Realizacja Lajf';
+const description =
+  'Własny produkt Lajf: aplikacja, w której firma z własną marką zbiera dokumenty od dostawców opakowań i wystawia deklarację zgodności UE z kodem QR.';
+const ZRZUTY = '/images/realizacje/appwr';
+---
+
+<LajfLayout title={title} description={description} ogImage="/images/og/realizacja-appwr.jpg">
+  <header class="phero art-hero"><div class="wrap pin">
+    <div class="art-crumbs"><a href="/">Lajf</a><span aria-hidden="true">/</span><a href="/#realizacje">Realizacje</a></div>
+    <span class="label">Własny produkt Lajf · aplikacja</span>
+    <h1>Aplikacja <span class="hl">aPPWR</span></h1>
+    <p class="lead">Aplikacja, w której firma z własną marką zbiera dokumenty od dostawców opakowań, widzi, czego brakuje, i wystawia deklarację zgodności UE z kodem QR. Działa pod adresem app.ppwrdlafirm.pl. Stronę, która tłumaczy obowiązek PPWR, opisujemy osobno.</p>
+    <div class="art-live">
+      <a href="https://ppwrdlafirm.pl/film/" class="btn btn-primary" target="_blank" rel="noopener">Zobacz filmy z aplikacji →</a>
+    </div>
+  </div></header>
+
+  <section class="art-section"><div class="wrap">
+    <article class="art-body">
+      <p>Ekrany poniżej pochodzą z publicznych filmów o aplikacji i pokazują dane przykładowej firmy. Danych klientów nie pokazujemy.</p>
+
+      <h2>Od razu widać, czego brakuje</h2>
+      <p>Pierwszy ekran pokazuje stan wszystkich opakowań: ile pozycji jest zamkniętych, co czeka na firmę i od której części zacząć. Dopóki brakuje wymaganych dowodów, deklaracji nie da się wygenerować.</p>
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/zgodnosc.jpg`} alt="Ekran Zgodność w aplikacji aPPWR: liczba opakowań, pozycje zamknięte, pozycje czekające, deklaracje i pasek postępu dokumentacji" width="1600" height="750" loading="lazy" />
+        <figcaption>Stan dokumentacji całej firmy na jednym ekranie.</figcaption>
+      </figure>
+
+      <h2>Część opakowania jako podstawowa jednostka</h2>
+      <ul>
+        <li>Ta sama folia w dwudziestu opakowaniach ma jeden zapis, a każda część ma listę wymogów PPWR z informacją, czego brakuje.</li>
+        <li>Firma zakłada opakowanie z częściami albo importuje cały portfel jednym arkuszem.</li>
+        <li>Wiek dowodu jest widoczny. Przy starzejącym się dokumencie aplikacja przygotowuje pismo do dostawcy o odświeżenie.</li>
+        <li>Nic, co zostanie wgrane, nie zmienia stanu zgodności. Zmienia go dopiero człowiek, który sprawdził dokument.</li>
+      </ul>
+
+      <h2>Dostawca wgrywa dokumenty z telefonu, bez konta</h2>
+      <p>Dostawca dostaje link, w którym wgrywa dokumenty i podaje dane. Nie zakłada konta. Dane firmy aplikacja dociąga po NIP.</p>
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/dostawca.jpg`} alt="Lista dostawców w aplikacji i strona dla dostawcy na telefonie z dokumentami do wgrania" width="1600" height="750" loading="lazy" />
+        <figcaption>Po lewej lista dostawców, po prawej to, co dostawca widzi w telefonie.</figcaption>
+      </figure>
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/potwierdzanie.jpg`} alt="Ekran potwierdzania kilku pozycji naraz, pogrupowanych według dokumentu" width="1600" height="750" loading="lazy" />
+        <figcaption>Jeden dokument obejmuje kilka części, więc potwierdza się je grupami.</figcaption>
+      </figure>
+
+      <h2>Deklaracja, której nie da się po cichu podmienić</h2>
+      <p>Wystawiona deklaracja zgodności UE ma logo firmy i kod QR. Jest zamrażana jako PDF razem z sumą kontrolną SHA-256 i migawką danych. Przy każdym pobraniu suma jest liczona od nowa, a jeśli plik się nie zgadza, aplikacja odmawia wydania. Kontroler skanuje kod QR telefonem i sprawdza, czy dokument jest aktualny.</p>
+      <figure class="zrzut">
+        <img src={`${ZRZUTY}/deklaracja-qr.jpg`} alt="Deklaracja zgodności UE z kodem QR i ekran weryfikacji dokumentu na telefonie" width="1600" height="750" loading="lazy" />
+        <figcaption>Deklaracja z kodem QR i weryfikacja na telefonie.</figcaption>
+      </figure>
+      <p>Ma to sens z powodu dziesięciu dni z art. 15 ust. 10: okazuje się dokumentację, na podstawie której wprowadzono opakowanie do obrotu, a nie jej późniejszą wersję. Dokument mówi też wprost, które dane pochodzą od dostawców, a które z oświadczenia firmy.</p>
+
+      <h2>Dwa sposoby korzystania</h2>
+      <ul>
+        <li><strong>Sami:</strong> firma pracuje w aplikacji samodzielnie. Abonament zależy od liczby rodzajów opakowań, bez opłaty za start.</li>
+        <li><strong>Za Was:</strong> opiekun prowadzi dokumentację, kontaktuje się z dostawcami i pilnuje terminów.</li>
+      </ul>
+      <p>Aktualne ceny są na <a href="https://ppwrdlafirm.pl/cennik/" target="_blank" rel="noopener">ppwrdlafirm.pl/cennik</a>. Deklarację zawsze podpisuje wytwórca, czyli marka, a nie my.</p>
+
+      <h2>Technologia</h2>
+      <p>Aplikacja opiera się na frameworku Open Mercato (Next.js, PostgreSQL) z własnym modułem PPWR, działa w kontenerach na własnym serwerze za Cloudflare i ma testy automatyczne logiki dokumentów.</p>
+      <p>Zobacz też: <a href="/realizacje/ppwr-dla-firm/">strona ppwrdlafirm.pl</a>, która tłumaczy obowiązek PPWR na przykładach.</p>
+    </article>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="ctaband reveal">
+      <h2>Masz obowiązek, którego nikt nie chce robić ręcznie?</h2>
+      <p>Opisz, jakie dokumenty i od kogo zbierasz dziś w arkuszach. Odpiszemy, czy da się z tego zrobić proces albo narzędzie i od czego zacząć.</p>
+      <a href="/#kontakt" class="btn btn-primary magnetic">Porozmawiajmy →</a>
+    </div>
+  </div></section>
+</LajfLayout>

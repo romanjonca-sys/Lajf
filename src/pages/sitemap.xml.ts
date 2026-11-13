@@ -27,6 +27,7 @@ const PAGES = [
   'realizacje/strona-wokalistki-iwona-wegrowska',
   'realizacje/moje-rodo',
   'realizacje/ppwr-dla-firm',
+  'realizacje/appwr',
   'realizacje/uklad-komediowy',
   'realizacje/krzysztof-stanio',
   'realizacje/dzwiek-dobry',
