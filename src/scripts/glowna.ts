@@ -90,36 +90,6 @@ function animacje(): void {
   }
 }
 
-/** Realizacje-historie: zakładki 01–03, same przełączają się co CZAS_HISTORII_MS, stoją po najechaniu lub kliknięciu. */
-const CZAS_HISTORII_MS = 7000;
-function historie(): void {
-  const sekcja = document.getElementById('story');
-  if (!sekcja) return;
-  const zakladki = Array.from(sekcja.querySelectorAll<HTMLButtonElement>('.story-tab'));
-  const panele = Array.from(sekcja.querySelectorAll<HTMLElement>('.story-panel'));
-  const zdjecia = Array.from(sekcja.querySelectorAll<HTMLElement>('.story-img'));
-  sekcja.style.setProperty('--czas', `${CZAS_HISTORII_MS}ms`);
-  const strony = czytajJson<string[]>(sekcja, 'data-strony') ?? [];
-  let biezaca = 0;
-  let licznik = 0;
-  const pokaz = (i: number): void => {
-    biezaca = i;
-    zakladki.forEach((z, k) => z.setAttribute('aria-selected', String(k === i)));
-    panele.forEach((p, k) => { p.hidden = k !== i; });
-    zdjecia.forEach((z, k) => z.classList.toggle('on', k === i));
-    sekcja.classList.toggle('tekst-prawo', strony[i] === 'prawo');
-  };
-  const auto = (): void => {
-    clearInterval(licznik);
-    if (REDUCED || sekcja.classList.contains('stop')) return;
-    licznik = window.setInterval(() => pokaz((biezaca + 1) % zakladki.length), CZAS_HISTORII_MS);
-  };
-  zakladki.forEach((z, i) => z.addEventListener('click', () => { sekcja.classList.add('stop'); clearInterval(licznik); pokaz(i); }));
-  sekcja.addEventListener('pointerenter', () => { clearInterval(licznik); sekcja.classList.add('stop'); });
-  sekcja.addEventListener('pointerleave', () => { sekcja.classList.remove('stop'); pokaz(biezaca); auto(); });
-  obserwuj(sekcja, { threshold: 0.3 }, (w) => { if (w) auto(); else clearInterval(licznik); });
-}
-
 function galeria(): void {
   const zakladki = document.getElementById('gal-tabs');
   const siatka = document.getElementById('gal');
@@ -167,7 +137,6 @@ function formularz(): void {
 
 swiatlo();
 scena();
-historie();
 galeria();
 formularz();
 if (!REDUCED) animacje();

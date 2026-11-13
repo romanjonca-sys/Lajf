@@ -48,27 +48,6 @@ export const REALIZACJE: Realizacja[] = [
   { kategoria: 'kultura', nazwa: 'Dźwięk Dobry', obraz: '/images/glowna/realizacje/dzwiek.webp', href: '/realizacje/dzwiek-dobry/', opis: 'Studio pisania piosenek' },
 ];
 
-export interface Historia {
-  nazwa: string;
-  etykieta: string;
-  /** Zdjęcie z Unsplash (licencja Unsplash) z wklejoną stroną klienta na laptopie, w /public. */
-  obraz: string;
-  /** Gdzie na zdjęciu stoi laptop, żeby na telefonie kadr go nie uciął (object-position). */
-  kadr: string;
-  /** Po której stronie zdjęcia stoi tekst: tam, gdzie nie ma laptopa. */
-  tekst: 'lewo' | 'prawo';
-  tytul: string;
-  opis: string;
-  href: string;
-  pytania: Array<[string, string]>;
-}
-
-/** Sekcja realizacji w stylu „historie”: zdjęcie przy laptopie + zakładki 01–03 + rozwijane pytania. */
-export const HISTORIE: Historia[] = [
-  { nazwa: 'Pan Kolektor', etykieta: 'Serwis kolektorów', obraz: '/images/glowna/historie/pankolektor.webp', kadr: '82% 50%', tekst: 'lewo', tytul: 'Telefon zawsze pod ręką', opis: 'Numer w nagłówku i na pierwszym ekranie, certyfikaty i realizacje z dachów. Klient z awarią dzwoni od razu, zamiast szukać dalej.', href: '/realizacje/pan-kolektor/', pytania: [['A jeśli nie mam dobrych zdjęć?', 'Wystarczą zdjęcia z telefonu z Twoich realizacji. Wybieramy najlepsze i dbamy, żeby wyglądały porządnie.'], ['Kto pisze treści?', 'My. Po 15-minutowej rozmowie piszemy teksty o Twoich usługach, a Ty tylko je akceptujesz.']] },
-  { nazwa: 'R&L Serwis', etykieta: 'Firma sprzątająca', obraz: '/images/glowna/historie/rlserwis.webp', kadr: '30% 50%', tekst: 'prawo', tytul: 'Dwie ścieżki zamiast jednego formularza', opis: 'Osobna wycena dla domu i dla biura, opinie klientów na pierwszym ekranie. Każdy od razu trafia tam, gdzie powinien.', href: '/realizacje/rl-serwis/', pytania: [['Czy zapytania przyjdą na telefon?', 'Tak. Każde zgłoszenie z formularza od razu trafia na Twój telefon i maila.'], ['A jak będę chciał coś zmienić?', 'Piszesz maila. Do godziny zmian w miesiącu jest w cenie.']] },
-];
-
 /** Trzy duże kadry na górze sekcji: firmy usługowe na tym samym planie co klient. */
 export const WYROZNIONE = ['Pan Kolektor', 'R&L Serwis', 'Zdalna Księgowa'];
 

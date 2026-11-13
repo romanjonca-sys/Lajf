@@ -11,6 +11,9 @@ const ZDJECIE: [number, number] = [2400, 1600];
 const EKRAN: [number, number] = [1200, 750]; // bazowy rozmiar elementu ekranu (16:10, jak zrzuty)
 const STRONA_MS = 3600;
 const PRZEJSCIE_MS = 550;
+// Nakładka minimalnie większa niż ekran na zdjęciu: wchodzi na czarną ramkę, żeby spod ciemnych stron
+// nie prześwitywał biały, oryginalny ekran zdjęcia.
+const ZAPAS = 1.018;
 
 const wait = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
 
@@ -55,7 +58,10 @@ function rogiWKontenerze(sc: Scena, cw: number, ch: number): Array<[number, numb
   const s = Math.max(cw / ZDJECIE[0], ch / ZDJECIE[1]);
   const ox = (cw - ZDJECIE[0] * s) * sc.kadr[0];
   const oy = (ch - ZDJECIE[1] * s) * sc.kadr[1];
-  return sc.rogi.map(([x, y]) => [x * s + ox, y * s + oy]);
+  const rogi = sc.rogi.map(([x, y]): [number, number] => [x * s + ox, y * s + oy]);
+  const cx = rogi.reduce((a, [x]) => a + x, 0) / rogi.length;
+  const cy = rogi.reduce((a, [, y]) => a + y, 0) / rogi.length;
+  return rogi.map(([x, y]) => [cx + (x - cx) * ZAPAS, cy + (y - cy) * ZAPAS]);
 }
 
 export function scena(): void {

@@ -139,7 +139,7 @@ a { color: inherit; }
 
 .scena-foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease; }
 .scena-foto.on { opacity: 1; }
-.ekran { position: absolute; left: 0; top: 0; transform-origin: 0 0; overflow: hidden; background: #fff; transition: opacity .5s ease; opacity: 0; }
+.ekran { position: absolute; left: 0; top: 0; transform-origin: 0 0; overflow: hidden; background: #0F0C1A; transition: opacity .5s ease; opacity: 0; }
 .ekran.on { opacity: 1; }
 .ekran img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: opacity .5s ease; }
 .ekran.zmiana img { opacity: 0; }
