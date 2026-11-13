@@ -9,6 +9,7 @@ import {
   artykulyWedlugKategorii,
   pozostaleArtykuly,
   getArtykul,
+  najnowszeArtykuly,
   schemaArtykulu,
   sciezkaArtykulu,
   sciezkiPoradnika,
@@ -144,5 +145,19 @@ describe('kategorie', () => {
 
   it('rzuca ArtykulNieIstniejeError przy „Czytaj dalej” dla nieznanego adresu', () => {
     assert.throws(() => pozostaleArtykuly('nie-ma-takiego'), ArtykulNieIstniejeError);
+  });
+});
+
+describe('najnowszeArtykuly', () => {
+  it('zwraca żądaną liczbę artykułów od najnowszego', () => {
+    const wynik = najnowszeArtykuly(3);
+    const daty = wynik.map((a) => a.updated ?? a.published);
+
+    assert.equal(wynik.length, Math.min(3, ARTYKULY.length));
+    assert.deepEqual(daty, [...daty].sort().reverse());
+  });
+
+  it('rzuca RangeError dla liczby mniejszej niż 1', () => {
+    assert.throws(() => najnowszeArtykuly(0), RangeError);
   });
 });

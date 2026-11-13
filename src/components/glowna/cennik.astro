@@ -1,0 +1,29 @@
+---
+import { W_CENIE } from '../../lib/glowna-tresc';
+---
+<section id="cena" class="sec pricing"><div class="wrap">
+  <div class="head">
+    <h2 class="disp">Jeden plan. Wszystko w cenie.</h2>
+    <p>Bez rachunków za serwer, odnawiania wtyczek i szukania informatyka. Jedna faktura co miesiąc obejmuje stronę i ludzi, którzy o nią dbają.</p>
+  </div>
+  <div class="plan">
+    <div class="plan-l">
+      <span class="mono per">Miesięcznie, netto</span>
+      <div class="amount disp"><span id="amount">399</span> zł<small>/ mc</small></div>
+      <div class="timeline mono">
+        <span>Krok 1<b>Akceptujesz stronę</b></span><span class="arrow">→</span>
+        <span>Miesiące 1–12<b>12 rat</b></span><span class="arrow">→</span>
+        <span>Miesiąc 13<b>Strona jest Twoja</b></span>
+      </div>
+      <p class="sum">Łącznie za pierwszy rok: <strong>4 788 zł netto</strong>. Rezygnujesz wcześniej? Spłacasz pozostałe raty i strona od razu jest Twoja. Po roku: utrzymanie <strong>99 zł/mc</strong>, utrzymanie ze zmianami treści <strong>199 zł/mc</strong> albo zabierasz pliki i domenę.</p>
+    </div>
+    <div class="plan-r">
+      <ul>{W_CENIE.map((p) => <li>{p}</li>)}</ul>
+      <div class="ctas">
+        <a class="btn btn-signal" href="#kontakt">Poproś o telefon <span class="mono">→</span></a>
+        <a class="btn btn-ghost" href="#pytania">Przeczytaj pytania</a>
+      </div>
+    </div>
+  </div>
+  <p class="alt">Potrzebujesz rezerwacji albo płatności online? Ten sam model od 679 zł/mc. Wolisz zapłacić raz? Wizytówka 2 490 zł netto. Szczegóły na stronie <a href="/strony-www/">Strony WWW</a>.</p>
+</div></section>

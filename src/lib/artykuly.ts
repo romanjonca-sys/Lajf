@@ -362,6 +362,13 @@ export function pozostaleArtykuly(slug: string): Artykul[] {
   return [...inne.filter((a) => a.kategoria === artykul.kategoria), ...inne.filter((a) => a.kategoria !== artykul.kategoria)];
 }
 
+/** Najnowsze artykuły (po dacie aktualizacji, a gdy jej brak, publikacji) do zajawki na stronie głównej. */
+export function najnowszeArtykuly(liczba: number): Artykul[] {
+  if (!Number.isInteger(liczba) || liczba < 1) throw new RangeError(`liczba artykułów musi być dodatnią liczbą całkowitą, jest: ${liczba}`);
+  const data = (a: Artykul): string => a.updated ?? a.published;
+  return [...ARTYKULY].sort((a, b) => data(b).localeCompare(data(a))).slice(0, liczba);
+}
+
 /** Adres artykułu z ukośnikiem na końcu, bo taki jest kanoniczny na Cloudflare Pages. */
 export function sciezkaArtykulu(slug: string): string {
   return `/${SCIEZKA_PORADNIKA}/${slug}/`;

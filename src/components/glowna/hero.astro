@@ -1,0 +1,38 @@
+---
+import { STATUS_BUDOWY } from '../../lib/glowna-tresc';
+
+const SLOWA = ['Strona', 'Twojej', 'firmy.', 'Zrobiona', 'i', 'prowadzona', 'za', 'Ciebie.'];
+const FAKTY = [
+  ['0 zł', 'na start. Bez opłaty wdrożeniowej.'],
+  ['2–4 tyg.', 'od rozmowy do strony gotowej do akceptacji.'],
+  ['12 ×', 'rat miesięcznych, dopiero po akceptacji.'],
+  ['Twoja', 'po roku: pliki, domena i treści.'],
+];
+const OPOZNIENIE_MS = 55;
+---
+<section class="hero"><div class="wrap">
+  <h1 class="disp">
+    {SLOWA.map((s, i) => <><span class="w"><span style={`animation-delay:${i * OPOZNIENIE_MS}ms`}>{s}</span></span>{' '}</>)}
+    <span class="w w-price"><span style={`animation-delay:${SLOWA.length * OPOZNIENIE_MS}ms`}><span class="hl">399 zł<sup>/mc</sup></span></span></span>
+  </h1>
+  <div class="hero-sub">
+    <div class="ctas">
+      <a class="btn btn-signal" href="#kontakt">Poproś o telefon <span class="mono">→</span></a>
+      <a class="btn btn-ghost" href="#cena">Zobacz, co w cenie</a>
+    </div>
+    <p>Piszemy treści, projektujemy stronę, podpinamy domenę i pocztę i pilnujemy, żeby wszystko działało. Nic nie płacisz, dopóki nie zaakceptujesz gotowej strony. Po 12 ratach jest Twoja.</p>
+    <span class="note">Odpowiadamy w ciągu dnia roboczego<br /><b>Masz już stronę? Przeniesiemy domenę i pocztę.</b></span>
+  </div>
+  <figure class="shot hero-shot live done" id="live" data-status={JSON.stringify(STATUS_BUDOWY)}>
+    <div class="bar mono">pankolektor.pl</div>
+    <div class="stage">
+      <img src="/images/realizacje/pankolektor.jpg" alt="Strona serwisu Pan Kolektor zrobiona i prowadzona przez Lajf" width="800" height="512" fetchpriority="high" />
+      <div class="skel" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="toast" aria-hidden="true"><strong>Nowe zapytanie · przed chwilą</strong>Klient prosi o telefon w sprawie wymiany kolektora</div>
+    <figcaption class="status mono"><b></b><span id="status-text">Strona działa · serwis kolektorów</span></figcaption>
+  </figure>
+</div></section>
+<div class="facts"><div class="wrap"><ul>
+  {FAKTY.map(([b, s]) => <li><b class="disp">{b}</b><span>{s}</span></li>)}
+</ul></div></div>

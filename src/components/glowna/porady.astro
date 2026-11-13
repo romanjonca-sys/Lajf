@@ -1,0 +1,16 @@
+---
+import { KATEGORIE, najnowszeArtykuly, sciezkaArtykulu } from '../../lib/artykuly';
+
+const LICZBA_PORAD = 3;
+const porady = najnowszeArtykuly(LICZBA_PORAD);
+---
+<section id="porady" class="sec"><div class="wrap">
+  <div class="head">
+    <h2 class="disp">Porady dla firm</h2>
+    <p>Domena, poczta, strona i pomiar. Piszemy o tym, co sami robimy u klientów, żebyś mógł to sprawdzić albo zrobić sam.</p>
+  </div>
+  <div class="tips">
+    {porady.map((a) => <a href={sciezkaArtykulu(a.slug)}><small class="mono">{KATEGORIE[a.kategoria].nazwa}</small><b>{a.h1} {a.h1hl}</b><span>{a.lead}</span></a>)}
+  </div>
+  <a class="btn btn-ghost tips-more" href="/poradnik/">Wszystkie porady</a>
+</div></section>

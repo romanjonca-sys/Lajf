@@ -1,0 +1,36 @@
+---
+import { KATEGORIE_REALIZACJI, REALIZACJE, WYROZNIONE } from '../../lib/glowna-tresc';
+
+const wyroznione = WYROZNIONE.map((n) => REALIZACJE.find((r) => r.nazwa === n)).filter((r) => r !== undefined);
+const zakladki = [['all', 'Wszystkie', REALIZACJE.length], ...Object.entries(KATEGORIE_REALIZACJI).map(([k, l]) => [k, l, REALIZACJE.filter((r) => r.kategoria === k).length])];
+const zewnetrzny = (href: string): boolean => href.startsWith('http');
+---
+<section id="realizacje" class="sec"><div class="wrap">
+  <div class="head">
+    <h2 class="disp">Strony, które zrobiliśmy i prowadzimy</h2>
+    <p>Małe firmy usługowe: serwis solarów, firma sprzątająca, biuro rachunkowe. Każda na tym samym planie co Ty.</p>
+  </div>
+  <div class="work">
+    {wyroznione.map((r) => r.href && (
+      <article><a href={r.href}>
+        <div class="shot"><div class="bar mono">{r.nazwa}</div><img src={r.obraz} alt={`Strona ${r.nazwa}`} width="800" height="512" loading="lazy" /></div>
+        <h3>{r.nazwa}</h3><span class="meta">{r.opis}</span>
+      </a></article>
+    ))}
+  </div>
+  <div class="gal-head">
+    <h3 class="disp">Wszystkie realizacje <small>{REALIZACJE.length}</small></h3>
+    <div class="tabs" role="group" aria-label="Filtruj realizacje" id="gal-tabs">
+      {zakladki.map(([k, l, n]) => <button type="button" data-k={k} aria-pressed={k === 'all' ? 'true' : 'false'}>{l}<span>{n}</span></button>)}
+    </div>
+  </div>
+  <div class="gal short" id="gal">
+    {REALIZACJE.map((r) => {
+      const inner = <><div class="th"><img src={r.obraz} alt={r.nazwa} width="800" height="512" loading="lazy" />{!r.href && <em class="soon mono">Wkrótce</em>}</div><b>{r.nazwa}</b><small>{r.opis}</small></>;
+      return r.href
+        ? <a data-k={r.kategoria} href={r.href} {...(zewnetrzny(r.href) ? { target: '_blank', rel: 'noopener' } : {})}>{inner}</a>
+        : <div data-k={r.kategoria}>{inner}</div>;
+    })}
+  </div>
+  <button type="button" class="btn btn-ghost more-btn" id="gal-more">Pokaż wszystkie ({REALIZACJE.length})</button>
+</div></section>

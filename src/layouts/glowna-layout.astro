@@ -1,0 +1,86 @@
+---
+/**
+ * Layout strony głównej (od 13.11.2026): jasny, jedna oferta, bez tła „aurora” i bez View Transitions.
+ * Head/SEO/JSON-LD jak w lajf-layout.astro (świadomie powielone: inny wygląd, ta sama firma).
+ * Analityka i baner zgód to te same komponenty co na reszcie serwisu.
+ */
+import '@fontsource-variable/archivo/standard.css';
+import '@fontsource-variable/space-grotesk';
+import '../styles/glowna.css';
+import '../styles/glowna-sekcje.css';
+import { siteConfig } from '../../site.config';
+import AnalyticsGa4 from '../components/analytics-ga4.astro';
+import CookieConsent from '../components/cookie-consent.astro';
+import { alternatywy } from '../lib/chrome-tresci';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const { brandName, company } = siteConfig;
+const siteUrl = Astro.site ?? new URL('https://lajf.eu');
+const canonical = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = new URL('/images/og-default.jpg', siteUrl).href;
+const hreflangi = alternatywy(Astro.url.pathname).map((alt) => ({ locale: alt.locale, href: new URL(alt.href, siteUrl).href }));
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${siteUrl.href}#organizacja`,
+      name: brandName,
+      legalName: company.legalName,
+      url: siteUrl.href,
+      email: company.email,
+      telephone: company.phone,
+      address: company.address,
+      ...(company.taxId ? { vatID: `PL${company.taxId.replace(/\D/g, '')}` } : {}),
+      ...(company.krs ? { identifier: `KRS ${company.krs}` } : {}),
+      founder: { '@type': 'Person', name: 'Roman Jońca' },
+    },
+    {
+      '@type': 'Service',
+      name: 'Strona WWW w abonamencie',
+      provider: { '@id': `${siteUrl.href}#organizacja` },
+      areaServed: 'PL',
+      description,
+      offers: { '@type': 'Offer', price: '399', priceCurrency: 'PLN', description: '399 zł netto miesięcznie przez 12 miesięcy, 0 zł na start, potem strona na własność klienta' },
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#EEEDF3" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{hreflangi.map((alt) => <link rel="alternate" hreflang={alt.locale} href={alt.href} />)}
+{hreflangi.length > 0 && <link rel="alternate" hreflang="x-default" href={hreflangi.find((a) => a.locale === 'pl')?.href ?? hreflangi[0].href} />}
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={brandName} />
+<meta property="og:locale" content="pl_PL" />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta name="twitter:card" content="summary_large_image" />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+<AnalyticsGa4 />
+</head>
+<body>
+<slot />
+<CookieConsent locale="pl" />
+</body>
+</html>

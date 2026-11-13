@@ -1,0 +1,36 @@
+---
+import { siteConfig } from '../../../site.config';
+import Logo from './logo.astro';
+
+const { company } = siteConfig;
+---
+<footer class="foot"><div class="wrap">
+  <div>
+    <Logo />
+    <p>{company.legalName} · {company.address}<br />{[company.krs && `KRS ${company.krs}`, company.taxId && `NIP ${company.taxId}`, company.regon && `REGON ${company.regon}`].filter(Boolean).join(' · ')}</p>
+  </div>
+  <div>
+    <h4>Robimy też</h4>
+    <ul>
+      <li><a href="/strony-www/">Strony WWW: wszystkie pakiety</a></li>
+      <li><a href="/audyt-firmy/">Audyt cyfrowy firmy</a></li>
+      <li><a href="/oprogramowanie/">Oprogramowanie</a></li>
+      <li><a href="/rodo-i-cyber/">Bezpieczeństwo i dane</a></li>
+      <li><a href="/biura-rachunkowe/">Dla biur rachunkowych</a></li>
+      <li><a href="/muzyka/">Muzyka</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Firma</h4>
+    <ul>
+      <li><a href="/poradnik/">Porady</a></li>
+      <li><a href="/polityka-prywatnosci/">Polityka prywatności</a></li>
+      <li><a href="/regulamin/">Regulamin</a></li>
+      <li><a href="/en/" hreflang="en">English</a></li>
+    </ul>
+  </div>
+</div></footer>
+<div class="dock">
+  <a class="btn btn-signal" href="#kontakt">Umów rozmowę</a>
+  <a class="btn btn-ghost" href="#cena">Cena</a>
+</div>

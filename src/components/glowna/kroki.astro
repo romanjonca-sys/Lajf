@@ -1,0 +1,16 @@
+---
+const KROKI = [
+  ['Rozmowa 15 minut', 'Pytamy, czym się zajmujesz, kim są Twoi klienci i co strona ma przynosić: telefony, rezerwacje czy zapytania.', 'Dzień 1'],
+  ['Piszemy i budujemy', 'Treści, projekt, domena, poczta i wizytówka Google. Oglądasz jedną gotową stronę, a nie stos szkiców.', 'Tygodnie 1–4'],
+  ['Akceptujesz, strona rusza', 'Dopiero od tej chwili płacisz. Zmiana później? Wysyłasz maila. Do godziny zmian w miesiącu jest w cenie.', 'Potem co miesiąc'],
+];
+---
+<section id="jak-to-dziala" class="sec"><div class="wrap">
+  <div class="head">
+    <h2 class="disp">Od rozmowy do działającej strony</h2>
+    <p>Twojego czasu zajmie to łącznie około dwóch godzin. Resztę robimy my.</p>
+  </div>
+  <ol class="steps">
+    {KROKI.map(([h, p, t], i) => <li><span class="step-n disp" aria-hidden="true">{i + 1}</span><h3>{h}</h3><p>{p}</p><span class="time mono">{t}</span></li>)}
+  </ol>
+</div></section>

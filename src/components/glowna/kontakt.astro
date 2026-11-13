@@ -1,0 +1,22 @@
+---
+import { siteConfig } from '../../../site.config';
+
+const { phone, email } = siteConfig.company;
+const telHref = `tel:${phone.replace(/\s/g, '')}`;
+---
+<section id="kontakt" class="sec contact"><div class="wrap grid">
+  <div>
+    <h2 class="disp">Porozmawiajmy o Twojej stronie</h2>
+    <p class="lead">Zostaw numer. Roman zadzwoni w ciągu dnia roboczego. W 15 minut ustalicie, czy ten plan pasuje do Twojej firmy.</p>
+    <div class="direct"><span class="mono">Albo od razu</span><a href={telHref}>{phone}</a><a href={`mailto:${email}`}>{email}</a></div>
+  </div>
+  <form id="lead" name="abonament" novalidate>
+    <label for="f-tel">Telefon<input id="f-tel" name="telefon" type="tel" autocomplete="tel" required /></label>
+    <label for="f-email">E-mail <em>wyślemy potwierdzenie</em><input id="f-email" name="email" type="email" autocomplete="email" required /></label>
+    <label for="f-name">Imię <em>opcjonalnie</em><input id="f-name" name="name" autocomplete="name" /></label>
+    <label for="f-www">Obecna strona <em>opcjonalnie</em><input id="f-www" name="www" inputmode="url" /></label>
+    <div class="hp" aria-hidden="true"><label for="f-hp">Nie wypełniaj<input id="f-hp" name="_gotcha" tabindex="-1" autocomplete="off" /></label></div>
+    <button class="btn btn-solid" type="submit" style="justify-content:center">Poproś o telefon <span class="mono">→</span></button>
+    <p class="fine">Dane wykorzystamy tylko do odpowiedzi. Więcej w <a href="/polityka-prywatnosci/">polityce prywatności</a>.</p>
+  </form>
+</div></section>

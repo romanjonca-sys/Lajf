@@ -1,0 +1,17 @@
+---
+import { KARTKI } from '../../lib/glowna-tresc';
+
+const [ikona, naglowek, tekst] = KARTKI[0];
+---
+<section id="o-mnie" class="sec person" aria-labelledby="osoba-h"><div class="wrap grid">
+  <div class="txt">
+    <h2 id="osoba-h" class="disp">Rozmawiasz z człowiekiem. <em>Umowę masz z firmą.</em></h2>
+    <p><strong>Roman Jońca</strong>, założyciel Lajf. Pianista i producent muzyczny po Akademii Muzycznej w Katowicach. Dziś buduje strony i aplikacje dla firm.</p>
+    <p>Muzyka nauczyła go jednej zasady: słuchacz ma załapać w pierwszych taktach. Twój klient ma zrozumieć Twoją stronę w pierwszych pięciu sekundach.</p>
+    <div class="sig mono"><span>Oddzwania osobiście</span><span><b>Lajf sp. z o.o.</b> · Jaworzno</span></div>
+  </div>
+  <figure>
+    <img src="/images/glowna/roman-osoba.webp" alt="Roman Jońca, założyciel Lajf" width="1200" height="675" loading="lazy" />
+    <div class="desk" id="desk" aria-hidden="true" data-kartki={JSON.stringify(KARTKI)}><b class="ico">{ikona}</b><strong>{naglowek}</strong><span>{tekst}</span></div>
+  </figure>
+</div></section>

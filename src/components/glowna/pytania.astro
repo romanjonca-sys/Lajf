@@ -1,0 +1,16 @@
+---
+import { PYTANIA } from '../../lib/glowna-tresc';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: PYTANIA.map(({ q, a }) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+};
+---
+<section id="pytania" class="sec pricing"><div class="wrap faq">
+  <div class="head" style="display:block"><h2 class="disp">Pytania przed podpisaniem</h2></div>
+  <div>
+    {PYTANIA.map(({ q, a }, i) => <details open={i === 0}><summary>{q}</summary><p>{a}</p></details>)}
+  </div>
+</div></section>
+<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
