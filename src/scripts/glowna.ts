@@ -92,21 +92,33 @@ function animacje(): void {
 
 function galeria(): void {
   const zakladki = document.getElementById('gal-tabs');
-  const siatka = document.getElementById('gal');
+  const spis = document.getElementById('spis');
   const wiecej = document.getElementById('gal-more');
-  const panel = document.getElementById('more-work');
-  if (!zakladki || !siatka || !wiecej || !panel) return;
-  wiecej.addEventListener('click', () => {
-    const otwarty = panel.classList.toggle('open');
-    wiecej.setAttribute('aria-expanded', String(otwarty));
-  });
+  const podglad = document.getElementById('podglad');
+  if (!zakladki || !spis || !wiecej) return;
+  const wiersze = Array.from(spis.querySelectorAll<HTMLElement>('li'));
+  wiecej.addEventListener('click', () => { spis.classList.remove('krotki'); wiecej.hidden = true; });
   zakladki.addEventListener('click', (e) => {
     const przycisk = (e.target as Element).closest('button');
     if (!przycisk) return;
     const k = przycisk.dataset.k ?? 'all';
     zakladki.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b === przycisk)));
-    Array.from(siatka.children).forEach((karta) => { (karta as HTMLElement).hidden = k !== 'all' && (karta as HTMLElement).dataset.k !== k; });
+    // filtr pokazuje całą kategorię, bez skracania listy
+    spis.classList.toggle('krotki', k === 'all' && !wiecej.hidden);
+    wiersze.forEach((w) => { w.hidden = k !== 'all' && w.dataset.k !== k; });
   });
+  const obraz = podglad?.querySelector('img');
+  if (!podglad || !obraz || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  let ramka = 0;
+  spis.addEventListener('pointermove', (e) => {
+    const w = (e.target as Element).closest<HTMLElement>('li');
+    if (!w) return;
+    if (obraz.getAttribute('src') !== w.dataset.obraz) obraz.src = w.dataset.obraz ?? '';
+    podglad.classList.add('on');
+    cancelAnimationFrame(ramka);
+    ramka = requestAnimationFrame(() => { podglad.style.left = `${e.clientX + 200}px`; podglad.style.top = `${e.clientY}px`; });
+  });
+  spis.addEventListener('pointerleave', () => podglad.classList.remove('on'));
 }
 
 function formularz(): void {

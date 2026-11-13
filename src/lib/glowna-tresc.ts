@@ -51,9 +51,6 @@ export const REALIZACJE: Realizacja[] = [
 /** Trzy duże kadry na górze sekcji: firmy usługowe na tym samym planie co klient. */
 export const WYROZNIONE = ['Pan Kolektor', 'R&L Serwis', 'Zdalna Księgowa'];
 
-/** Galeria pod przyciskiem „Zobacz wszystkie”: bez trzech wyróżnionych, żeby się nie powtarzały. */
-export const POZOSTALE = REALIZACJE.filter((r) => !WYROZNIONE.includes(r.nazwa));
-
 export function realizacjeKategorii(kategoria: string): Realizacja[] {
   if (!(kategoria in KATEGORIE_REALIZACJI)) throw new NieznanaKategoriaError(kategoria);
   return REALIZACJE.filter((r) => r.kategoria === kategoria);

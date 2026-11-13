@@ -1,46 +1,38 @@
 ---
-import { KATEGORIE_REALIZACJI, POZOSTALE, REALIZACJE } from '../../lib/glowna-tresc';
+/**
+ * Realizacje jako typograficzny spis (wzór: lista klientów Locomotive): duża nazwa, branża, status, strzałka.
+ * Komputer: podgląd strony podąża za kursorem nad wierszem. Telefon: miniatura w wierszu.
+ * Pierwsze WIDOCZNE wiersze widać od razu, reszta po kliknięciu „Pokaż wszystkie”.
+ */
+import { KATEGORIE_REALIZACJI, REALIZACJE } from '../../lib/glowna-tresc';
 
-const zakladki = [['all', 'Wszystkie', POZOSTALE.length], ...Object.entries(KATEGORIE_REALIZACJI).map(([k, l]) => [k, l, POZOSTALE.filter((r) => r.kategoria === k).length])];
+const WIDOCZNE = 6;
+const zakladki = [['all', 'Wszystkie', REALIZACJE.length], ...Object.entries(KATEGORIE_REALIZACJI).map(([k, l]) => [k, l, REALIZACJE.filter((r) => r.kategoria === k).length])];
 const zewnetrzny = (href: string): boolean => href.startsWith('http');
 ---
 <section id="realizacje" class="sec"><div class="wrap">
   <div class="head">
     <h2 class="disp">Strony, które zrobiliśmy i prowadzimy</h2>
-    <p>Małe firmy usługowe: serwis solarów, firma sprzątająca, biuro rachunkowe. Każda na tym samym planie co Ty.</p>
+    <p>Firmy usługowe, gabinety, artyści. Każda strona działa i można ją sprawdzić.</p>
   </div>
-  <div class="wall" aria-label="Strony klientów Lajf">
-    {[REALIZACJE.slice(0, 8), REALIZACJE.slice(8)].map((rzad, r) => (
-      <div class:list={['wall-row', { odwrot: r === 1 }]}>
-        <div class="wall-track">
-          {[...rzad, ...rzad].map((w, i) => {
-            const karta = <><img src={w.obraz} alt={i < rzad.length ? `Strona ${w.nazwa}` : ''} width="1200" height="768" loading="lazy" /><span class="wall-cap"><b>{w.nazwa}</b>{w.opis}</span></>;
-            const ukryj = i >= rzad.length ? { 'aria-hidden': true, tabindex: -1 } : {};
-            return w.href
-              ? <a class="wall-card" href={w.href} {...(zewnetrzny(w.href) ? { target: '_blank', rel: 'noopener' } : {})} {...ukryj}>{karta}</a>
-              : <div class="wall-card" {...ukryj}>{karta}<em class="soon mono">Wkrótce</em></div>;
-          })}
-        </div>
-      </div>
-    ))}
+  <div class="tabs" role="group" aria-label="Filtruj realizacje" id="gal-tabs">
+    {zakladki.map(([k, l, n]) => <button type="button" data-k={k} aria-pressed={k === 'all' ? 'true' : 'false'}>{l}<span>{n}</span></button>)}
   </div>
-  <button type="button" class="btn btn-ghost more-btn" id="gal-more" aria-expanded="false" aria-controls="more-work">Zobacz wszystkie realizacje ({REALIZACJE.length}) <span class="mono">↓</span></button>
-  <div class="more-work" id="more-work">
-    <div class="more-in">
-      <div class="gal-head">
-        <h3 class="disp">Więcej realizacji <small>{POZOSTALE.length}</small></h3>
-        <div class="tabs" role="group" aria-label="Filtruj realizacje" id="gal-tabs">
-          {zakladki.map(([k, l, n]) => <button type="button" data-k={k} aria-pressed={k === 'all' ? 'true' : 'false'}>{l}<span>{n}</span></button>)}
-        </div>
-      </div>
-      <div class="gal" id="gal">
-        {POZOSTALE.map((r) => {
-          const inner = <><div class="th"><img src={r.obraz} alt={r.nazwa} width="1200" height="768" loading="lazy" />{!r.href && <em class="soon mono">Wkrótce</em>}</div><b>{r.nazwa}</b><small>{r.opis}</small></>;
-          return r.href
-            ? <a data-k={r.kategoria} href={r.href} {...(zewnetrzny(r.href) ? { target: '_blank', rel: 'noopener' } : {})}>{inner}</a>
-            : <div data-k={r.kategoria}>{inner}</div>;
-        })}
-      </div>
-    </div>
-  </div>
+  <ol class="spis krotki" id="spis">
+    {REALIZACJE.map((r, i) => {
+      const tresc = <>
+        <span class="nr mono">{String(i + 1).padStart(2, '0')}</span>
+        <img class="mini" src={r.obraz} alt="" width="1200" height="768" loading="lazy" />
+        <span class="nazwa">{r.nazwa}</span>
+        <span class="opis">{r.opis}</span>
+        <span class="stan mono">{r.href ? 'Działa' : 'Wkrótce'}</span>
+        <span class="strz mono" aria-hidden="true">{r.href ? '↗' : ''}</span>
+      </>;
+      return <li data-k={r.kategoria} data-obraz={r.obraz} class:list={{ dalej: i >= WIDOCZNE }}>
+        {r.href ? <a href={r.href} {...(zewnetrzny(r.href) ? { target: '_blank', rel: 'noopener' } : {})}>{tresc}</a> : <div>{tresc}</div>}
+      </li>;
+    })}
+  </ol>
+  <button type="button" class="btn btn-ghost more-btn" id="gal-more" aria-expanded="false" aria-controls="spis">Pokaż wszystkie ({REALIZACJE.length}) <span class="mono">↓</span></button>
+  <div class="podglad" id="podglad" aria-hidden="true"><img alt="" /></div>
 </div></section>
