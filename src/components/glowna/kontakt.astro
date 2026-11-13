@@ -1,14 +1,21 @@
 ---
 import { siteConfig } from '../../../site.config';
 
-const { phone, email } = siteConfig.company;
-const telHref = `tel:${phone.replace(/\s/g, '')}`;
+const { phone, email, whatsapp } = siteConfig.company;
+const cyfry = (numer: string): string => numer.replace(/\D/g, '');
+const KANALY = [
+  { etykieta: 'Zadzwoń', wartosc: phone, href: `tel:+${cyfry(phone)}` },
+  { etykieta: 'Napisz', wartosc: email, href: `mailto:${email}` },
+  ...(whatsapp ? [{ etykieta: 'WhatsApp', wartosc: 'Napisz na WhatsAppie', href: `https://wa.me/${cyfry(whatsapp)}` }] : []),
+];
 ---
 <section id="kontakt" class="sec contact"><div class="wrap grid">
   <div>
     <h2 class="disp">Porozmawiajmy o Twojej stronie</h2>
     <p class="lead">Zostaw numer. Roman zadzwoni w ciągu dnia roboczego. W 15 minut ustalicie, czy ten plan pasuje do Twojej firmy.</p>
-    <div class="direct"><span class="mono">Albo od razu</span><a href={telHref}>{phone}</a><a href={`mailto:${email}`}>{email}</a></div>
+    <ul class="direct">
+      {KANALY.map((k) => <li><a href={k.href}><span class="mono">{k.etykieta}</span><b>{k.wartosc}</b><i aria-hidden="true">→</i></a></li>)}
+    </ul>
   </div>
   <form id="lead" name="abonament" novalidate>
     <label for="f-tel">Telefon<input id="f-tel" name="telefon" type="tel" autocomplete="tel" required /></label>

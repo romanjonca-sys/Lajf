@@ -109,8 +109,14 @@
 .contact .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; padding-top: 3vw; }
 .contact h2 { font-size: clamp(52px, 8vw, 120px); line-height: .86; margin: 0 0 20px; }
 .contact .lead { max-width: 40ch; font-size: 19px; margin: 0; }
-.contact .direct { margin-top: 26px; display: grid; gap: 4px; }
-.contact .direct a { font-size: 22px; font-weight: 700; text-decoration: none; }
+.contact .direct { list-style: none; margin: 32px 0 0; padding: 0; border-top: 1.5px solid var(--ink); }
+.contact .direct a { display: grid; grid-template-columns: 92px 1fr auto; align-items: center; gap: 12px; padding: 16px 10px; border-bottom: 1.5px solid var(--ink); text-decoration: none; transition: background-color .2s ease, padding .2s ease; }
+.contact .direct a:hover { background: var(--white); padding-inline: 16px; }
+.contact .direct .mono { color: var(--ink); opacity: .7; }
+.contact .direct b { font-size: clamp(19px, 2.2vw, 26px); font-weight: 700; overflow-wrap: anywhere; }
+.contact .direct i { font-style: normal; font-family: var(--mono); font-size: 20px; transition: transform .2s ease; }
+.contact .direct a:hover i { transform: translateX(4px); }
+@media (max-width: 420px) { .contact .direct a { grid-template-columns: 1fr auto; } .contact .direct .mono { grid-column: 1 / -1; } }
 .contact form { display: grid; gap: 14px; background: var(--white); border: 1.5px solid var(--ink); padding: 28px; box-shadow: 0 30px 60px -28px rgba(15,12,26,.45); }
 .contact label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; }
 .contact label em { font-style: normal; font-weight: 400; color: var(--muted); }
