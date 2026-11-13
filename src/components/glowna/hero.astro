@@ -3,20 +3,33 @@ import { HERO_SLAJDY } from '../../lib/glowna-tresc';
 
 const [pierwszy] = HERO_SLAJDY;
 
-const SLOWA = ['Strona', 'Twojej', 'firmy.', 'Zrobiona', 'i', 'prowadzona', 'za', 'Ciebie.'];
+// Stałe wiersze: w trakcie animacji litery są szersze i bez tego słowa przeskakiwałyby między liniami.
+const WIERSZE = [['Strona', 'Twojej'], ['firmy.', 'Zrobiona'], ['i', 'prowadzona'], ['za', 'Ciebie.']];
+const SLOWA = WIERSZE.flat();
 const FAKTY = [
   ['0 zł', 'na start. Bez opłaty wdrożeniowej.'],
   ['2–4 tyg.', 'od rozmowy do strony gotowej do akceptacji.'],
   ['12 ×', 'rat miesięcznych, dopiero po akceptacji.'],
   ['Twoja', 'po roku: pliki, domena i treści.'],
 ];
-const OPOZNIENIE_MS = 55;
+const LITERA_MS = 28;
+const NAGLOWEK = `${SLOWA.join(' ')} 399 zł/mc`;
+// Numer kolejny litery w całym nagłówku: fala „zaciskania” liter idzie od lewej do prawej.
+let n = 0;
+const litery = (slowo: string): Array<{ z: string; i: number }> => [...slowo].map((z) => ({ z, i: n++ }));
+const wierszeLiter = WIERSZE.map((w) => w.map(litery));
+const cena = litery('399');
+const zl = litery('zł');
 ---
 <section class="hero"><div class="wrap">
-  <h1 class="disp">
-    {SLOWA.map((s, i) => <><span class="w"><span style={`animation-delay:${i * OPOZNIENIE_MS}ms`}>{s}</span></span>{' '}</>)}
-    <span class="w w-price"><span style={`animation-delay:${SLOWA.length * OPOZNIENIE_MS}ms`}><span class="hl">399 zł<sup>/mc</sup></span></span></span>
+  <h1 class="disp kinetic" id="kinetic" aria-label={NAGLOWEK}>
+    {wierszeLiter.map((wiersz) => <span class="line" aria-hidden="true">{wiersz.map((l) => <><span class="w">{l.map(({ z, i }) => <span class="l" style={`--d:${i * LITERA_MS}ms`}>{z}</span>)}</span>{' '}</>)}</span>)}
+    <span class="w w-price" aria-hidden="true"><span class="hl" style={`--d:${n * LITERA_MS}ms`}>{cena.map(({ z, i }) => <span class="l" style={`--d:${i * LITERA_MS}ms`}>{z}</span>)} {zl.map(({ z, i }) => <span class="l" style={`--d:${i * LITERA_MS}ms`}>{z}</span>)}<sup>/mc</sup></span></span>
   </h1>
+  <script is:inline>
+    // Przed pierwszym malowaniem: tekst czeka na kulki (scripts/czastki.ts). Bez ruchu albo canvas zostaje widoczny.
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && document.createElement('canvas').getContext) document.getElementById('kinetic').classList.add('czeka');
+  </script>
   <div class="hero-sub">
     <div class="ctas">
       <a class="btn btn-signal" href="#kontakt">Poproś o telefon <span class="mono">→</span></a>

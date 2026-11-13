@@ -1,3 +1,4 @@
+import { czastki } from './czastki';
 import { swiatlo } from './swiatlo';
 
 /**
@@ -99,7 +100,32 @@ function kartkaPodDlonmi(): void {
   }, KARTKA_MS);
 }
 
+/** Na komputerze litery nagłówka pod kursorem lekko się rozszerzają (oś szerokości kroju). */
+function oddychajacyNaglowek(): void {
+  const h1 = document.getElementById('kinetic');
+  if (!h1 || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  const litery = Array.from(h1.querySelectorAll<HTMLElement>('.l'));
+  const ZASIEG_PX = 220;
+  const MAKS_PROC = 38; // 62% → do 100% szerokości tuż pod kursorem
+  let ramka = 0;
+  let x = 0;
+  let y = 0;
+  const aktualizuj = (): void => {
+    ramka = 0;
+    for (const l of litery) {
+      const r = l.getBoundingClientRect();
+      const d = Math.hypot(r.left + r.width / 2 - x, r.top + r.height / 2 - y);
+      const sila = Math.max(0, 1 - d / ZASIEG_PX);
+      l.style.fontStretch = `${62 + MAKS_PROC * sila * sila}%`;
+    }
+  };
+  h1.addEventListener('pointermove', (e) => { x = e.clientX; y = e.clientY; if (!ramka) ramka = requestAnimationFrame(aktualizuj); });
+  h1.addEventListener('pointerleave', () => { cancelAnimationFrame(ramka); ramka = 0; litery.forEach((l) => { l.style.fontStretch = ''; }); });
+}
+
 function animacje(): void {
+  void czastki();
+  oddychajacyNaglowek();
   void budowaStron();
   kartkaPodDlonmi();
   const kroki = document.getElementById('jak-to-dziala');
