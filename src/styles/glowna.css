@@ -93,6 +93,10 @@ a { color: inherit; }
 @keyframes rise { from { transform: translateY(105%); } to { transform: none; } }
 .hero-sub { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 36px; padding-bottom: 40px; align-items: end; }
 .hero-sub p { margin: 0; font-size: 19px; max-width: 46ch; }
+.hero-sub .lead { font-size: clamp(19px, 1.6vw, 22px); line-height: 1.45; max-width: 34ch; text-wrap: pretty; display: grid; gap: 12px; }
+.hero-sub .lead strong { font-weight: 600; color: var(--ink); }
+.hero-sub .lead span { color: var(--muted); font-size: .88em; }
+.hero-sub .lead b { color: var(--ink); background: linear-gradient(transparent 60%, color-mix(in srgb, var(--signal) 45%, transparent) 60%); }
 .hero-sub .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
 .hero-sub .note { grid-column: 1; margin-top: -18px; color: var(--muted); font-size: 15px; }
 .hero-sub .note b { color: var(--ink); }
