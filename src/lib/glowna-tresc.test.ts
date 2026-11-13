@@ -4,6 +4,7 @@ import { describe, it } from 'node:test';
 
 import {
   HERO_SLAJDY,
+  HISTORIE,
   KATEGORIE_REALIZACJI,
   NieznanaKategoriaError,
   POZOSTALE,
@@ -75,5 +76,19 @@ describe('HERO_SLAJDY', () => {
 
   it('brak zrzutu wykrywa się jako błąd', () => {
     assert.equal(existsSync(new URL('../../public/images/glowna/hero/nie-ma.webp', import.meta.url)), false);
+  });
+});
+
+describe('HISTORIE', () => {
+  it('każda historia ma zdjęcie w /public, link do realizacji i dwa pytania', () => {
+    for (const h of HISTORIE) {
+      assert.ok(existsSync(new URL(`../../public${h.obraz}`, import.meta.url)), `brak ${h.obraz}`);
+      assert.ok(h.href.startsWith('/realizacje/'), h.nazwa);
+      assert.equal(h.pytania.length, 2, h.nazwa);
+    }
+  });
+
+  it('wykrywa brak zdjęcia historii', () => {
+    assert.equal(existsSync(new URL('../../public/images/glowna/historie/nie-ma.webp', import.meta.url)), false);
   });
 });

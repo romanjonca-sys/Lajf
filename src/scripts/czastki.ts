@@ -14,9 +14,33 @@ const NASYP_MS = 150; // jak długo sypie się jedna litera (od dołu do góry)
 const SPADEK_MS = 300; // czas spadku kulki
 const WYSOKOSC_STRUMIENIA = 1.4; // wylot strumienia nad literą, w wysokościach litery
 const GASNIECIE_MS = 300;
-const MAKS_KULEK = 4200;
+const MAKS_KULEK = 7000;
+const MAKS_KULEK_TELEFON = 2200; // słabsze telefony: mniej kulek, żeby animacja nie klatkowała
+const TELEFON_PX = 760;
 
-interface Kulka { x0: number; y0: number; x: number; y: number; r: number; kolor: number[]; start: number }
+/** 0 kółko, 1 kwadrat (obrócony), 2 pierścień, 3 trójkąt */
+type Ksztalt = 0 | 1 | 2 | 3;
+interface Kulka { x0: number; y0: number; x: number; y: number; r: number; kolor: number[]; start: number; ksztalt: Ksztalt; obrot: number; alfa: number }
+
+function losujKsztalt(): Ksztalt {
+  const l = Math.random();
+  return l < 0.55 ? 0 : l < 0.75 ? 1 : l < 0.9 ? 2 : 3;
+}
+
+function rysujKsztalt(ctx: CanvasRenderingContext2D, k: Kulka, x: number, y: number, r: number): void {
+  ctx.beginPath();
+  if (k.ksztalt === 0) { ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill(); return; }
+  if (k.ksztalt === 2) { ctx.lineWidth = Math.max(0.6, r * 0.45); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.stroke(); return; }
+  const boki = k.ksztalt === 1 ? 4 : 3;
+  for (let i = 0; i < boki; i++) {
+    const a = k.obrot + (i * Math.PI * 2) / boki;
+    const px = x + Math.cos(a) * r * 1.25;
+    const py = y + Math.sin(a) * r * 1.25;
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
 interface Punkt { x: number; y: number; litera: number }
 interface Litera { srodek: number; gora: number; wysokosc: number }
 
@@ -55,7 +79,7 @@ function punktyNapisu(h1: HTMLElement, skala: number): { punkty: Punkt[]; litery
     ctx.fillText(znak, (lr.left - r.left) * skala, y);
   });
   const dane = ctx.getImageData(0, 0, c.width, c.height).data;
-  const krok = Math.max(3, Math.round(parseFloat(styl.fontSize) * skala / 26));
+  const krok = Math.max(2, Math.round(parseFloat(styl.fontSize) * skala / 36));
   const punkty: Punkt[] = [];
   for (let y = 0; y < c.height; y += krok) {
     for (let x = 0; x < c.width; x += krok) {
@@ -83,7 +107,10 @@ export async function czastki(): Promise<void> {
   const h1 = document.getElementById('kinetic');
   const scena = h1?.closest<HTMLElement>('.hero');
   if (!h1 || !scena || !h1.classList.contains('czeka')) return;
-  const odslon = (): void => { h1.classList.remove('czeka'); };
+  const odslon = (): void => {
+    h1.classList.remove('czeka');
+    try { sessionStorage.setItem('lajf-kulki', '1'); } catch (err) { console.warn('[czastki] sessionStorage:', err); }
+  };
   try {
     await document.fonts.load(`850 100px "Archivo Variable"`);
   } catch (err) {
@@ -107,8 +134,9 @@ export async function czastki(): Promise<void> {
 
   const dx = rh.left - rs.left;
   const dy = rh.top - rs.top;
-  const promien = Math.max(1.4, parseFloat(getComputedStyle(h1).fontSize) / 46);
-  const co = Math.ceil(punkty.length / MAKS_KULEK);
+  const promien = Math.max(1, parseFloat(getComputedStyle(h1).fontSize) / 66);
+  const limit = window.innerWidth < TELEFON_PX ? MAKS_KULEK_TELEFON : MAKS_KULEK;
+  const co = Math.ceil(punkty.length / limit);
   const wybrane = co > 1 ? punkty.filter((_, i) => i % co === 0) : punkty;
   // w każdej literze kulki sypią się od dołu do góry
   const wLiterze = new Map<number, Punkt[]>();
@@ -130,8 +158,11 @@ export async function czastki(): Promise<void> {
         y0: zGory ? Math.max(-20, l.gora + dy - l.wysokosc * WYSOKOSC_STRUMIENIA) : (dolWiersza.get(w - 1) ?? l.gora) + dy,
         x: p.x + dx,
         y: p.y + dy,
-        r: promien * (0.75 + Math.random() * 0.5),
+        r: promien * (0.45 + Math.random() * Math.random() * 1.6), // dużo małych, mało dużych
         kolor: hex(KOLORY[Math.floor(Math.random() * KOLORY.length)]),
+        ksztalt: losujKsztalt(),
+        obrot: Math.random() * Math.PI,
+        alfa: 0.45 + Math.random() * 0.5,
         start: w * WIERSZ_MS + (l.srodek / szer) * FALA_MS + (j / lista.length) * NASYP_MS,
       });
     });
@@ -149,10 +180,10 @@ export async function czastki(): Promise<void> {
       const x = k.x0 + (k.x - k.x0) * wygladz(p); // rozsypuje się na boki
       const y = k.y0 + (k.y - k.y0) * p * p; // spada z przyspieszeniem jak piasek
       const [r, g, b] = k.kolor.map((v, i) => Math.round(v + (ATRAMENT[i] - v) * gasniecie));
-      ctx.fillStyle = `rgb(${r},${g},${b})`;
-      ctx.beginPath();
-      ctx.arc(x, y, k.r * (p < 1 ? 0.8 : 1), 0, Math.PI * 2);
-      ctx.fill();
+      const alfa = k.alfa + (1 - k.alfa) * gasniecie; // przezroczyste kulki tężeją przy podmianie na tekst
+      ctx.fillStyle = `rgba(${r},${g},${b},${alfa})`;
+      ctx.strokeStyle = ctx.fillStyle;
+      rysujKsztalt(ctx, k, x, y, k.r * (p < 1 ? 0.8 : 1));
     }
     if (t < koniecLotu + GASNIECIE_MS) { requestAnimationFrame(klatka); return; }
     // podmiana na prawdziwy tekst: tekst się pojawia, kulki znikają

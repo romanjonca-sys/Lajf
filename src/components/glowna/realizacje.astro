@@ -1,7 +1,6 @@
 ---
-import { KATEGORIE_REALIZACJI, POZOSTALE, REALIZACJE, WYROZNIONE } from '../../lib/glowna-tresc';
+import { HISTORIE, KATEGORIE_REALIZACJI, POZOSTALE, REALIZACJE } from '../../lib/glowna-tresc';
 
-const wyroznione = WYROZNIONE.map((n) => REALIZACJE.find((r) => r.nazwa === n)).filter((r) => r !== undefined);
 const zakladki = [['all', 'Wszystkie', POZOSTALE.length], ...Object.entries(KATEGORIE_REALIZACJI).map(([k, l]) => [k, l, POZOSTALE.filter((r) => r.kategoria === k).length])];
 const zewnetrzny = (href: string): boolean => href.startsWith('http');
 ---
@@ -10,13 +9,26 @@ const zewnetrzny = (href: string): boolean => href.startsWith('http');
     <h2 class="disp">Strony, które zrobiliśmy i prowadzimy</h2>
     <p>Małe firmy usługowe: serwis solarów, firma sprzątająca, biuro rachunkowe. Każda na tym samym planie co Ty.</p>
   </div>
-  <div class="work">
-    {wyroznione.map((r) => r.href && (
-      <article><a href={r.href}>
-        <div class="shot"><div class="bar mono">{r.nazwa}</div><img src={r.obraz} alt={`Strona ${r.nazwa}`} width="1200" height="768" loading="lazy" /></div>
-        <h3>{r.nazwa}</h3><span class="meta">{r.opis}</span>
-      </a></article>
-    ))}
+  <div class="story" id="story">
+    <div class="story-media" aria-hidden="true">
+      {HISTORIE.map((h, i) => <img class:list={['story-img', { on: i === 0 }]} src={h.obraz} alt="" width="1920" height="1280" loading={i === 0 ? 'lazy' : 'lazy'} style={`object-position:${h.kadr}`} />)}
+    </div>
+    <div class="story-txt">
+      <div class="story-tabs" role="tablist" aria-label="Realizacje">
+        {HISTORIE.map((h, i) => <button type="button" role="tab" id={`story-tab-${i}`} aria-controls={`story-panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} class="story-tab"><span class="nr mono">{String(i + 1).padStart(2, '0')}</span><span class="nm">{h.nazwa}</span><i class="pasek"></i></button>)}
+      </div>
+      {HISTORIE.map((h, i) => (
+        <div class="story-panel" role="tabpanel" id={`story-panel-${i}`} aria-labelledby={`story-tab-${i}`} hidden={i !== 0}>
+          <span class="mono story-et">{h.etykieta}</span>
+          <h3>{h.tytul}</h3>
+          <p>{h.opis}</p>
+          <a class="story-link" href={h.href}>Zobacz realizację <span class="mono">→</span></a>
+          <div class="story-faq">
+            {h.pytania.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
+          </div>
+        </div>
+      ))}
+    </div>
   </div>
   <button type="button" class="btn btn-ghost more-btn" id="gal-more" aria-expanded="false" aria-controls="more-work">Zobacz wszystkie realizacje ({REALIZACJE.length}) <span class="mono">↓</span></button>
   <div class="more-work" id="more-work">

@@ -28,7 +28,10 @@ const zl = litery('zł');
   </h1>
   <script is:inline>
     // Przed pierwszym malowaniem: tekst czeka na kulki (scripts/czastki.ts). Bez ruchu albo canvas zostaje widoczny.
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && document.createElement('canvas').getContext) document.getElementById('kinetic').classList.add('czeka');
+    // Kulki tylko przy pierwszym wejściu w tej wizycie: kto wraca z podstrony, widzi tekst od razu.
+    var bylo = false;
+    try { bylo = sessionStorage.getItem('lajf-kulki') === '1'; } catch (e) { bylo = false; }
+    if (!bylo && !matchMedia('(prefers-reduced-motion: reduce)').matches && document.createElement('canvas').getContext) document.getElementById('kinetic').classList.add('czeka');
   </script>
   <div class="hero-sub">
     <div class="ctas">
