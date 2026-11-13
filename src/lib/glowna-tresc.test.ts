@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
+import { existsSync } from 'node:fs';
 import { describe, it } from 'node:test';
 
 import {
+  HERO_SLAJDY,
   KATEGORIE_REALIZACJI,
   NieznanaKategoriaError,
   POZOSTALE,
@@ -58,5 +60,20 @@ describe('treść strony głównej', () => {
     assert.ok(W_CENIE.some((p) => p.includes('do 8')));
     assert.ok(W_CENIE.some((p) => p.includes('1 godziny zmian')));
     assert.ok(PYTANIA.some((p) => p.a.includes('Spłacasz pozostałe raty')));
+  });
+});
+
+describe('HERO_SLAJDY', () => {
+  it('każdy slajd ma zrzuty, które istnieją w /public, i co najmniej 2 kroki budowy', () => {
+    for (const slajd of HERO_SLAJDY) {
+      for (const plik of [slajd.komputer, slajd.telefon]) {
+        assert.ok(existsSync(new URL(`../../public${plik}`, import.meta.url)), `brak pliku ${plik}`);
+      }
+      assert.ok(slajd.budowa.length >= 2, slajd.nazwa);
+    }
+  });
+
+  it('brak zrzutu wykrywa się jako błąd', () => {
+    assert.equal(existsSync(new URL('../../public/images/glowna/hero/nie-ma.webp', import.meta.url)), false);
   });
 });

@@ -24,22 +24,40 @@ async function wpisz(el: HTMLElement, tekst: string): Promise<void> {
   }
 }
 
-/** Hero: strona klienta „buduje się”, a na końcu przychodzi zapytanie. Zaczyna i kończy na gotowej stronie. */
-async function budowaStrony(): Promise<void> {
+interface SlajdHero { nazwa: string; adres: string; komputer: string; telefon: string; budowa: string[]; zapytanie: string }
+
+function ustawSlajd(slajd: SlajdHero): void {
+  const pc = document.getElementById('live-pc');
+  const tel = document.getElementById('live-tel');
+  if (pc instanceof HTMLImageElement) pc.src = slajd.komputer;
+  if (tel instanceof HTMLImageElement) tel.src = slajd.telefon;
+  const adres = document.getElementById('live-adres');
+  const zapytanie = document.getElementById('live-zapytanie');
+  if (adres) adres.textContent = slajd.adres;
+  if (zapytanie) zapytanie.textContent = slajd.zapytanie;
+}
+
+/** Hero: strony klientów po kolei „budują się”, a na końcu na telefon przychodzi zapytanie. */
+async function budowaStron(): Promise<void> {
   const live = document.getElementById('live');
   const linia = document.getElementById('status-text');
-  const kroki = czytajJson<string[]>(live, 'data-status');
-  if (!live || !linia || !kroki || kroki.length < 2) return;
-  for (;;) {
+  const slajdy = czytajJson<SlajdHero[]>(live, 'data-slajdy');
+  if (!live || !linia || !slajdy || slajdy.length === 0) return;
+  // Zrzuty kolejnych stron wczytujemy z góry, żeby przełączenie nie mrugało pustym kadrem.
+  slajdy.forEach((s) => { new Image().src = s.komputer; new Image().src = s.telefon; });
+  for (let i = 0; ; i = (i + 1) % slajdy.length) {
+    const slajd = slajdy[i];
     await wait(2200);
     live.classList.remove('done', 'ping');
-    for (const krok of kroki.slice(0, -2)) { await wpisz(linia, krok); await wait(900); }
-    await wpisz(linia, kroki[kroki.length - 2]);
+    await wait(500);
+    ustawSlajd(slajd);
+    for (const krok of slajd.budowa) { await wpisz(linia, krok); await wait(800); }
+    await wpisz(linia, 'Gotowe do Twojej akceptacji ✓');
     live.classList.add('done');
-    await wait(1600);
-    await wpisz(linia, kroki[kroki.length - 1]);
+    await wait(1400);
+    await wpisz(linia, `${slajd.nazwa} · zapytania lecą na telefon`);
     live.classList.add('ping');
-    await wait(5200);
+    await wait(4800);
     live.classList.remove('ping');
   }
 }
@@ -80,7 +98,7 @@ function kartkaPodDlonmi(): void {
 }
 
 function animacje(): void {
-  void budowaStrony();
+  void budowaStron();
   kartkaPodDlonmi();
   const kroki = document.getElementById('jak-to-dziala');
   if (kroki) obserwuj(kroki, { rootMargin: '-35% 0px -35% 0px' }, (w) => kroki.classList.toggle('lit', w));

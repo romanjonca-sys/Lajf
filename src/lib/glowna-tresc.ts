@@ -92,14 +92,24 @@ export const PYTANIA: Array<{ q: string; a: string }> = [
   { q: 'Kim jesteście?', a: 'Lajf sp. z o.o., spółka z KRS z Jaworzna. Robimy strony i aplikacje dla firm usługowych, gabinetów i artystów. Faktura VAT.' },
 ];
 
-/** Linie statusu w „budującej się” stronie w hero. Dwie ostatnie: akceptacja i działanie. */
-export const STATUS_BUDOWY = [
-  'Piszemy treści o serwisie kolektorów…',
-  'Projektujemy najpierw pod telefon…',
-  'Podpinamy pankolektor.pl i pocztę…',
-  'Zakładamy wizytówkę Google…',
-  'Gotowe do Twojej akceptacji ✓',
-  'Działa · zapytania lecą na Twój telefon',
+export interface SlajdHero {
+  nazwa: string;
+  adres: string;
+  /** Zrzut strony na komputerze (2400×1500) i na telefonie (780×1688), w /public. */
+  komputer: string;
+  telefon: string;
+  /** Kolejne kroki budowy strony, wpisywane w linii statusu pod przeglądarką. */
+  budowa: string[];
+  /** Przykładowe zapytanie, które pojawia się na telefonie po starcie strony. */
+  zapytanie: string;
+}
+
+/** Pierwszy ekran: strony klientów przełączają się po kolei, każda „buduje się” i dostaje zapytanie. */
+export const HERO_SLAJDY: SlajdHero[] = [
+  { nazwa: 'Pan Kolektor', adres: 'pankolektor.pl', komputer: '/images/glowna/hero/pankolektor-pc.webp', telefon: '/images/glowna/hero/pankolektor-tel.webp', budowa: ['Piszemy treści o serwisie kolektorów…', 'Projektujemy najpierw pod telefon…', 'Podpinamy pankolektor.pl i pocztę…'], zapytanie: 'Klient prosi o telefon w sprawie wymiany kolektora' },
+  { nazwa: 'R&L Serwis', adres: 'rlserwis.pl', komputer: '/images/glowna/hero/rlserwis-pc.webp', telefon: '/images/glowna/hero/rlserwis-tel.webp', budowa: ['Piszemy treści o sprzątaniu domów i biur…', 'Dodajemy galerię realizacji…', 'Podpinamy rlserwis.pl i pocztę…'], zapytanie: 'Wycena sprzątania biura po remoncie' },
+  { nazwa: 'Zdalna Księgowa', adres: 'zdalnaksiegowa.com.pl', komputer: '/images/glowna/hero/zdalnaksiegowa-pc.webp', telefon: '/images/glowna/hero/zdalnaksiegowa-tel.webp', budowa: ['Piszemy o księgowości dla IT…', 'Układamy pakiety i cennik…', 'Podpinamy domenę i pocztę…'], zapytanie: 'Firma chce przejść do biura od stycznia' },
+  { nazwa: 'Iwona Węgrowska', adres: 'iwonawegrowska.pl', komputer: '/images/glowna/hero/iwona-pc.webp', telefon: '/images/glowna/hero/iwona-tel.webp', budowa: ['Układamy koncerty i booking…', 'Wgrywamy singiel do odtwarzacza…', 'Podpinamy iwonawegrowska.pl…'], zapytanie: 'Zapytanie o koncert na firmowej gali' },
 ];
 
 /** Kartka pod dłońmi w sekcji „o mnie”: co dzieje się ze stroną klienta w zwykłym miesiącu. */

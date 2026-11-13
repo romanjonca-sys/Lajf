@@ -1,5 +1,7 @@
 ---
-import { STATUS_BUDOWY } from '../../lib/glowna-tresc';
+import { HERO_SLAJDY } from '../../lib/glowna-tresc';
+
+const [pierwszy] = HERO_SLAJDY;
 
 const SLOWA = ['Strona', 'Twojej', 'firmy.', 'Zrobiona', 'i', 'prowadzona', 'za', 'Ciebie.'];
 const FAKTY = [
@@ -23,18 +25,18 @@ const OPOZNIENIE_MS = 55;
     <p>Piszemy treści, projektujemy stronę, podpinamy domenę i pocztę i pilnujemy, żeby wszystko działało. Nic nie płacisz, dopóki nie zaakceptujesz gotowej strony. Po 12 ratach jest Twoja.</p>
     <span class="note">Odpowiadamy w ciągu dnia roboczego<br /><b>Masz już stronę? Przeniesiemy domenę i pocztę.</b></span>
   </div>
-  <div class="devices live done" id="live" data-status={JSON.stringify(STATUS_BUDOWY)}>
+  <div class="devices live done" id="live" data-slajdy={JSON.stringify(HERO_SLAJDY)}>
     <figure class="shot browser">
-      <div class="bar mono">pankolektor.pl</div>
+      <div class="bar mono" id="live-adres">{pierwszy.adres}</div>
       <div class="stage">
-        <img src="/images/glowna/pankolektor-pc.webp" alt="Strona serwisu Pan Kolektor zrobiona i prowadzona przez Lajf, widok na komputerze" width="2400" height="1500" fetchpriority="high" />
+        <img id="live-pc" src={pierwszy.komputer} alt="Strony klientów Lajf: widok na komputerze" width="2400" height="1500" fetchpriority="high" />
         <div class="skel" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
       </div>
-      <figcaption class="status mono"><b></b><span id="status-text">Strona działa · serwis kolektorów</span></figcaption>
+      <figcaption class="status mono"><b></b><span id="status-text">{pierwszy.nazwa} · strona działa</span></figcaption>
     </figure>
     <div class="phone" aria-hidden="true">
-      <img src="/images/glowna/pankolektor-tel.webp" alt="" width="780" height="1688" loading="lazy" />
-      <div class="toast"><strong>Nowe zapytanie · teraz</strong>Klient prosi o telefon w sprawie wymiany kolektora</div>
+      <img id="live-tel" src={pierwszy.telefon} alt="" width="780" height="1688" />
+      <div class="toast"><strong>Nowe zapytanie · teraz</strong><span id="live-zapytanie">{pierwszy.zapytanie}</span></div>
     </div>
   </div>
 </div></section>
