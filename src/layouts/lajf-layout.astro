@@ -138,6 +138,12 @@ const jsonLd = {
 <LajfFooter locale={locale} />
 
 <script>
+  // Tło nieostrego światła za nagłówkiem podstrony; astro:page-load odpala się też po przejściach View Transitions.
+  import { swiatlo } from '../scripts/swiatlo';
+  document.addEventListener('astro:page-load', swiatlo);
+</script>
+
+<script>
   // Inicjalizacja interakcji — odpalana też po każdym przejściu (View Transitions)
   //
   // ⛔ STAN TRZYMAMY W ZAKRESIE MODUŁU, NIE NA `window`. Skrypt jest pakowany raz

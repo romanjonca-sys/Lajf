@@ -1,3 +1,5 @@
+import { swiatlo } from './swiatlo';
+
 /**
  * Zachowanie strony głównej: animacje (budowa strony w hero, ciemniejąca sekcja kroków,
  * licznik ceny, kartka pod dłońmi), filtr realizacji i formularz zgłoszenia.
@@ -154,6 +156,7 @@ function formularz(): void {
   });
 }
 
+swiatlo();
 galeria();
 formularz();
 if (!REDUCED) animacje();

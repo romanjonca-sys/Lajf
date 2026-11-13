@@ -94,14 +94,9 @@ a { color: inherit; }
 .shot img { display: block; width: 100%; height: auto; aspect-ratio: 800/512; object-fit: cover; object-position: top; }
 .devices { position: relative; z-index: 2; margin-bottom: -120px; margin-right: 6%; container-type: inline-size; }
 .browser { box-shadow: 0 40px 80px -40px rgba(15,12,26,.45); }
-/* tło jak nieostre światło na zdjęciu (wzór: antimetal.com), w kolorach Lajf: fioletowy cień i niebieski */
-.hero { overflow-x: clip; }
-.devices::before { content: ""; position: absolute; z-index: -1; inset: -22% -14% 35% -14%; pointer-events: none;
-  background:
-    radial-gradient(38% 48% at 12% 62%, rgba(42,37,64,.42), transparent 72%),
-    radial-gradient(34% 46% at 90% 52%, rgba(91,140,255,.40), transparent 72%),
-    radial-gradient(28% 36% at 62% 18%, rgba(168,162,189,.35), transparent 72%);
-  filter: blur(48px); }
+/* tło: shader WebGL z nieostrym światłem (scripts/swiatlo.ts), canvas wstawiany do .hero */
+.hero { overflow-x: clip; position: relative; isolation: isolate; }
+.swiatlo { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; display: block; -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent); mask-image: linear-gradient(to bottom, #000 55%, transparent); }
 .browser .stage img { aspect-ratio: 16/10; }
 /* telefon z wersją mobilną nachodzi na prawy dolny róg przeglądarki */
 .phone { position: absolute; right: -6.5%; bottom: -7%; width: 22%; border: max(5px, .7cqw) solid var(--ink); border-radius: max(18px, 2.6cqw); overflow: hidden; background: var(--ink); box-shadow: 0 30px 60px -20px rgba(15,12,26,.55); }
