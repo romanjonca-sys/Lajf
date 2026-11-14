@@ -10,6 +10,9 @@ import { swiatlo } from './swiatlo';
 
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const KARTKA_MS = 3800;
+const ODSLON_KROK_MS = 90;
+const ODSLON_MAX_KROKOW = 8;
+const ODSLON_SELEKTOR = '.sec :is(h2, h3, p, li, summary, .btn, .shot)';
 const EN = document.documentElement.lang === 'en';
 const KOMUNIKAT_BLEDU = EN ? 'Could not send. Call us or email kontakt@lajf.eu.' : 'Nie udało się wysłać. Zadzwoń albo napisz: kontakt@lajf.eu.';
 const DZIEKUJEMY = EN ? 'Thank you. We will call you within one business day.' : 'Dziękujemy. Zadzwonimy w ciągu dnia roboczego.';
@@ -79,7 +82,40 @@ function oddychajacyNaglowek(): void {
   h1.addEventListener('pointerleave', () => { cancelAnimationFrame(ramka); ramka = 0; litery.forEach((l) => { l.style.fontStretch = ''; }); });
 }
 
+/** Po wjeździe element wraca do własnych stylów (np. przejść przycisków przy najechaniu). */
+function zakonczOdslone(el: HTMLElement): void {
+  el.classList.remove('odslon', 'in');
+  el.style.transitionDelay = '';
+}
+
+/**
+ * Teksty sekcji wjeżdżają po kolei, każdy osobno (nagłówek, akapit, punkty),
+ * gdy dojdzie do nich przewijanie. Elementy, które pojawiły się razem, startują co ODSLON_KROK_MS.
+ */
+function odslanianieTresci(): void {
+  const obs = new IntersectionObserver((wpisy) => {
+    wpisy.filter((w) => w.isIntersecting).forEach((w, i) => {
+      const el = w.target as HTMLElement;
+      el.style.transitionDelay = `${Math.min(i, ODSLON_MAX_KROKOW) * ODSLON_KROK_MS}ms`;
+      el.classList.add('in');
+      const naKoniec = (e: TransitionEvent): void => {
+        if (e.target !== el || e.propertyName !== 'transform') return;
+        el.removeEventListener('transitionend', naKoniec);
+        zakonczOdslone(el);
+      };
+      el.addEventListener('transitionend', naKoniec);
+      obs.unobserve(el);
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll<HTMLElement>(ODSLON_SELEKTOR).forEach((el) => {
+    if (el.closest('.podglad') || el.parentElement?.closest(ODSLON_SELEKTOR)) return;
+    el.classList.add('odslon');
+    obs.observe(el);
+  });
+}
+
 function animacje(): void {
+  odslanianieTresci();
   void czastki();
   oddychajacyNaglowek();
   kartkaPodDlonmi();

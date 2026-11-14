@@ -125,7 +125,7 @@ body { overflow-x: clip; }
 .founder-photo img { filter: none; }
 
 /* menu */
-nav { background: var(--paper); backdrop-filter: none; border-bottom: 1px solid var(--line); }
+nav { background: var(--paper); backdrop-filter: none; border-bottom: 1px solid var(--line); box-shadow: 0 10px 24px -14px rgba(15,12,26,.35); }
 .logo { color: var(--ink); font-size: 28px; }
 .nav-links { color: var(--ink); font-size: 15px; }
 .nav-links a::after { background: var(--ink); }
